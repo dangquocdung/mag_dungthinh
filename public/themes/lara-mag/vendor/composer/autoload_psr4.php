@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Theme\\LaraMag\\' => array($baseDir . '/src'),
+    'Theme\\DungThinh\\' => array($baseDir . '/src'),
 );

@@ -32,7 +32,7 @@ class VideoPostsWidget extends AbstractWidget
     public function __construct()
     {
         parent::__construct([
-            'name' => 'Video Posts - LaraMag Theme',
+            'name' => 'Video Posts - DungThinh Theme',
             'description' => 'Video posts widget',
             'number_display' => 5,
         ]);

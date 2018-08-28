@@ -165,7 +165,7 @@ mix
     .scripts('./plugins/simple-slider/resources/assets/js/simple-slider-admin.js', 'public/vendor/core/plugins/simple-slider/js/simple-slider-admin.js')
     .copy('./public/vendor/core/plugins/simple-slider/js/simple-slider-admin.js', 'plugins/simple-slider/public/js');
 
-// LaraMag Theme
+// DungThinh Theme
 mix
     .sass('./public/themes/lara-mag/assets/sass/lara-mag.scss', 'public/themes/lara-mag/assets/css/lara-mag.css')
     .scripts(

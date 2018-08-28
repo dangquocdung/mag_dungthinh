@@ -1,10 +1,10 @@
 <?php
 
-namespace Theme\LaraMag\Http\Controllers;
+namespace Theme\DungThinh\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
-class LaraMagController extends Controller
+class DungThinhController extends Controller
 {
     /**
      * @return string

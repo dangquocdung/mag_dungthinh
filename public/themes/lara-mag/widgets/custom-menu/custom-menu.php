@@ -22,7 +22,7 @@ class CustomMenuWidget extends AbstractWidget
     public function __construct()
     {
         parent::__construct([
-            'name' => __('Custom Menu - LaraMag Theme'),
+            'name' => __('Custom Menu - DungThinh Theme'),
             'description' => __('Add a custom menu to your widget area.'),
             'menu_id' => null,
         ]);

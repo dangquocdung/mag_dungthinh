@@ -9,12 +9,12 @@ class ComposerStaticInitc5d91581cd673f3f5722ded031eaa1ad
     public static $prefixLengthsPsr4 = array (
         'T' => 
         array (
-            'Theme\\LaraMag\\' => 14,
+            'Theme\\DungThinh\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Theme\\LaraMag\\' => 
+        'Theme\\DungThinh\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

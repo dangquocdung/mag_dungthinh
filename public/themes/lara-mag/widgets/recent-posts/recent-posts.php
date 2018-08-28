@@ -22,7 +22,7 @@ class RecentPostsWidget extends AbstractWidget
     public function __construct()
     {
         parent::__construct([
-            'name' => __('Recent posts - LaraMag Theme'),
+            'name' => __('Recent posts - DungThinh Theme'),
             'description' => __('Recent posts widget.'),
             'number_display' => 5,
         ]);
