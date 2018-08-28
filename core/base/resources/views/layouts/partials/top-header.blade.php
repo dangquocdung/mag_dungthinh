@@ -3,7 +3,7 @@
     <div class="navbar-header page-logo">
 
         <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-            <span>Bot</span>ble
+            <span>Dung</span>Thinh
         </a>
         <div class="sidebar-toggle menu-toggler responsive-toggler visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
             <span></span>
