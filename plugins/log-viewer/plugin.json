@@ -3,7 +3,7 @@
     "namespace": "Botble\\LogViewer\\",
     "provider": "Botble\\LogViewer\\Providers\\LogViewerServiceProvider",
     "author": "Sang Nguyen",
-    "url": "http://sangnguyen.info",
+    "url": "http://dungthinh.com",
     "version": "2.6",
     "description": "Log Viewer"
 }

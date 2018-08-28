@@ -3,7 +3,7 @@
   "namespace": "Botble\\SimpleSlider\\",
   "provider": "Botble\\SimpleSlider\\Providers\\SimpleSliderServiceProvider",
   "author": "Sang Nguyen",
-  "url": "http://sangnguyen.info",
+  "url": "http://dungthinh.com",
   "version": "1.2",
   "description": "A plugin to create sliders"
 }
