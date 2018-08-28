@@ -23,7 +23,7 @@ class InstallCommand extends Command
 
     /**
      * Execute the console command.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handle()
     {

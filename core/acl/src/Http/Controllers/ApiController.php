@@ -17,7 +17,7 @@ class ApiController extends BaseController
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function getClients(Request $request, TableBuilder $tableBuilder)
@@ -34,7 +34,7 @@ class ApiController extends BaseController
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getCreateClient(FormBuilder $builder)
     {
@@ -51,7 +51,7 @@ class ApiController extends BaseController
      * @param ClientRepository $clientRepository
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postCreateClient(ApiClientRequest $request, ClientRepository $clientRepository, BaseHttpResponse $response)
     {
@@ -64,7 +64,7 @@ class ApiController extends BaseController
      * @param ClientRepository $clientRepository
      * @param FormBuilder $builder
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getEditClient($id, ClientRepository $clientRepository, FormBuilder $builder)
     {
@@ -83,7 +83,7 @@ class ApiController extends BaseController
      * @param ClientRepository $clientRepository
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postEditClient($id, ApiClientRequest $request, ClientRepository $clientRepository, BaseHttpResponse $response)
     {
@@ -99,7 +99,7 @@ class ApiController extends BaseController
      * @param $id
      * @param ClientRepository $clientRepository
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDeleteClient($id, ClientRepository $clientRepository)
     {
@@ -112,7 +112,7 @@ class ApiController extends BaseController
      * @param ClientRepository $clientRepository
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postDeleteClient($id, ClientRepository $clientRepository, BaseHttpResponse $response)
     {

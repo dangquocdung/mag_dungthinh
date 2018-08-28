@@ -15,7 +15,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {
@@ -36,7 +36,7 @@ class HookServiceProvider extends ServiceProvider
      * @param $screen
      * @param Request $request
      * @param $data
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleLogin($screen, Request $request, $data)
     {
@@ -47,7 +47,7 @@ class HookServiceProvider extends ServiceProvider
      * @param $screen
      * @param Request $request
      * @param $data
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleLogout($screen, Request $request, $data)
     {
@@ -58,7 +58,7 @@ class HookServiceProvider extends ServiceProvider
      * @param $screen
      * @param Request $request
      * @param $data
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleUpdateProfile($screen, Request $request, $data)
     {
@@ -69,7 +69,7 @@ class HookServiceProvider extends ServiceProvider
      * @param $screen
      * @param Request $request
      * @param $data
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleUpdatePassword($screen, Request $request, $data)
     {
@@ -79,7 +79,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $screen
      * @param Request $request
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleBackup($screen, Request $request)
     {
@@ -89,7 +89,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $screen
      * @param Request $request
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleRestore($screen, Request $request)
     {
@@ -99,7 +99,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $widgets
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function registerDashboardWidgets($widgets)

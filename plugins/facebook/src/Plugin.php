@@ -8,21 +8,21 @@ class Plugin implements PluginInterface
 {
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function activate()
     {
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function deactivate()
     {
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function remove()
     {

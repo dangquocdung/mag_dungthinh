@@ -30,7 +30,7 @@ class RebuildPermissionsCommand extends Command
     /**
      * Install constructor.
      * @param UserInterface $userRepository
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(UserInterface $userRepository)
     {
@@ -42,7 +42,7 @@ class RebuildPermissionsCommand extends Command
     /**
      * Execute the console command.
      * @param $return
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Exception
      */
     public function handle($return = false)

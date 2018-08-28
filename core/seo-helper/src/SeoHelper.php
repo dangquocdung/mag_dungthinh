@@ -211,7 +211,7 @@ class SeoHelper implements SeoHelperContract
      * @param \Illuminate\Http\Request $request
      * @param $object
      * @return bool
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function saveMetaData($screen, $request, $object)
     {
@@ -234,7 +234,7 @@ class SeoHelper implements SeoHelperContract
      * @param $screen
      * @param $object
      * @return bool
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function deleteMetaData($screen, $object)
     {

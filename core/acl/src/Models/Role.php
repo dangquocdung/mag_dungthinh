@@ -41,7 +41,7 @@ class Role extends EloquentRole
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function users()
     {
@@ -50,7 +50,7 @@ class Role extends EloquentRole
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function userCreated()
     {

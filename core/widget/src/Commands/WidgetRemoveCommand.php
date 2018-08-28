@@ -43,7 +43,7 @@ class WidgetRemoveCommand extends Command
      *
      * @param \Illuminate\Filesystem\Filesystem $files
      * @param WidgetInterface $widgetRepository
-     * @author @author Sang Nguyen
+     * @author @author QuocDung Dang
      */
     public function __construct(File $files, WidgetInterface $widgetRepository)
     {
@@ -57,7 +57,7 @@ class WidgetRemoveCommand extends Command
      * Execute the console command.
      *
      * @return boolean
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handle()
     {
@@ -85,7 +85,7 @@ class WidgetRemoveCommand extends Command
      * Get the destination view path.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function getPath()
     {
@@ -96,7 +96,7 @@ class WidgetRemoveCommand extends Command
      * Get the theme name.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function getWidget()
     {
@@ -107,7 +107,7 @@ class WidgetRemoveCommand extends Command
      * Get the console command arguments.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function getArguments()
     {

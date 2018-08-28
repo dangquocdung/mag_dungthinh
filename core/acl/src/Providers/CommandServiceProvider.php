@@ -16,7 +16,7 @@ class CommandServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

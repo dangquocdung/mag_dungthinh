@@ -21,7 +21,7 @@ class SlugServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -39,7 +39,7 @@ class SlugServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

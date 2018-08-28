@@ -85,7 +85,7 @@ class Post extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function user()
     {
@@ -94,7 +94,7 @@ class Post extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function tags()
     {
@@ -103,7 +103,7 @@ class Post extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function categories()
     {
@@ -111,7 +111,7 @@ class Post extends Eloquent
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected static function boot()
     {

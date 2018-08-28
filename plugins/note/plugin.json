@@ -2,7 +2,7 @@
     "name": "Note",
     "namespace": "Botble\\Note\\",
     "provider": "Botble\\Note\\Providers\\NoteServiceProvider",
-    "author": "Sang Nguyen",
+    "author": "QuocDung Dang",
     "url": "http://dungthinh.com",
     "version": "2.6",
     "description": "Allow to add note when editing page, post..."

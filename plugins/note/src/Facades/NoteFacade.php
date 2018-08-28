@@ -11,7 +11,7 @@ class NoteFacade extends Facade
      * Get the registered name of the component.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected static function getFacadeAccessor()
     {

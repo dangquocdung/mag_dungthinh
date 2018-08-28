@@ -46,7 +46,7 @@ class CreateUserService implements ProduceServiceInterface
 
     /**
      * @param Request $request
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @return User|false|\Illuminate\Database\Eloquent\Model|mixed
      */
     public function execute(Request $request)

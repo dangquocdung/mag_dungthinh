@@ -66,7 +66,7 @@ class AclTest extends DuskTestCase
     /**
      * @throws \Exception
      * @throws \Throwable
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function testCanLogin()
     {
@@ -83,7 +83,7 @@ class AclTest extends DuskTestCase
     /**
      * @throws \Exception
      * @throws \Throwable
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function testCanLogout()
     {

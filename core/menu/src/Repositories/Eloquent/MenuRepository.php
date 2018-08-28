@@ -18,7 +18,7 @@ class MenuRepository extends RepositoriesAbstract implements MenuInterface
      * @param $active
      * @param array $selects
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function findBySlug($slug, $active, $selects = [])
     {
@@ -37,7 +37,7 @@ class MenuRepository extends RepositoriesAbstract implements MenuInterface
     /**
      * @param $name
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function createSlug($name)
     {

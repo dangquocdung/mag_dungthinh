@@ -12,7 +12,7 @@ class StoreCategoryService extends StoreCategoryServiceAbstract
     /**
      * @param Request $request
      * @param Post $post
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @return mixed|void
      */
     public function execute(Request $request, Post $post)

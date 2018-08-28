@@ -10,7 +10,7 @@ interface WidgetInterface extends RepositoryInterface
      * Get all theme widgets
      * @param string $theme
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByTheme($theme);
 }

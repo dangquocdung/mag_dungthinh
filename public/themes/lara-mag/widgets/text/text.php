@@ -28,7 +28,7 @@ class TextWidget extends AbstractWidget
 
     /**
      * Widget constructor.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct()
     {

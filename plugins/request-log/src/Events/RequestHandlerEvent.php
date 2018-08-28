@@ -16,7 +16,7 @@ class RequestHandlerEvent extends \Event
     /**
      * RequestHandlerEvent constructor.
      * @param $code
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct($code)
     {
@@ -27,7 +27,7 @@ class RequestHandlerEvent extends \Event
      * Get the channels the event should be broadcast on.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function broadcastOn()
     {

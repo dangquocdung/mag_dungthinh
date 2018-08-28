@@ -17,7 +17,7 @@ class RequestHandlerListener
     /**
      * RequestHandlerListener constructor.
      * @param RequestLog $requestLog
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(RequestLog $requestLog)
     {
@@ -29,7 +29,7 @@ class RequestHandlerListener
      *
      * @param  RequestHandlerEvent $event
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handle(RequestHandlerEvent $event)
     {

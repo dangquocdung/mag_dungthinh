@@ -36,7 +36,7 @@ class TagController extends BaseController
     /**
      * @param TagTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function getList(TagTable $dataTable)
@@ -48,7 +48,7 @@ class TagController extends BaseController
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getCreate(FormBuilder $formBuilder)
     {
@@ -61,7 +61,7 @@ class TagController extends BaseController
      * @param TagRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postCreate(TagRequest $request, BaseHttpResponse $response)
     {
@@ -79,7 +79,7 @@ class TagController extends BaseController
      * @param Request $request
      * @param FormBuilder $formBuilder
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getEdit($id, Request $request, FormBuilder $formBuilder)
     {
@@ -97,7 +97,7 @@ class TagController extends BaseController
      * @param TagRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postEdit($id, TagRequest $request, BaseHttpResponse $response)
     {
@@ -117,7 +117,7 @@ class TagController extends BaseController
      * @param $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
@@ -137,7 +137,7 @@ class TagController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postDeleteMany(Request $request, BaseHttpResponse $response)
     {
@@ -159,7 +159,7 @@ class TagController extends BaseController
      * Get list tags in db
      *
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAllTags()
     {

@@ -9,7 +9,7 @@ use Html;
 /**
  * Class Assets
  * @package Botble\Assets
- * @author Sang Nguyen
+ * @author QuocDung Dang
  * @since 22/07/2015 11:23 PM
  */
 class Assets
@@ -49,7 +49,7 @@ class Assets
 
     /**
      * Assets constructor.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct()
     {
@@ -64,7 +64,7 @@ class Assets
      *
      * @param array $assets
      * @return $this
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function addJavascript($assets)
     {
@@ -80,7 +80,7 @@ class Assets
      *
      * @param array $assets
      * @return $this
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function addStylesheets($assets)
     {
@@ -94,7 +94,7 @@ class Assets
     /**
      * @param $assets
      * @return $this
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function addStylesheetsDirectly($assets)
     {
@@ -114,7 +114,7 @@ class Assets
      * @param $assets
      * @param string $location
      * @return $this
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function addJavascriptDirectly($assets, $location = 'bottom')
     {
@@ -136,7 +136,7 @@ class Assets
      *
      * @param array $modules
      * @return $this;
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function addAppModule($modules)
     {
@@ -152,7 +152,7 @@ class Assets
      *
      * @param array $assets
      * @return $this;
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function removeStylesheets($assets)
     {
@@ -170,7 +170,7 @@ class Assets
      *
      * @param array $assets
      * @return $this;
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function removeJavascript($assets)
     {
@@ -189,7 +189,7 @@ class Assets
      * @param string $location : top or bottom
      * @param boolean $version : show version?
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getJavascript($location = null, $version = true)
     {
@@ -252,7 +252,7 @@ class Assets
      * @param array $lastModules : append last CSS to current module
      * @param boolean $version : show version?
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getStylesheets($lastModules = [], $version = true)
     {
@@ -290,7 +290,7 @@ class Assets
      * Get all modules in current module
      * @param boolean $version : show version?
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAppModules($version = true)
     {
@@ -335,7 +335,7 @@ class Assets
     /**
      * Get all admin themes
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getThemes()
     {
@@ -356,7 +356,7 @@ class Assets
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAdminLocales()
     {
@@ -385,7 +385,7 @@ class Assets
     /**
      * @param $name
      * @param bool $version
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getJavascriptItemToHtml($name, $version = true)
     {
@@ -407,7 +407,7 @@ class Assets
     /**
      * @param $name
      * @param bool $version
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getStylesheetItemToHtml($name, $version = true)
     {

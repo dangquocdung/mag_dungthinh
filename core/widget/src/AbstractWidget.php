@@ -108,7 +108,7 @@ abstract class AbstractWidget
      * @param $params
      *
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function cacheKey(array $params = [])
     {
@@ -117,7 +117,7 @@ abstract class AbstractWidget
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getConfig()
     {
@@ -127,7 +127,7 @@ abstract class AbstractWidget
     /**
      * Treat this method as a controller action.
      * Return view() or other content to display.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function run()
@@ -159,7 +159,7 @@ abstract class AbstractWidget
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getId()
     {
@@ -170,7 +170,7 @@ abstract class AbstractWidget
      * @param null $sidebar_id
      * @param int $position
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function form($sidebar_id = null, $position = 0)
@@ -203,7 +203,7 @@ abstract class AbstractWidget
      * Add defaults to configuration array.
      *
      * @param array $defaults
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function addConfigDefaults(array $defaults)
     {
@@ -213,7 +213,7 @@ abstract class AbstractWidget
     /**
      * @return null|string
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function getCurrentLocaleCode()
     {

@@ -27,7 +27,7 @@ class CategoryController extends BaseController
 
     /**
      * @param CategoryInterface $categoryRepository
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(CategoryInterface $categoryRepository)
     {
@@ -38,7 +38,7 @@ class CategoryController extends BaseController
      * Display all categories
      * @param CategoryTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function getList(CategoryTable $dataTable)
@@ -52,7 +52,7 @@ class CategoryController extends BaseController
      * Show create form
      * @param FormBuilder $formBuilder
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getCreate(FormBuilder $formBuilder)
     {
@@ -67,7 +67,7 @@ class CategoryController extends BaseController
      * @param CategoryRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postCreate(CategoryRequest $request, BaseHttpResponse $response)
     {
@@ -89,7 +89,7 @@ class CategoryController extends BaseController
      *
      * @param $id
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getEdit($id, FormBuilder $formBuilder)
     {
@@ -107,7 +107,7 @@ class CategoryController extends BaseController
      * @param CategoryRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postEdit($id, CategoryRequest $request, BaseHttpResponse $response)
     {
@@ -131,7 +131,7 @@ class CategoryController extends BaseController
      * @param $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
@@ -153,7 +153,7 @@ class CategoryController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postDeleteMany(Request $request, BaseHttpResponse $response)
     {

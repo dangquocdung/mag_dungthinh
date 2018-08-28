@@ -32,7 +32,7 @@ class PublicController extends Controller
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getIndex()
@@ -44,7 +44,7 @@ class PublicController extends Controller
     /**
      * @param $key
      * @return \Response
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getView($key)
@@ -96,7 +96,7 @@ class PublicController extends Controller
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getSiteMap()
     {
@@ -109,7 +109,7 @@ class PublicController extends Controller
     /**
      * Generate JSON feed
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getJsonFeed()
     {

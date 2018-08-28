@@ -26,7 +26,7 @@ class GalleryMeta extends Eloquent
     /**
      * @param $value
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getImagesAttribute($value)
     {

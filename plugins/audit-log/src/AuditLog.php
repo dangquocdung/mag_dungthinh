@@ -27,7 +27,7 @@ class AuditLog
      * @param $screen
      * @param $data
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getReferenceName($screen, $data)
     {

@@ -18,7 +18,7 @@ class SystemController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function getInfo(Request $request, TableBuilder $tableBuilder)
@@ -48,7 +48,7 @@ class SystemController extends Controller
     /**
      * Show all plugins in system
      *
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getListPlugins()
@@ -98,7 +98,7 @@ class SystemController extends Controller
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getChangePluginStatus(Request $request, BaseHttpResponse $response)
@@ -140,7 +140,7 @@ class SystemController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getCacheManagement()
     {
@@ -152,7 +152,7 @@ class SystemController extends Controller
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function postClearCache(Request $request, BaseHttpResponse $response)
     {

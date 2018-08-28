@@ -18,7 +18,7 @@ class BackupServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -26,7 +26,7 @@ class BackupServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

@@ -11,7 +11,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {
@@ -38,7 +38,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $widgets
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function addPageStatsWidget($widgets)

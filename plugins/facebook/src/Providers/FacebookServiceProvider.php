@@ -20,7 +20,7 @@ class FacebookServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -29,7 +29,7 @@ class FacebookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

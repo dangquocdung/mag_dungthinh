@@ -18,7 +18,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     /**
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getFeatured($limit = 5)
     {
@@ -37,7 +37,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param array $selected
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getListPostNonInList(array $selected = [], $limit = 7)
     {
@@ -54,7 +54,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param $id
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getRelated($id, $limit = 3)
     {
@@ -71,7 +71,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param int $paginate
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByCategory($category_id, $paginate = 12, $limit = 0)
     {
@@ -96,7 +96,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param $user_id
      * @param int $paginate
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByUserId($user_id, $paginate = 6)
     {
@@ -109,7 +109,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDataSiteMap()
     {
@@ -124,7 +124,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param $tag
      * @param int $paginate
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByTag($tag, $paginate = 12)
     {
@@ -142,7 +142,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param int $limit
      * @param int $category_id
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getRecentPosts($limit = 5, $category_id = 0)
     {
@@ -164,7 +164,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param int $limit
      * @param int $paginate
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getSearch($query, $limit = 10, $paginate = 10)
     {
@@ -188,7 +188,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     /**
      * @param bool $active
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAllPosts($active = true)
     {
@@ -204,7 +204,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      * @param $limit
      * @param array $args
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getPopularPosts($limit, array $args = [])
     {

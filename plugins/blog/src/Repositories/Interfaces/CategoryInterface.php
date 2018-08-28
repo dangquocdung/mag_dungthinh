@@ -10,20 +10,20 @@ interface CategoryInterface extends RepositoryInterface
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDataSiteMap();
 
     /**
      * @param $limit
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getFeaturedCategories($limit);
 
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAllCategories(array $condition = []);
 
@@ -49,7 +49,7 @@ interface CategoryInterface extends RepositoryInterface
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAllCategoriesWithChildren(array $condition = [], array $with = [], array $select = ['*']);
 }

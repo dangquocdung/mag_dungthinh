@@ -21,7 +21,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function boot()
@@ -67,7 +67,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $widgets
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function registerDashboardWidgets($widgets)
@@ -89,7 +89,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $widgets
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function addStatsWidgets($widgets)
@@ -106,7 +106,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $slug
      * @return array|Eloquent
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handleSingleView($slug)

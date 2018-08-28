@@ -29,7 +29,7 @@ class ThemeServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -52,7 +52,7 @@ class ThemeServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

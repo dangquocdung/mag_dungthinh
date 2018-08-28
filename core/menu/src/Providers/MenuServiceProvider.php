@@ -30,7 +30,7 @@ class MenuServiceProvider extends ServiceProvider
      * Register the service provider.
      *
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -59,7 +59,7 @@ class MenuServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

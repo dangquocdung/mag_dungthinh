@@ -59,7 +59,7 @@ class Gallery extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function user()
     {

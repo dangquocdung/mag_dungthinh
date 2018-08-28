@@ -52,7 +52,7 @@ class LoginController extends BaseController
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function showLoginForm()
     {
@@ -111,7 +111,7 @@ class LoginController extends BaseController
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function username()
     {

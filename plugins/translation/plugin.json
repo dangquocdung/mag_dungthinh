@@ -2,7 +2,7 @@
     "name": "Translation",
     "namespace": "Botble\\Translation\\",
     "provider": "Botble\\Translation\\Providers\\TranslationServiceProvider",
-    "author": "Sang Nguyen",
+    "author": "QuocDung Dang",
     "url": "http://dungthinh.com",
     "version": "2.6",
     "description": "Manage translation text"

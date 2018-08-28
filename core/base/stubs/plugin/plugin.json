@@ -2,7 +2,7 @@
     "name": "{Plugin}",
     "namespace": "Botble\\{Plugin}\\",
     "provider": "Botble\\{Plugin}\\Providers\\{Plugin}ServiceProvider",
-    "author": "Sang Nguyen",
+    "author": "QuocDung Dang",
     "url": "http://dungthinh.com",
     "version": "1.0",
     "description": "The description for plugin {plugin}"

@@ -34,7 +34,7 @@ class DashboardWidget extends Eloquent
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function userSetting()
     {
@@ -43,7 +43,7 @@ class DashboardWidget extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function settings()
     {

@@ -8,7 +8,7 @@ class LaraMagController extends Controller
 {
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getTest()
     {

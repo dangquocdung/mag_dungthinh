@@ -12,7 +12,7 @@ class HttpsProtocol
      * @param Request $request
      * @param Closure $next
      * @return \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handle($request, Closure $next)
     {

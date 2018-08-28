@@ -10,7 +10,7 @@ abstract class Request extends FormRequest
      * Determine if the user is authorized to make this request.
      *
      * @return bool
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function authorize()
     {

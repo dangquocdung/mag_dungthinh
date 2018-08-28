@@ -22,7 +22,7 @@ class GalleryMetaCacheDecorator extends CacheAbstractDecorator implements Galler
      * GalleryCacheDecorator constructor.
      * @param GalleryMetaInterface $repository
      * @param CacheInterface $cache
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(GalleryMetaInterface $repository, CacheInterface $cache)
     {

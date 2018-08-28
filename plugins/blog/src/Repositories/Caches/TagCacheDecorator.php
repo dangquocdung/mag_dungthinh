@@ -28,7 +28,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
      * TagCacheDecorator constructor.
      * @param TagInterface $repository
      * @param CacheInterface $cache
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(TagInterface $repository, CacheInterface $cache)
     {
@@ -38,7 +38,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDataSiteMap()
     {
@@ -48,7 +48,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
     /**
      * @param $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getPopularTags($limit)
     {
@@ -58,7 +58,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
     /**
      * @param bool $active
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAllTags($active = true)
     {

@@ -66,7 +66,7 @@ class BaseServiceProvider extends ServiceProvider
      * Register any application services.
      *
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -129,7 +129,7 @@ class BaseServiceProvider extends ServiceProvider
     /**
      * Boot the service provider.
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {
@@ -185,7 +185,7 @@ class BaseServiceProvider extends ServiceProvider
 
     /**
      * Add default dashboard menu for core
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function registerDefaultMenus()
     {

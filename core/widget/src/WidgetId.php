@@ -15,7 +15,7 @@ class WidgetId
      * Getter for widget id.
      *
      * @return int
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function get()
     {
@@ -26,7 +26,7 @@ class WidgetId
      * Setter for widget id.
      *
      * @param int $id
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function set($id)
     {
@@ -35,7 +35,7 @@ class WidgetId
 
     /**
      * Increment widget id by one.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function increment()
     {
@@ -44,7 +44,7 @@ class WidgetId
 
     /**
      * Resets widget id to zero.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function reset()
     {

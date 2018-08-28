@@ -43,7 +43,7 @@ class GalleryTable extends TableAbstract
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.1
      */
     public function ajax()
@@ -78,7 +78,7 @@ class GalleryTable extends TableAbstract
      * Get the query object to be processed by datatables.
      *
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.1
      */
     public function query()
@@ -99,7 +99,7 @@ class GalleryTable extends TableAbstract
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.1
      */
     public function columns()
@@ -139,7 +139,7 @@ class GalleryTable extends TableAbstract
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.1
      * @throws \Throwable
      */

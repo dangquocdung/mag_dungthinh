@@ -10,7 +10,7 @@ class ContactRequest extends Request
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function rules()
     {
@@ -32,7 +32,7 @@ class ContactRequest extends Request
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function messages()
     {

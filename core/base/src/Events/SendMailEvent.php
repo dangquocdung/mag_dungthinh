@@ -28,7 +28,7 @@ class SendMailEvent extends Event
      * @param $content
      * @param $title
      * @param $args
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct($content, $title, $args)
     {
@@ -41,7 +41,7 @@ class SendMailEvent extends Event
      * Get the channels the event should be broadcast on.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function broadcastOn()
     {

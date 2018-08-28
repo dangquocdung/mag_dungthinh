@@ -11,7 +11,7 @@ class Plugin implements PluginInterface
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function permissions()
     {
@@ -19,7 +19,7 @@ class Plugin implements PluginInterface
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function activate()
     {
@@ -30,14 +30,14 @@ class Plugin implements PluginInterface
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function deactivate()
     {
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function remove()
     {

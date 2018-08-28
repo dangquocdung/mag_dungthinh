@@ -19,7 +19,7 @@ class SlugService
     /**
      * SlugService constructor.
      * @param SlugInterface $slugRepository
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(SlugInterface $slugRepository)
     {
@@ -30,7 +30,7 @@ class SlugService
      * @param $name
      * @param int $slug_id
      * @return int|string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function create($name, $slug_id = 0)
     {

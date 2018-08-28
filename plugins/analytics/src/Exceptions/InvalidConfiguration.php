@@ -9,7 +9,7 @@ class InvalidConfiguration extends Exception
     /**
      * @return static
      * @author Freek Van der Herten <freek@spatie.be>
-     * @modified Sang Nguyen
+     * @modified QuocDung Dang
      */
     public static function viewIdNotSpecified()
     {
@@ -19,7 +19,7 @@ class InvalidConfiguration extends Exception
     /**
      * @param $path
      * @return static
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public static function credentialsIsNotValid()
     {

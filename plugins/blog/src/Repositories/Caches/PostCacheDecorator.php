@@ -23,7 +23,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * PostCacheDecorator constructor.
      * @param PostInterface $repository
      * @param CacheInterface $cache
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(PostInterface $repository, CacheInterface $cache)
     {
@@ -35,7 +35,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param $slug
      * @param $status
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getBySlug($slug, $status)
     {
@@ -45,7 +45,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     /**
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getFeatured($limit = 5)
     {
@@ -56,7 +56,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param array $selected
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getListPostNonInList(array $selected = [], $limit = 12)
     {
@@ -67,7 +67,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param $user_id
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByUserId($user_id, $limit = 6)
     {
@@ -76,7 +76,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDataSiteMap()
     {
@@ -87,7 +87,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param $tag
      * @param int $paginate
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByTag($tag, $paginate = 12)
     {
@@ -98,7 +98,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param $slug
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getRelated($slug, $limit = 3)
     {
@@ -109,7 +109,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param int $limit
      * @param int $category_id
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getRecentPosts($limit = 5, $category_id = 0)
     {
@@ -121,7 +121,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param int $limit
      * @param int $paginate
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getSearch($query, $limit = 10, $paginate = 10)
     {
@@ -133,7 +133,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param int $paginate
      * @param int $limit
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getByCategory($category, $paginate = 12, $limit = 0)
     {
@@ -143,7 +143,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     /**
      * @param bool $active
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getAllPosts($active = true)
     {
@@ -154,7 +154,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
      * @param $limit
      * @param array $args
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getPopularPosts($limit, array $args = [])
     {

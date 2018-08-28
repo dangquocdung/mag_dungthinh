@@ -13,7 +13,7 @@ class SupportServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -21,7 +21,7 @@ class SupportServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {
@@ -30,7 +30,7 @@ class SupportServiceProvider extends ServiceProvider
     /**
      * Load module's helpers
      * @param $directory
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.0
      */
     public function autoloadHelpers($directory)

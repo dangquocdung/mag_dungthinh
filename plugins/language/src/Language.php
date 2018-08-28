@@ -110,7 +110,7 @@ class Language
      * Language constructor.
      * @param LanguageInterface $languageRepository
      * @param LanguageMetaInterface $languageMetaRepository
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.0
      */
     public function __construct(LanguageInterface $languageRepository, LanguageMetaInterface $languageMetaRepository)
@@ -141,7 +141,7 @@ class Language
      * Return an array of all supported Locales
      *
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getSupportedLocales()
     {
@@ -183,7 +183,7 @@ class Language
     /**
      * @param array $select
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.0
      */
     public function getActiveLanguage($select = ['*'])
@@ -201,7 +201,7 @@ class Language
      * Returns default locale
      *
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getDefaultLocale()
     {
@@ -210,7 +210,7 @@ class Language
 
     /**
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function setDefaultLocale()
     {
@@ -225,7 +225,7 @@ class Language
     }
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.0
      */
     public function screenUsingMultiLanguage()
@@ -235,7 +235,7 @@ class Language
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.1
      */
     public function getHiddenLanguageText()
@@ -263,7 +263,7 @@ class Language
      * @param $id
      * @param $unique_key
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.0
      */
     public function getRelatedLanguageItem($id, $unique_key)
@@ -393,7 +393,7 @@ class Language
      *
      * @return string|false URL translated, False if url does not exist
      * @author Marc Cámara <mcamara88@gmail.com>
-     * @modified Sang Nguyen
+     * @modified QuocDung Dang
      */
     public function getLocalizedURL($locale = null, $url = null, $attributes = [])
     {
@@ -770,7 +770,7 @@ class Language
      * Returns current text direction
      *
      * @return string current locale name
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getCurrentLocaleRTL()
     {
@@ -797,7 +797,7 @@ class Language
 
     /**
      * @param $code
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function setCurrentAdminLocale($code)
     {
@@ -808,7 +808,7 @@ class Language
      * Returns current admin locale code
      *
      * @return string current locale code
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getCurrentAdminLocaleCode()
     {
@@ -965,7 +965,7 @@ class Language
     /**
      * @param array $select
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.2
      */
     public function getDefaultLanguage($select = ['*'])

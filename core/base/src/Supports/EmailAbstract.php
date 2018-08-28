@@ -31,7 +31,7 @@ class EmailAbstract extends Mailable
      * @param $content
      * @param $subject
      * @param array $data
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct($content, $subject, $data = [])
     {
@@ -44,7 +44,7 @@ class EmailAbstract extends Mailable
      * Build the message.
      *
      * @return $this
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function build()
     {

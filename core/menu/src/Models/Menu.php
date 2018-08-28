@@ -16,7 +16,7 @@ class Menu extends Eloquent
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function menuNodes()
     {

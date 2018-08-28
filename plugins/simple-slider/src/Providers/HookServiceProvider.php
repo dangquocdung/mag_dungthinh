@@ -14,7 +14,7 @@ class HookServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {
@@ -29,7 +29,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $shortcode
      * @return null
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function render($shortcode)
     {

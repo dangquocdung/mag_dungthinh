@@ -38,7 +38,7 @@ class InfoTable extends \Botble\Table\Abstracts\TableAbstract
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Exception
      */
     public function ajax()
@@ -67,7 +67,7 @@ class InfoTable extends \Botble\Table\Abstracts\TableAbstract
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function columns()
     {
@@ -87,7 +87,7 @@ class InfoTable extends \Botble\Table\Abstracts\TableAbstract
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function buttons()
     {
@@ -104,7 +104,7 @@ class InfoTable extends \Botble\Table\Abstracts\TableAbstract
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @since 2.1
      * @throws \Throwable
      */
@@ -117,7 +117,7 @@ class InfoTable extends \Botble\Table\Abstracts\TableAbstract
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function actions()
     {

@@ -13,7 +13,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {
@@ -25,7 +25,7 @@ class HookServiceProvider extends ServiceProvider
      * Fire event log
      *
      * @param $code
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handleSiteError($code)
     {
@@ -35,7 +35,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $widgets
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function registerDashboardWidgets($widgets)
     {

@@ -53,7 +53,7 @@ class Tag extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function posts()
     {

@@ -32,7 +32,7 @@ class DashboardMenu
 
     /**
      * @param User $user
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function init(User $user)
     {

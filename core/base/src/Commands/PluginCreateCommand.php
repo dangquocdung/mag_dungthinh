@@ -50,7 +50,7 @@ class PluginCreateCommand extends Command
      *
      * @param \Illuminate\Filesystem\Filesystem $files
      * @param Composer $composer
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function __construct(Filesystem $files, Composer $composer)
     {
@@ -61,7 +61,7 @@ class PluginCreateCommand extends Command
 
     /**
      * Execute the console command.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
@@ -92,7 +92,7 @@ class PluginCreateCommand extends Command
 
     /**
      * Generate the module in Modules directory.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function publishStubs()
     {
@@ -108,7 +108,7 @@ class PluginCreateCommand extends Command
     /**
      * Search and replace all occurrences of ‘Module’
      * in all files with the name of the new module.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function searchAndReplaceInFiles()
     {
@@ -128,7 +128,7 @@ class PluginCreateCommand extends Command
      * Rename models and repositories.
      * @param $location
      * @return boolean
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function renameModelsAndRepositories($location)
     {
@@ -152,7 +152,7 @@ class PluginCreateCommand extends Command
      *
      * @param string $path
      * @return string
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function transformFilename($path)
     {
@@ -169,7 +169,7 @@ class PluginCreateCommand extends Command
      * @param string $from
      * @param string $to
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function publishDirectory($from, $to)
     {
@@ -190,7 +190,7 @@ class PluginCreateCommand extends Command
      *
      * @param string $directory
      * @return void
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     protected function createParentDirectory($directory)
     {

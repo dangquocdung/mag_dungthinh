@@ -56,7 +56,7 @@ class ThemeActivateCommand extends Command
      * Execute the console command.
      *
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function handle()
     {

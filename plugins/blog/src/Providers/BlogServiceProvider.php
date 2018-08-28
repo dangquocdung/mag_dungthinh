@@ -25,7 +25,7 @@ use Botble\Blog\Repositories\Interfaces\TagInterface;
 /**
  * Class BlogServiceProvider
  * @package Botble\Blog
- * @author Sang Nguyen
+ * @author QuocDung Dang
  * @since 02/07/2016 09:50 AM
  */
 class BlogServiceProvider extends ServiceProvider
@@ -38,7 +38,7 @@ class BlogServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function register()
     {
@@ -73,7 +73,7 @@ class BlogServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function boot()
     {

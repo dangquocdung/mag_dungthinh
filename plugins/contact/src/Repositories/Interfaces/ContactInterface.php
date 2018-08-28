@@ -9,13 +9,13 @@ interface ContactInterface extends RepositoryInterface
     /**
      * @param array $select
      * @return mixed
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function getUnread($select = ['*']);
 
     /**
      * @return int
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      */
     public function countUnread();
 }

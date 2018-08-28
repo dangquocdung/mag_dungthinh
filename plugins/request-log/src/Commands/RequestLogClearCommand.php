@@ -28,7 +28,7 @@ class RequestLogClearCommand extends Command
 
     /**
      * RebuildPermissions constructor.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @param RequestLogInterface $requestLogRepository
      */
     public function __construct(RequestLogInterface $requestLogRepository)
@@ -39,7 +39,7 @@ class RequestLogClearCommand extends Command
 
     /**
      * Execute the console command.
-     * @author Sang Nguyen
+     * @author QuocDung Dang
      * @throws \Throwable
      */
     public function handle()
