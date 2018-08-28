@@ -26,10 +26,6 @@ __MACOSX
 
 style.integration.css
 
-public/vendor/core
-public/vendor/jsvalidation
-public/vendor/sitemap
-
 .env.dusk.local
 _ide_helper.php
 package-lock.json
