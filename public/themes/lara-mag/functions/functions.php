@@ -96,7 +96,7 @@ theme_option()
         'label' => __('Copyright'),
         'attributes' => [
             'name' => 'copyright',
-            'value' => '© 2016 Botble Technologies. All right reserved. Designed by Nghia Minh',
+            'value' => '© 2016 DungThinh Technologies. All right reserved. Designed by Nghia Minh',
             'options' => [
                 'class' => 'form-control',
                 'placeholder' => __('Change copyright'),
