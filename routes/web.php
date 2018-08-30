@@ -10,5 +10,3 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/send_email', array('uses' => 'EmailController@sendEmailReminder'));
