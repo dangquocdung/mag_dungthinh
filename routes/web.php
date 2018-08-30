@@ -11,3 +11,4 @@
 |
 */
 
+Route::get('/send_email', array('uses' => 'EmailController@sendEmailReminder'));
