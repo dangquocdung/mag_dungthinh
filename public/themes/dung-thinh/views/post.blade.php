@@ -12,7 +12,7 @@
                     @php $url = str_replace('watch?v=', 'embed/', get_meta_data($post->id, 'video_link', POST_MODULE_SCREEN_NAME, true)); @endphp
                     @if (!empty($url))
                         <div class="embed-responsive embed-responsive-16by9 mb30">
-                            <iframe class="embed-responsive-item" allowfullscreen frameborder="0" height="315" width="420" src="{{ str_replace('watch?v=', 'embed/', $url) }}"></iframe>
+                            <iframe class="embed-responsive-item" allowfullscreen frameborder="0" height="315" width="420" src="{{ str_replace('watch?v=', 'embed/', $url) }}?rel=0"></iframe>
                         </div>
                         <br>
                     @endif
