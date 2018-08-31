@@ -52,7 +52,7 @@
                     <section class="">
                         <ul>
                             @foreach (get_related_posts($post->slug, 5) as $related_item)
-                            <li class="post1-item-list">
+                            <li class="post1-item-list" style="list-style-type: none;">
                                 <a href="{{ route('public.single', $related_item->slug) }}"><i class="fa fa-caret-right" aria-hidden="true"></i>{{ $related_item->name }}</a>
                             </li>
                             @endforeach
