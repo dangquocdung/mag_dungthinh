@@ -216,12 +216,13 @@ class RvMedia
             $file->folder_id = $folder_id;
             $file->user_id = Auth::check() ? Auth::user()->getKey() : 0;
             $file->options = request()->get('options', []);
+            $file->insert('vendor/core/images/logo_white.png');
             $this->fileRepository->createOrUpdate($file);
 
             if (is_image($this->uploadManager->fileMimeType($path))) {
                 foreach (config('media.sizes') as $size) {
                     $readable_size = explode('x', $size);
-                    $this->insert('vendor/core/images/logo_white.png');
+                    
                     $this->thumbnailService
                         ->setImage($fileUpload->getRealPath())
                         ->setSize($readable_size[0], $readable_size[1])
