@@ -34,7 +34,7 @@ class VideoPostsWidget extends AbstractWidget
         parent::__construct([
             'name' => 'Video Posts - DungThinh Theme',
             'description' => 'Video posts widget',
-            'number_display' => 7,
+            'number_display' => 5,
         ]);
     }
 }
