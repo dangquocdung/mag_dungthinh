@@ -221,6 +221,7 @@ class RvMedia
             if (is_image($this->uploadManager->fileMimeType($path))) {
                 foreach (config('media.sizes') as $size) {
                     $readable_size = explode('x', $size);
+                    $this->insert('vendor/core/images/logo_white.png');
                     $this->thumbnailService
                         ->setImage($fileUpload->getRealPath())
                         ->setSize($readable_size[0], $readable_size[1])
