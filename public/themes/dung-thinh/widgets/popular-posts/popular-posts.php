@@ -34,7 +34,7 @@ class PopularPostsWidget extends AbstractWidget
         parent::__construct([
             'name' => 'Popular Posts - DungThinh Theme',
             'description' => 'Show list popular posts',
-            'number_display' => 5,
+            'number_display' => 7,
         ]);
     }
 }
