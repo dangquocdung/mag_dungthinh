@@ -167,10 +167,10 @@ mix
 
 // DungThinh Theme
 mix
-    .sass('./public/themes/dungthinh-mag/assets/sass/dungthinh-mag.scss', 'public/themes/dungthinh-mag/assets/css/dungthinh-mag.css')
+    .sass('./public/themes/dungthinh/assets/sass/dungthinh.scss', 'public/themes/dungthinh/assets/css/dungthinh.css')
     .scripts(
         [
-            './public/themes/dungthinh-mag/assets/js/jquery.min.js',
-            './public/themes/dungthinh-mag/assets/js/custom.js',
-            './public/themes/dungthinh-mag/assets/js/jquery.fancybox.min.js'
-        ], 'public/themes/dungthinh-mag/assets/js/dungthinh-mag.js');
+            './public/themes/dungthinh/assets/js/jquery.min.js',
+            './public/themes/dungthinh/assets/js/custom.js',
+            './public/themes/dungthinh/assets/js/jquery.fancybox.min.js'
+        ], 'public/themes/dungthinh/assets/js/dungthinh.js');
