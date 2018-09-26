@@ -167,10 +167,10 @@ mix
 
 // DungThinh Theme
 mix
-    .sass('./public/themes/lara-mag/assets/sass/lara-mag.scss', 'public/themes/lara-mag/assets/css/lara-mag.css')
+    .sass('./public/themes/dungthinh-mag/assets/sass/dungthinh-mag.scss', 'public/themes/dungthinh-mag/assets/css/dungthinh-mag.css')
     .scripts(
         [
-            './public/themes/lara-mag/assets/js/jquery.min.js',
-            './public/themes/lara-mag/assets/js/custom.js',
-            './public/themes/lara-mag/assets/js/jquery.fancybox.min.js'
-        ], 'public/themes/lara-mag/assets/js/lara-mag.js');
+            './public/themes/dungthinh-mag/assets/js/jquery.min.js',
+            './public/themes/dungthinh-mag/assets/js/custom.js',
+            './public/themes/dungthinh-mag/assets/js/jquery.fancybox.min.js'
+        ], 'public/themes/dungthinh-mag/assets/js/dungthinh-mag.js');
