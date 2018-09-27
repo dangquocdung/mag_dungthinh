@@ -14,7 +14,7 @@ class Locale
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure $next
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handle($request, Closure $next)
     {

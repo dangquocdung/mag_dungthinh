@@ -28,7 +28,7 @@ class {Widget}Widget extends AbstractWidget
 
     /**
      * Widget constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {

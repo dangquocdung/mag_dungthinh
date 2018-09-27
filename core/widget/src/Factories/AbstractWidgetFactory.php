@@ -73,7 +73,7 @@ abstract class AbstractWidgetFactory
      * Constructor.
      *
      * @param ApplicationWrapperContract $app
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(ApplicationWrapperContract $app)
     {
@@ -88,7 +88,7 @@ abstract class AbstractWidgetFactory
      * @param string $widgetName
      * @param array $params
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __call($widgetName, array $params = [])
     {
@@ -104,7 +104,7 @@ abstract class AbstractWidgetFactory
      *
      * @throws InvalidWidgetClassException
      * @throws Exception
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function instantiateWidget(array $params = [])
     {
@@ -136,7 +136,7 @@ abstract class AbstractWidgetFactory
      *
      * @param $widgetName
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function parseFullWidgetNameFromString($widgetName)
     {
@@ -148,7 +148,7 @@ abstract class AbstractWidgetFactory
      *
      * @param $content
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function wrapContentInContainer($content)
     {
@@ -169,7 +169,7 @@ abstract class AbstractWidgetFactory
      *
      * @param array $params
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function encryptWidgetParams($params)
     {
@@ -181,7 +181,7 @@ abstract class AbstractWidgetFactory
      *
      * @param string $params
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function decryptWidgetParams($params)
     {

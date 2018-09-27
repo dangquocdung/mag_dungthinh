@@ -29,7 +29,7 @@ class GalleryServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function register()
     {
@@ -57,7 +57,7 @@ class GalleryServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

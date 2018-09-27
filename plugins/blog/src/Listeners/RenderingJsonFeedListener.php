@@ -39,7 +39,7 @@ class RenderingJsonFeedListener
      * Handle the event.
      *
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handle()
     {

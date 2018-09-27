@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      * The event listener mappings for the application.
      *
      * @var array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected $listen = [
         RenderingSiteMapEvent::class => [

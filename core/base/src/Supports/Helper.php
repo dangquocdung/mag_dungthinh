@@ -13,7 +13,7 @@ class Helper
     /**
      * Load module's helpers
      * @param $directory
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 2.0
      */
     public static function autoload($directory)
@@ -28,7 +28,7 @@ class Helper
      * @param Eloquent $object
      * @param string $session_name
      * @return bool
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function handleViewCount(Eloquent $object, $session_name)
     {
@@ -54,7 +54,7 @@ class Helper
      * @param string $function
      * @param string $class
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function formatLog($input, $line = '', $function = '', $class = '')
     {
@@ -70,7 +70,7 @@ class Helper
 
     /**
      * @param $plugin
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function removePluginAssets($plugin)
     {

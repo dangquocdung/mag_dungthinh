@@ -23,7 +23,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
      * FileCacheDecorator constructor.
      * @param MediaFileInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(MediaFileInterface $repository, CacheInterface $cache)
     {
@@ -33,7 +33,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getSpaceUsed()
     {
@@ -42,7 +42,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getSpaceLeft()
     {
@@ -51,7 +51,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getQuota()
     {
@@ -60,7 +60,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getPercentageUsed()
     {
@@ -71,7 +71,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
      * @param $name
      * @param $folder
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createName($name, $folder)
     {
@@ -83,7 +83,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
      * @param $extension
      * @param $folder
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createSlug($name, $extension, $folder)
     {
@@ -104,7 +104,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function emptyTrash()
     {

@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
 {
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @param Factory $view
      */
     public function boot(Factory $view)

@@ -20,7 +20,7 @@ class Gallery
 
     /**
      * Gallery constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(GalleryMetaInterface $galleryMetaRepository)
     {
@@ -38,7 +38,7 @@ class Gallery
 
     /**
      * @param $module
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function registerModule($screen)
     {
@@ -47,7 +47,7 @@ class Gallery
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getScreens()
     {
@@ -102,7 +102,7 @@ class Gallery
 
     /**
      * @return $this
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function registerAssets()
     {

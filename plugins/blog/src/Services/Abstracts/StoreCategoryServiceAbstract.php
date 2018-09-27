@@ -16,7 +16,7 @@ abstract class StoreCategoryServiceAbstract
     /**
      * StoreCategoryServiceAbstract constructor.
      * @param CategoryInterface $categoryRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(CategoryInterface $categoryRepository)
     {
@@ -27,7 +27,7 @@ abstract class StoreCategoryServiceAbstract
      * @param Request $request
      * @param Post $post
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     abstract public function execute(Request $request, Post $post);
 }

@@ -6,7 +6,7 @@ if (!function_exists('add_filter')) {
      * @param $callback
      * @param int $priority
      * @param int $arguments
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function add_filter($hook, $callback, $priority = 20, $arguments = 1)
     {
@@ -17,7 +17,7 @@ if (!function_exists('add_filter')) {
 if (!function_exists('remove_filter')) {
     /**
      * @param $hook
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function remove_filter($hook)
     {
@@ -31,7 +31,7 @@ if (!function_exists('add_action')) {
      * @param $callback
      * @param int $priority
      * @param int $arguments
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function add_action($hook, $callback, $priority = 20, $arguments = 1)
     {
@@ -42,7 +42,7 @@ if (!function_exists('add_action')) {
 if (!function_exists('apply_filters')) {
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function apply_filters()
     {
@@ -53,7 +53,7 @@ if (!function_exists('apply_filters')) {
 
 if (!function_exists('do_action')) {
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function do_action()
     {
@@ -67,7 +67,7 @@ if (!function_exists('get_hooks')) {
      * @param null $name
      * @param bool $isFilter
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function get_hooks($name = null, $isFilter = true)
     {

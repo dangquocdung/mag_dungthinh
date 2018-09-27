@@ -28,12 +28,12 @@ class AdsWidget extends AbstractWidget
 
     /**
      * Widget constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {
         parent::__construct([
-            'name' => 'Ads - DungThinh Theme',
+            'name' => 'Ads - LaraMag Theme',
             'description' => __('Widget to show image ads on sidebar.'),
             'image_url' => null,
             'image_link' => null,

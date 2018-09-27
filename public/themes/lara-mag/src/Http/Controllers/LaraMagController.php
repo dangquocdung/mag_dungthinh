@@ -1,14 +1,14 @@
 <?php
 
-namespace Theme\DungThinh\Http\Controllers;
+namespace Theme\LaraMag\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
-class DungThinhController extends Controller
+class LaraMagController extends Controller
 {
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getTest()
     {

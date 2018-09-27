@@ -14,7 +14,7 @@ use RvMedia;
 /**
  * Class FolderController
  * @package Botble\Media\Http\Controllers
- * @author QuocDung Dang
+ * @author Sang Nguyen
  * @since 19/08/2015 07:55 AM
  */
 class MediaFolderController extends Controller
@@ -33,7 +33,7 @@ class MediaFolderController extends Controller
      * FolderController constructor.
      * @param MediaFolderInterface $folderRepository
      * @param MediaFileInterface $fileRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(MediaFolderInterface $folderRepository, MediaFileInterface $fileRepository)
     {
@@ -44,7 +44,7 @@ class MediaFolderController extends Controller
     /**
      * @param MediaFolderRequest $request
      * @return JsonResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postCreate(MediaFolderRequest $request)
     {

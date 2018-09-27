@@ -2,8 +2,8 @@
     "name": "Analytics",
     "namespace": "Botble\\Analytics\\",
     "provider": "Botble\\Analytics\\Providers\\AnalyticsServiceProvider",
-    "author": "QuocDung Dang",
-    "url": "http://dungthinh.com",
+    "author": "Sang Nguyen",
+    "url": "http://sangnguyen.info",
     "version": "2.6",
     "description": "Tracking data from Google Analytics"
 }

@@ -22,7 +22,7 @@ class DashboardWidgetSettingCacheDecorator extends CacheAbstractDecorator implem
      * WidgetCacheDecorator constructor.
      * @param DashboardWidgetSettingInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(DashboardWidgetSettingInterface $repository, CacheInterface $cache)
     {
@@ -32,7 +32,7 @@ class DashboardWidgetSettingCacheDecorator extends CacheAbstractDecorator implem
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 2.1
      */
     public function getListWidget()

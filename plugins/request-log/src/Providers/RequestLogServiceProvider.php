@@ -16,7 +16,7 @@ use Botble\RequestLog\Models\RequestLog as RequestLogModel;
 /**
  * Class RequestLogServiceProvider
  * @package Botble\RequestLog
- * @author QuocDung Dang
+ * @author Sang Nguyen
  * @since 02/07/2016 09:50 AM
  */
 class RequestLogServiceProvider extends ServiceProvider
@@ -29,7 +29,7 @@ class RequestLogServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function register()
     {
@@ -48,7 +48,7 @@ class RequestLogServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

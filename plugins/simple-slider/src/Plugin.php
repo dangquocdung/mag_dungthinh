@@ -9,7 +9,7 @@ use Botble\Base\Interfaces\PluginInterface;
 class Plugin implements PluginInterface
 {
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function activate()
     {
@@ -20,7 +20,7 @@ class Plugin implements PluginInterface
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function deactivate()
     {
@@ -28,7 +28,7 @@ class Plugin implements PluginInterface
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function remove()
     {

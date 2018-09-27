@@ -8,7 +8,7 @@ class HookServiceProvider extends ServiceProvider
 {
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {
@@ -20,7 +20,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param string $alert
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function registerAdminAlert($alert)

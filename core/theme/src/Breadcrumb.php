@@ -58,7 +58,7 @@ class Breadcrumb
      * Render breadcrumbs.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function render()
     {

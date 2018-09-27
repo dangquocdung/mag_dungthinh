@@ -65,7 +65,7 @@ class Category extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function posts()
     {
@@ -74,7 +74,7 @@ class Category extends Eloquent
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function parent()
     {
@@ -83,7 +83,7 @@ class Category extends Eloquent
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function children()
     {

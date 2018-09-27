@@ -28,7 +28,7 @@ class PostFormat
     /**
      * @param $formats
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 16-09-2016
      */
     public static function registerPostFormat(array $formats = [])
@@ -41,7 +41,7 @@ class PostFormat
     /**
      * @param bool $convert_to_list
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 16-09-2016
      */
     public static function getPostFormats($convert_to_list = false)

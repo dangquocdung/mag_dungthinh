@@ -11,7 +11,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {
@@ -23,7 +23,7 @@ class HookServiceProvider extends ServiceProvider
      * @param $tabs
      * @param $screen
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 2.0
      * @throws \Throwable
      */
@@ -43,7 +43,7 @@ class HookServiceProvider extends ServiceProvider
      * @param $screen
      * @param $data
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 2.0
      * @throws \Throwable
      */

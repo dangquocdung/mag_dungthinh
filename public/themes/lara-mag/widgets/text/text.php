@@ -28,12 +28,12 @@ class TextWidget extends AbstractWidget
 
     /**
      * Widget constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {
         parent::__construct([
-            'name' => 'Text - DungThinh Theme',
+            'name' => 'Text - LaraMag Theme',
             'description' => __('Arbitrary text or HTML.'),
             'content' => null,
         ]);

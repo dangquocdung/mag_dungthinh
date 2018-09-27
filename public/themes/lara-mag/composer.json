@@ -1,7 +1,7 @@
 {
-  "name": "botble/dungthinh",
+  "name": "botble/lara-mag",
   "type": "Botble theme",
-  "description": "DungThinh - Theme for magazine site",
+  "description": "LaraMag - Theme for magazine site",
   "homepage": "http://botble.com",
   "authors": [
     {
@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Theme\\DungThinh\\": "src/"
+      "Theme\\LaraMag\\": "src/"
     }
   }
 }

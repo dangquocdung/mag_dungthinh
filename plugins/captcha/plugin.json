@@ -2,8 +2,8 @@
   "name": "Captcha",
   "namespace": "Botble\\Captcha\\",
   "provider": "Botble\\Captcha\\Providers\\CaptchaServiceProvider",
-  "author": "QuocDung Dang",
-  "url": "http://dungthinh.com",
+  "author": "Sang Nguyen",
+  "url": "http://sangnguyen.info",
   "version": "2.6",
   "description": "Captcha for higher security"
 }

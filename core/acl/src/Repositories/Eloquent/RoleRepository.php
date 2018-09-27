@@ -11,7 +11,7 @@ class RoleRepository extends RepositoriesAbstract implements RoleInterface
      * @param $name
      * @param $id
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createSlug($name, $id)
     {

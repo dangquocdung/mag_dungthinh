@@ -24,7 +24,7 @@ class AnalyticsServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      * @author Freek Van der Herten <freek@spatie.be>
-     * @modified QuocDung Dang
+     * @modified Sang Nguyen
      */
     public function register()
     {
@@ -51,7 +51,7 @@ class AnalyticsServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

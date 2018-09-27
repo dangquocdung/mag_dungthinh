@@ -22,7 +22,7 @@ class DashboardWidgetCacheDecorator extends CacheAbstractDecorator implements Da
      * WidgetCacheDecorator constructor.
      * @param DashboardWidgetInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(DashboardWidgetInterface $repository, CacheInterface $cache)
     {

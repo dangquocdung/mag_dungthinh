@@ -13,7 +13,7 @@ class BeforeEditContentListener
      *
      * @param BeforeEditContentEvent $event
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handle(BeforeEditContentEvent $event)
     {

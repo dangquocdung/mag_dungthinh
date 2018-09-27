@@ -17,7 +17,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class PageServiceProvider
  * @package Botble\Page
- * @author QuocDung Dang
+ * @author Sang Nguyen
  * @since 02/07/2016 09:50 AM
  */
 class PageServiceProvider extends ServiceProvider
@@ -30,7 +30,7 @@ class PageServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function register()
     {
@@ -49,7 +49,7 @@ class PageServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

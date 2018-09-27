@@ -35,7 +35,7 @@ class WidgetCreateCommand extends Command
      * Create a new command instance.
      *
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @author @author QuocDung Dang
+     * @author @author Sang Nguyen
      */
     public function __construct(File $files)
     {
@@ -48,7 +48,7 @@ class WidgetCreateCommand extends Command
      * Execute the console command.
      *
      * @return boolean
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handle()
     {
@@ -69,7 +69,7 @@ class WidgetCreateCommand extends Command
 
     /**
      * Generate the module in Modules directory.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     private function publishStubs()
     {
@@ -88,7 +88,7 @@ class WidgetCreateCommand extends Command
      * @param string $from
      * @param string $to
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function publishDirectory($from, $to)
     {
@@ -107,7 +107,7 @@ class WidgetCreateCommand extends Command
     /**
      * Search and replace all occurrences of ‘Module’
      * in all files with the name of the new module.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function searchAndReplaceInFiles()
     {
@@ -129,7 +129,7 @@ class WidgetCreateCommand extends Command
      * Rename models and repositories.
      * @param $location
      * @return boolean
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function renameFiles($location)
     {
@@ -152,7 +152,7 @@ class WidgetCreateCommand extends Command
      * Rename file in path.
      * @param $path
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function transformFilename($path)
     {
@@ -168,7 +168,7 @@ class WidgetCreateCommand extends Command
      * Get the destination view path.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getPath()
     {
@@ -179,7 +179,7 @@ class WidgetCreateCommand extends Command
      * Get the theme name.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getWidget()
     {
@@ -190,7 +190,7 @@ class WidgetCreateCommand extends Command
      * Get the console command arguments.
      *
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getArguments()
     {

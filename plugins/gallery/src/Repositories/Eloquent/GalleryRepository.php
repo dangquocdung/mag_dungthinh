@@ -17,7 +17,7 @@ class GalleryRepository extends RepositoriesAbstract implements GalleryInterface
      * Get all galleries.c
      *
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAll()
     {
@@ -28,7 +28,7 @@ class GalleryRepository extends RepositoriesAbstract implements GalleryInterface
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap()
     {
@@ -41,7 +41,7 @@ class GalleryRepository extends RepositoriesAbstract implements GalleryInterface
     /**
      * @param $limit
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFeaturedGalleries($limit)
     {

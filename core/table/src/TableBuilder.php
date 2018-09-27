@@ -24,7 +24,7 @@ class TableBuilder
     /**
      * @param string $tableClass
      * @return \Botble\Base\Tables\TableAbstract
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function create($tableClass)
     {

@@ -5,7 +5,7 @@ use PragmaRX\Countries\Package\Countries;
 if (!function_exists('get_list_countries')) {
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function get_list_countries()
     {
@@ -17,7 +17,7 @@ if (!function_exists('get_country_name_by_code')) {
     /**
      * @param $code
      * @return null
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function get_country_name_by_code($code)
     {

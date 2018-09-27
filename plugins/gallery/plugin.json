@@ -2,8 +2,8 @@
     "name": "Gallery",
     "namespace": "Botble\\Gallery\\",
     "provider": "Botble\\Gallery\\Providers\\GalleryServiceProvider",
-    "author": "QuocDung Dang",
-    "url": "http://dungthinh.com",
+    "author": "Sang Nguyen",
+    "url": "http://sangnguyen.info",
     "version": "2.6",
     "description": "Gallery for posts, pages..."
 }

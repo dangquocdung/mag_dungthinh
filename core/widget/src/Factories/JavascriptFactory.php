@@ -22,7 +22,7 @@ class JavascriptFactory
 
     /**
      * @param $widgetFactory
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(AbstractWidgetFactory $widgetFactory)
     {
@@ -33,7 +33,7 @@ class JavascriptFactory
      * Construct javascript code to load the widget.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getLoader()
     {
@@ -49,7 +49,7 @@ class JavascriptFactory
      * @param float|int $timeout
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getReloader($timeout)
     {
@@ -67,7 +67,7 @@ class JavascriptFactory
      * Get the current widget container id.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getContainerId()
     {
@@ -78,7 +78,7 @@ class JavascriptFactory
      * Determine what to use - jquery or native js.
      *
      * @return bool
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function useJquery()
     {
@@ -89,7 +89,7 @@ class JavascriptFactory
      * Construct ajax call for loaders.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function constructAjaxCall()
     {
@@ -111,7 +111,7 @@ class JavascriptFactory
      *
      * @param string $url
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function constructJqueryAjaxCall($url)
     {
@@ -131,7 +131,7 @@ class JavascriptFactory
      *
      * @param string $url
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function constructNativeJsAjaxCall($url)
     {

@@ -41,7 +41,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * RepositoriesAbstract constructor.
      * @param Model|Eloquent $model
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(Model $model)
     {
@@ -51,7 +51,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
 
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getScreen() : string
     {
@@ -62,7 +62,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param $data
      * @param $screen
      * @return Builder
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function applyBeforeExecuteQuery($data, $screen)
     {
@@ -80,7 +80,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * Get empty model.
      *
      * @return object
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getModel()
     {
@@ -91,7 +91,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * Get table name.
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getTable()
     {
@@ -182,7 +182,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $select
      * @param array $with
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFirstBy(array $condition = [], array $select = ['*'], array $with = [])
     {
@@ -204,7 +204,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      *
      * @param array $with
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function make(array $with = [])
     {
@@ -220,7 +220,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param $id
      * @param array $with
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function findById($id, array $with = [])
     {
@@ -235,7 +235,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param $id
      * @param array $with
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function findOrFail($id, array $with = [])
     {
@@ -251,7 +251,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      *
      * @param array $with Eager load related models
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function all(array $with = [])
     {
@@ -266,7 +266,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param string $column
      * @param string $key
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function pluck($column, $key = null)
     {
@@ -288,7 +288,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $condition
      * @param array $with
      * @param array $select
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @return Collection
      */
     public function allBy(array $condition, array $with = [], array $select = ['*'])
@@ -304,7 +304,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $data
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function create(array $data)
     {
@@ -319,7 +319,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param $data
      * @param array $condition
      * @return false|Model
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createOrUpdate($data, $condition = [])
     {
@@ -358,7 +358,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      *
      * @param Model $model
      * @return bool
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Exception
      */
     public function delete(Model $model)
@@ -370,7 +370,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $data
      * @param array $with
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function firstOrCreate(array $data, array $with = [])
     {
@@ -387,7 +387,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $condition
      * @param array $data
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function update(array $condition, array $data)
     {
@@ -400,7 +400,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $select
      * @param array $condition
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function select(array $select = ['*'], array $condition = [])
     {
@@ -411,7 +411,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $condition
      * @return bool
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function deleteBy(array $condition = [])
     {
@@ -432,7 +432,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $condition
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function count(array $condition = [])
     {
@@ -450,7 +450,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $value
      * @param array $args
      * @return \Illuminate\Database\Eloquent\Collection|LengthAwarePaginator|mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getByWhereIn($column, array $value = [], array $args = [])
     {
@@ -593,7 +593,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $condition
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function restoreBy(array $condition = [])
     {
@@ -609,7 +609,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $condition
      * @param array $select
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFirstByWithTrash(array $condition = [], array $select = [])
     {
@@ -625,7 +625,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $data
      * @return bool
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function insert(array $data)
     {

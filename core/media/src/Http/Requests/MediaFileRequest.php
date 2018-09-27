@@ -11,7 +11,7 @@ class MediaFileRequest extends Request
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function rules()
     {
@@ -32,7 +32,7 @@ class MediaFileRequest extends Request
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function attributes()
     {

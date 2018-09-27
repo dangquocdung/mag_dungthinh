@@ -9,21 +9,21 @@ interface TagInterface extends RepositoryInterface
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap();
 
     /**
      * @param $limit
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getPopularTags($limit);
 
     /**
      * @param bool $active
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAllTags($active = true);
 }

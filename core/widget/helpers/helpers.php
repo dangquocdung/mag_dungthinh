@@ -5,7 +5,7 @@ use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 if (!function_exists('register_widget')) {
     /**
      * @param $widget_id
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function register_widget($widget_id)
     {
@@ -16,7 +16,7 @@ if (!function_exists('register_widget')) {
 if (!function_exists('register_sidebar')) {
     /**
      * @param $args
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function register_sidebar($args)
     {
@@ -27,7 +27,7 @@ if (!function_exists('register_sidebar')) {
 if (!function_exists('remove_sidebar')) {
     /**
      * @param $sidebar_id
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function remove_sidebar($sidebar_id)
     {
@@ -38,7 +38,7 @@ if (!function_exists('remove_sidebar')) {
 if (!function_exists('dynamic_sidebar')) {
     /**
      * @param $sidebar_id
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     function dynamic_sidebar($sidebar_id)

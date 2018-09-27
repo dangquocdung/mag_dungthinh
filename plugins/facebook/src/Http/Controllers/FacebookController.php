@@ -13,7 +13,7 @@ class FacebookController extends BaseController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getSettings()
     {
@@ -35,7 +35,7 @@ class FacebookController extends BaseController
      * @param UpdateSettingsRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postSettings(UpdateSettingsRequest $request, BaseHttpResponse $response)
     {
@@ -58,7 +58,7 @@ class FacebookController extends BaseController
     /**
      * @param LaravelFacebookSdk $facebook
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAccessToken(LaravelFacebookSdk $facebook, BaseHttpResponse $response)
     {
@@ -69,7 +69,7 @@ class FacebookController extends BaseController
      * @param LaravelFacebookSdk $facebook
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getHandleCallback(LaravelFacebookSdk $facebook, BaseHttpResponse $response)
     {
@@ -148,7 +148,7 @@ class FacebookController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getRemoveAccessToken(BaseHttpResponse $response)
     {

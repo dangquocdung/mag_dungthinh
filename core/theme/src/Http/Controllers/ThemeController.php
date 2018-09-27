@@ -18,7 +18,7 @@ class ThemeController extends BaseController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getList()
     {
@@ -33,7 +33,7 @@ class ThemeController extends BaseController
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getOptions()
     {
@@ -59,7 +59,7 @@ class ThemeController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postUpdate(Request $request, BaseHttpResponse $response)
     {
@@ -78,7 +78,7 @@ class ThemeController extends BaseController
      * @param $theme
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getActiveTheme($theme, BaseHttpResponse $response)
     {
@@ -93,7 +93,7 @@ class ThemeController extends BaseController
     /**
      * @param FormBuilder $formBuilder
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getCustomCss(FormBuilder $formBuilder)
     {
@@ -122,7 +122,7 @@ class ThemeController extends BaseController
      * @param CustomCssRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postCustomCss(CustomCssRequest $request, BaseHttpResponse $response)
     {

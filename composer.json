@@ -13,7 +13,7 @@
     },
     "authors": [
         {
-            "name": "QuocDung Dang",
+            "name": "Sang Nguyen",
             "email": "sangnguyenplus@gmail.com"
         }
     ],
@@ -25,7 +25,6 @@
         "davejamesmiller/laravel-breadcrumbs": "~5.0",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~4.0",
-        "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "~2.4",
         "jeremeamia/SuperClosure": "^2.4",
         "kris/laravel-form-builder": "^1.14",

@@ -29,7 +29,7 @@ class RequestLog extends Eloquent
 
     /**
      * @param $value
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setReferrerAttribute($value)
     {
@@ -39,7 +39,7 @@ class RequestLog extends Eloquent
     /**
      * @param $value
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getReferrerAttribute($value)
     {
@@ -48,7 +48,7 @@ class RequestLog extends Eloquent
 
     /**
      * @param $value
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setUserIdAttribute($value)
     {
@@ -58,7 +58,7 @@ class RequestLog extends Eloquent
     /**
      * @param $value
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getUserIdAttribute($value)
     {

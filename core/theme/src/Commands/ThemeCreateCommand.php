@@ -92,7 +92,7 @@ class ThemeCreateCommand extends Command
 
     /**
      * Generate the module in Modules directory.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     private function publishStubs()
     {
@@ -113,7 +113,7 @@ class ThemeCreateCommand extends Command
      * @param string $from
      * @param string $to
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function publishDirectory($from, $to)
     {
@@ -132,7 +132,7 @@ class ThemeCreateCommand extends Command
     /**
      * Search and replace all occurrences of ‘Module’
      * in all files with the name of the new module.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function searchAndReplaceInFiles()
     {
@@ -154,7 +154,7 @@ class ThemeCreateCommand extends Command
      * Rename models and repositories.
      * @param $location
      * @return boolean
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function renameFiles($location)
     {
@@ -177,7 +177,7 @@ class ThemeCreateCommand extends Command
      * Rename file in path.
      * @param $path
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function transformFilename($path)
     {

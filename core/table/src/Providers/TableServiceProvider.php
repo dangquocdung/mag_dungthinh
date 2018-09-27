@@ -30,7 +30,7 @@ class TableServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

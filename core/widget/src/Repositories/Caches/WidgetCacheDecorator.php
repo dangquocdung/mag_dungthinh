@@ -22,7 +22,7 @@ class WidgetCacheDecorator extends CacheAbstractDecorator implements WidgetInter
      * WidgetCacheDecorator constructor.
      * @param WidgetInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(WidgetInterface $repository, CacheInterface $cache)
     {
@@ -34,7 +34,7 @@ class WidgetCacheDecorator extends CacheAbstractDecorator implements WidgetInter
      * Get all theme widgets
      * @param string $theme
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getByTheme($theme)
     {

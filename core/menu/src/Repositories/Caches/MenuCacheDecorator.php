@@ -22,7 +22,7 @@ class MenuCacheDecorator extends CacheAbstractDecorator implements MenuInterface
      * MenuCacheDecorator constructor.
      * @param MenuInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(MenuInterface $repository, CacheInterface $cache)
     {
@@ -35,7 +35,7 @@ class MenuCacheDecorator extends CacheAbstractDecorator implements MenuInterface
      * @param $active
      * @param $selects
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function findBySlug($slug, $active, $selects = [])
     {
@@ -45,7 +45,7 @@ class MenuCacheDecorator extends CacheAbstractDecorator implements MenuInterface
     /**
      * @param $name
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createSlug($name)
     {

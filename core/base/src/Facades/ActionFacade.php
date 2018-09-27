@@ -14,7 +14,7 @@ class ActionFacade extends Facade
 
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 2.1
      */
     protected static function getFacadeAccessor()

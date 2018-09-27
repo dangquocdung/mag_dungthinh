@@ -22,7 +22,7 @@ class RoleUserCacheDecorator extends CacheAbstractDecorator implements RoleUserI
      * UserCacheDecorator constructor.
      * @param RoleUserInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(RoleUserInterface $repository, CacheInterface $cache)
     {

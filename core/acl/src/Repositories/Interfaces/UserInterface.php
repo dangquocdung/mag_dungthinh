@@ -9,7 +9,7 @@ interface UserInterface extends RepositoryInterface
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap();
 
@@ -18,7 +18,7 @@ interface UserInterface extends RepositoryInterface
      *
      * @param $email
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getUniqueUsernameFromEmail($email);
 }

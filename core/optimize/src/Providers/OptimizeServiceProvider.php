@@ -21,14 +21,14 @@ class OptimizeServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function register()
     {
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

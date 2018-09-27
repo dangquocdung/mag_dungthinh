@@ -16,7 +16,7 @@ class AnalyticsController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function getGeneral(BaseHttpResponse $response)
     {
@@ -68,7 +68,7 @@ class AnalyticsController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function getTopVisitPages(BaseHttpResponse $response)
@@ -91,7 +91,7 @@ class AnalyticsController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getTopBrowser(BaseHttpResponse $response)
     {
@@ -113,7 +113,7 @@ class AnalyticsController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getTopReferrer(BaseHttpResponse $response)
     {

@@ -10,7 +10,7 @@ class LanguageFacade extends Facade
 
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected static function getFacadeAccessor()
     {

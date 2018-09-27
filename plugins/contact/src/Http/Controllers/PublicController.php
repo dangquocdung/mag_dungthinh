@@ -19,7 +19,7 @@ class PublicController extends Controller
 
     /**
      * @param ContactInterface $contactRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(ContactInterface $contactRepository)
     {
@@ -31,7 +31,7 @@ class PublicController extends Controller
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @throws \Throwable
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postSendContact(ContactRequest $request, BaseHttpResponse $response)
     {

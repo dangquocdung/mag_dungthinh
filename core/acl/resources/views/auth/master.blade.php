@@ -10,7 +10,7 @@
     </div>
     <div class="copyright">
         <p>
-            {{--  {!! trans('core.base::layouts.copyright', ['year' => Carbon::now()->format('Y'), 'company' => config('core.base.general.base_name'), 'version' => get_cms_version()]) !!}  --}}
+            {!! trans('core.base::layouts.copyright', ['year' => Carbon::now()->format('Y'), 'company' => config('core.base.general.base_name'), 'version' => get_cms_version()]) !!}
         </p>
         <p>
             @foreach (Assets::getAdminLocales() as $key => $value)

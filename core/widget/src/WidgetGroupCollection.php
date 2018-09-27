@@ -17,7 +17,7 @@ class WidgetGroupCollection
      * Constructor.
      *
      * @param ApplicationWrapperContract $app
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(ApplicationWrapperContract $app)
     {
@@ -30,7 +30,7 @@ class WidgetGroupCollection
      * @param $sidebar_id
      *
      * @return WidgetGroup
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function group($sidebar_id)
     {
@@ -44,7 +44,7 @@ class WidgetGroupCollection
     /**
      * @param $args
      * @return $this|mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setGroup($args)
     {
@@ -62,7 +62,7 @@ class WidgetGroupCollection
     /**
      * @param $group_id
      * @return $this
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function removeGroup($group_id)
     {
@@ -74,7 +74,7 @@ class WidgetGroupCollection
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getGroups()
     {

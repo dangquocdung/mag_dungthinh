@@ -20,7 +20,7 @@ class UploadsManager
     protected $mime_type;
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {
@@ -35,7 +35,7 @@ class UploadsManager
      *
      * @param $folder
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function cleanFolder($folder)
     {
@@ -47,7 +47,7 @@ class UploadsManager
      *
      * @param $path
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function fileDetails($path)
     {
@@ -65,7 +65,7 @@ class UploadsManager
      *
      * @param $path
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function uploadPath($path)
     {
@@ -77,7 +77,7 @@ class UploadsManager
      *
      * @param $path
      * @return mixed|null|string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function fileMimeType($path)
     {
@@ -89,7 +89,7 @@ class UploadsManager
      *
      * @param $path
      * @return int
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function fileSize($path)
     {
@@ -101,7 +101,7 @@ class UploadsManager
      *
      * @param $path
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function fileModified($path)
     {
@@ -115,7 +115,7 @@ class UploadsManager
      *
      * @param $folder
      * @return bool|string|\Symfony\Component\Translation\TranslatorInterface
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createDirectory($folder)
     {
@@ -133,7 +133,7 @@ class UploadsManager
      *
      * @param $folder
      * @return bool|string|\Symfony\Component\Translation\TranslatorInterface
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function deleteDirectory($folder)
     {
@@ -155,7 +155,7 @@ class UploadsManager
      *
      * @param $path
      * @return bool|string|\Symfony\Component\Translation\TranslatorInterface
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function deleteFile($path)
     {
@@ -184,7 +184,7 @@ class UploadsManager
      * @param $path
      * @param $content
      * @return bool|string|\Symfony\Component\Translation\TranslatorInterface
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function saveFile($path, $content)
     {

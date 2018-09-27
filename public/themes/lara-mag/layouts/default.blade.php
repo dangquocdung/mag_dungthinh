@@ -18,14 +18,6 @@
     <meta http-equiv="content-language" content="en">
 
     {!! Theme::header() !!}
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-9602577412117870",
-        enable_page_level_ads: true
-    });
-    </script>
 </head>
 <body class="home blog">
         {!! Theme::partial('header') !!}

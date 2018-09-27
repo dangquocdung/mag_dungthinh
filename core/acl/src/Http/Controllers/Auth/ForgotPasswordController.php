@@ -39,7 +39,7 @@ class ForgotPasswordController extends BaseController
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function showLinkRequestForm()
     {

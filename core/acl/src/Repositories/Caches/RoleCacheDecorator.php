@@ -22,7 +22,7 @@ class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
      * RoleCacheDecorator constructor.
      * @param RoleInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(RoleInterface $repository, CacheInterface $cache)
     {
@@ -34,7 +34,7 @@ class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
      * @param $name
      * @param $id
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createSlug($name, $id)
     {

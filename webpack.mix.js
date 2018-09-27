@@ -165,12 +165,12 @@ mix
     .scripts('./plugins/simple-slider/resources/assets/js/simple-slider-admin.js', 'public/vendor/core/plugins/simple-slider/js/simple-slider-admin.js')
     .copy('./public/vendor/core/plugins/simple-slider/js/simple-slider-admin.js', 'plugins/simple-slider/public/js');
 
-// DungThinh Theme
+// LaraMag Theme
 mix
-    .sass('./public/themes/dungthinh/assets/sass/dungthinh.scss', 'public/themes/dungthinh/assets/css/dungthinh.css')
+    .sass('./public/themes/lara-mag/assets/sass/lara-mag.scss', 'public/themes/lara-mag/assets/css/lara-mag.css')
     .scripts(
         [
-            './public/themes/dungthinh/assets/js/jquery.min.js',
-            './public/themes/dungthinh/assets/js/custom.js',
-            './public/themes/dungthinh/assets/js/jquery.fancybox.min.js'
-        ], 'public/themes/dungthinh/assets/js/dungthinh.js');
+            './public/themes/lara-mag/assets/js/jquery.min.js',
+            './public/themes/lara-mag/assets/js/custom.js',
+            './public/themes/lara-mag/assets/js/jquery.fancybox.min.js'
+        ], 'public/themes/lara-mag/assets/js/lara-mag.js');

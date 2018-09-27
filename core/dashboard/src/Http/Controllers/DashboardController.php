@@ -49,7 +49,7 @@ class DashboardController extends BaseController
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDashboard()
     {
@@ -75,7 +75,7 @@ class DashboardController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postEditWidgetSettings(Request $request, BaseHttpResponse $response)
     {
@@ -93,7 +93,7 @@ class DashboardController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postEditWidgetSettingItem(Request $request, BaseHttpResponse $response)
     {
@@ -118,7 +118,7 @@ class DashboardController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postUpdateWidgetOrder(Request $request, BaseHttpResponse $response)
     {
@@ -140,7 +140,7 @@ class DashboardController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getHideWidget(Request $request, BaseHttpResponse $response)
     {
@@ -162,7 +162,7 @@ class DashboardController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postHideWidgets(Request $request, BaseHttpResponse $response)
     {

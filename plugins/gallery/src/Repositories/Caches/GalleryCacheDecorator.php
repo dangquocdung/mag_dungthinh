@@ -22,7 +22,7 @@ class GalleryCacheDecorator extends CacheAbstractDecorator implements GalleryInt
      * GalleryCacheDecorator constructor.
      * @param GalleryInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(GalleryInterface $repository, CacheInterface $cache)
     {
@@ -34,7 +34,7 @@ class GalleryCacheDecorator extends CacheAbstractDecorator implements GalleryInt
      * Get all galleries.
      *
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAll()
     {
@@ -43,7 +43,7 @@ class GalleryCacheDecorator extends CacheAbstractDecorator implements GalleryInt
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap()
     {
@@ -53,7 +53,7 @@ class GalleryCacheDecorator extends CacheAbstractDecorator implements GalleryInt
     /**
      * @param $limit
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFeaturedGalleries($limit)
     {

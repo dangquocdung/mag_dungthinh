@@ -30,7 +30,7 @@ class Text extends AbstractWidget
 
     /**
      * Text constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {

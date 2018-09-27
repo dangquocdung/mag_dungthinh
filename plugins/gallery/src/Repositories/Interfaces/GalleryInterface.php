@@ -11,19 +11,19 @@ interface GalleryInterface extends RepositoryInterface
      * Get all galleries.
      *
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAll();
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap();
 
     /**
      * @param $limit
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFeaturedGalleries($limit);
 }

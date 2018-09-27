@@ -10,7 +10,7 @@ class UserRepository extends RepositoriesAbstract implements UserInterface
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap()
     {
@@ -27,7 +27,7 @@ class UserRepository extends RepositoriesAbstract implements UserInterface
      *
      * @param $email
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getUniqueUsernameFromEmail($email)
     {

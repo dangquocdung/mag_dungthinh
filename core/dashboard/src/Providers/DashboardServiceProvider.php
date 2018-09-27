@@ -18,7 +18,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class DashboardServiceProvider
  * @package Botble\Dashboard
- * @author QuocDung Dang
+ * @author Sang Nguyen
  * @since 02/07/2016 09:50 AM
  */
 class DashboardServiceProvider extends ServiceProvider
@@ -31,7 +31,7 @@ class DashboardServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function register()
     {
@@ -58,7 +58,7 @@ class DashboardServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

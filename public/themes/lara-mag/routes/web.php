@@ -1,7 +1,7 @@
 <?php
 
-Route::group(['namespace' => 'Theme\DungThinh\Http\Controllers', 'middleware' => 'web'], function () {
+Route::group(['namespace' => 'Theme\LaraMag\Http\Controllers', 'middleware' => 'web'], function () {
     Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
-        Route::get('/dungthinh/test', 'DungThinhController@getTest');
+        Route::get('/lara-mag/test', 'LaraMagController@getTest');
     });
 });

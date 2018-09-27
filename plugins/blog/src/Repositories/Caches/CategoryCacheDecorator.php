@@ -23,7 +23,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
      * CategoryCacheDecorator constructor.
      * @param CategoryInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(CategoryInterface $repository, CacheInterface $cache)
     {
@@ -33,7 +33,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataSiteMap()
     {
@@ -43,7 +43,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     /**
      * @param $limit
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFeaturedCategories($limit)
     {
@@ -53,7 +53,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     /**
      * @param array $condition
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAllCategories(array $condition = [])
     {
@@ -91,7 +91,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     /**
      * @param array $condition
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAllCategoriesWithChildren(array $condition = [], array $with = [], array $select = ['*'])
     {

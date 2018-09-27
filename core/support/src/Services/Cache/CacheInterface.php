@@ -10,7 +10,7 @@ interface CacheInterface
      * @param string : cache item key
      * @param string $key
      * @return mixed PHP data result of cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function get($key);
 
@@ -22,7 +22,7 @@ interface CacheInterface
      * @param int : the number of minutes to store the item
      * @param string $key
      * @return mixed $value variable returned for convenience
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function put($key, $value, $minutes = null);
 
@@ -33,7 +33,7 @@ interface CacheInterface
      * @param string : cache item key
      * @param string $key
      * @return bool If cache item exists
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function has($key);
 
@@ -41,7 +41,7 @@ interface CacheInterface
      * Flush cache
      *
      * @return bool If cache is flushed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function flush();
 }

@@ -16,7 +16,7 @@ class Editor
 
     /**
      * Register Editor's assets
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function registerAssets()
     {
@@ -30,7 +30,7 @@ class Editor
      * @param bool $with_short_code
      * @param array $attributes
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function render($name, $value = null, $with_short_code = false, array $attributes = [])

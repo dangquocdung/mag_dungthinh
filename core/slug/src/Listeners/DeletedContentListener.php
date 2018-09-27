@@ -28,7 +28,7 @@ class DeletedContentListener
      *
      * @param DeletedContentEvent $event
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handle(DeletedContentEvent $event)
     {

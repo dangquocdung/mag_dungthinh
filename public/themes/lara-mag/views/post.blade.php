@@ -12,7 +12,7 @@
                     @php $url = str_replace('watch?v=', 'embed/', get_meta_data($post->id, 'video_link', POST_MODULE_SCREEN_NAME, true)); @endphp
                     @if (!empty($url))
                         <div class="embed-responsive embed-responsive-16by9 mb30">
-                            <iframe class="embed-responsive-item" allowfullscreen frameborder="0" height="315" width="420" src="{{ str_replace('watch?v=', 'embed/', $url) }}?rel=0"></iframe>
+                            <iframe class="embed-responsive-item" allowfullscreen frameborder="0" height="315" width="420" src="{{ str_replace('watch?v=', 'embed/', $url) }}"></iframe>
                         </div>
                         <br>
                     @endif
@@ -52,7 +52,7 @@
                     <section class="">
                         <ul>
                             @foreach (get_related_posts($post->slug, 5) as $related_item)
-                            <li class="post1-item-list" style="list-style-type: none;">
+                            <li class="post1-item-list">
                                 <a href="{{ route('public.single', $related_item->slug) }}"><i class="fa fa-caret-right" aria-hidden="true"></i>{{ $related_item->name }}</a>
                             </li>
                             @endforeach

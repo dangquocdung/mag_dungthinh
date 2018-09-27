@@ -19,7 +19,7 @@ class Manager
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getAllThemes()
     {
@@ -37,7 +37,7 @@ class Manager
     /**
      * @param $theme
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function registerTheme($theme)
     {
@@ -49,7 +49,7 @@ class Manager
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getThemes()
     {

@@ -27,7 +27,7 @@ class GalleryController extends BaseController
 
     /**
      * @param GalleryInterface $galleryRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(GalleryInterface $galleryRepository)
     {
@@ -38,7 +38,7 @@ class GalleryController extends BaseController
      * Display all galleries
      * @param GalleryTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function getList(GalleryTable $dataTable)
@@ -54,7 +54,7 @@ class GalleryController extends BaseController
     /**
      * Show create form
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getCreate(FormBuilder $formBuilder)
     {
@@ -69,7 +69,7 @@ class GalleryController extends BaseController
      * @param GalleryRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postCreate(GalleryRequest $request, BaseHttpResponse $response)
     {
@@ -95,7 +95,7 @@ class GalleryController extends BaseController
      * @param Request $request
      * @param FormBuilder $formBuilder
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getEdit($id, Request $request, FormBuilder $formBuilder)
     {
@@ -113,7 +113,7 @@ class GalleryController extends BaseController
      * @param GalleryRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postEdit($id, GalleryRequest $request, BaseHttpResponse $response)
     {
@@ -135,7 +135,7 @@ class GalleryController extends BaseController
      * @param $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
@@ -154,7 +154,7 @@ class GalleryController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postDeleteMany(Request $request, BaseHttpResponse $response)
     {

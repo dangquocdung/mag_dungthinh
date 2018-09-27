@@ -13,7 +13,7 @@ interface ApplicationWrapperContract
      * @param $minutes
      * @param Closure $callback
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function cache($key, $minutes, Closure $callback);
 
@@ -23,7 +23,7 @@ interface ApplicationWrapperContract
      * @param $method
      * @param array $params
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function call($method, $params = []);
 
@@ -33,7 +33,7 @@ interface ApplicationWrapperContract
      * @param string $key
      * @param mixed $default
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function config($key, $default = null);
 
@@ -41,7 +41,7 @@ interface ApplicationWrapperContract
      * Wrapper around app()->getNamespace().
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getNamespace();
 
@@ -51,7 +51,7 @@ interface ApplicationWrapperContract
      * @param string $abstract
      * @param array $parameters
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function make($abstract, array $parameters = []);
 }

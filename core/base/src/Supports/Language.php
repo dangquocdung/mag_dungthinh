@@ -385,7 +385,7 @@ class Language
 
     /**
      * @return array
-     * @modified QuocDung Dang
+     * @modified Sang Nguyen
      */
     public static function getListLanguages()
     {
@@ -394,7 +394,7 @@ class Language
 
     /**
      * @return array
-     * @modified QuocDung Dang
+     * @modified Sang Nguyen
      */
     public static function getListLanguageFlags()
     {

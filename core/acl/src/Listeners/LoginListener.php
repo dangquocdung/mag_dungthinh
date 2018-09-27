@@ -15,7 +15,7 @@ class LoginListener
      *
      * @param  Login $event
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Exception
      */
     public function handle(Login $event)

@@ -12,7 +12,7 @@ class InvalidPeriod extends Exception
      * @param DateTime $endDate
      * @return static
      * @author Freek Van der Herten <freek@spatie.be>
-     * @modified QuocDung Dang
+     * @modified Sang Nguyen
      */
     public static function startDateCannotBeAfterEndDate(DateTime $startDate, DateTime $endDate)
     {

@@ -2,8 +2,8 @@
     "name": "Facebook",
     "namespace": "Botble\\Facebook\\",
     "provider": "Botble\\Facebook\\Providers\\FacebookServiceProvider",
-    "author": "QuocDung Dang",
-    "url": "http://dungthinh.com",
+    "author": "Sang Nguyen",
+    "url": "http://sangnguyen.info",
     "version": "2.6",
     "description": "Facebook"
 }

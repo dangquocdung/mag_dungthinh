@@ -14,7 +14,7 @@ class AuthController extends Controller
      * @param LoginRequest $request
      * @param BaseHttpResponse $response
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function login(LoginRequest $request, BaseHttpResponse $response)
     {
@@ -37,7 +37,7 @@ class AuthController extends Controller
     /**
      * @param Request $request
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function logout(Request $request, BaseHttpResponse $response)
     {

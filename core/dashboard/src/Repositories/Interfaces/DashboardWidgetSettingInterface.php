@@ -8,7 +8,7 @@ interface DashboardWidgetSettingInterface extends RepositoryInterface
 {
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @since 2.1
      */
     public function getListWidget();

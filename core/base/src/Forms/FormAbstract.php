@@ -58,7 +58,7 @@ abstract class FormAbstract extends Form
 
     /**
      * FormAbstract constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function __construct()
@@ -71,7 +71,7 @@ abstract class FormAbstract extends Form
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getOptions(): array
     {
@@ -81,7 +81,7 @@ abstract class FormAbstract extends Form
     /**
      * @param mixed $options
      * @return $this
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setOptions(array $options): self
     {
@@ -266,7 +266,7 @@ abstract class FormAbstract extends Form
 
     /**
      * @return $this
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @return $this
      */
     public function withCustomFields(): self
@@ -306,7 +306,7 @@ abstract class FormAbstract extends Form
 
     /**
      * @return int
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function hasMainFields()
     {
@@ -345,7 +345,7 @@ abstract class FormAbstract extends Form
      * @param bool $showFields
      * @param bool $showEnd
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function renderForm(array $options = [], $showStart = true, $showFields = true, $showEnd = true): string
     {
@@ -359,7 +359,7 @@ abstract class FormAbstract extends Form
      * @return string
      * @throws \Exception
      * @throws \Proengsoft\JsValidation\Facades\FormRequestArgumentException
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function renderValidatorJs(): string
     {

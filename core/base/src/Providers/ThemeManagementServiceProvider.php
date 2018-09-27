@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class ThemeManagementServiceProvider extends ServiceProvider
 {
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

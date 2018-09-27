@@ -18,7 +18,7 @@ trait SlugTrait
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getScreen()
     {
@@ -28,7 +28,7 @@ trait SlugTrait
     /**
      * @param $value
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getSlugAttribute($value)
     {
@@ -55,7 +55,7 @@ trait SlugTrait
     /**
      * @param $value
      * @return int
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getSlugIdAttribute($value)
     {

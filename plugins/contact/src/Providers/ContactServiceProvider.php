@@ -28,7 +28,7 @@ class ContactServiceProvider extends ServiceProvider
      * Register the service provider.
      *
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function register()
     {
@@ -47,7 +47,7 @@ class ContactServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

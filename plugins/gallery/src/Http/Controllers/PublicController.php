@@ -18,7 +18,7 @@ class PublicController extends Controller
     /**
      * PublicController constructor.
      * @param GalleryInterface $galleryRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(GalleryInterface $galleryRepository)
     {
@@ -26,7 +26,7 @@ class PublicController extends Controller
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getGalleries()

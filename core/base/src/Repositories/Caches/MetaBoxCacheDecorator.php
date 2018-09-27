@@ -22,7 +22,7 @@ class MetaBoxCacheDecorator extends CacheAbstractDecorator implements MetaBoxInt
      * MetaBoxCacheDecorator constructor.
      * @param MetaBoxInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(MetaBoxInterface $repository, CacheInterface $cache)
     {

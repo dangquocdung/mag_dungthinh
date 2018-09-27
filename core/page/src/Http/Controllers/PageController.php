@@ -28,7 +28,7 @@ class PageController extends BaseController
     /**
      * PageController constructor.
      * @param PageInterface $pageRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(PageInterface $pageRepository)
     {
@@ -38,7 +38,7 @@ class PageController extends BaseController
     /**
      * @param PageTable $dataTable
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function getList(PageTable $dataTable)
@@ -50,7 +50,7 @@ class PageController extends BaseController
 
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getCreate(FormBuilder $formBuilder)
     {
@@ -63,7 +63,7 @@ class PageController extends BaseController
      * @param PageRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postCreate(PageRequest $request, BaseHttpResponse $response)
     {
@@ -82,7 +82,7 @@ class PageController extends BaseController
     /**
      * @param $id
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getEdit($id, FormBuilder $formBuilder)
     {
@@ -100,7 +100,7 @@ class PageController extends BaseController
      * @param PageRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postEdit($id, PageRequest $request, BaseHttpResponse $response)
     {
@@ -121,7 +121,7 @@ class PageController extends BaseController
      * @param $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
@@ -141,7 +141,7 @@ class PageController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postDeleteMany(Request $request, BaseHttpResponse $response)
     {

@@ -22,7 +22,7 @@ class MenuNodeCacheDecorator extends CacheAbstractDecorator implements MenuNodeI
      * MenuCacheDecorator constructor.
      * @param MenuNodeInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(MenuNodeInterface $repository, CacheInterface $cache)
     {
@@ -35,7 +35,7 @@ class MenuNodeCacheDecorator extends CacheAbstractDecorator implements MenuNodeI
      * @param $parent_id
      * @param array $selects
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getByMenuId($menu_id, $parent_id, $select = ['*'])
     {

@@ -21,7 +21,7 @@ class Note
 
     /**
      * Gallery constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(NoteInterface $noteRepository)
     {
@@ -38,7 +38,7 @@ class Note
 
     /**
      * @param $module
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function registerModule($screen)
     {
@@ -47,7 +47,7 @@ class Note
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getScreens()
     {
@@ -60,7 +60,7 @@ class Note
      * @param string $screen
      * @param \Illuminate\Http\Request $request
      * @param Eloquent| false $object
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function saveNote($screen, $request, $object)
     {
@@ -79,7 +79,7 @@ class Note
      * @param \Eloquent|false $data
      * @param string $screen
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function deleteNote($screen, $data)
     {

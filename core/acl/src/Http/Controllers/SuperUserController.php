@@ -32,7 +32,7 @@ class SuperUserController extends BaseController
     /**
      * @param SuperUserTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function getList(SuperUserTable $dataTable)
@@ -46,7 +46,7 @@ class SuperUserController extends BaseController
      * @param $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDelete($id, BaseHttpResponse $response)
     {
@@ -71,7 +71,7 @@ class SuperUserController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postDeleteMany(Request $request, BaseHttpResponse $response)
     {
@@ -96,7 +96,7 @@ class SuperUserController extends BaseController
 
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getCreate(FormBuilder $formBuilder)
     {
@@ -107,7 +107,7 @@ class SuperUserController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function postCreate(Request $request, BaseHttpResponse $response)
     {

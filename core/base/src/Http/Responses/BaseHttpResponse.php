@@ -45,7 +45,7 @@ class BaseHttpResponse implements Responsable
     /**
      * @param $error
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setError($error): self
     {
@@ -56,7 +56,7 @@ class BaseHttpResponse implements Responsable
     /**
      * @param $message
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setMessage($message): self
     {
@@ -67,7 +67,7 @@ class BaseHttpResponse implements Responsable
     /**
      * @param $data
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setData($data): self
     {
@@ -134,7 +134,7 @@ class BaseHttpResponse implements Responsable
     /**
      * @param \Illuminate\Http\Request $request
      * @return BaseHttpResponse|\Illuminate\Http\RedirectResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function toResponse($request)
     {
@@ -159,7 +159,7 @@ class BaseHttpResponse implements Responsable
     /**
      * @param $url
      * @return \Illuminate\Http\RedirectResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function responseRedirect($url)
     {

@@ -11,7 +11,7 @@ class FormServiceProvider extends ServiceProvider
     /**
      * Boot the service provider.
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {

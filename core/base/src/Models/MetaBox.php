@@ -16,7 +16,7 @@ class MetaBox extends Eloquent
 
     /**
      * @param $value
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setMetaValueAttribute($value)
     {
@@ -26,7 +26,7 @@ class MetaBox extends Eloquent
     /**
      * @param $value
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getMetaValueAttribute($value)
     {

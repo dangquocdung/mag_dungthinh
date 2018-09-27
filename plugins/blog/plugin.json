@@ -2,8 +2,8 @@
     "name": "Blog",
     "namespace": "Botble\\Blog\\",
     "provider": "Botble\\Blog\\Providers\\BlogServiceProvider",
-    "author": "QuocDung Dang",
-    "url": "http://dungthinh.com",
+    "author": "Sang Nguyen",
+    "url": "http://sangnguyen.info",
     "version": "2.6",
     "description": "Manage posts, categories, tags"
 }

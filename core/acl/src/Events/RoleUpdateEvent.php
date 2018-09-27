@@ -18,7 +18,7 @@ class RoleUpdateEvent extends Event
     /**
      * RoleUpdateEvent constructor.
      * @param Role $role
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(Role $role)
     {
@@ -29,7 +29,7 @@ class RoleUpdateEvent extends Event
      * Get the channels the event should be broadcast on.
      *
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function broadcastOn()
     {

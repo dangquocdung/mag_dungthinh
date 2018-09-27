@@ -23,7 +23,7 @@ class ContactCacheDecorator extends CacheAbstractDecorator implements ContactInt
      * ContactCacheDecorator constructor.
      * @param ContactInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(ContactInterface $repository, CacheInterface $cache)
     {
@@ -34,7 +34,7 @@ class ContactCacheDecorator extends CacheAbstractDecorator implements ContactInt
     /**
      * @param array $select
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getUnread($select = ['*'])
     {
@@ -43,7 +43,7 @@ class ContactCacheDecorator extends CacheAbstractDecorator implements ContactInt
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function countUnread()
     {

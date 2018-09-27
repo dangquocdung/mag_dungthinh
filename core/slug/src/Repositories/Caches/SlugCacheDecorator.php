@@ -22,7 +22,7 @@ class SlugCacheDecorator extends CacheAbstractDecorator implements SlugInterface
      * SlugCacheDecorator constructor.
      * @param SlugInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(SlugInterface $repository, CacheInterface $cache)
     {

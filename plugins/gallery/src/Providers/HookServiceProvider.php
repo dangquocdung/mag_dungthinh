@@ -13,7 +13,7 @@ class HookServiceProvider extends ServiceProvider
 {
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function boot()
@@ -28,7 +28,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * @param $screen
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function addGalleryBox($screen)
     {
@@ -39,7 +39,7 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function galleryMetaField()
@@ -55,7 +55,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $shortcode
      * @return null
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function render($shortcode)
     {
@@ -65,7 +65,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $slug
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handleSingleView($slug)

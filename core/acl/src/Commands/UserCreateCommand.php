@@ -30,7 +30,7 @@ class UserCreateCommand extends Command
     /**
      * Install constructor.
      * @param UserInterface $userRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(UserInterface $userRepository)
     {
@@ -42,7 +42,7 @@ class UserCreateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handle()
     {
@@ -53,7 +53,7 @@ class UserCreateCommand extends Command
      * Create a superuser.
      *
      * @return void
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function createSuperUser()
     {

@@ -13,7 +13,7 @@ class JsonFeedManager
 
     /**
      * JsonFeedManager constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {
@@ -23,7 +23,7 @@ class JsonFeedManager
     /**
      * @param array $item
      * @return $this
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function addItem($key, array $item)
     {
@@ -33,7 +33,7 @@ class JsonFeedManager
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getItems()
     {
@@ -42,7 +42,7 @@ class JsonFeedManager
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function render()
     {

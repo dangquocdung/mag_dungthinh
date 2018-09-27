@@ -22,7 +22,7 @@ class SettingCacheDecorator extends CacheAbstractDecorator implements SettingInt
      * SettingCacheDecorator constructor.
      * @param SettingInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(SettingInterface $repository, CacheInterface $cache)
     {

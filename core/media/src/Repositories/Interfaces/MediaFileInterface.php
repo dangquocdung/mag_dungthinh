@@ -8,7 +8,7 @@ interface MediaFileInterface extends RepositoryInterface
 {
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getSpaceUsed();
 
@@ -19,20 +19,20 @@ interface MediaFileInterface extends RepositoryInterface
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getQuota();
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getPercentageUsed();
 
     /**
      * @param $name
      * @param $folder
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createName($name, $folder);
 
@@ -40,7 +40,7 @@ interface MediaFileInterface extends RepositoryInterface
      * @param $name
      * @param $extension
      * @param $folder
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createSlug($name, $extension, $folder);
 
@@ -69,7 +69,7 @@ interface MediaFileInterface extends RepositoryInterface
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function emptyTrash();
 }

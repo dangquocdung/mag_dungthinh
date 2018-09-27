@@ -23,7 +23,7 @@
             <h1 class="logo fleft">
                 <a href="{{ route('public.index') }}" title="{{ setting('site_title') }}">
                 @if (!theme_option('logo'))
-                    <span>DungThinh</span>.com
+                    <span>Lara</span>Mag
                 @else
                     <img src="{{ theme_option('logo') }}" alt="{{ setting('site_title') }}" title="{{ setting('site_title') }}"/>
                 @endif

@@ -22,7 +22,7 @@ class LanguageMetaCacheDecorator extends CacheAbstractDecorator implements Langu
      * LanguageCacheDecorator constructor.
      * @param LanguageMetaInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(LanguageMetaInterface $repository, CacheInterface $cache)
     {

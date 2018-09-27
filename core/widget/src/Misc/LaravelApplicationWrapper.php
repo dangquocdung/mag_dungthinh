@@ -16,7 +16,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
 
     /**
      * Constructor.
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct()
     {
@@ -30,7 +30,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
      * @param $minutes
      * @param Closure $callback
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function cache($key, $minutes, Closure $callback)
     {
@@ -43,7 +43,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
      * @param $method
      * @param array $params
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function call($method, $params = [])
     {
@@ -56,7 +56,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
      * @param string $key
      * @param mixed $default
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function config($key, $default = null)
     {
@@ -66,7 +66,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
     /**
      *
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getNamespace()
     {
@@ -79,7 +79,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
      * @param string $abstract
      * @param array $parameters
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function make($abstract, array $parameters = [])
     {

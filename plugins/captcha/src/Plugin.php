@@ -7,21 +7,21 @@ use Botble\Base\Interfaces\PluginInterface;
 class Plugin implements PluginInterface
 {
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function activate()
     {
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function deactivate()
     {
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public static function remove()
     {

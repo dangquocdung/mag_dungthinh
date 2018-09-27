@@ -29,7 +29,7 @@ class Widget extends Eloquent
 
     /**
      * @param $value
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function setDataAttribute($value)
     {
@@ -39,7 +39,7 @@ class Widget extends Eloquent
     /**
      * @param $value
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getDataAttribute($value)
     {

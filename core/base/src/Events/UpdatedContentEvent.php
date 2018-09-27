@@ -41,7 +41,7 @@ class UpdatedContentEvent extends Event
      * Get the channels the event should be broadcast on.
      *
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function broadcastOn()
     {

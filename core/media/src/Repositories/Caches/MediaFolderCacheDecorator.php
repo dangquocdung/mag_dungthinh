@@ -22,7 +22,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
      * FolderCacheDecorator constructor.
      * @param MediaFolderInterface $repository
      * @param CacheInterface $cache
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(MediaFolderInterface $repository, CacheInterface $cache)
     {
@@ -45,7 +45,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
      * @param $name
      * @param $parent_id
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function createSlug($name, $parent_id)
     {
@@ -55,7 +55,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     /**
      * @param $name
      * @param $parent_id
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @return mixed
      */
     public function createName($name, $parent_id)
@@ -108,7 +108,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
      * @param $folder_id
      * @param string $path
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getFullPath($folder_id, $path = '')
     {
@@ -118,7 +118,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     /**
      * @param $folder_id
      * @internal param bool $force
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function restoreFolder($folder_id)
     {
@@ -127,7 +127,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function emptyTrash()
     {

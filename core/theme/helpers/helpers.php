@@ -30,7 +30,7 @@ if (!function_exists('theme')) {
 if (!function_exists('theme_option')) {
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     function theme_option($key = null, $default = null)
     {

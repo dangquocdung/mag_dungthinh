@@ -31,7 +31,7 @@ class AuthController extends BaseController
      *
      * @param $provider
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function redirectToProvider($provider)
     {
@@ -43,7 +43,7 @@ class AuthController extends BaseController
      * @param $provider
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function handleProviderCallback($provider, BaseHttpResponse $response)
     {

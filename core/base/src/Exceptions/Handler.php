@@ -27,7 +27,7 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param Exception $ex
      * @return BaseHttpResponse|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Response
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function render($request, Exception $ex)
@@ -96,7 +96,7 @@ class Handler extends ExceptionHandler
      * Determine if the exception is from the bot.
      *
      * @return boolean
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function isExceptionFromBot()
     {

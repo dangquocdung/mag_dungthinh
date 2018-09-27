@@ -14,7 +14,7 @@ class StoreTagService extends StoreTagServiceAbstract
     /**
      * @param Request $request
      * @param Post $post
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @return mixed|void
      */
     public function execute(Request $request, Post $post)

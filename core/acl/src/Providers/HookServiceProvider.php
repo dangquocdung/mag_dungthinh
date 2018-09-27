@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 class HookServiceProvider extends ServiceProvider
 {
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function boot()
     {
@@ -18,7 +18,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $widgets
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function addUserStatsWidget($widgets)

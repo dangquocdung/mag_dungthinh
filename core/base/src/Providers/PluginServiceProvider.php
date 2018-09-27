@@ -9,7 +9,7 @@ use Schema;
 class PluginServiceProvider extends ServiceProvider
 {
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function boot()

@@ -16,7 +16,7 @@ abstract class StoreTagServiceAbstract
     /**
      * StoreTagService constructor.
      * @param TagInterface $tagRepository
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function __construct(TagInterface $tagRepository)
     {
@@ -27,7 +27,7 @@ abstract class StoreTagServiceAbstract
      * @param Request $request
      * @param Post $post
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     abstract public function execute(Request $request, Post $post);
 }

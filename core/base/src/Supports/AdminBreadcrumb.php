@@ -8,7 +8,7 @@ class AdminBreadcrumb
 {
     /**
      * @return string
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Exception
      */
     public function render()

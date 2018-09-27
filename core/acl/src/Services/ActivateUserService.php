@@ -24,7 +24,7 @@ class ActivateUserService
     }
 
     /**
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @param $code
      * @param $username
      * @return bool|Exception

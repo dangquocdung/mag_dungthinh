@@ -16,7 +16,7 @@ class WidgetFactory extends AbstractWidgetFactory
     /**
      * @param $widget
      * @return $this
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function registerWidget($widget)
     {
@@ -26,7 +26,7 @@ class WidgetFactory extends AbstractWidgetFactory
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getWidgets()
     {
@@ -37,7 +37,7 @@ class WidgetFactory extends AbstractWidgetFactory
      * Run widget without magic method.
      *
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function run()
     {
@@ -70,7 +70,7 @@ class WidgetFactory extends AbstractWidgetFactory
      * Get widget reload timeout or false if it's not reloadable.
      *
      * @return bool|float|int
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getReloadTimeout()
     {
@@ -81,7 +81,7 @@ class WidgetFactory extends AbstractWidgetFactory
      * Get widget cache time or false if it's not meant to be cached.
      *
      * @return bool|float|int
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getCacheTime()
     {
@@ -92,7 +92,7 @@ class WidgetFactory extends AbstractWidgetFactory
      * Make call and get return widget content.
      *
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getContent()
     {
@@ -107,7 +107,7 @@ class WidgetFactory extends AbstractWidgetFactory
      *
      * @param $args
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     protected function getContentFromCache($args)
     {

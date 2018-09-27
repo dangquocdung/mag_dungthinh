@@ -22,7 +22,7 @@ class ApiClientTable extends TableAbstract
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function ajax()
     {
@@ -58,7 +58,7 @@ class ApiClientTable extends TableAbstract
      * Get the query object to be processed by datatables.
      *
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function query()
     {
@@ -71,7 +71,7 @@ class ApiClientTable extends TableAbstract
 
     /**
      * @return mixed
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function columns()
     {
@@ -100,7 +100,7 @@ class ApiClientTable extends TableAbstract
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function buttons()
@@ -110,7 +110,7 @@ class ApiClientTable extends TableAbstract
 
     /**
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      * @throws \Throwable
      */
     public function actions()
@@ -122,7 +122,7 @@ class ApiClientTable extends TableAbstract
      * Get columns.
      *
      * @return array
-     * @author QuocDung Dang
+     * @author Sang Nguyen
      */
     public function getColumns()
     {
