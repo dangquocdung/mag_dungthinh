@@ -25,7 +25,8 @@
                 @if (!theme_option('logo'))
                     <span>Dũng Thịnh</span>
                 @else
-                    <img src="{{ theme_option('logo') }}" alt="{{ setting('site_title') }}" title="{{ setting('site_title') }}"/>
+                    <span>Dzung Thinh</span>
+                    {{--  <img src="{{ theme_option('logo') }}" alt="{{ setting('site_title') }}" title="{{ setting('site_title') }}"/>  --}}
                 @endif
                 </a>
             </h1><!-- end .logo -->
