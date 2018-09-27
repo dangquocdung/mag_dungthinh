@@ -4,7 +4,7 @@
             <section class="header-menu-top-left fleft">
                 {!!
                     Menu::generateMenu([
-                        'slug' => 'top-header',
+                        'slug' => 'menu-tren-cung',
                         'options' => ['id' => 'menu-header-top-menu', 'class' => 'menu'],
                         'theme' => true,
                     ])
