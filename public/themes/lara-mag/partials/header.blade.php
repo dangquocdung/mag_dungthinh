@@ -50,7 +50,7 @@
                     </section><!-- end .close nav -->
                     {!!
                         Menu::generateMenu([
-                            'slug' => 'main-menu',
+                            'slug' => 'menu-chinh',
                             'options' => ['id' => 'menu-header-main-menu', 'class' => 'menu'],
                             'theme' => true,
                         ])
