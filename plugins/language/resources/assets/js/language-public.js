@@ -1,22 +1,24 @@
-function initLanguageSwitcher() {
-    jQuery('.language-wrapper .dropdown .dropdown-toggle').on('click', function (e) {
-        e.preventDefault();
-        if (jQuery(this).hasClass('active')) {
-            jQuery('.language-wrapper .dropdown .dropdown-menu').hide();
-            jQuery(this).removeClass('active');
-        } else {
-            jQuery('.language-wrapper .dropdown .dropdown-menu').show();
-            jQuery(this).addClass('active');
-        }
-    });
-    jQuery(document).on('click', function (event) {
-        if (jQuery(event.target).closest('.language-wrapper').length === 0) {
-            jQuery('.language-wrapper .dropdown .dropdown-menu').hide();
-            jQuery('.language-wrapper .dropdown .dropdown-toggle').removeClass('active');
-        }
-    });
+class LanguagePublicManagement {
+    init() {
+        $('.language-wrapper .dropdown .dropdown-toggle').on('click', (event) => {
+            event.preventDefault();
+            if ($(event.currentTarget).hasClass('active')) {
+                $('.language-wrapper .dropdown .dropdown-menu').hide();
+                $(event.currentTarget).removeClass('active');
+            } else {
+                $('.language-wrapper .dropdown .dropdown-menu').show();
+                $(event.currentTarget).addClass('active');
+            }
+        });
+        $(document).on('click', (event) => {
+            if ($(event.currentTarget).closest('.language-wrapper').length === 0) {
+                $('.language-wrapper .dropdown .dropdown-menu').hide();
+                $('.language-wrapper .dropdown .dropdown-toggle').removeClass('active');
+            }
+        });
+    }
 }
 
-$(document).ready(function () {
-   initLanguageSwitcher();
+$(document).ready(() => {
+   new LanguagePublicManagement().init();
 });

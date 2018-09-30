@@ -4,7 +4,7 @@
     </a>
     <div class="dropdown-content">
         @foreach ($bulk_changes as $key => $bulk_change)
-            <a href="#" data-key="{{ $key }}" data-class="{{ $class }}" data-save-url="{{ $url }}"
+            <a href="#" data-key="{{ $key }}" data-class-item="{{ $class }}" data-save-url="{{ $url }}"
                class="bulk-change-item">{{ $bulk_change['title'] }}</a>
         @endforeach
     </div>

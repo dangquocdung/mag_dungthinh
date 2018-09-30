@@ -6,7 +6,7 @@ return [
      | ------------------------------------------------------------------------------------------------
      */
     'secret' => env('CAPTCHA_SECRET', 'no-captcha-secret'),
-    'sitekey' => env('CAPTCHA_SITE_KEY', 'no-captcha-site-key'),
+    'site_key' => env('CAPTCHA_SITE_KEY', 'no-captcha-site-key'),
 
     /* ------------------------------------------------------------------------------------------------
      |  Localization

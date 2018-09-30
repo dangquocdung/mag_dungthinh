@@ -23,13 +23,6 @@ class OptimizeServiceProvider extends ServiceProvider
     /**
      * @author Sang Nguyen
      */
-    public function register()
-    {
-    }
-
-    /**
-     * @author Sang Nguyen
-     */
     public function boot()
     {
         $this->setIsInConsole($this->app->runningInConsole())
@@ -41,9 +34,11 @@ class OptimizeServiceProvider extends ServiceProvider
          */
         $router = $this->app['router'];
 
-        $router->pushMiddlewareToGroup('web', CollapseWhitespace::class);
         $router->pushMiddlewareToGroup('web', ElideAttributes::class);
         $router->pushMiddlewareToGroup('web', InsertDNSPrefetch::class);
+        if (!$this->app->isLocal() && !is_in_admin()) {
+            $router->pushMiddlewareToGroup('web', CollapseWhitespace::class);
+        }
         $router->pushMiddlewareToGroup('web', RemoveComments::class);
         $router->pushMiddlewareToGroup('web', InlineCss::class);
         //$router->pushMiddlewareToGroup('web', RemoveQuotes::class);

@@ -12,8 +12,5 @@
     @include('core.dashboard::partials.paginate', ['data' => $histories, 'limit' => $limit])
 </div>
 @else
-    <div class="dashboard_widget_msg">
-        <p class="smiley" aria-hidden="true"></p>
-        <p>{{ trans('core.base::tables.no_data') }}</p>
-    </div>
+    @include('core.dashboard::partials.no-data')
 @endif

@@ -14,7 +14,7 @@ interface Filesystem extends Patternable
      * Get the files instance.
      *
      * @return \Illuminate\Filesystem\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getInstance();
 
@@ -24,7 +24,7 @@ interface Filesystem extends Patternable
      * @param  string $storagePath
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPath($storagePath);
 
@@ -34,7 +34,7 @@ interface Filesystem extends Patternable
      * @param  string $datePattern
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDatePattern($datePattern);
 
@@ -44,7 +44,7 @@ interface Filesystem extends Patternable
      * @param  string $prefixPattern
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPrefixPattern($prefixPattern);
 
@@ -54,7 +54,7 @@ interface Filesystem extends Patternable
      * @param  string $extension
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setExtension($extension);
 
@@ -62,7 +62,7 @@ interface Filesystem extends Patternable
      * Get all log files.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function all();
 
@@ -70,7 +70,7 @@ interface Filesystem extends Patternable
      * Get all valid log files.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function logs();
 
@@ -80,7 +80,7 @@ interface Filesystem extends Patternable
      * @param  bool $withPaths
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates($withPaths = false);
 
@@ -92,7 +92,7 @@ interface Filesystem extends Patternable
      * @return string
      *
      * @throws \Botble\LogViewer\Exceptions\FilesystemException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function read($date);
 
@@ -104,7 +104,7 @@ interface Filesystem extends Patternable
      * @return bool
      *
      * @throws \Botble\LogViewer\Exceptions\FilesystemException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function delete($date);
 
@@ -114,7 +114,7 @@ interface Filesystem extends Patternable
      * @param  string $date
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function path($date);
 }

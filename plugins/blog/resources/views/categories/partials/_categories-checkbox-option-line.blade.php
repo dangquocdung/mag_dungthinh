@@ -1,14 +1,14 @@
-<?php
+@php
 /**
  * @var string $value
  */
 $value = isset($value) ? (array)$value : [];
-?>
+@endphp
 @if($categories)
     <ul>
         @foreach($categories as $category)
             @if($category->id != $currentId)
-                <li value="{{ $category->id or '' }}"
+                <li value="{{ $category->id ?? '' }}"
                         {{ $category->id == $value ? 'selected' : '' }}>
                     {!! Form::customCheckbox([
                         [

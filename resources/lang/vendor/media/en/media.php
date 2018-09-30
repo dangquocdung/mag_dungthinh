@@ -102,27 +102,27 @@ return [
 
         'no_item' => [
             'all_media' => [
-                'icon' => 'fa fa-cloud-upload',
+                'icon' => 'fas fa-cloud-upload-alt',
                 'title' => 'Drop files and folders here',
                 'message' => 'Or use the upload button above',
             ],
             'trash' => [
-                'icon' => 'fa fa-trash',
+                'icon' => 'fas fa-trash-alt',
                 'title' => 'There is nothing in your trash currently',
                 'message' => 'Delete files to move them to trash automatically. Delete files from trash to remove them permanently',
             ],
             'favorites' => [
-                'icon' => 'fa fa-star',
+                'icon' => 'fas fa-star',
                 'title' => 'You have not added anything to your favorites yet',
                 'message' => 'Add files to favorites to easily find them later',
             ],
             'recent' => [
-                'icon' => 'fa fa-clock-o',
+                'icon' => 'far fa-clock',
                 'title' => 'You did not opened anything yet',
                 'message' => 'All recent files that you opened will be appeared here',
             ],
             'default' => [
-                'icon' => 'fa fa-refresh',
+                'icon' => 'fas fa-sync',
                 'title' => 'No items',
                 'message' => 'This directory has no item',
             ],
@@ -162,4 +162,5 @@ return [
             ],
         ],
     ],
+    'name_invalid' => 'The folder name has invalid character(s).',
 ];

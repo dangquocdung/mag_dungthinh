@@ -10,7 +10,7 @@ interface Patternable
      * Get the log pattern.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getPattern();
 
@@ -22,7 +22,7 @@ interface Patternable
      * @param  string $extension
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPattern(
         $prefix = Filesystem::PATTERN_PREFIX,

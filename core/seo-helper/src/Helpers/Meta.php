@@ -43,7 +43,8 @@ class Meta implements MetaContract
      * @param  string $content
      * @param  string $prefix
      * @param  string $propertyName
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
     public function __construct($name, $content, $propertyName = 'name', $prefix = '')
     {
@@ -57,7 +58,7 @@ class Meta implements MetaContract
      * Get the meta name.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function key()
     {
@@ -70,7 +71,7 @@ class Meta implements MetaContract
      * @param  string $prefix
      *
      * @return \Botble\SeoHelper\Helpers\Meta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPrefix($prefix)
     {
@@ -85,7 +86,8 @@ class Meta implements MetaContract
      * @param  string $nameProperty
      *
      * @return \Botble\SeoHelper\Helpers\Meta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
     public function setNameProperty($nameProperty)
     {
@@ -101,9 +103,9 @@ class Meta implements MetaContract
      * @param  bool $prefixed
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function getName($prefixed = true)
+    protected function getName($prefixed = true)
     {
         $name = $this->name;
 
@@ -120,9 +122,9 @@ class Meta implements MetaContract
      * @param  string $name
      *
      * @return \Botble\SeoHelper\Helpers\Meta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function setName($name)
+    protected function setName($name)
     {
         $name = trim(strip_tags($name));
         $this->name = str_replace([' '], '-', $name);
@@ -134,9 +136,9 @@ class Meta implements MetaContract
      * Get the meta content.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function getContent()
+    protected function getContent()
     {
         return $this->clean($this->content);
     }
@@ -147,9 +149,9 @@ class Meta implements MetaContract
      * @param  string $content
      *
      * @return \Botble\SeoHelper\Helpers\Meta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function setContent($content)
+    protected function setContent($content)
     {
         if (is_string($content)) {
             $this->content = trim($content);
@@ -167,7 +169,7 @@ class Meta implements MetaContract
      * @param  string $prefix
      *
      * @return \Botble\SeoHelper\Helpers\Meta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function make($name, $content, $propertyName = 'name', $prefix = '')
     {
@@ -178,7 +180,7 @@ class Meta implements MetaContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -193,9 +195,9 @@ class Meta implements MetaContract
      * Render the link tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function renderLink()
+    protected function renderLink()
     {
         return '<link rel="' . $this->getName(false) . '" href="' . $this->getContent() . '">';
     }
@@ -204,9 +206,9 @@ class Meta implements MetaContract
      * Render the meta tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function renderMeta()
+    protected function renderMeta()
     {
         $output = [];
         $output[] = $this->nameProperty . '="' . $this->getName() . '"';
@@ -219,7 +221,7 @@ class Meta implements MetaContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -230,13 +232,28 @@ class Meta implements MetaContract
      * Check if meta is a link tag.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isLink()
     {
         return in_array($this->name, [
-            'alternate', 'archives', 'author', 'canonical', 'first', 'help', 'icon', 'index', 'last',
-            'license', 'next', 'nofollow', 'noreferrer', 'pingback', 'prefetch', 'prev', 'publisher'
+            'alternate',
+            'archives',
+            'author',
+            'canonical',
+            'first',
+            'help',
+            'icon',
+            'index',
+            'last',
+            'license',
+            'next',
+            'nofollow',
+            'noreferrer',
+            'pingback',
+            'prefetch',
+            'prev',
+            'publisher',
         ]);
     }
 
@@ -244,7 +261,7 @@ class Meta implements MetaContract
      * Check if meta is valid.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isValid()
     {
@@ -257,9 +274,9 @@ class Meta implements MetaContract
      * @param  string $nameProperty
      *
      * @throws InvalidArgumentException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function checkNameProperty(&$nameProperty)
+    protected function checkNameProperty(&$nameProperty)
     {
         if (!is_string($nameProperty)) {
             throw new InvalidArgumentException(
@@ -286,10 +303,10 @@ class Meta implements MetaContract
      * @param  string $value
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function clean($value)
     {
-        return htmlentities(strip_tags($value));
+        return e(strip_tags($value));
     }
 }

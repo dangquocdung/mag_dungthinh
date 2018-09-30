@@ -57,6 +57,7 @@ class InfoTable extends \Botble\Table\Abstracts\TableAbstract
 
     /**
      * @return \Illuminate\Support\Collection
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function query()
     {

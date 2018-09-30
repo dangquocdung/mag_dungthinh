@@ -1,7 +1,7 @@
 let MediaConfig = $.parseJSON(localStorage.getItem('MediaConfig')) || {};
 
 let defaultConfig = {
-    app_key: '483a0xyzytz1242c0d520426e8ba366c530c3d9dabc',
+    app_key: '483a0xyzytz1242c0d520426e8ba366c530c3d9d3xd',
     request_params: {
         view_type: 'tiles',
         filter: 'everything',
@@ -12,7 +12,7 @@ let defaultConfig = {
     },
     hide_details_pane: false,
     icons: {
-        folder: 'fa fa-folder-o',
+        folder: 'fa fa-folder',
     },
     actions_list: {
         basic: [
@@ -33,7 +33,7 @@ let defaultConfig = {
                 class: 'rv-action-copy-link',
             },
             {
-                icon: 'fa fa-pencil',
+                icon: 'far fa-edit',
                 name: 'Rename',
                 action: 'rename',
                 order: 1,
@@ -56,7 +56,7 @@ let defaultConfig = {
                 class: 'rv-action-favorite',
             },
             {
-                icon: 'fa fa-star-o',
+                icon: 'fa fa-star',
                 name: 'Remove favorite',
                 action: 'remove_favorite',
                 order: 3,

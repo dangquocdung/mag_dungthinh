@@ -58,7 +58,7 @@ class {Plugin}ServiceProvider extends ServiceProvider
                 'id' => 'cms-plugins-{plugin}',
                 'priority' => 5,
                 'parent_id' => null,
-                'name' => '{Plugin}',
+                'name' => trans('plugins.{-plugin}::{-plugin}.name'),
                 'icon' => 'fa fa-list',
                 'url' => route('{plugin}.list'),
                 'permissions' => ['{plugin}.list'],

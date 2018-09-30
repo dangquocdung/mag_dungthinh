@@ -26,10 +26,8 @@ class MenuRepository extends RepositoriesAbstract implements MenuInterface
         if ($active) {
             $data = $data->where('menus.status', '=', 1)->select($selects);
         }
+        $data = $this->applyBeforeExecuteQuery($data, $this->screen, true);
         $data = $data->first();
-        if ($active) {
-            return apply_filters(BASE_FILTER_BEFORE_GET_SINGLE, $data, $this->model, MENU_MODULE_SCREEN_NAME);
-        }
         $this->resetModel();
         return $data;
     }

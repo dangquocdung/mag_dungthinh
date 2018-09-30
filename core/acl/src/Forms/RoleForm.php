@@ -47,7 +47,7 @@ class RoleForm extends FormAbstract
                 'label' => trans('core.base::forms.is_default'),
                 'label_attr' => ['class' => 'control-label'],
                 'attr' => [
-                    'class' => 'styled',
+                    'class' => 'hrv-checkbox',
                 ],
                 'value' => 1,
             ])
@@ -61,8 +61,8 @@ class RoleForm extends FormAbstract
     }
 
     /**
-     * @param $parentId
-     * @param $allFlags
+     * @param int $parentId
+     * @param array $allFlags
      * @return mixed
      * @author Sang Nguyen
      */
@@ -84,6 +84,13 @@ class RoleForm extends FormAbstract
     protected function getAvailablePermissions(): array
     {
         $flags = [];
+
+        $configuration = config(strtolower('cms-permissions'));
+        if (!empty($configuration)) {
+            foreach ($configuration as $config) {
+                $flags[$config['flag']] = $config;
+            }
+        }
 
         foreach (scan_folder(base_path() . '/core') as $module) {
             $configuration = config(strtolower('core.' . $module . '.permissions'));
@@ -107,7 +114,7 @@ class RoleForm extends FormAbstract
     }
 
     /**
-     * @param $flags
+     * @param array $flags
      * @return array
      * @author Sang Nguyen
      */

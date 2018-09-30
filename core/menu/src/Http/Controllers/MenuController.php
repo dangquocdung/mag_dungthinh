@@ -18,6 +18,7 @@ use Botble\Menu\Repositories\Interfaces\MenuInterface;
 use Botble\Menu\Repositories\Interfaces\MenuNodeInterface;
 use Botble\Support\Services\Cache\Cache;
 use Exception;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Http\Request;
 use Menu;
 use stdClass;
@@ -44,16 +45,18 @@ class MenuController extends BaseController
      * MenuController constructor.
      * @param MenuInterface $menuRepository
      * @param MenuNodeInterface $menuNodeRepository
+     * @param CacheManager $cache
      * @author Sang Nguyen
      */
     public function __construct(
         MenuInterface $menuRepository,
-        MenuNodeInterface $menuNodeRepository
+        MenuNodeInterface $menuNodeRepository,
+        CacheManager $cache
     )
     {
         $this->menuRepository = $menuRepository;
         $this->menuNodeRepository = $menuNodeRepository;
-        $this->cache = new Cache(app('cache'), MenuRepository::class);
+        $this->cache = new Cache($cache, MenuRepository::class);
     }
 
     /**
@@ -64,9 +67,9 @@ class MenuController extends BaseController
      */
     public function getList(MenuTable $dataTable)
     {
-        page_title()->setTitle(trans('core.menu::menu.name'));
+        page_title()->setTitle(trans('core.base::layouts.menu'));
 
-        return $dataTable->renderTable(['title' => trans('core.menu::menu.name')]);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -115,9 +118,9 @@ class MenuController extends BaseController
     {
         page_title()->setTitle(trans('core.menu::menu.edit'));
 
-        Assets::addJavascript(['jquery-nestable']);
-        Assets::addStylesheets(['jquery-nestable']);
-        Assets::addAppModule(['menu']);
+        Assets::addJavascript(['jquery-nestable'])
+            ->addStylesheets(['jquery-nestable'])
+            ->addAppModule(['menu']);
 
         $oldInputs = old();
         if ($oldInputs && $id == 0) {
@@ -182,7 +185,9 @@ class MenuController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -196,7 +201,9 @@ class MenuController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -207,27 +214,5 @@ class MenuController extends BaseController
         }
 
         return $response->setMessage(trans('core.base::notices.delete_success_message'));
-    }
-
-    /**
-     * @param Request $request
-     * @return BaseHttpResponse
-     * @author Sang Nguyen
-     */
-    public function postChangeStatus(Request $request, BaseHttpResponse $response)
-    {
-        $ids = $request->input('ids');
-        if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
-        }
-
-        foreach ($ids as $id) {
-            $menu = $this->menuRepository->findById($id);
-            $menu->status = $request->input('status');
-            $this->menuRepository->createOrUpdate($menu);
-            event(new UpdatedContentEvent(MENU_MODULE_SCREEN_NAME, $request, $menu));
-        }
-
-        return $response->setData($request->input('status'))->setMessage(trans('core.base::notices.update_success_message'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Botble\Blog\Tables;
 
+use Botble\Blog\Models\Post;
 use Botble\Blog\Repositories\Interfaces\CategoryInterface;
 use Botble\Blog\Repositories\Interfaces\PostInterface;
 use Botble\Table\Abstracts\TableAbstract;
@@ -20,11 +21,6 @@ class PostTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -39,11 +35,16 @@ class PostTable extends TableAbstract
      * @param PostInterface $postRepository
      * @param CategoryInterface $categoryRepostory
      */
-    public function __construct(DataTables $table, UrlGenerator $urlGenerator, PostInterface $postRepository, CategoryInterface $categoryRepostory)
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlGenerator,
+        PostInterface $postRepository,
+        CategoryInterface $categoryRepository
+    )
     {
         $this->repository = $postRepository;
         $this->setOption('id', 'table-posts');
-        $this->categoryRepository = $categoryRepostory;
+        $this->categoryRepository = $categoryRepository;
         parent::__construct($table, $urlGenerator);
     }
 
@@ -104,8 +105,7 @@ class PostTable extends TableAbstract
                 'posts.created_at',
                 'posts.status',
                 'posts.updated_at',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, POST_MODULE_SCREEN_NAME));
     }
 
@@ -125,6 +125,7 @@ class PostTable extends TableAbstract
             'image' => [
                 'name' => 'posts.image',
                 'title' => trans('core.base::tables.image'),
+                'width' => '70px',
             ],
             'name' => [
                 'name' => 'posts.name',
@@ -133,8 +134,8 @@ class PostTable extends TableAbstract
             ],
             'updated_at' => [
                 'name' => 'posts.updated_at',
-                'title' => __('Categories'),
-                'width' => '100px',
+                'title' => trans('plugins.blog::posts.categories'),
+                'width' => '150px',
                 'class' => 'no-sort',
                 'orderable' => false,
             ],
@@ -186,7 +187,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBulkChanges(): array
     {
@@ -238,9 +239,9 @@ class PostTable extends TableAbstract
 
     /**
      * @param \Illuminate\Database\Query\Builder $query
-     * @param $key
-     * @param $operator
-     * @param $value
+     * @param string $key
+     * @param string $operator
+     * @param string $value
      * @return $this|\Illuminate\Database\Query\Builder|string|static
      */
     public function applyFilterCondition($query, $key, $operator, $value)
@@ -256,9 +257,28 @@ class PostTable extends TableAbstract
                     ->where('post_category.category_id', $operator, $value);
                 break;
             default:
+                if ($operator !== '=') {
+                    $value = (float) $value;
+                }
                 $query = $query->where($key, $operator, $value);
         }
 
         return $query;
+    }
+
+    /**
+     * @param Post $item
+     * @param string $input_key
+     * @param string $input_value
+     * @return false|\Illuminate\Database\Eloquent\Model
+     */
+    public function saveBulkChangeItem($item, $input_key, $input_value)
+    {
+        if ($input_key === 'category') {
+            $item->categories()->sync([$input_value]);
+            return $item;
+        }
+
+        return parent::saveBulkChangeItem($item, $input_key, $input_value);
     }
 }

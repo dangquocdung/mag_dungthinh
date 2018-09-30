@@ -2,16 +2,22 @@
 
 namespace Botble\AuditLog\Providers;
 
+use Assets;
 use AuditLog;
 use Auth;
+use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Botble\AuditLog\Events\AuditHandlerEvent;
 use Illuminate\Http\Request;
-use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetInterface;
-use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetSettingInterface;
 
 class HookServiceProvider extends ServiceProvider
 {
+
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * Boot the service provider.
@@ -25,17 +31,17 @@ class HookServiceProvider extends ServiceProvider
         add_action(USER_ACTION_AFTER_UPDATE_PASSWORD, [$this, 'handleUpdateProfile'], 45, 3);
 
         if (defined('BACKUP_ACTION_AFTER_BACKUP')) {
-            add_action(BACKUP_ACTION_AFTER_BACKUP, [$this, 'handleBackup'], 45, 2);
-            add_action(BACKUP_ACTION_AFTER_RESTORE, [$this, 'handleRestore'], 45, 2);
+            add_action(BACKUP_ACTION_AFTER_BACKUP, [$this, 'handleBackup'], 45, 1);
+            add_action(BACKUP_ACTION_AFTER_RESTORE, [$this, 'handleRestore'], 45, 1);
         }
 
-        add_filter(DASHBOARD_FILTER_ADMIN_LIST, [$this, 'registerDashboardWidgets'], 28, 1);
+        add_filter(DASHBOARD_FILTER_ADMIN_LIST, [$this, 'registerDashboardWidgets'], 28, 2);
     }
 
     /**
-     * @param $screen
+     * @param string $screen
      * @param Request $request
-     * @param $data
+     * @param \stdClass $data
      * @author Sang Nguyen
      */
     public function handleLogin($screen, Request $request, $data)
@@ -44,9 +50,9 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $screen
+     * @param string $screen
      * @param Request $request
-     * @param $data
+     * @param \stdClass $data
      * @author Sang Nguyen
      */
     public function handleLogout($screen, Request $request, $data)
@@ -55,9 +61,9 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $screen
+     * @param string $screen
      * @param Request $request
-     * @param $data
+     * @param \stdClass $data
      * @author Sang Nguyen
      */
     public function handleUpdateProfile($screen, Request $request, $data)
@@ -66,9 +72,9 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $screen
+     * @param string $screen
      * @param Request $request
-     * @param $data
+     * @param \stdClass $data
      * @author Sang Nguyen
      */
     public function handleUpdatePassword($screen, Request $request, $data)
@@ -77,43 +83,58 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $screen
-     * @param Request $request
+     * @param string $screen
      * @author Sang Nguyen
      */
-    public function handleBackup($screen, Request $request)
+    public function handleBackup($screen)
     {
         event(new AuditHandlerEvent($screen, 'backup', 0, '', 'info'));
     }
 
     /**
-     * @param $screen
-     * @param Request $request
+     * @param string $screen
      * @author Sang Nguyen
      */
-    public function handleRestore($screen, Request $request)
+    public function handleRestore($screen)
     {
         event(new AuditHandlerEvent($screen, 'restored', 0, '', 'info'));
     }
 
     /**
-     * @param $widgets
-     * @return string
-     * @author Sang Nguyen
+     * @param array $widgets
+     * @param Collection $widget_settings
+     * @return array
      * @throws \Throwable
+     * @author Sang Nguyen
      */
-    public function registerDashboardWidgets($widgets)
+    public function registerDashboardWidgets($widgets, $widget_settings)
     {
-        $widget = app(DashboardWidgetInterface::class)->firstOrCreate(['name' => 'widget_audit_logs'], ['id', 'name']);
-        $widget_setting = app(DashboardWidgetSettingInterface::class)->getFirstBy([
-            'widget_id' => $widget->id,
-            'user_id' => Auth::user()->getKey(),
-        ], ['status', 'order']);
+        if (!Auth::user()->hasPermission('audit-log.list')) {
+            return $widgets;
+        }
+
+        Assets::addJavascriptDirectly(['/vendor/core/plugins/audit-log/js/audit-log.js']);
+
+        $widget = $widget_settings->where('name', 'widget_audit_logs')->first();
+        $widget_setting = $widget ? $widget->settings->first() : null;
+
+        if (!$widget) {
+            $widget = $this->app->make(DashboardWidgetInterface::class)->firstOrCreate(['name' => 'widget_audit_logs']);
+        }
+
+        $widget->title = trans('plugins.audit-log::history.widget_audit_logs');
+        $widget->icon = 'fas fa-history';
+        $widget->color = '#44b6ae';
+
+        $data = [
+            'id' => $widget->id,
+            'view' => view('plugins.audit-log::widgets.base', compact('widget', 'widget_setting'))->render(),
+        ];
 
         if (empty($widget_setting) || array_key_exists($widget_setting->order, $widgets)) {
-            $widgets[] = view('plugins.audit-log::widgets.base', compact('widget', 'widget_setting'))->render();
+            $widgets[] = $data;
         } else {
-            $widgets[$widget_setting->order] = view('plugins.audit-log::widgets.base', compact('widget', 'widget_setting'))->render();
+            $widgets[$widget_setting->order] = $data;
         }
         return $widgets;
     }

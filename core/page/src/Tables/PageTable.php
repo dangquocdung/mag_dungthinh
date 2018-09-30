@@ -17,11 +17,6 @@ class PageTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -89,9 +84,7 @@ class PageTable extends TableAbstract
                 'pages.template',
                 'pages.created_at',
                 'pages.status',
-                'pages.order',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, PAGE_MODULE_SCREEN_NAME));
     }
 
@@ -125,11 +118,6 @@ class PageTable extends TableAbstract
             'status' => [
                 'name' => 'pages.status',
                 'title' => trans('core.base::tables.status'),
-                'width' => '100px',
-            ],
-            'order' => [
-                'name' => 'pages.order',
-                'title' => trans('core.base::tables.order'),
                 'width' => '100px',
             ],
         ];
@@ -199,10 +187,6 @@ class PageTable extends TableAbstract
             'pages.created_at' => [
                 'title' => trans('core.base::tables.created_at'),
                 'type' => 'date',
-            ],
-            'pages.order' => [
-                'title' => trans('core.base::tables.order'),
-                'type' => 'number',
             ],
         ];
     }

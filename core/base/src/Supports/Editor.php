@@ -20,8 +20,11 @@ class Editor
      */
     public function registerAssets()
     {
-        Assets::addJavascriptDirectly(config('core.base.general.editor.' . setting('rich_editor', config('core.base.general.editor.primary')) . '.js'));
-        Assets::addAppModule(['editor']);
+        Assets::addJavascriptDirectly(
+            config('core.base.general.editor.' .
+                setting('rich_editor', config('core.base.general.editor.primary')) . '.js')
+        )
+        ->addAppModule(['editor']);
     }
 
     /**
@@ -35,11 +38,14 @@ class Editor
      */
     public function render($name, $value = null, $with_short_code = false, array $attributes = [])
     {
-        $attributes['class'] = array_get($attributes, 'class', '') . ' form-control editor-' . setting('rich_editor', config('core.base.general.editor.primary'));
+        $attributes['class'] = array_get($attributes, 'class', '') .
+            ' form-control editor-' .
+            setting('rich_editor', config('core.base.general.editor.primary'));
         $attributes['id'] = array_has($attributes, 'id') ? $attributes['id'] : $name;
         $attributes['with-short-code'] = $with_short_code;
         $attributes['rows'] = array_get($attributes, 'rows', 10);
 
-        return view('core.base::elements.forms.editor', compact('name', 'value', 'with-short-code', 'attributes'))->render();
+        return view('core.base::elements.forms.editor', compact('name', 'value', 'with-short-code', 'attributes'))
+            ->render();
     }
 }

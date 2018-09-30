@@ -41,6 +41,7 @@ if (!function_exists('render_galleries')) {
      */
     function render_galleries($limit)
     {
+        Gallery::registerAssets();
         return view('plugins.gallery::gallery', compact('limit'));
     }
 }

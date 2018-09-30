@@ -4,8 +4,8 @@ namespace Botble\RequestLog\Listeners;
 
 use Botble\RequestLog\Events\RequestHandlerEvent;
 use Botble\RequestLog\Models\RequestLog;
-use Request;
 use Auth;
+use Illuminate\Http\Request;
 
 class RequestHandlerListener
 {
@@ -15,30 +15,41 @@ class RequestHandlerListener
     public $requestLog;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * RequestHandlerListener constructor.
      * @param RequestLog $requestLog
+     * @param Request $request
      * @author Sang Nguyen
      */
-    public function __construct(RequestLog $requestLog)
+    public function __construct(RequestLog $requestLog, Request $request)
     {
         $this->requestLog = $requestLog;
+        $this->request = $request;
     }
 
     /**
      * Handle the event.
      *
      * @param  RequestHandlerEvent $event
-     * @return void
+     * @return boolean
      * @author Sang Nguyen
      */
     public function handle(RequestHandlerEvent $event)
     {
+        if ($event->code == 404) {
+            return false;
+        }
+
         $this->requestLog = RequestLog::firstOrNew([
-            'url' => string_limit_words(Request::fullUrl(), 120),
+            'url'         => str_limit($this->request->fullUrl(), 120),
             'status_code' => $event->code,
         ]);
 
-        if ($referrer = Request::header('referrer')) {
+        if ($referrer = $this->request->header('referrer')) {
             $referrers = (array)$this->requestLog->referer ?: [];
             $referrers[] = $referrer;
             $this->requestLog->referer = $referrers;
@@ -48,7 +59,9 @@ class RequestHandlerListener
             if (!is_array($this->requestLog->user_id)) {
                 $this->requestLog->user_id = [Auth::user()->getKey()];
             } else {
-                $this->requestLog->user_id = array_unique(array_merge($this->requestLog->user_id, [Auth::user()->getKey()]));
+                $this->requestLog->user_id = array_unique(
+                    array_merge($this->requestLog->user_id, [Auth::user()->getKey()])
+                );
             }
         }
 
@@ -58,6 +71,6 @@ class RequestHandlerListener
             $this->requestLog->count += 1;
         }
 
-        $this->requestLog->save();
+        return $this->requestLog->save();
     }
 }

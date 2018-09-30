@@ -19,7 +19,7 @@ class ClearLogCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'log:clear';
+    protected $signature = 'cms:log:clear';
 
     /**
      * The console command description.
@@ -47,11 +47,8 @@ class ClearLogCommand extends Command
      */
     public function handle()
     {
-        $files = scan_folder(storage_path('logs'));
-        foreach ($files as $file) {
-            if (!in_array($file, ['.gitignore'])) {
-                $this->files->delete(storage_path('logs') . DIRECTORY_SEPARATOR . $file);
-            }
+        foreach ($this->files->allFiles(storage_path('logs')) as $file) {
+            $this->files->delete($file->getPathname());
         }
         $this->info('Clear log files successfully!');
     }

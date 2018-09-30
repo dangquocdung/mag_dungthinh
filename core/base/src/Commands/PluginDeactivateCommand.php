@@ -2,11 +2,11 @@
 
 namespace Botble\Base\Commands;
 
+use Botble\Setting\Supports\SettingStore;
 use Composer\Autoload\ClassLoader;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Composer;
 
 class PluginDeactivateCommand extends Command
 {
@@ -23,7 +23,7 @@ class PluginDeactivateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugin:deactivate {name : The plugin that you want to deactivate}';
+    protected $signature = 'cms:plugin:deactivate {name : The plugin that you want to deactivate}';
 
     /**
      * The console command description.
@@ -33,16 +33,23 @@ class PluginDeactivateCommand extends Command
     protected $description = 'Deactivate a plugin in /plugins directory';
 
     /**
+     * @var SettingStore
+     */
+    protected $settingStore;
+
+    /**
      * Create a new key generator command.
      *
      * @param \Illuminate\Filesystem\Filesystem $files
+     * @param SettingStore $settingStore
      * @author Sang Nguyen
      */
-    public function __construct(Filesystem $files)
+    public function __construct(Filesystem $files, SettingStore $settingStore)
     {
         parent::__construct();
 
         $this->files = $files;
+        $this->settingStore = $settingStore;
     }
 
     /**
@@ -59,6 +66,11 @@ class PluginDeactivateCommand extends Command
 
         $plugin = strtolower($this->argument('name'));
         $location = config('core.base.general.plugin_path') . '/' . $plugin;
+
+        if (!$this->files->isDirectory($location)) {
+            $this->error('This plugin is not exists.');
+            return false;
+        }
 
         $content = get_file_data($location . '/plugin.json');
         if (!empty($content)) {
@@ -77,18 +89,15 @@ class PluginDeactivateCommand extends Command
                 if (($key = array_search($plugin, $activated_plugins)) !== false) {
                     unset($activated_plugins[$key]);
                 }
-                setting()->set('activated_plugins', json_encode(array_values($activated_plugins)));
-                setting()->save();
-                cache()->forget(md5('cache-dashboard-menu'));
+                $this->settingStore
+                    ->set('activated_plugins', json_encode(array_values($activated_plugins)))
+                    ->save();
+
+                $this->call('cache:clear');
                 $this->line('<info>Deactivate plugin successfully!</info>');
             } else {
                 $this->line('<info>This plugin is deactivated already!</info>');
             }
-        }
-
-        if (!$this->files->isDirectory($location)) {
-            $this->error('This plugin is not exists.');
-            return false;
         }
         return true;
     }

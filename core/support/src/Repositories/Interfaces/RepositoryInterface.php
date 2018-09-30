@@ -17,10 +17,11 @@ interface RepositoryInterface
     /**
      * @param $data
      * @param $screen
+     * @param bool $is_single
      * @return Builder
      * @author Sang Nguyen
      */
-    public function applyBeforeExecuteQuery($data, $screen);
+    public function applyBeforeExecuteQuery($data, $screen, $is_single = false);
 
     /**
      * Get empty model.

@@ -45,6 +45,8 @@ class ChangePasswordService implements ProduceServiceInterface
             'password' => bcrypt($request->input('password')),
         ]);
 
+        Auth::logoutOtherDevices($request->input('password'));
+
         do_action(USER_ACTION_AFTER_UPDATE_PASSWORD, USER_MODULE_SCREEN_NAME, $request, $user);
         return $user;
     }

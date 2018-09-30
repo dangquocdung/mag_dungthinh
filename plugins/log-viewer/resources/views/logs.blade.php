@@ -41,7 +41,7 @@
                                     @endif
                                 </td>
                             @endforeach
-                            <td class="text-right">
+                            <td class="text-right" style="width: 150px;">
                                 <a href="{{ route('log-viewer::logs.show', [$date]) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-search"></i>
                                 </a>
@@ -49,7 +49,7 @@
                                     <i class="fa fa-download"></i>
                                 </a>
                                 <a href="#delete-log-modal" class="btn btn-xs btn-danger" data-log-date="{{ $date }}">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -81,7 +81,7 @@
                         <p>{!! trans('plugins.log-viewer::log-viewer.confirm_delete_msg', ['date' => null]) !!}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default pull-left" data-dismiss="modal">{{ trans('core.base::forms.cancel') }}</button>
+                        <button type="button" class="btn btn-sm btn-secondary float-left" data-dismiss="modal">{{ trans('core.base::forms.cancel') }}</button>
                         <button type="submit" class="btn btn-sm btn-danger" data-loading-text="{{ trans('plugins.log-viewer::log-viewer.loading') }}">{{ trans('plugins.log-viewer::log-viewer.delete_button') }}</button>
                     </div>
                 </div>

@@ -11,23 +11,23 @@ class ContactRequest extends Request
      *
      * @return array
      * @author Sang Nguyen
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function rules()
     {
-        if (setting('enable_captcha')) {
+        if (setting('enable_captcha') && is_plugin_active('captcha')) {
             return [
                 'name' => 'required',
                 'email' => 'required|email',
                 'content' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ];
-        } else {
-            return [
-                'name' => 'required',
-                'email' => 'required|email',
-                'content' => 'required',
-            ];
         }
+        return [
+            'name' => 'required',
+            'email' => 'required|email',
+            'content' => 'required',
+        ];
     }
 
     /**

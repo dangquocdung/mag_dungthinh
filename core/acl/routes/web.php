@@ -24,9 +24,6 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
         });
     });
 
-    Route::get('auth/{provider}', ['as' => 'auth.social', 'uses' => 'AuthController@redirectToProvider']);
-    Route::get('auth/callback/{provider}', ['as' => 'auth.social.callback', 'uses' => 'AuthController@handleProviderCallback']);
-
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'system/users'], function () {
             Route::get('/', [
@@ -55,12 +52,6 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
                 'permission' => 'users.delete',
             ]);
 
-            Route::post('/change-status', [
-                'as' => 'users.change.status',
-                'uses' => 'UserController@postChangeStatus',
-                'permission' => 'users.edit',
-            ]);
-
             Route::post('/update-profile/{id}', [
                 'as' => 'users.update-profile',
                 'uses' => 'UserController@postUpdateProfile',
@@ -84,6 +75,18 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
             Route::get('/profile/{id}', [
                 'as' => 'user.profile.view',
                 'uses' => 'UserController@getUserProfile',
+                'permission' => false,
+            ]);
+
+            Route::get('/impersonate/{id}', [
+                'as' => 'users.impersonate',
+                'uses' => 'UserController@getImpersonate',
+                'permission' => 'superuser',
+            ]);
+
+            Route::get('/leave-impersonation', [
+                'as' => 'users.leave_impersonation',
+                'uses' => 'UserController@leaveImpersonation',
                 'permission' => false,
             ]);
         });
@@ -116,41 +119,9 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
                 'uses' => 'SuperUserController@postCreate',
             ]);
         });
-
-        Route::group(['prefix' => 'api'], function () {
-            Route::get('/clients', [
-                'as' => 'api.clients',
-                'uses' => 'ApiController@getClients',
-            ]);
-            Route::get('/clients/create', [
-                'as' => 'api.clients.create',
-                'uses' => 'ApiController@getCreateClient',
-            ]);
-            Route::post('/clients/create', [
-                'as' => 'api.clients.create.post',
-                'uses' => 'ApiController@postCreateClient',
-            ]);
-            Route::get('/clients/edit/{id}', [
-                'as' => 'api.clients.edit',
-                'uses' => 'ApiController@getEditClient',
-            ]);
-            Route::post('/clients/edit/{id}', [
-                'as' => 'api.clients.edit.post',
-                'uses' => 'ApiController@postEditClient',
-            ]);
-            Route::get('/clients/delete/{id}', [
-                'as' => 'api.clients.delete',
-                'uses' => 'ApiController@getDeleteClient',
-            ]);
-            Route::delete('/clients/edit/{id}', [
-                'as' => 'api.clients.delete.post',
-                'uses' => 'ApiController@postDeleteClient',
-            ]);
-        });
     });
 
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
-
         Route::group(['prefix' => 'system/roles'], function () {
             Route::get('/', [
                 'as' => 'roles.list',

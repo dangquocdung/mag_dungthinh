@@ -30,12 +30,13 @@ class FacebookWidget extends AbstractWidget
 
     /**
      * FacebookWidget constructor.
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function __construct()
     {
         parent::__construct([
             'name' => __('Facebook Widget (Facebook Plugin)'),
-            'description' => 'Facebook fan page widget',
+            'description' => __('Facebook fan page widget'),
             'facebook_name' => null,
             'facebook_id' => null,
         ]);

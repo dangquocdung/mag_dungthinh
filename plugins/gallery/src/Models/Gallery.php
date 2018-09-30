@@ -5,11 +5,9 @@ namespace Botble\Gallery\Models;
 use Botble\ACL\Models\User;
 use Botble\Slug\Traits\SlugTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Gallery extends Eloquent
 {
-    use SoftDeletes;
     use SlugTrait;
 
     /**
@@ -20,13 +18,6 @@ class Gallery extends Eloquent
     protected $table = 'galleries';
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['deleted_at'];
-
-    /**
      * The date fields for the model.clear
      *
      * @var array
@@ -34,7 +25,6 @@ class Gallery extends Eloquent
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**

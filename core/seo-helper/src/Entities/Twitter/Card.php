@@ -31,7 +31,7 @@ class Card implements TwitterCardContract
 
     /**
      * Make the twitter card instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
@@ -44,7 +44,8 @@ class Card implements TwitterCardContract
      * @param  string $type
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidTwitterCardException
      */
     public function setType($type)
     {
@@ -64,7 +65,7 @@ class Card implements TwitterCardContract
      * @param  string $site
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSite($site)
     {
@@ -83,7 +84,7 @@ class Card implements TwitterCardContract
      * @param  string $title
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTitle($title)
     {
@@ -96,7 +97,7 @@ class Card implements TwitterCardContract
      * @param  string $description
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDescription($description)
     {
@@ -109,7 +110,7 @@ class Card implements TwitterCardContract
      * @param  string $url
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addImage($url)
     {
@@ -126,7 +127,7 @@ class Card implements TwitterCardContract
      * @param  array $meta
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMetas(array $meta)
     {
@@ -142,7 +143,7 @@ class Card implements TwitterCardContract
      * @param  string $content
      *
      * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMeta($name, $content)
     {
@@ -155,7 +156,7 @@ class Card implements TwitterCardContract
      * Get all supported card types.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function types()
     {
@@ -172,9 +173,9 @@ class Card implements TwitterCardContract
 
     /**
      * Render card images.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function loadImages()
+    protected function loadImages()
     {
         if (count($this->images) == 1) {
             $this->addMeta('image', $this->images[0]);
@@ -190,22 +191,22 @@ class Card implements TwitterCardContract
     /**
      * Reset the card.
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return Card
+     * @author ARCANEDEV
      */
     public function reset()
     {
         $this->meta->reset();
         $this->images = [];
 
-        return $this->init();
+        return $this;
     }
 
     /**
      * Render the twitter card.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -220,7 +221,7 @@ class Card implements TwitterCardContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -233,9 +234,9 @@ class Card implements TwitterCardContract
      * @param  string $type
      *
      * @throws \Botble\SeoHelper\Exceptions\InvalidTwitterCardException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function checkType(&$type)
+    protected function checkType(&$type)
     {
         if (!is_string($type)) {
             throw new InvalidTwitterCardException(
@@ -254,9 +255,9 @@ class Card implements TwitterCardContract
      * Check the card site.
      *
      * @param  string $site
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function checkSite(&$site)
+    protected function checkSite(&$site)
     {
         $site = $this->prepareUsername($site);
     }
@@ -267,9 +268,9 @@ class Card implements TwitterCardContract
      * @param  string $username
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function prepareUsername($username)
+    protected function prepareUsername($username)
     {
         if (!starts_with($username, '@')) {
             $username = '@' . $username;

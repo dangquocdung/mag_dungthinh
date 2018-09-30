@@ -6,12 +6,13 @@ use Assets;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Base\Supports\Language;
+use Botble\Language\LanguageManager;
 use Botble\Language\Repositories\Interfaces\LanguageMetaInterface;
 use Botble\Language\Http\Requests\LanguageRequest;
 use Botble\Language\Repositories\Interfaces\LanguageInterface;
+use Botble\Setting\Supports\SettingStore;
 use Exception;
 use Illuminate\Http\Request;
-use Setting;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
@@ -71,16 +72,25 @@ class LanguageController extends BaseController
                 'lang_code' => $request->input('lang_code'),
             ]);
             if ($language) {
-                return $response->setError(true)->setMessage(__('This language is added already!'));
+                return $response
+                    ->setError()
+                    ->setMessage(__('This language is added already!'));
+            }
+
+            if ($this->languageRepository->count() == 0) {
+                $request->merge(['lang_is_default' => 1]);
             }
             $language = $this->languageRepository->createOrUpdate($request->except('lang_id'));
 
             event(new CreatedContentEvent(LANGUAGE_MODULE_SCREEN_NAME, $request, $language));
 
-            return $response->setData(view('plugins.language::partials.language-item', ['item' => $language])->render())
+            return $response
+                ->setData(view('plugins.language::partials.language-item', ['item' => $language])->render())
                 ->setMessage(trans('core.base::notices.create_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -103,10 +113,13 @@ class LanguageController extends BaseController
 
             event(new UpdatedContentEvent(LANGUAGE_MODULE_SCREEN_NAME, $request, $language));
 
-            return $response->setData(view('plugins.language::partials.language-item', ['item' => $language])->render())
+            return $response
+                ->setData(view('plugins.language::partials.language-item', ['item' => $language])->render())
                 ->setMessage(trans('core.base::notices.update_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -173,18 +186,22 @@ class LanguageController extends BaseController
                 $default = $this->languageRepository->getFirstBy([
                     'lang_is_default' => 0,
                 ]);
-                $default->lang_is_default = 1;
-                $this->languageRepository->createOrUpdate($default);
-                $delete_default = $default->lang_id;
+                if ($default) {
+                    $default->lang_is_default = 1;
+                    $this->languageRepository->createOrUpdate($default);
+                    $delete_default = $default->lang_id;
+                }
             }
-
-            $this->languageMetaRepository->deleteBy(['lang_meta_code' => $language->lang_code]);
 
             event(new DeletedContentEvent(LANGUAGE_MODULE_SCREEN_NAME, $request, $language));
 
-            return $response->setData($delete_default)->setMessage(trans('core.base::notices.delete_success_message'));
+            return $response
+                ->setData($delete_default)
+                ->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage($exception->getMessage());
         }
     }
 
@@ -223,31 +240,35 @@ class LanguageController extends BaseController
     /**
      * @param Request $request
      * @param BaseHttpResponse $response
+     * @param SettingStore $settingStore
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function postEditSettings(Request $request, BaseHttpResponse $response)
+    public function postEditSettings(Request $request, BaseHttpResponse $response, SettingStore $settingStore)
     {
-        Setting::set('language_hide_default', $request->input('language_hide_default', false));
-        Setting::set('language_display', $request->input('language_display'));
-        Setting::set('language_switcher_display', $request->input('language_switcher_display'));
-        Setting::set('language_hide_languages', json_encode($request->input('language_hide_languages', [])));
-        Setting::save();
+        $settingStore
+            ->set('language_hide_default', $request->input('language_hide_default', false))
+            ->set('language_display', $request->input('language_display'))
+            ->set('language_switcher_display', $request->input('language_switcher_display'))
+            ->set('language_hide_languages', json_encode($request->input('language_hide_languages', [])))
+            ->set('language_show_default_item_if_current_version_not_existed', $request->input('language_show_default_item_if_current_version_not_existed'))
+            ->save();
         return $response->setMessage(trans('core.base::notices.update_success_message'));
     }
 
     /**
      * @param $code
+     * @param \Botble\Language\LanguageManager $language
+     * @return \Illuminate\Http\RedirectResponse
      * @author Sang Nguyen
      * @since 2.2
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function getChangeDataLanguage($code)
+    public function getChangeDataLanguage($code, LanguageManager $language)
     {
         $previousUrl = strtok(app('url')->previous(), '?');
 
         $query_string = null;
-        if ($code !== \Language::getDefaultLocaleCode()) {
+        if ($code !== $language->getDefaultLocaleCode()) {
             $query_string = '?' . http_build_query(['ref_lang' => $code]);
         }
 

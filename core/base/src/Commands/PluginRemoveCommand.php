@@ -3,10 +3,10 @@
 namespace Botble\Base\Commands;
 
 use Botble\Base\Models\Migration;
+use Botble\Base\Supports\Helper;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Composer;
 use Schema;
 
 class PluginRemoveCommand extends Command
@@ -23,7 +23,7 @@ class PluginRemoveCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugin:remove {name : The module that you want to remove}';
+    protected $signature = 'cms:plugin:remove {name : The plugin that you want to remove} {--force : Force to remove plugin without confirmation}';
 
     /**
      * The console command description.
@@ -62,8 +62,8 @@ class PluginRemoveCommand extends Command
         $location = config('core.base.general.plugin_path') . '/' . strtolower($plugin);
 
         if ($this->files->isDirectory($location)) {
-            if ($this->confirm('Are you sure you want to permanently delete? [yes|no]')) {
-                $this->call('plugin:deactivate', ['name' => strtolower($plugin)]);
+            if ($this->confirm('Are you sure you want to permanently delete? [yes|no]', $this->hasOption('force'))) {
+                $this->call('cms:plugin:deactivate', ['name' => strtolower($plugin)]);
 
                 $content = get_file_data($location . '/plugin.json');
                 if (!empty($content)) {
@@ -91,6 +91,8 @@ class PluginRemoveCommand extends Command
                 if (empty($this->files->directories(config('core.base.general.plugin_path')))) {
                     $this->files->deleteDirectory(config('core.base.general.plugin_path'));
                 }
+
+                Helper::removePluginData($plugin);
 
                 $this->call('cache:clear');
             }

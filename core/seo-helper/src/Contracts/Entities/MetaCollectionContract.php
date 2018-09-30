@@ -13,7 +13,7 @@ interface MetaCollectionContract extends RenderableContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function add($name, $content);
 
@@ -23,7 +23,7 @@ interface MetaCollectionContract extends RenderableContract
      * @param  array $meta
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMany(array $meta);
 
@@ -33,7 +33,7 @@ interface MetaCollectionContract extends RenderableContract
      * @param  array|string $names
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function remove($names);
 }

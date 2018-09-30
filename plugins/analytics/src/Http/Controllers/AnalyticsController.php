@@ -6,8 +6,8 @@ use Botble\Analytics\Exceptions\InvalidConfiguration;
 use Botble\Analytics\Period;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Carbon;
 use Analytics;
+use Carbon\Carbon;
 use Exception;
 
 class AnalyticsController extends BaseController
@@ -17,11 +17,12 @@ class AnalyticsController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
+     * @throws \Throwable
      */
     public static function getGeneral(BaseHttpResponse $response)
     {
-        $startDate = Carbon::today()->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->startOfDay();
+        $endDate = Carbon::today(config('app.timezone'))->endOfDay();
         $dimensions = 'hour';
 
         try {
@@ -32,7 +33,7 @@ class AnalyticsController extends BaseController
             $answer = Analytics::performQuery($period, 'ga:visits,ga:pageviews', ['dimensions' => 'ga:' . $dimensions]);
 
             if ($answer->rows == null) {
-                return collect([]);
+                return $response;
             }
 
             if ($dimensions === 'hour') {
@@ -59,9 +60,13 @@ class AnalyticsController extends BaseController
 
             return $response->setData(view('plugins.analytics::widgets.general.general', compact('stats', 'country_stats', 'total'))->render());
         } catch (InvalidConfiguration $ex) {
-            return $response->setError(true)->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -73,8 +78,8 @@ class AnalyticsController extends BaseController
      */
     public function getTopVisitPages(BaseHttpResponse $response)
     {
-        $startDate = Carbon::today()->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->startOfDay();
+        $endDate = Carbon::today(config('app.timezone'))->endOfDay();
 
         try {
             $period = Period::create($startDate, $endDate);
@@ -82,9 +87,13 @@ class AnalyticsController extends BaseController
 
             return $response->setData(view('plugins.analytics::widgets.page.page', compact('pages'))->render());
         } catch (InvalidConfiguration $ex) {
-            return $response->setError(true)->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -92,11 +101,12 @@ class AnalyticsController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
+     * @throws \Throwable
      */
     public function getTopBrowser(BaseHttpResponse $response)
     {
-        $startDate = Carbon::today()->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->startOfDay();
+        $endDate = Carbon::today(config('app.timezone'))->endOfDay();
 
         try {
             $period = Period::create($startDate, $endDate);
@@ -104,9 +114,13 @@ class AnalyticsController extends BaseController
 
             return $response->setData(view('plugins.analytics::widgets.browser.browser', compact('browsers'))->render());
         } catch (InvalidConfiguration $ex) {
-            return $response->setError(true)->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -114,11 +128,12 @@ class AnalyticsController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
+     * @throws \Throwable
      */
     public function getTopReferrer(BaseHttpResponse $response)
     {
-        $startDate = Carbon::today()->startOfDay();
-        $endDate = Carbon::now()->endOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->startOfDay();
+        $endDate = Carbon::today(config('app.timezone'))->endOfDay();
 
         try {
             $period = Period::create($startDate, $endDate);
@@ -126,9 +141,13 @@ class AnalyticsController extends BaseController
 
             return $response->setData(view('plugins.analytics::widgets.referrer.referrer', compact('referrers'))->render());
         } catch (InvalidConfiguration $ex) {
-            return $response->setError(true)->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.analytics::analytics.wrong_configuration', ['version' => get_cms_version()]));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 }

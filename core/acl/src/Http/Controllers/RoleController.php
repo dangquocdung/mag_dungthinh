@@ -64,13 +64,13 @@ class RoleController extends BaseController
     {
         page_title()->setTitle(trans('core.acl::permissions.role_permission'));
 
-        return $dataTable->renderTable(['title' => trans('core.acl::permissions.list_role')]);
+        return $dataTable->renderTable();
     }
 
     /**
      * Delete a role
      *
-     * @param $id
+     * @param int $id
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
@@ -94,7 +94,9 @@ class RoleController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -105,7 +107,7 @@ class RoleController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param FormBuilder $formBuilder
      * @return string
      * @author Sang Nguyen
@@ -124,7 +126,7 @@ class RoleController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param RoleCreateRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
@@ -189,7 +191,7 @@ class RoleController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -236,8 +238,8 @@ class RoleController extends BaseController
      */
     public function postAssignMember(Request $request)
     {
-        $user = $this->userRepository->findById($request->input('pk'));
-        $role = $this->roleRepository->findById($request->input('value'));
+        $user = $this->userRepository->findOrFail($request->input('pk'));
+        $role = $this->roleRepository->findOrFail($request->input('value'));
         $this->roleUserRepository->deleteBy(['user_id' => $user->id]);
 
         $this->roleUserRepository->createOrUpdate([
@@ -250,7 +252,7 @@ class RoleController extends BaseController
 
     /**
      * Return a correctly type casted permissions array
-     * @param $permissions
+     * @param array $permissions
      * @return array
      * @author Sang Nguyen
      */

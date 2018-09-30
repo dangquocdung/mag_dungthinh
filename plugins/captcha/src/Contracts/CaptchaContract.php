@@ -13,7 +13,7 @@ interface CaptchaContract
      * @param  RequestContract $request
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setRequestClient(RequestContract $request);
 
@@ -23,7 +23,7 @@ interface CaptchaContract
      * @param  AttributesContract $attributes
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setAttributes(AttributesContract $attributes);
 
@@ -34,7 +34,7 @@ interface CaptchaContract
      * @param  array $attributes
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function display($name, array $attributes = []);
 
@@ -45,7 +45,7 @@ interface CaptchaContract
      * @param  array $attributes
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function image($name, array $attributes = []);
 
@@ -56,7 +56,7 @@ interface CaptchaContract
      * @param  array $attributes
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function audio($name, array $attributes = []);
 
@@ -67,7 +67,7 @@ interface CaptchaContract
      * @param  string $clientIp
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function verify($response, $clientIp = null);
 
@@ -75,7 +75,7 @@ interface CaptchaContract
      * Get script tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function script();
 
@@ -86,7 +86,7 @@ interface CaptchaContract
      * @param  string $callbackName
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function scriptWithCallback(array $captcha, $callbackName = 'captchaRenderCallback');
 }

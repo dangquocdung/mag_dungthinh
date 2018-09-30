@@ -8,11 +8,6 @@ Route::group(['namespace' => 'Botble\Menu\Http\Controllers', 'middleware' => 'we
                 'uses' => 'MenuController@getList',
             ]);
 
-            Route::get('/show/{id}', [
-                'as' => 'menus.show',
-                'uses' => 'MenuController@getShow',
-            ]);
-
             Route::get('/create', [
                 'as' => 'menus.create',
                 'uses' => 'MenuController@getCreate',
@@ -42,12 +37,6 @@ Route::group(['namespace' => 'Botble\Menu\Http\Controllers', 'middleware' => 'we
                 'as' => 'menus.delete.many',
                 'uses' => 'MenuController@postDeleteMany',
                 'permission' => 'menus.delete',
-            ]);
-
-            Route::post('/change-status', [
-                'as' => 'menus.change.status',
-                'uses' => 'MenuController@postChangeStatus',
-                'permission' => 'menus.edit',
             ]);
         });
     });

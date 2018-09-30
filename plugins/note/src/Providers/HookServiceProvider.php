@@ -4,10 +4,14 @@ namespace Botble\Note\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Botble\Note\Repositories\Interfaces\NoteInterface;
-use Note;
 
 class HookServiceProvider extends ServiceProvider
 {
+
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * Boot the service provider.
@@ -29,7 +33,7 @@ class HookServiceProvider extends ServiceProvider
      */
     public function addNoteTab($tabs, $screen, $data = null)
     {
-        if (in_array($screen, Note::getScreens())) {
+        if (in_array($screen, config('plugins.note.general.supported'))) {
             if (!empty($data)) {
                 $tabs = $tabs . view('plugins.note::history-tab')->render();
             }
@@ -41,7 +45,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $tabs
      * @param $screen
-     * @param $data
+     * @param \Eloquent $data
      * @return string
      * @author Sang Nguyen
      * @since 2.0
@@ -49,10 +53,10 @@ class HookServiceProvider extends ServiceProvider
      */
     public function addNoteContent($tabs, $screen, $data = null)
     {
-        if (in_array($screen, Note::getScreens())) {
+        if (in_array($screen, config('plugins.note.general.supported'))) {
             $notes = [];
             if (!empty($data)) {
-                $notes = app(NoteInterface::class)->allBy([
+                $notes = $this->app->make(NoteInterface::class)->allBy([
                     'reference_id' => $data->id,
                     'reference_type' => $screen,
                 ]);

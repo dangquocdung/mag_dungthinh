@@ -37,7 +37,7 @@ class SeoHelper implements SeoHelperContract
      * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
      * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
      * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(
         SeoMetaContract $seoMeta,
@@ -54,7 +54,7 @@ class SeoHelper implements SeoHelperContract
      * Get SeoMeta instance.
      *
      * @return \Botble\SeoHelper\Contracts\SeoMetaContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function meta()
     {
@@ -67,7 +67,7 @@ class SeoHelper implements SeoHelperContract
      * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
      *
      * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSeoMeta(SeoMetaContract $seoMeta)
     {
@@ -80,7 +80,7 @@ class SeoHelper implements SeoHelperContract
      * Get SeoOpenGraph instance.
      *
      * @return \Botble\SeoHelper\Contracts\SeoOpenGraphContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function openGraph()
     {
@@ -93,7 +93,7 @@ class SeoHelper implements SeoHelperContract
      * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
      *
      * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSeoOpenGraph(SeoOpenGraphContract $seoOpenGraph)
     {
@@ -106,7 +106,7 @@ class SeoHelper implements SeoHelperContract
      * Get SeoTwitter instance.
      *
      * @return \Botble\SeoHelper\Contracts\SeoTwitterContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function twitter()
     {
@@ -119,7 +119,7 @@ class SeoHelper implements SeoHelperContract
      * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
      *
      * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSeoTwitter(SeoTwitterContract $seoTwitter)
     {
@@ -136,7 +136,7 @@ class SeoHelper implements SeoHelperContract
      * @param  string|null $separator
      *
      * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTitle($title, $siteName = null, $separator = null)
     {
@@ -154,7 +154,7 @@ class SeoHelper implements SeoHelperContract
      * @param  string $description
      *
      * @return \Botble\SeoHelper\Contracts\SeoHelperContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDescription($description)
     {
@@ -171,7 +171,7 @@ class SeoHelper implements SeoHelperContract
      * @param  array|string $keywords
      *
      * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setKeywords($keywords)
     {
@@ -184,7 +184,7 @@ class SeoHelper implements SeoHelperContract
      * Render all seo tags.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -199,7 +199,7 @@ class SeoHelper implements SeoHelperContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -246,5 +246,19 @@ class SeoHelper implements SeoHelperContract
         } catch (Exception $ex) {
             return false;
         }
+    }
+
+    /**
+     * @param string | array $screen
+     * @return SeoHelper
+     * @author Sang Nguyen
+     */
+    public function registerModule($screen)
+    {
+        if (!is_array($screen)) {
+            $screen = [$screen];
+        }
+        config(['core.seo-helper.general.supported' => array_merge(config('core.seo-helper.general.supported'), $screen)]);
+        return $this;
     }
 }

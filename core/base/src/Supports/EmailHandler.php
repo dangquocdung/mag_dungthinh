@@ -3,7 +3,6 @@
 namespace Botble\Base\Supports;
 
 use Botble\Base\Events\SendMailEvent;
-use Carbon\Carbon;
 use Exception;
 use MailVariable;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -23,24 +22,30 @@ class EmailHandler
     }
 
     /**
-     * @param $content
-     * @param $title
-     * @param $args
-     * @author Sang Nguyen
+     * @param string $content
+     * @param string $title
+     * @param string $to
+     * @param array $args
+     * @param bool $debug
      * @throws \Throwable
+     * @author Sang Nguyen
      */
-    public function send($content, $title, $args = [])
+    public function send($content, $title, $to = null, $args = [], $debug = false)
     {
         try {
 
-            $args['to'] = array_get($args, 'to', setting('email_from_address', setting('admin_email')));
-            $args['name'] = array_get($args, 'to', setting('email_from_name'));
+            if (empty($to)) {
+                $to = setting('email_from_address', setting('admin_email'));
+            }
 
             $content = MailVariable::prepareData($content);
             $title = MailVariable::prepareData($title);
 
-            event(new SendMailEvent($content, $title, $args));
+            event(new SendMailEvent($content, $title, $to, $args, $debug));
         } catch (Exception $ex) {
+            if ($debug) {
+                throw $ex;
+            }
             info($ex->getMessage());
             $this->sendErrorException($ex);
         }
@@ -64,13 +69,12 @@ class EmailHandler
             $url = URL::full();
             $error = $handler->getContent($ex);
 
-            EmailHandler::send(
+            $this->send(
                 view('core.base::emails.error-reporting', compact('url', 'ex', 'error'))->render(),
                 $exception->getFile(),
-                [
-                    'to' => !empty(config('core.base.general.error_reporting.to')) ? config('core.base.general.error_reporting.to') : setting('admin_email'),
-                    'name' => setting('site_title'),
-                ]
+                !empty(config('core.base.general.error_reporting.to')) ?
+                    config('core.base.general.error_reporting.to') :
+                    setting('admin_email')
             );
         } catch (Exception $ex) {
             info($ex->getMessage());

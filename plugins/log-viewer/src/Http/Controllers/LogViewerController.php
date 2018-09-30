@@ -24,7 +24,7 @@ class LogViewerController extends BaseController
 
     /**
      * LogViewerController constructor.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
@@ -39,7 +39,7 @@ class LogViewerController extends BaseController
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function listLogs(Request $request)
     {
@@ -61,7 +61,7 @@ class LogViewerController extends BaseController
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function paginate(array $data, Request $request)
     {
@@ -81,7 +81,7 @@ class LogViewerController extends BaseController
      * @param  string $date
      *
      * @return \Illuminate\View\View
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function show($date)
     {
@@ -97,7 +97,7 @@ class LogViewerController extends BaseController
     /**
      * @param $date
      * @return \Botble\LogViewer\Entities\Log|null
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function getLogOrFail($date)
     {
@@ -116,7 +116,7 @@ class LogViewerController extends BaseController
      * @param  string $level
      *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function showByLevel($date, $level)
     {
@@ -140,7 +140,7 @@ class LogViewerController extends BaseController
      * @param  string $date
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function download($date)
     {
@@ -153,7 +153,7 @@ class LogViewerController extends BaseController
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function delete(Request $request)
     {

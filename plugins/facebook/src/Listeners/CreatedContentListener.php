@@ -4,25 +4,11 @@ namespace Botble\Facebook\Listeners;
 
 use Botble\Base\Events\CreatedContentEvent;
 use Exception;
+use Facebook\Exceptions\FacebookSDKException;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 
 class CreatedContentListener
 {
-
-    /**
-     * @var LaravelFacebookSdk
-     */
-    protected $facebook;
-
-    /**
-     * CreatedContentListener constructor.
-     * @param LaravelFacebookSdk $facebook
-     */
-    public function __construct(LaravelFacebookSdk $facebook)
-    {
-        $this->facebook = $facebook;
-    }
-
     /**
      * Handle the event.
      *
@@ -49,12 +35,14 @@ class CreatedContentListener
                         if (!empty($page_token)) {
                             $content = $event->data->description ?? str_limit($event->data->content, 120);
                             $content = str_replace('&nbsp', ' ', strip_tags($content));
-                            $this->facebook->post('/' . $page_id . '/feed', [
+                            app(LaravelFacebookSdk::class)->post('/' . $page_id . '/feed', [
                                 'message' => $content,
                                 'link' => route('public.single', $event->data->slug),
                             ], $page_token);
                         }
                     }
+                } catch (FacebookSDKException $exception) {
+                    info($exception->getMessage());
                 } catch (Exception $exception) {
                     info($exception->getMessage());
                 }

@@ -4,11 +4,9 @@ namespace Botble\Blog\Models;
 
 use Botble\Slug\Traits\SlugTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Eloquent
 {
-    use SoftDeletes;
     use SlugTrait;
 
     /**
@@ -24,13 +22,6 @@ class Category extends Eloquent
     protected $primaryKey = 'id';
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['deleted_at'];
-
-    /**
      * The date fields for the model.clear
      *
      * @var array
@@ -38,7 +29,6 @@ class Category extends Eloquent
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**
@@ -88,5 +78,14 @@ class Category extends Eloquent
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function (Category $category) {
+            $category->posts()->detach();
+        });
     }
 }

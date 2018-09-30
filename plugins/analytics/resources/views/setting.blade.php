@@ -19,14 +19,16 @@
             <div class="form-group">
                 <label class="text-title-field"
                        for="view_id">{{ trans('plugins.analytics::analytics.settings.view_id') }}</label>
-                <input data-counter="120" type="text" class="next-input" name="view_id" id="view_id"
-                       value="{{ setting('view_id', config('plugins.analytics.general.view_id')) }}" placeholder="{{ trans('plugins.analytics::analytics.settings.view_id_description') }}">
+                <input data-counter="120" type="text" class="next-input" name="analytics_view_id" id="analytics_view_id"
+                       value="{{ setting('analytics_view_id', config('plugins.analytics.general.view_id')) }}" placeholder="{{ trans('plugins.analytics::analytics.settings.view_id_description') }}">
             </div>
-            <div class="form-group">
-                <label class="text-title-field"
-                       for="analytics_service_account_credentials">{{ trans('plugins.analytics::analytics.settings.json_credential') }}</label>
-                <textarea class="next-input form-control" name="analytics_service_account_credentials" id="analytics_service_account_credentials" rows="5" placeholder="{{ trans('plugins.analytics::analytics.settings.json_credential_description') }}">{{ setting('analytics_service_account_credentials') }}</textarea>
-            </div>
+            @if (!app()->environment('demo'))
+                <div class="form-group">
+                    <label class="text-title-field"
+                           for="analytics_service_account_credentials">{{ trans('plugins.analytics::analytics.settings.json_credential') }}</label>
+                    <textarea class="next-input form-control" name="analytics_service_account_credentials" id="analytics_service_account_credentials" rows="5" placeholder="{{ trans('plugins.analytics::analytics.settings.json_credential_description') }}">{{ setting('analytics_service_account_credentials') }}</textarea>
+                </div>
+            @endif
         </div>
     </div>
 </div>

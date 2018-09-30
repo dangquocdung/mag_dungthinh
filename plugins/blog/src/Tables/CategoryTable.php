@@ -16,6 +16,11 @@ class CategoryTable extends TableAbstract
     protected $has_actions = true;
 
     /**
+     * @var bool
+     */
+    protected $use_default_sorting = false;
+
+    /**
      * CategoryTable constructor.
      * @param DataTables $table
      * @param UrlGenerator $urlGenerator
@@ -86,26 +91,27 @@ class CategoryTable extends TableAbstract
     {
         return [
             'id' => [
-                'name' => 'categories.id',
+                'name' => 'id',
                 'title' => trans('core.base::tables.id'),
                 'width' => '20px',
             ],
             'name' => [
-                'name' => 'categories.name',
+                'name' => 'name',
                 'title' => trans('core.base::tables.name'),
+                'class' => 'text-left',
             ],
             'created_at' => [
-                'name' => 'categories.created_at',
+                'name' => 'created_at',
                 'title' => trans('core.base::tables.created_at'),
                 'width' => '100px',
             ],
             'updated_at' => [
-                'name' => 'categories.updated_at',
+                'name' => 'updated_at',
                 'title' => trans('core.base::tables.updated_at'),
                 'width' => '100px',
             ],
             'status' => [
-                'name' => 'categories.status',
+                'name' => 'status',
                 'title' => trans('core.base::tables.status'),
                 'width' => '100px',
             ],
@@ -146,7 +152,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBulkChanges(): array
     {

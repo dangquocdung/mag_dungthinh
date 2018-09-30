@@ -2,7 +2,6 @@
 
 namespace Botble\Widget;
 
-use Botble\Widget\Models\Widget;
 use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 use Theme;
 

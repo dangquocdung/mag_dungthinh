@@ -2,7 +2,9 @@
 
 @section ('page')
 
-    <div class="page-wrapper new-style-theme-wrapper">
+    @include('core.base::layouts.partials.svg-icon')
+
+    <div class="page-wrapper">
         @include('core.base::layouts.partials.top-header')
         <div class="clearfix"></div>
         <!-- Page container -->
@@ -10,7 +12,7 @@
 
             <!-- Sidebar -->
             <div class="page-sidebar-wrapper">
-                <div class="page-sidebar navbar-collapse collapse">
+                <div class="page-sidebar navbar-collapse">
                     <div class="sidebar">
                         <div class="sidebar-content">
                             <ul class="page-sidebar-menu page-header-fixed navigation" data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200">
@@ -40,4 +42,8 @@
 @section('javascript')
     @include('media::partials.media')
 @endsection
+
+@push('footer')
+    @routes
+@endpush
 

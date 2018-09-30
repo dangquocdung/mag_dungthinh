@@ -4,20 +4,19 @@
         <button class="btn btn-primary show-hide-editor-btn" type="button" data-result="{{ $result }}">{{ trans('core.base::forms.show_hide_editor') }}</button>
     </span>
     <span class="editor-action-item">
-        <a class="btn_gallery btn btn-primary"
+        <a href="#" class="btn_gallery btn btn-primary"
            data-result="{{ $result }}"
            data-multiple="true"
            data-action="media-insert-{{ setting('rich_editor', config('core.base.general.editor.primary')) }}">
-            <i class="fa fa-picture-o"></i> {{ trans('media::media.add') }}
+            <i class="far fa-image"></i> {{ trans('media::media.add') }}
         </a>
     </span>
     @if (isset($attributes['with-short-code']) && $attributes['with-short-code'] == true)
         <span class="editor-action-item list-shortcode-items">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle add_shortcode_btn_trigger" data-result="{{ $result }}" type="button" data-toggle="dropdown"><i class="fa fa-code"></i> {{ trans('core.base::forms.short_code') }}
-                    <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu pull-left">
+                <ul class="dropdown-menu">
                     @foreach ($shortcodes = shortcode()->getAll() as $key => $item)
                         @if (array_get($item, 'admin_config') != null)
                             <li data-html="{{ array_get($item, 'admin_config') }}">
@@ -29,13 +28,12 @@
             </div>
         </span>
         @push('footer')
-
             <div class="modal fade short_code_modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header bg-primary">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('core.base::forms.add_short_code') }}</strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
 
                         <div class="modal-body with-padding">
@@ -46,8 +44,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button class="pull-left btn btn-default" data-dismiss="modal">{{ trans('core.base::tables.cancel') }}</button>
-                            <a class="pull-right btn btn-primary add_short_code_btn" href="#">{{ trans('core.base::forms.add') }}</a>
+                            <button class="float-left btn btn-secondary" data-dismiss="modal">{{ trans('core.base::tables.cancel') }}</button>
+                            <a class="float-right btn btn-primary add_short_code_btn" href="#">{{ trans('core.base::forms.add') }}</a>
                         </div>
                     </div>
                 </div>
@@ -64,11 +62,11 @@
                     $('.list-shortcode-items li a').on('click', function (event) {
                         event.preventDefault();
                         var admin_config = $(this).closest('li').data('html');
-                        if (admin_config != null && admin_config != '') {
+                        if (admin_config != null && admin_config !== '') {
                             $('.short-code-data-form').trigger('reset');
                             $short_code_key.val($(this).data('key'));
                             $('.short-code-admin-config').html(admin_config);
-                            if ($(this).data('description') != '' && $(this).data('description') != null) {
+                            if ($(this).data('description') !== '' && $(this).data('description') != null) {
                                 $('.short_code_modal .modal-title strong').text($(this).data('description'));
                             }
                             $('.short_code_modal').modal('show');
@@ -93,14 +91,14 @@
                         var attributes = '';
                         $.each(formData, function (index, item) {
                             var element = formElement.find('*[name=' + item.name + ']');
-                            if (element.data('shortcode-attribute') != 'content') {
+                            if (element.data('shortcode-attribute') !== 'content') {
                                 attributes += ' ' + item.name + '="' + item.value + '"';
                             }
                         });
 
                         var content = '';
                         var contentElement = formElement.find('*[data-shortcode-attribute=content]');
-                        if (contentElement != null && contentElement.val() != null && contentElement.val() != '') {
+                        if (contentElement != null && contentElement.val() != null && contentElement.val() !== '') {
                             content = contentElement.val();
                         }
 
@@ -121,12 +119,19 @@
 
         @endpush
     @endif
+
+    {!! apply_filters(BASE_FILTER_FORM_EDITOR_BUTTONS, null) !!}
 </div>
 <div class="clearfix"></div>
 
 {!! Form::textarea($name, $value, $attributes) !!}
 
 @push('footer')
+    <script>
+        function setImageValue(file) {
+            $('.mce-btn.mce-open').parent().find('.mce-textbox').val(file);
+        }
+    </script>
     <iframe id="form_target" name="form_target" style="display:none"></iframe>
     <form id="my_form" action="{{ route('media.files.upload.from.editor') }}" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden;display: none;">
         {{ csrf_field() }}

@@ -56,7 +56,7 @@ class UpdateProfileImageService implements ProduceServiceInterface
         config()->set('filesystems.disks.local.root', config('core.base.general.upload.base_dir'));
 
         File::deleteDirectory(config('core.base.general.upload.base_dir') . DIRECTORY_SEPARATOR . config('core.acl.general.avatar.container_dir') . DIRECTORY_SEPARATOR . $user->username);
-        Storage::put($avatar['path'], file_get_contents($request->file('avatar_file')->getRealPath()), 'public');
+        Storage::disk()->put($avatar['path'], file_get_contents($request->file('avatar_file')->getRealPath()), 'public');
 
         $crop = new CropAvatar($request->input('avatar_src'), $request->input('avatar_data'), $avatar);
         $user->profile_image = $crop->getResult();

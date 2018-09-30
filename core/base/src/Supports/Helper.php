@@ -6,6 +6,7 @@ use Auth;
 use Eloquent;
 use Exception;
 use File;
+use Illuminate\Database\Eloquent\Model;
 use Request;
 
 class Helper
@@ -25,7 +26,7 @@ class Helper
     }
 
     /**
-     * @param Eloquent $object
+     * @param Eloquent | Model $object
      * @param string $session_name
      * @return bool
      * @author Sang Nguyen
@@ -59,7 +60,7 @@ class Helper
     public static function formatLog($input, $line = '', $function = '', $class = '')
     {
         return array_merge($input, [
-            'user_id' => Auth::check() ? Auth::user()->getKey() : 'Testing',
+            'user_id' => Auth::check() ? Auth::user()->getKey() : 'System',
             'ip' => Request::ip(),
             'line' => $line,
             'function' => $function,
@@ -71,16 +72,36 @@ class Helper
     /**
      * @param $plugin
      * @author Sang Nguyen
+     * @return boolean
+     * @deprecated
      */
     public static function removePluginAssets($plugin)
     {
-        $public_path = public_path('vendor/core/plugins/' . $plugin);
-        $assets_path = resource_path('assets/plugins/' . $plugin);
-        if (File::isDirectory($public_path)) {
-            File::deleteDirectory($public_path);
+        return self::removePluginData($plugin);
+    }
+
+    /**
+     * @param $plugin
+     * @author Sang Nguyen
+     * @return boolean
+     * @since 3.3
+     */
+    public static function removePluginData($plugin)
+    {
+        $folders = [
+            public_path('vendor/core/plugins/' . $plugin),
+            resource_path('assets/plugins/' . $plugin),
+            resource_path('views/vendor/plugins.' . $plugin),
+            resource_path('lang/vendor/plugins.' . $plugin),
+            config_path('plugins.' . $plugin),
+        ];
+
+        foreach ($folders as $folder) {
+            if (File::isDirectory($folder)) {
+                File::deleteDirectory($folder);
+            }
         }
-        if (File::isDirectory($assets_path)) {
-            File::deleteDirectory($assets_path);
-        }
+
+        return true;
     }
 }

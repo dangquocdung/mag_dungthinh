@@ -41,9 +41,9 @@ class TagController extends BaseController
      */
     public function getList(TagTable $dataTable)
     {
-        page_title()->setTitle(trans('plugins.blog::tags.list'));
+        page_title()->setTitle(trans('plugins.blog::tags.menu'));
 
-        return $dataTable->renderTable(['title' => trans('plugins.blog::tags.list')]);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -75,7 +75,7 @@ class TagController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @param FormBuilder $formBuilder
      * @return string
@@ -93,7 +93,7 @@ class TagController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param TagRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
@@ -114,7 +114,7 @@ class TagController extends BaseController
 
     /**
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -129,7 +129,9 @@ class TagController extends BaseController
 
             return $response->setMessage(trans('plugins.blog::tags.deleted'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('plugins.blog::tags.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.blog::tags.cannot_delete'));
         }
     }
 
@@ -143,7 +145,9 @@ class TagController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('plugins.blog::tags.notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.blog::tags.notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -152,7 +156,9 @@ class TagController extends BaseController
 
             event(new DeletedContentEvent(TAG_MODULE_SCREEN_NAME, $request, $tag));
         }
-        return $response->setData($request->input('status'))->setMessage(trans('plugins.blog::tags.deleted'));
+        return $response
+            ->setData($request->input('status'))
+            ->setMessage(trans('plugins.blog::tags.deleted'));
     }
 
     /**

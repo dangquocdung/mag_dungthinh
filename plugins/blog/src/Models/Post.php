@@ -5,13 +5,11 @@ namespace Botble\Blog\Models;
 use Botble\ACL\Models\User;
 use Botble\Slug\Traits\SlugTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 class Post extends Eloquent
 {
     use RevisionableTrait;
-    use SoftDeletes;
     use SlugTrait;
 
     /**
@@ -45,13 +43,6 @@ class Post extends Eloquent
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['deleted_at'];
-
-    /**
      * The date fields for the model.clear
      *
      * @var array
@@ -59,7 +50,6 @@ class Post extends Eloquent
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**

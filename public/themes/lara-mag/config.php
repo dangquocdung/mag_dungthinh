@@ -44,10 +44,14 @@ return [
         // breadcrumb template.
         'beforeRenderTheme' => function (Theme $theme) {
             // You may use this event to set up your assets.
-            // $theme->asset()->usePath()->add('lara-mag-css', 'css/lara-mag.css');
+
             $theme->asset()->usePath()->writeStyle('lara-mag-css', str_replace('/../', $theme->asset()->url(''), file_get_contents(public_path($theme->asset()->url('css/lara-mag.css')))));
 
-            $theme->asset()->container('footer')->usePath()->add('lara-mag-js', 'js/lara-mag.js');
+            $theme
+                ->asset()
+                ->container('footer')
+                ->usePath()->add('lara-mag-js', 'js/lara-mag.js')
+                ->usePath()->add('bootstrap-js', 'js/bootstrap.min.js');
 
             $theme->composer(['page', 'post', 'index', 'category', 'tag', 'gallery'], function (View $view) {
                 $view->withShortcodes();

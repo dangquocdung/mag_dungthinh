@@ -12,7 +12,7 @@ class ActivityLogClearCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'activity-logs:clear';
+    protected $signature = 'cms:activity-logs:clear';
 
     /**
      * The console command description.

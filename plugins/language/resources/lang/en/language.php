@@ -34,7 +34,7 @@ return [
     'edit_related' => 'Edit related language for this record',
     'add_language_for_item' => 'Add other language version for this record',
     'settings' => 'Settings',
-    'language_hide_default' => 'Hide default language?',
+    'language_hide_default' => 'Hide default language from URL?',
     'language_display_flag_only' => 'Flag only',
     'language_display_name_only' => 'Name only',
     'language_display_all' => 'Display all flag and name',
@@ -51,4 +51,5 @@ return [
     'hide_languages_helper_display_hidden' => '{0} All languages are currently displayed.|{1} :language is currently hidden to visitors.|[2, Inf] :language are currently hidden to visitors.',
     'show_all' => 'Show all',
     'change_language' => 'Language',
+    'language_show_default_item_if_current_version_not_existed' => 'Show item in default language if it is not existed in current language',
 ];

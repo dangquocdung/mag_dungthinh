@@ -54,5 +54,6 @@ class SlugServiceProvider extends ServiceProvider
         $this->app->register(FormServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(CommandServiceProvider::class);
     }
 }

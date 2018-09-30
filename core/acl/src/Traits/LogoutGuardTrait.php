@@ -72,8 +72,8 @@ trait LogoutGuardTrait
     /**
      * Get the specified key from the session.
      *
-     * @param $request
-     * @param $name
+     * @param Request $request
+     * @param string $name
      * @return mixed
      */
     public function sessionGet($request, $name)
@@ -84,9 +84,9 @@ trait LogoutGuardTrait
     /**
      * Check if the session has a particular key.
      *
-     * @param $request
-     * @param $name
-     * @return mixed
+     * @param Request $request
+     * @param string $name
+     * @return bool
      */
     public function sessionHas($request, $name)
     {

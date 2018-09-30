@@ -8,7 +8,7 @@ interface SeoHelperContract extends RenderableContract
      * Get SeoMeta instance.
      *
      * @return \Botble\SeoHelper\Contracts\SeoMetaContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function meta();
 
@@ -18,7 +18,7 @@ interface SeoHelperContract extends RenderableContract
      * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSeoMeta(SeoMetaContract $seoMeta);
 
@@ -26,7 +26,7 @@ interface SeoHelperContract extends RenderableContract
      * Get SeoOpenGraph instance.
      *
      * @return \Botble\SeoHelper\Contracts\SeoOpenGraphContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function openGraph();
 
@@ -36,7 +36,7 @@ interface SeoHelperContract extends RenderableContract
      * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSeoOpenGraph(SeoOpenGraphContract $seoOpenGraph);
 
@@ -44,7 +44,7 @@ interface SeoHelperContract extends RenderableContract
      * Get SeoTwitter instance.
      *
      * @return \Botble\SeoHelper\Contracts\SeoTwitterContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function twitter();
 
@@ -54,7 +54,7 @@ interface SeoHelperContract extends RenderableContract
      * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSeoTwitter(SeoTwitterContract $seoTwitter);
 
@@ -66,7 +66,7 @@ interface SeoHelperContract extends RenderableContract
      * @param  string|null $separator
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTitle($title, $siteName = null, $separator = null);
 
@@ -76,7 +76,7 @@ interface SeoHelperContract extends RenderableContract
      * @param  string $description
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDescription($description);
 
@@ -86,7 +86,7 @@ interface SeoHelperContract extends RenderableContract
      * @param  array|string $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setKeywords($keywords);
 }

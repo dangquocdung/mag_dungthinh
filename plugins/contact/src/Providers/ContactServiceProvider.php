@@ -16,7 +16,6 @@ use MailVariable;
 
 class ContactServiceProvider extends ServiceProvider
 {
-
     use LoadAndPublishDataTrait;
 
     /**
@@ -67,7 +66,7 @@ class ContactServiceProvider extends ServiceProvider
                 'priority' => 120,
                 'parent_id' => null,
                 'name' => trans('plugins.contact::contact.menu'),
-                'icon' => 'fa fa-envelope-o',
+                'icon' => 'far fa-envelope',
                 'url' => route('contacts.list'),
                 'permissions' => ['contacts.list'],
             ]);

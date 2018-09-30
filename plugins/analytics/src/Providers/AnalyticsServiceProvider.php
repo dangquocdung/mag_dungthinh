@@ -23,7 +23,7 @@ class AnalyticsServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     * @author Freek Van der Herten <freek@spatie.be>
+     * @author Freek Van der Herten
      * @modified Sang Nguyen
      */
     public function register()
@@ -43,7 +43,7 @@ class AnalyticsServiceProvider extends ServiceProvider
                 throw InvalidConfiguration::credentialsIsNotValid();
             }
 
-            return new Analytics(app(AnalyticsClient::class), setting('analytics_view_id', config('plugins.analytics.general.view_id')));
+            return new Analytics($this->app->make(AnalyticsClient::class), setting('analytics_view_id', config('plugins.analytics.general.view_id')));
         });
 
         AliasLoader::getInstance()->alias('Analytics', AnalyticsFacade::class);
@@ -60,7 +60,9 @@ class AnalyticsServiceProvider extends ServiceProvider
             ->loadAndPublishConfigurations(['general', 'permissions'])
             ->loadRoutes()
             ->loadAndPublishViews()
-            ->loadAndPublishTranslations();
+            ->loadAndPublishTranslations()
+            ->publishPublicFolder()
+            ->publishAssetsFolder();
 
         $this->app->register(HookServiceProvider::class);
     }

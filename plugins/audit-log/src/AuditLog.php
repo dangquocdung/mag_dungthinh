@@ -21,11 +21,12 @@ class AuditLog
             return false;
         }
         event(new AuditHandlerEvent($screen, $action, $data->id, $this->getReferenceName($screen, $data), $type));
+        return true;
     }
 
     /**
-     * @param $screen
-     * @param $data
+     * @param string $screen
+     * @param \stdClass|User $data
      * @return string
      * @author Sang Nguyen
      */

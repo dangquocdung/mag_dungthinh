@@ -15,7 +15,7 @@ class StatsTable extends Table
      * @param  string|null $locale
      *
      * @return \Botble\LogViewer\Tables\StatsTable
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function make(array $data, LogLevelsContract $levels, $locale = null)
     {
@@ -28,7 +28,7 @@ class StatsTable extends Table
      * @param  string|null $locale
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function totalsJson($locale = null)
     {
@@ -55,7 +55,7 @@ class StatsTable extends Table
      * @param  array $data
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function prepareHeader(array $data)
     {
@@ -74,7 +74,7 @@ class StatsTable extends Table
      * @param  array $data
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function prepareRows(array $data)
     {
@@ -93,7 +93,7 @@ class StatsTable extends Table
      * @param  array $data
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function prepareFooter(array $data)
     {

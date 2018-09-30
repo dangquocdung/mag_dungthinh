@@ -101,31 +101,31 @@ return [
                 [
                     'all_media' =>
                         [
-                            'icon' => 'fa fa-cloud-upload',
+                            'icon' => 'fas fa-cloud-upload-alt',
                             'title' => 'Bạn có thể kéo thả tập tin vào đây để tải lên',
                             'message' => 'Hoặc có thể bấm nút Tải lên ở phía trên',
                         ],
                     'trash' =>
                         [
-                            'icon' => 'fa fa-trash',
+                            'icon' => 'fas fa-trash-alt',
                             'title' => 'Hiện tại không có tập tin nào trong thùng rác',
                             'message' => 'Xóa tập tin sẽ đem tập tin lưu vào thùng rác. Xóa tập tin trong thùng rác sẽ xóa vĩnh viễn.',
                         ],
                     'favorites' =>
                         [
-                            'icon' => 'fa fa-star',
+                            'icon' => 'fas fa-star',
                             'title' => 'Bạn chưa đặt tập tin nào vào mục yêu thích',
                             'message' => 'Thêm tập tin vào mục yêu thích để tìm kiếm chúng dễ dàng sau này.',
                         ],
                     'recent' =>
                         [
-                            'icon' => 'fa fa-clock-o',
+                            'icon' => 'far fa-clock',
                             'title' => 'Bạn chưa mở tập tin nào.',
                             'message' => 'Mục này hiển thị các tập tin bạn đã xem gần đây.',
                         ],
                     'default' =>
                         [
-                            'icon' => 'fa fa-refresh',
+                            'icon' => 'fas fa-sync',
                             'title' => 'Thư mục trống',
                             'message' => 'Thư mục này chưa có tập tin nào',
                         ],
@@ -170,4 +170,5 @@ return [
                 ],
         ],
     'empty_trash_success' => 'Dọn sạch thùng rác thành công',
+    'name_invalid' => 'Tên thư mục chứa ký tự không hợp lệ',
 ];

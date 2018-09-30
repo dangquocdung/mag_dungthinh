@@ -19,7 +19,7 @@
  * Service definition for Logging (v2).
  *
  * <p>
- * Writes log entries and manages your Stackdriver Logging configuration.</p>
+ * Writes log entries and manages your Logging configuration.</p>
  *
  * <p>
  * For more information about this service, see the API

@@ -1,68 +1,73 @@
-var BSEO = BSEO || {};
+class SEOHelperManagement {
+    constructor() {
+        this.$document = $(document);
+    }
 
-BSEO.handleMetaBox = function () {
-    $('.page-url-seo p').text($(document).find('#sample-permalink a').prop('href'));
-    $(document).on('click', '.btn-trigger-show-seo-detail', function (event) {
-        event.preventDefault();
-        $('.seo-edit-section').toggleClass('hidden');
-    });
-
-    $(document).on('keyup', 'input[name=name]', function () {
-        BSEO.updateSEOTitle($(this).val());
-    });
-
-    $(document).on('keyup', 'input[name=title]', function () {
-        BSEO.updateSEOTitle($(this).val());
-    });
-
-    $(document).on('keyup', 'textarea[name=description]', function () {
-        BSEO.updateSEODescription($(this).val());
-    });
-
-    $(document).on('keyup', '#seo_title', function () {
-        if ($(this).val()) {
-            $('.page-title-seo').text($(this).val());
+    static updateSEOTitle(value) {
+        if (value) {
+            if (!$('#seo_title').val()) {
+                $('.page-title-seo').text(value);
+            }
             $('.default-seo-description').addClass('hidden');
             $('.existed-seo-meta').removeClass('hidden');
         } else {
-            if ($('input[name=name]').val()) {
-                $('.page-title-seo').text($('input[name=name]').val());
-            } else {
-                $('.page-title-seo').text($('input[name=title]').val());
+            $('.default-seo-description').removeClass('hidden');
+            $('.existed-seo-meta').addClass('hidden');
+        }
+    }
+
+    static updateSEODescription(value) {
+        if (value) {
+            if (!$('#seo_description').val()) {
+                $('.page-description-seo').text(value);
             }
         }
-    });
-
-    $(document).on('keyup', '#seo_description', function () {
-        if ($(this).val()) {
-            $('.page-description-seo').text($(this).val());
-        }  else {
-            $('.page-title-seo').text($('textarea[name=description]').val());
-        }
-    });
-};
-
-BSEO.updateSEOTitle = function (value) {
-    if (value) {
-        if (!$('#seo_title').val()) {
-            $('.page-title-seo').text(value);
-        }
-        $('.default-seo-description').addClass('hidden');
-        $('.existed-seo-meta').removeClass('hidden');
-    } else {
-        $('.default-seo-description').removeClass('hidden');
-        $('.existed-seo-meta').addClass('hidden');
     }
-};
 
-BSEO.updateSEODescription = function (value) {
-    if (value) {
-        if (!$('#seo_description').val()) {
-            $('.page-description-seo').text(value);
-        }
+    handleMetaBox () {
+        $('.page-url-seo p').text(this.$document.find('#sample-permalink a').prop('href'));
+        this.$document.on('click', '.btn-trigger-show-seo-detail', (event) => {
+            event.preventDefault();
+            $('.seo-edit-section').toggleClass('hidden');
+        });
+
+        this.$document.on('keyup', 'input[name=name]', (event) => {
+            SEOHelperManagement.updateSEOTitle($(event.currentTarget).val());
+        });
+
+        this.$document.on('keyup', 'input[name=title]', (event) => {
+            SEOHelperManagement.updateSEOTitle($(event.currentTarget).val());
+        });
+
+        this.$document.on('keyup', 'textarea[name=description]', (event) => {
+            SEOHelperManagement.updateSEODescription($(event.currentTarget).val());
+        });
+
+        this.$document.on('keyup', '#seo_title', (event) => {
+            if ($(event.currentTarget).val()) {
+                $('.page-title-seo').text($(event.currentTarget).val());
+                $('.default-seo-description').addClass('hidden');
+                $('.existed-seo-meta').removeClass('hidden');
+            } else {
+                let $input_name = $('input[name=name]');
+                if ($input_name.val()) {
+                    $('.page-title-seo').text($input_name.val());
+                } else {
+                    $('.page-title-seo').text($('input[name=title]').val());
+                }
+            }
+        });
+
+        this.$document.on('keyup', '#seo_description', (event) => {
+            if ($(event.currentTarget).val()) {
+                $('.page-description-seo').text($(event.currentTarget).val());
+            }  else {
+                $('.page-title-seo').text($('textarea[name=description]').val());
+            }
+        });
     }
-};
+}
 
-$(document).ready(function () {
-    BSEO.handleMetaBox();
+$(document).ready(() => {
+    new SEOHelperManagement().handleMetaBox();
 });

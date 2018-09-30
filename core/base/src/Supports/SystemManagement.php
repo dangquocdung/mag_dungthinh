@@ -25,6 +25,7 @@ class SystemManagement
     /**
      * Get the De-composer system report as a PHP array
      * @return array
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function getReportArray()
     {
@@ -33,7 +34,9 @@ class SystemManagement
         $reportArray['System Environment'] = self::getSystemEnv();
         $reportArray['Installed Packages'] = self::getPackagesArray($composerArray['require']);
 
-        empty(self::getExtraStats()) ? '' : $reportArray['Extra Stats'] = self::getExtraStats();
+        if (self::getExtraStats()) {
+            $reportArray['Extra Stats'] = self::getExtraStats();
+        }
 
         return $reportArray;
     }
@@ -97,6 +100,7 @@ class SystemManagement
      * Get the system report as JSON
      *
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function getReportJson()
     {
@@ -106,6 +110,7 @@ class SystemManagement
     /**
      * Get the Composer file contents as an array
      * @return array
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function getComposerArray()
     {
@@ -127,8 +132,10 @@ class SystemManagement
             if ($key !== 'php' && file_exists($packageFile)) {
                 $json2 = file_get_contents($packageFile);
                 $dependenciesArray = json_decode($json2, true);
-                $dependencies = array_key_exists('require', $dependenciesArray) ? $dependenciesArray['require'] : 'No dependencies';
-                $devDependencies = array_key_exists('require-dev', $dependenciesArray) ? $dependenciesArray['require-dev'] : 'No dependencies';
+                $dependencies = array_key_exists('require', $dependenciesArray) ?
+                    $dependenciesArray['require'] : 'No dependencies';
+                $devDependencies = array_key_exists('require-dev', $dependenciesArray) ?
+                    $dependenciesArray['require-dev'] : 'No dependencies';
 
                 $packages[] = [
                     'name' => $key,

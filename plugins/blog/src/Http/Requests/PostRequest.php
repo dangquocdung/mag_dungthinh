@@ -17,8 +17,7 @@ class PostRequest extends Request
     {
         return [
             'name' => 'required|max:255',
-            'description' => 'required|max:400',
-            'content' => 'required',
+            'description' => 'max:400',
             'categories' => 'required',
             'slug' => 'required|max:255',
         ];

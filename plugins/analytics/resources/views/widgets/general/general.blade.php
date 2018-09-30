@@ -57,7 +57,7 @@
 <div class="col-lg-3 col-md-4 col-sm-6">
     <div class="info-box">
         <div class="info-box-icon bg-purple">
-            <i class="fa fa-pie-chart"></i>
+            <i class="fas fa-chart-pie"></i>
         </div>
         <div class="info-box-content">
             <span class="info-box-text">{{ trans('plugins.analytics::analytics.percent_new_session') }}</span>
@@ -81,7 +81,7 @@
 <div class="col-lg-3 col-md-4 col-sm-6">
     <div class="info-box">
         <div class="info-box-icon bg-red">
-            <i class="fa fa-clock-o"></i>
+            <i class="fa fa-clock"></i>
         </div>
         <div class="info-box-content">
             <span class="info-box-text">{{ trans('plugins.analytics::analytics.avg_duration') }}</span>
@@ -108,65 +108,3 @@
 <div data-country-stats='{{ json_encode($country_stats, JSON_HEX_APOS) }}'></div>
 <div data-lang-pageviews='{{ trans("plugins.analytics::analytics.pageviews") }}'></div>
 <div data-lang-visits='{{ trans("plugins.analytics::analytics.visitors") }}'></div>
-
-<script>
-    $(document).ready(function () {
-        var stats = $('div[data-stats]').data('stats');
-        var country_stats = $('div[data-country-stats]').data('country-stats');
-        var lang_pageviews = $('div[data-lang-pageviews]').data('lang-pageviews');
-        var lang_visits = $('div[data-lang-visits]').data('lang-visits');
-
-
-        var statArray = [];
-        $.each(stats, function (index, el) {
-            statArray.push({axis: el.axis, visitors: el.visitors, pageViews: el.pageViews});
-        });
-
-
-        /* Morris.js Charts */
-        var area = new Morris.Area({
-            element: 'stats-chart',
-            resize: true,
-            data: statArray,
-            xkey: 'axis',
-            ykeys: ['visitors', 'pageViews'],
-            labels: [lang_visits, lang_pageviews],
-            lineColors: ['#DD4D37', '#3c8dbc'],
-            hideHover: 'auto',
-            parseTime: false
-        });
-
-        //jvectormap data
-        var visitorsData = {};
-
-        $.each(country_stats, function (index, el) {
-            visitorsData[el[0]] = el[1];
-        });
-
-        //World map by jvectormap
-        $('#world-map').vectorMap({
-            map: 'world_mill_en',
-            backgroundColor: 'transparent',
-            regionStyle: {
-                initial: {
-                    fill: '#e4e4e4',
-                    'fill-opacity': 1,
-                    stroke: 'none',
-                    'stroke-width': 0,
-                    'stroke-opacity': 1
-                }
-            },
-            series: {
-                regions: [{
-                    values: visitorsData,
-                    scale: ['#C64333', '#dd4b39'],
-                    normalizeFunction: 'polynomial'
-                }]
-            },
-            onRegionLabelShow: function (e, el, code) {
-                if (typeof visitorsData[code] != 'undefined')
-                    el.html(el.html() + ': ' + visitorsData[code] + ' ' + lang_visits);
-            }
-        });
-    });
-</script>

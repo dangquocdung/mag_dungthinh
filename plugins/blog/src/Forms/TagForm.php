@@ -36,12 +36,9 @@ class TagForm extends FormAbstract
                     'data-counter' => 400,
                 ],
             ])
-            ->add('status', 'select', [
+            ->add('status', 'customSelect', [
                 'label' => trans('core.base::tables.status'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr' => [
-                    'class' => 'form-control select-full',
-                ],
                 'choices' => [
                     1 => trans('core.base::system.activated'),
                     0 => trans('core.base::system.deactivated'),

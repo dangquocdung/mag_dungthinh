@@ -48,9 +48,9 @@ class MailVariable
             'footer' => get_setting_email_template_content('core', 'base', 'footer'),
             'site_title' => setting('site_title'),
             'site_url' => route('public.index'),
-            'site_logo' => url(theme_option('logo', setting('admin_logo'))),
-            'date_time' => Carbon::now()->toDateTimeString(),
-            'date_year' => Carbon::now()->format('Y'),
+            'site_logo' => url(theme_option('logo', setting('admin_logo', config('core.base.general.logo')))),
+            'date_time' => Carbon::now(config('app.timezone'))->toDateTimeString(),
+            'date_year' => Carbon::now(config('app.timezone'))->format('Y'),
             'site_admin_email' => setting('admin_email'),
         ];
     }
@@ -141,7 +141,18 @@ class MailVariable
      */
     public function getVariableValue($variable, $module, $default = ''): string
     {
-        return array_get($this->variableValues, $module . '.' . $variable, $default);
+        return (string) array_get($this->variableValues, $module . '.' . $variable, $default);
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariableValues($module = null)
+    {
+        if ($module) {
+            return array_get($this->variableValues, $module, []);
+        }
+        return $this->variableValues;
     }
 
     /**
@@ -150,15 +161,24 @@ class MailVariable
      * @return string
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function prepareData($content): string
+    public function prepareData($content, $variables = []): string
     {
         $this->initVariable();
         $this->initVariableValues();
 
-        $content = $this->replaceVariableValue(array_keys($this->variables['core']), 'core', $content);
+        if (!empty($content)) {
+            $content = $this->replaceVariableValue(array_keys($this->variables['core']), 'core', $content);
 
-        if ($this->module !== 'core') {
-            $content = $this->replaceVariableValue(array_keys(array_get($this->variables, $this->module, [])), $this->module, $content);
+            if ($this->module !== 'core') {
+                if (empty($variables)) {
+                    $variables = array_get($this->variables, $this->module, []);
+                }
+                $content = $this->replaceVariableValue(
+                    array_keys($variables),
+                    $this->module,
+                    $content
+                );
+            }
         }
 
         return apply_filters(BASE_FILTER_EMAIL_TEMPLATE, $content);
@@ -173,11 +193,17 @@ class MailVariable
     protected function replaceVariableValue(array $variables, $module, $content): string
     {
         foreach ($variables as $variable) {
-            $content = str_replace('{{ ' . $variable . ' }}', $this->getVariableValue($variable, $module), $content);
-            $content = str_replace('{{' . $variable . '}}', $this->getVariableValue($variable, $module), $content);
-            $content = str_replace('{{ ' . $variable . '}}', $this->getVariableValue($variable, $module), $content);
-            $content = str_replace('{{' . $variable . ' }}', $this->getVariableValue($variable, $module), $content);
-            $content = str_replace('<?php echo e(' . $variable . '); ?>', $this->getVariableValue($variable, $module), $content);
+            $keys = [
+                '{{ ' . $variable . ' }}',
+                '{{' . $variable . '}}',
+                '{{ ' . $variable . '}}',
+                '{{' . $variable . ' }}',
+                '<?php echo e(' . $variable . '); ?>',
+            ];
+
+            foreach ($keys as $key) {
+                $content = str_replace($key, $this->getVariableValue($variable, $module), $content);
+            }
         }
 
         return $content;

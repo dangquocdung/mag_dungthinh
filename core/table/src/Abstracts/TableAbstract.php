@@ -3,6 +3,7 @@
 namespace Botble\Table\Abstracts;
 
 use Assets;
+use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Support\Repositories\Interfaces\RepositoryInterface;
 use Carbon\Carbon;
 use Form;
@@ -88,6 +89,11 @@ abstract class TableAbstract extends DataTable
      * @var RepositoryInterface
      */
     protected $repository;
+
+    /**
+     * @var bool
+     */
+    protected $use_default_sorting = true;
 
     /**
      * TableAbstract constructor.
@@ -259,7 +265,7 @@ abstract class TableAbstract extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\Datatables\Html\Builder
+     * @return \Yajra\DataTables\Html\Builder
      * @author Sang Nguyen
      * @since 2.1
      * @throws \Throwable
@@ -299,7 +305,7 @@ abstract class TableAbstract extends DataTable
                         ],
                     ],
                     'emptyTable' => trans('core.base::tables.no_data'),
-                    'info' => '<span class="dt-length-records"><i class="fa fa-globe"></i> <span class="hidden-xs">' . trans('core.base::tables.show_from') . '</span> _START_ ' . trans('core.base::tables.to') . ' _END_ ' . trans('core.base::tables.in') . ' <span class="badge bold badge-dt">_TOTAL_</span> <span class="hidden-xs">' . trans('core.base::tables.records') . '</span></span>',
+                    'info' => '<span class="dt-length-records"><i class="fa fa-globe"></i> <span class="d-none d-sm-inline">' . trans('core.base::tables.show_from') . '</span> _START_ ' . trans('core.base::tables.to') . ' _END_ ' . trans('core.base::tables.in') . ' <span class="badge badge-secondary bold badge-dt">_TOTAL_</span> <span class="hidden-xs">' . trans('core.base::tables.records') . '</span></span>',
                     'infoEmpty' => trans('core.base::tables.no_record'),
                     'infoFiltered' => '(' . trans('core.base::tables.filtered_from') . ' _MAX_ ' . trans('core.base::tables.records') . ')',
                     'lengthMenu' => '<span class="dt-length-style">_MENU_</span>',
@@ -311,6 +317,7 @@ abstract class TableAbstract extends DataTable
                         'previous' => trans('pagination.previous'),
                     ],
                 ],
+                'aaSorting' => $this->use_default_sorting ? [[($this->has_checkbox ? 1 : 0), 'desc']] : [],
             ]);
     }
 
@@ -320,10 +327,16 @@ abstract class TableAbstract extends DataTable
      */
     public function htmlInitComplete()
     {
-        return 'function () {
-                $(".group-checkable").closest(".checker").show();
-                $(".group-checkable").removeClass("hidden");
-                $(".checkboxes").uniform();
+        return 'function () {' . $this->htmlInitCompleteFunction() . '}';
+    }
+
+    /**
+     * @return string
+     * @author Sang Nguyen
+     */
+    public function htmlInitCompleteFunction()
+    {
+        return '
                 $(".dataTables_wrapper").css({"width": $(this).closest(".dataTable").width()});
                 
                 if (jQuery().select2) {
@@ -340,21 +353,7 @@ abstract class TableAbstract extends DataTable
                         minimumResultsForSearch: -1
                     });
                 }
-                
-                var _self = $(this);
-                
-                if (_self.hasClass("js-drag-drop")) {
-                    _self.find("thead tr th").each(function() {
-                        var indexTh = $(this).index() + 1;
-                        if ($(this).hasClass("hidden")) {
-                            var html = $(this).removeClass("hidden").wrap("<p/>").parent().html();
-                            $(".table-tag thead").append(html);
-                            $(this).unwrap();
-                            $(this).addClass("hidden")
-                        }
-                    });
-                }
-            }';
+            ';
     }
 
     /**
@@ -367,34 +366,41 @@ abstract class TableAbstract extends DataTable
             return null;
         }
 
-        return 'function () {
-                var pagination = $(this).closest(".dataTables_wrapper").find(".dataTables_paginate");
-                pagination.toggle(this.api().page.info().pages > 1);
+        return 'function () {' . $this->htmlDrawCallbackFunction() . '}';
+    }
+
+    /**
+     * @return string
+     * @author Sang Nguyen
+     */
+    public function htmlDrawCallbackFunction()
+    {
+        return '
+            var pagination = $(this).closest(".dataTables_wrapper").find(".dataTables_paginate");
+            pagination.toggle(this.api().page.info().pages > 1);
+            
+            var data_count = this.api().data().count();
+            
+            var length_select = $(this).closest(".dataTables_wrapper").find(".dataTables_length");
+            var length_info = $(this).closest(".dataTables_wrapper").find(".dataTables_info");
+            length_select.toggle(data_count >= 10);
+            length_info.toggle(data_count > 0);
                 
-                var data_count = this.api().data().count();
-                
-                var length_select = $(this).closest(".dataTables_wrapper").find(".dataTables_length");
-                var length_info = $(this).closest(".dataTables_wrapper").find(".dataTables_info");
-                length_select.toggle(data_count >= 10);
-                length_info.toggle(data_count > 0);
-                    
-                $(".checkboxes").uniform();
-                
-                if (jQuery().select2) {
-                    $(document).find(".select-multiple").select2({
-                        width: "100%",
-                        allowClear: true,
-                        placeholder: $(this).data("placeholder")
-                    });
-                    $(document).find(".select-search-full").select2({
-                        width: "100%"
-                    });
-                    $(document).find(".select-full").select2({
-                        width: "100%",
-                        minimumResultsForSearch: -1
-                    });
-                }
-            }';
+            if (jQuery().select2) {
+                $(document).find(".select-multiple").select2({
+                    width: "100%",
+                    allowClear: true,
+                    placeholder: $(this).data("placeholder")
+                });
+                $(document).find(".select-search-full").select2({
+                    width: "100%"
+                });
+                $(document).find(".select-full").select2({
+                    width: "100%",
+                    minimumResultsForSearch: -1
+                });
+            }
+        ';
     }
 
     /**
@@ -428,6 +434,18 @@ abstract class TableAbstract extends DataTable
      * @author Sang Nguyen
      * @throws \Throwable
      */
+    public function getDefaultButtons()
+    {
+        return [
+            'reload',
+        ];
+    }
+
+    /**
+     * @return array
+     * @author Sang Nguyen
+     * @throws \Throwable
+     */
     public function getActionsButton()
     {
         if (!$this->getActions()) {
@@ -444,18 +462,6 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * @return array
-     * @author Sang Nguyen
-     * @throws \Throwable
-     */
-    public function getDefaultButtons()
-    {
-        return [
-            'reload',
-        ];
-    }
-
-    /**
      * @return mixed
      * @author Sang Nguyen
      * @since 2.1
@@ -466,18 +472,14 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * @return mixed
+     * @return array
      * @author Sang Nguyen
      * @since 2.1
      */
-    abstract public function columns();
-
-    /**
-     * @return mixed
-     * @author Sang Nguyen
-     * @since 2.1
-     */
-    abstract public function buttons();
+    public function buttons()
+    {
+        return [];
+    }
 
     /**
      * @return array
@@ -530,6 +532,13 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
+     * @return mixed
+     * @author Sang Nguyen
+     * @since 2.1
+     */
+    abstract public function columns();
+
+    /**
      * Get columns.
      *
      * @return array
@@ -573,7 +582,7 @@ abstract class TableAbstract extends DataTable
             'checkbox' => [
                 'width' => '10px',
                 'class' => 'text-left no-sort',
-                'title' => '<div class="checkbox checkbox-primary"><input type="checkbox" class="group-checkable hidden" data-set=".dataTable .checkboxes" /></div>',
+                'title' => '<input type="checkbox" class="table-check-all" data-set=".dataTable .checkboxes" />',
                 'orderable' => false,
                 'searchable' => false,
                 'exportable' => false,
@@ -611,15 +620,15 @@ abstract class TableAbstract extends DataTable
      */
     public function render($view, $data = [], $mergeData = [])
     {
-        Assets::addJavascript(['datatables', 'sortable', 'moment', 'datetimepicker'])
-            ->addStylesheets(['datatables', 'datetimepicker'])
+        Assets::addJavascript(['datatables', 'moment', 'datepicker'])
+            ->addStylesheets(['datatables', 'datepicker'])
             ->addStyleSheetsDirectly([
                 'vendor/core/css/components/table.css',
             ])
             ->addJavascriptDirectly([
                 'vendor/core/packages/bootstrap3-typeahead.min.js',
             ])
-            ->addAppModule(['datatables', 'table', 'filter']);
+            ->addAppModule(['table', 'filter']);
 
         $data['id'] = array_get($data, 'id', $this->getOption('id'));
         $data['class'] = array_get($data, 'class', $this->getOption('class'));
@@ -687,6 +696,7 @@ abstract class TableAbstract extends DataTable
      */
     public function bulkActions(): array
     {
+        $actions = [];
         if ($this->getBulkChanges()) {
             $actions['bulk-change'] = view('core.table::bulk-changes', [
                 'bulk_changes' => $this->getBulkChanges(),
@@ -709,6 +719,7 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @param $title
+     * @param null $value
      * @param $type
      * @param null $data
      * @return array
@@ -732,7 +743,7 @@ abstract class TableAbstract extends DataTable
             case 'select':
                 $attributes['class'] = $attributes['class'] . ' select';
                 $attributes['placeholder'] = trans('core.table::general.select_option');
-                $html = Form::select($input_name, $data, $value, $attributes)->toHtml();
+                $html = call_user_func_array([Form::class, 'customSelect'], [$input_name, $data, $value, $attributes])->toHtml();
                 break;
             case 'select-search':
                 $attributes['class'] = $attributes['class'] . ' select-search-full';
@@ -743,7 +754,8 @@ abstract class TableAbstract extends DataTable
                 $html = Form::number($input_name, $value, $attributes)->toHtml();
                 break;
             case 'date':
-                $attributes['class'] = $attributes['class'] . ' datetimepicker';
+                $attributes['class'] = $attributes['class'] . ' datepicker';
+                $attributes['data-date-format'] = config('core.base.general.date_format.js.date');
                 $html = view('core.table::partials.date-field', ['content' => Form::text($input_name, $value, $attributes)->toHtml()])->render();
                 break;
             default:
@@ -774,14 +786,55 @@ abstract class TableAbstract extends DataTable
      */
     public function prepareBulkChangeValue($key, $value)
     {
+        if (strpos($key, '.') !== -1) {
+            $key = array_last(explode('.', $key));
+        }
         switch ($key) {
             case 'created_at':
             case 'updated_at':
-                $value = Carbon::createFromFormat('Y/m/d', $value)->toDateTimeString();
+                $value = Carbon::createFromFormat(config('core.base.general.date_format.date'), $value)->toDateTimeString();
                 break;
         }
 
         return $value;
+    }
+
+    /**
+     * @param $ids
+     * @param $input_key
+     * @param $input_value
+     * @return boolean
+     */
+    public function saveBulkChanges($ids, $input_key, $input_value)
+    {
+        foreach ($ids as $id) {
+            $item = $this->repository->findById($id);
+            if ($item) {
+                $this->saveBulkChangeItem($item, $input_key, $input_value);
+                event(new UpdatedContentEvent($this->repository->getScreen(), request(), $item));
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param $item
+     * @param $input_key
+     * @param $input_value
+     * @return false|\Illuminate\Database\Eloquent\Model
+     */
+    public function saveBulkChangeItem($item, $input_key, $input_value)
+    {
+        $item->{$input_key} = $this->prepareBulkChangeValue($input_key, $input_value);
+        return $this->repository->createOrUpdate($item);
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilters()
+    {
+        return $this->getBulkChanges();
     }
 
     /**
@@ -793,7 +846,7 @@ abstract class TableAbstract extends DataTable
     {
         $table_id = $this->getOption('id');
         $class = get_class($this);
-        $columns = $this->getBulkChanges();
+        $columns = $this->getFilters();
 
         $request = request();
         $request_filters = [
@@ -828,19 +881,20 @@ abstract class TableAbstract extends DataTable
      */
     public function applyFilterCondition($query, $key, $operator, $value)
     {
-
-        $keys = explode('.', $key);
-        if (count($keys) > 1) {
-            $key = $keys[1];
+        if (strpos($key, '.') !== -1) {
+            $key = array_last(explode('.', $key));
         }
 
         switch ($key) {
             case 'created_at':
             case 'updated_at':
-                $value = Carbon::createFromFormat('Y/m/d', $value)->toDateString();
+                $value = Carbon::createFromFormat(config('core.base.general.date_format.date'), $value)->toDateString();
                 $query = $query->whereDate($key, $operator, $value);
                 break;
             default:
+                if ($operator !== '=') {
+                    $value = (float) $value;
+                }
                 $query = $query->where($key, $operator, $value);
         }
 

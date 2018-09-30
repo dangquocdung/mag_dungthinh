@@ -38,9 +38,9 @@ class ContactController extends BaseController
      */
     public function getList(ContactTable $dataTable)
     {
-        page_title()->setTitle(trans('plugins.contact::contact.list'));
+        page_title()->setTitle(trans('plugins.contact::contact.menu'));
 
-        return $dataTable->renderTable(['title' => trans('plugins.contact::contact.list'), 'icon' => 'fa fa-envelope-o']);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -54,6 +54,9 @@ class ContactController extends BaseController
         page_title()->setTitle(trans('plugins.contact::contact.edit'));
 
         $contact = $this->contactRepository->findById($id);
+
+        $contact->is_read = true;
+        $this->contactRepository->createOrUpdate($contact);
 
         return $formBuilder->create(ContactForm::class)->setModel($contact)->renderForm();
     }
@@ -98,7 +101,9 @@ class ContactController extends BaseController
             event(new DeletedContentEvent(CONTACT_MODULE_SCREEN_NAME, $request, $contact));
             return $response->setMessage(trans('plugins.contact::contact.deleted'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('plugins.contact::contact.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.contact::contact.cannot_delete'));
         }
     }
 
@@ -112,7 +117,9 @@ class ContactController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('plugins.contact::contact.notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('plugins.contact::contact.notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -121,7 +128,8 @@ class ContactController extends BaseController
             event(new DeletedContentEvent(CONTACT_MODULE_SCREEN_NAME, $request, $contact));
         }
 
-        return $response->setData($request->input('status'))
+        return $response
+            ->setData($request->input('status'))
             ->setMessage(trans('plugins.contact::contact.deleted'));
     }
 }

@@ -16,9 +16,7 @@ Route::group(['namespace' => 'Botble\LogViewer\Http\Controllers', 'middleware' =
                 'permission' => 'logs.delete',
             ]);
 
-            Route::group([
-                'prefix' => '{date}',
-            ], function () {
+            Route::group(['prefix' => '{date}'], function () {
                 Route::get('/', [
                     'as' => 'log-viewer::logs.show',
                     'uses' => 'LogViewerController@show',

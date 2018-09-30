@@ -13,7 +13,7 @@ class CleanCommand extends Command
      *
      * @var string
      */
-    protected $name = 'translations:clean';
+    protected $name = 'cms:translations:clean';
 
     /**
      * The console command description.

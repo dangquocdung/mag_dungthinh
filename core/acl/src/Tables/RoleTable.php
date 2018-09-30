@@ -19,11 +19,6 @@ class RoleTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -96,8 +91,7 @@ class RoleTable extends TableAbstract
                 'roles.description',
                 'roles.created_at',
                 'roles.created_by',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, ROLE_MODULE_SCREEN_NAME));
     }
 

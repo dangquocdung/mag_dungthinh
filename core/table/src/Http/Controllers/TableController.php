@@ -3,11 +3,11 @@
 namespace Botble\Table\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Table\Http\Requests\BulkChangeRequest;
 use Botble\Table\Http\Requests\FilterRequest;
 use Botble\Table\TableBuilder;
+use Exception;
 use Form;
 use Illuminate\Http\Request;
 use Validator;
@@ -81,8 +81,8 @@ class TableController extends Controller
         $ids = $request->input('ids');
         if (empty($ids)) {
             return $response
-                ->setError(true)
-                ->setMessage(__('Please select at least one record to perform this action!'));
+                ->setError()
+                ->setMessage(trans('core.table::general.please_select_record'));
         }
 
         $input_key = $request->input('key');
@@ -93,29 +93,25 @@ class TableController extends Controller
 
         if (!empty($columns[$input_key]['validate'])) {
             $validator = Validator::make($request->input(), [
-                'value' => $columns[$input_key]['validate']
+                'value' => $columns[$input_key]['validate'],
             ]);
 
             if ($validator->fails()) {
                 return $response
-                    ->setError(true)
-                    ->setMessage($validator->getMessageBag()->toArray()['value'][0]);
+                    ->setError()
+                    ->setMessage($validator->messages()->first());
             }
         }
 
-        foreach ($ids as $id) {
-            $item = $object->getRepository()
-                ->getModel()
-                ->where(['id' => $id])
-                ->first();
-            if ($item) {
-                $item->{$input_key} = $object->prepareBulkChangeValue($input_key, $input_value);
-                $object->getRepository()->createOrUpdate($item);
-                event(new UpdatedContentEvent($object->getRepository()->getScreen(), $request, $item));
-            }
+        try {
+            $object->saveBulkChanges($ids, $input_key, $input_value);
+        } catch (Exception $exception) {
+            return $response
+                ->setError()
+                ->setMessage($exception->getMessage());
         }
 
-        return $response->setMessage(__('Update data for selected record(s) successfully!'));
+        return $response->setMessage(trans('core.table::general.save_bulk_change_success'));
     }
 
     /**

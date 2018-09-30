@@ -22,4 +22,5 @@ return [
     'menu' => 'Pages',
     'menu_name' => 'Pages',
     'edit_this_page' => 'Edit this page',
+    'total_pages' => 'Total pages',
 ];

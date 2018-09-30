@@ -1,6 +1,10 @@
 .list-item-checkbox {
-    overflow   : hidden !important;
-    max-height : 320px;
+    overflow     : hidden !important;
+    max-height   : 320px;
+    padding-left : 15px;
+    li {
+        list-style : none;
+    }
     .mCSB_container {
         padding-bottom : 20px;
         .help-block.error-help-block {
@@ -47,38 +51,38 @@
 }
 
 .preview-image-wrapper {
-    position   : relative;
-    display    : inline-block;
-    min-height: 150px;
-    min-width: 150px;
-    max-width: 150px;
-    max-height: 150px;
-    height: 150px;
-    width: 150px;
-    text-align: center;
-    border: 1px solid rgba(195, 207, 216, 0.3);
-    vertical-align: middle;
-    background: #fafbfc;
+    position       : relative;
+    display        : inline-block;
+    min-height     : 150px;
+    min-width      : 150px;
+    max-width      : 150px;
+    max-height     : 150px;
+    height         : 150px;
+    width          : 150px;
+    text-align     : center;
+    border         : 1px solid rgba(195, 207, 216, 0.3);
+    vertical-align : middle;
+    background     : #fafbfc;
     img {
-        height : 150px;
-        max-width: 100%;
+        height    : 150px;
+        max-width : 100%;
     }
     &.preview-image-wrapper-not-allow-thumb {
-        min-height: auto;
-        min-width : auto;
-        max-height: 1000px;
-        height : auto;
-        width : auto;
+        min-height : auto;
+        min-width  : auto;
+        max-height : 1000px;
+        height     : auto;
+        width      : auto;
         img {
-            height : auto;
-            max-width: 150px;
+            height    : auto;
+            max-width : 150px;
         }
     }
 }
 
 .admin-logo-image-setting {
     .preview-image-wrapper {
-        background: #638ab1;
+        background : #638ab1;
     }
 }
 
@@ -208,10 +212,10 @@ form {
             label {
                 color : inherit;
             }
-            .form-control, .input-group-addon, .select2-selection {
+            .form-control, .input-group-prepend, .select2-selection {
                 border-color : #cccccc !important;
             }
-            .input-group-addon {
+            .input-group-prepend {
                 color : #555555;
             }
             .help-block {
@@ -231,7 +235,139 @@ form {
 }
 
 .field-has-error {
-    border: 1px solid #a94442 !important;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    border             : 1px solid #a94442 !important;
+    -webkit-box-shadow : inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow         : inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle {
+    text-decoration : none !important;
+    &:after {
+        display : none;
+    }
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-menu {
+    position : absolute;
+    float    : left;
+    top      : 49px;
+}
+
+.btn-secondary {
+    color            : #333333;
+    background-color : #ffffff;
+    border-color     : #cccccc;
+    &:hover {
+        color            : #333333;
+        background-color : #e6e6e6;
+        border-color     : #adadad;
+    }
+    &.focus, &:focus {
+        color            : #333333;
+        background-color : #e6e6e6;
+        border-color     : #8c8c8c;
+    }
+    &.active, &:active {
+        color            : #333333;
+        background-color : #e6e6e6;
+        border-color     : #adadad;
+    }
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show > .btn-secondary.dropdown-toggle {
+    color            : #333333;
+    background-color : #e6e6e6;
+    border-color     : #adadad;
+}
+
+.bootstrap-datetimepicker-widget, .bootstrap-timepicker-widget {
+    &.dropdown-menu {
+        display                 : block;
+        position                : absolute;
+        left                    : 0;
+        z-index                 : 1000;
+        float                   : left;
+        min-width               : 160px;
+        padding                 : 5px 0;
+        margin                  : 2px 0 0;
+        font-size               : 14px;
+        text-align              : left;
+        list-style              : none;
+        background-color        : #ffffff;
+        -webkit-background-clip : padding-box;
+        background-clip         : padding-box;
+        border                  : 1px solid rgba(0, 0, 0, .15);
+        border-radius           : 4px;
+        -webkit-box-shadow      : 0 6px 12px rgba(0, 0, 0, .175);
+        box-shadow              : 0 6px 12px rgba(0, 0, 0, .175);
+    }
+
+    .collapse.in {
+        display : block;
+    }
+
+    .glyphicon {
+        position                : relative;
+        top                     : 1px;
+        display                 : inline-block;
+        font                    : 900 normal normal 14px/1 Font Awesome\ 5 Free;
+        font-style              : normal;
+        line-height             : 1;
+        -webkit-font-smoothing  : antialiased;
+        -moz-osx-font-smoothing : grayscale;
+    }
+
+    .glyphicon-time:before {
+        content : "\f017";
+    }
+
+    .glyphicon-chevron-left:before {
+        content : "\f053";
+    }
+
+    .glyphicon-chevron-right:before {
+        content : "\f054";
+    }
+
+    .glyphicon-chevron-up:before {
+        content : "\f077";
+    }
+
+    .glyphicon-chevron-down:before {
+        content : "\f078";
+    }
+
+    .glyphicon-calendar:before {
+        content : "\f073";
+    }
+}
+
+.mt-radio > input, .mt-checkbox > input {
+    position : absolute !important;
+}
+
+h4.modal-title {
+    margin : 0;
+}
+
+.box-links-for-menu .list-item li label input {
+    margin-left : 5px;
+}
+
+.editable-buttons {
+    .editable-submit {
+        padding: 5px 10px;
+    }
+    .editable-cancel {
+        color: #333333;
+        background-color: #ffffff;
+        border-color: #cccccc;
+        padding: 5px 10px;
+    }
+}
+
+.editable-input {
+    .form-control {
+        height: 34px;
+    }
 }

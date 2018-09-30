@@ -43,4 +43,5 @@ return [
     'title' => 'Tiêu đề',
     'value' => 'Giá trị',
     'show_hide_editor' => 'Ẩn/Hiện trình soạn thảo',
+    'basic_info_title' => 'Thông tin cơ bản',
 ];

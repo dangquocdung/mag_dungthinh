@@ -2,9 +2,10 @@
 
 namespace Botble\RequestLog\Events;
 
+use Event;
 use Illuminate\Queue\SerializesModels;
 
-class RequestHandlerEvent extends \Event
+class RequestHandlerEvent extends Event
 {
     use SerializesModels;
 
@@ -15,7 +16,7 @@ class RequestHandlerEvent extends \Event
 
     /**
      * RequestHandlerEvent constructor.
-     * @param $code
+     * @param int $code
      * @author Sang Nguyen
      */
     public function __construct($code)

@@ -31,8 +31,17 @@ class SimpleSlider extends Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function slider_items()
+    public function sliderItems()
     {
         return $this->hasMany(SimpleSliderItem::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function (SimpleSlider $slider) {
+            SimpleSliderItem::where('simple_slider_id', $slider->id)->delete();
+        });
     }
 }

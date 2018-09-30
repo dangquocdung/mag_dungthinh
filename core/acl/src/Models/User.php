@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements RoleableInterface, PermissibleInterface
@@ -21,6 +22,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     use PermissibleTrait;
     use Notifiable;
     use HasApiTokens;
+    use Impersonate;
 
     /**
      * {@inheritDoc}
@@ -98,7 +100,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
 
     /**
      * Always capitalize the first name when we retrieve it
-     * @param $value
+     * @param string $value
      * @return string
      * @author Sang Nguyen
      */
@@ -109,7 +111,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
 
     /**
      * Always capitalize the last name when we retrieve it
-     * @param $value
+     * @param string $value
      * @return string
      * @author Sang Nguyen
      */
@@ -128,7 +130,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     }
 
     /**
-     * @return mixed
+     * @return string
      * @author Sang Nguyen
      */
     public function getProfileImage()
@@ -162,11 +164,11 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     }
 
     /**
-     * @param $permissions
+     * @param string $permission
      * @return boolean
      * @author Sang Nguyen
      */
-    public function hasPermission($permissions)
+    public function hasPermission($permission)
     {
         if ($this->isSuperUser()) {
             return true;
@@ -174,15 +176,15 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
         /**
          * @var PermissionsTrait $this
          */
-        return $this->hasAccess($permissions);
+        return $this->hasAccess($permission);
     }
 
     /**
-     * @param $permissions
+     * @param array $permissions
      * @return bool
      * @author Sang Nguyen
      */
-    public function hasAnyPermission($permissions)
+    public function hasAnyPermission(array $permissions)
     {
         if ($this->isSuperUser()) {
             return true;
@@ -207,7 +209,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     }
 
     /**
-     * @param $date
+     * @param string $date
      * @author Sang Nguyen
      */
     public function setDobAttribute($date)
@@ -222,7 +224,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     /**
      * @param $date
      * @author Sang Nguyen
-     * @return mixed
+     * @return string
      */
     public function getDobAttribute($date)
     {
@@ -230,7 +232,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return array
      */
     public function getPermissionsAttribute($value)
@@ -276,7 +278,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
     /**
      * Set mutator for the "permissions" attribute.
      *
-     * @param  mixed $permissions
+     * @param array $permissions
      * @return void
      */
     public function setPermissionsAttribute(array $permissions)
@@ -367,9 +369,7 @@ class User extends Authenticatable implements RoleableInterface, PermissibleInte
      */
     public function delete()
     {
-        $isSoftDeleted = array_key_exists('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this));
-
-        if ($this->exists && !$isSoftDeleted) {
+        if ($this->exists) {
             $this->activations()->delete();
             $this->roles()->detach();
         }

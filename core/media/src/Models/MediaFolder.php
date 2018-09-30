@@ -4,7 +4,6 @@ namespace Botble\Media\Models;
 
 use Botble\Media\Services\UploadsManager;
 use Eloquent;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MediaFolder extends Eloquent
@@ -45,9 +44,6 @@ class MediaFolder extends Eloquent
      */
     public function files()
     {
-        /**
-         * @var Model $this
-         */
         return $this->hasMany(MediaFile::class, 'folder_id', 'id');
     }
 
@@ -57,9 +53,6 @@ class MediaFolder extends Eloquent
      */
     public function parentFolder()
     {
-        /**
-         * @var Model $this
-         */
         return $this->hasOne(MediaFolder::class, 'id', 'parent');
     }
 
@@ -81,6 +74,9 @@ class MediaFolder extends Eloquent
                 $uploadManager = new UploadsManager();
 
                 foreach ($files as $file) {
+                    /**
+                     * @var MediaFile $file
+                     */
                     $path = str_replace(config('media.driver.' . config('filesystems.default') . '.path'), '', $file->url);
                     $uploadManager->deleteFile($path);
                     $file->forceDelete();
@@ -89,6 +85,9 @@ class MediaFolder extends Eloquent
                 $files = MediaFile::where('folder_id', '=', $folder->id)->withTrashed()->get();
 
                 foreach ($files as $file) {
+                    /**
+                     * @var MediaFile $file
+                     */
                     $file->delete();
                 }
             }
@@ -97,13 +96,5 @@ class MediaFolder extends Eloquent
         static::restoring(function ($folder) {
             MediaFile::where('folder_id', '=', $folder->id)->restore();
         });
-    }
-
-    /**
-     * @author Sang Nguyen
-     */
-    public function __wakeup()
-    {
-        parent::boot();
     }
 }

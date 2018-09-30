@@ -17,7 +17,7 @@ class WidgetCreateCommand extends Command
      *
      * @var string
      */
-    protected $name = 'widget:create';
+    protected $name = 'cms:widget:create';
 
     /**
      * The console command description.
@@ -71,7 +71,7 @@ class WidgetCreateCommand extends Command
      * Generate the module in Modules directory.
      * @author Sang Nguyen
      */
-    private function publishStubs()
+    protected function publishStubs()
     {
         $from = base_path('core/widget/stubs');
 

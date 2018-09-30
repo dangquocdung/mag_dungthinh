@@ -9,7 +9,7 @@ trait SlugTrait
     /**
      * @var string
      */
-    protected $slug;
+    protected $slug = '';
 
     /**
      * @var int
@@ -26,11 +26,10 @@ trait SlugTrait
     }
 
     /**
-     * @param $value
      * @return string
      * @author Sang Nguyen
      */
-    public function getSlugAttribute($value)
+    public function getSlugAttribute()
     {
         if ($this->key != null) {
             return $this->key;
@@ -57,7 +56,7 @@ trait SlugTrait
      * @return int
      * @author Sang Nguyen
      */
-    public function getSlugIdAttribute($value)
+    public function getSlugIdAttribute()
     {
         if ($this->slug_id != 0) {
             return $this->slug_id;

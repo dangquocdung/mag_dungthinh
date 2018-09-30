@@ -3,12 +3,9 @@
 namespace Botble\ACL\Models;
 
 use Botble\ACL\Roles\EloquentRole;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends EloquentRole
 {
-    use SoftDeletes;
-
     /**
      * The database table used by the model.
      *

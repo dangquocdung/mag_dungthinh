@@ -14,7 +14,7 @@ class LogEntryCollection extends Collection
      * @param  string $raw
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function load($raw)
     {
@@ -33,7 +33,7 @@ class LogEntryCollection extends Collection
      * @param  int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function paginate($perPage = 20)
     {
@@ -55,7 +55,7 @@ class LogEntryCollection extends Collection
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function filterByLevel($level)
     {
@@ -68,7 +68,7 @@ class LogEntryCollection extends Collection
      * Get log entries stats.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats()
     {
@@ -88,7 +88,7 @@ class LogEntryCollection extends Collection
      * @param  bool|false $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false)
     {
@@ -108,7 +108,7 @@ class LogEntryCollection extends Collection
      * Init stats counters.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function initStats()
     {

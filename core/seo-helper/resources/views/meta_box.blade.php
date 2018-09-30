@@ -11,7 +11,7 @@
         </div>
 
         <div class="page-description-seo ws-nm">
-            {{ strip_tags($meta['seo_description'] ?? (!empty($object) ? $object->description : (!empty($object) && $object->content ? string_limit_words($object->content, 250) : old('seo_meta.seo_description')))) }}
+            {{ strip_tags($meta['seo_description'] ?? (!empty($object) ? $object->description : (!empty($object) && $object->content ? str_limit($object->content, 250) : old('seo_meta.seo_description')))) }}
         </div>
     </div>
 </div>
@@ -25,6 +25,6 @@
     </div>
     <div class="form-group">
         <label for="seo_description" class="control-label">{{ trans('core.seo-helper::seo-helper.seo_description') }}</label>
-        {!! Form::textarea('seo_meta[seo_description]', strip_tags($meta['seo_description']) ?? old('seo_meta.seo_description'), ['class' => 'form-control', 'rows' => 3, 'id' => 'seo_description', 'placeholder' => trans('core.seo-helper::seo-helper.seo_description'), 'data-counter' => 120]) !!}
+        {!! Form::textarea('seo_meta[seo_description]', strip_tags($meta['seo_description']) ?? old('seo_meta.seo_description'), ['class' => 'form-control', 'rows' => 3, 'id' => 'seo_description', 'placeholder' => trans('core.seo-helper::seo-helper.seo_description'), 'data-counter' => 155]) !!}
     </div>
 </div>

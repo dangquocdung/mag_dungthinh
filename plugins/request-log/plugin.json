@@ -4,6 +4,6 @@
     "provider": "Botble\\RequestLog\\Providers\\RequestLogServiceProvider",
     "author": "Sang Nguyen",
     "url": "http://sangnguyen.info",
-    "version": "2.6",
+    "version": "3.0",
     "description": "Log error requests"
 }

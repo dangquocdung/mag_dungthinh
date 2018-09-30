@@ -6,7 +6,7 @@ export class ContextMenuService {
         if (jQuery().contextMenu) {
             $.contextMenu({
                 selector: '.js-context-menu[data-context="file"]',
-                build: function ($element, event) {
+                build: () => {
                     return {
                         items: ContextMenuService._fileContextMenu(),
                     };
@@ -15,7 +15,7 @@ export class ContextMenuService {
 
             $.contextMenu({
                 selector: '.js-context-menu[data-context="folder"]',
-                build: function ($element, event) {
+                build: () => {
                     return {
                         items: ContextMenuService._folderContextMenu(),
                     };
@@ -28,27 +28,27 @@ export class ContextMenuService {
         let items = {
             preview: {
                 name: 'Preview',
-                icon: function (opt, $itemElement, itemKey, item) {
+                icon: (opt, $itemElement, itemKey, item) => {
                     $itemElement.html('<i class="fa fa-eye" aria-hidden="true"></i> ' + item.name);
 
                     return 'context-menu-icon-updated';
                 },
-                callback: function (key, opt) {
+                callback: () => {
                     ActionsService.handlePreview();
                 }
             },
         };
 
-        _.each(Helpers.getConfigs().actions_list, function (actionGroup, key) {
-            _.each(actionGroup, function (value) {
+        _.each(Helpers.getConfigs().actions_list, (actionGroup, key) => {
+            _.each(actionGroup, (value) => {
                 items[value.action] = {
                     name: value.name,
-                    icon: function (opt, $itemElement, itemKey, item) {
+                    icon: (opt, $itemElement, itemKey, item) => {
                         $itemElement.html('<i class="' + value.icon + '" aria-hidden="true"></i> ' + (RV_MEDIA_CONFIG.translations.actions_list[key][value.action] || item.name));
 
                         return 'context-menu-icon-updated';
                     },
-                    callback: function (key, opt) {
+                    callback: () => {
                         $('.js-files-action[data-action="' + value.action + '"]').trigger('click');
                     }
                 };
@@ -78,7 +78,7 @@ export class ContextMenuService {
                 break;
         }
 
-        _.each(except, function (value) {
+        _.each(except, (value) => {
             items[value] = undefined;
         });
 
@@ -138,7 +138,7 @@ export class ContextMenuService {
         }
 
         let can_preview = false;
-        _.each(selectedFiles, function (value) {
+        _.each(selectedFiles, (value) => {
             if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
                 can_preview = true;
             }

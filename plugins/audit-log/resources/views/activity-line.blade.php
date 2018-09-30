@@ -9,10 +9,10 @@
     @endif
     @if ($history->reference_name)
         @if (empty($history->user) || $history->user->getFullName() != $history->reference_name)
-            "{{ string_limit_words($history->reference_name, 30) }}"
+            "{{ str_limit($history->reference_name, 40) }}"
         @endif
     @endif
     .
 </span>
-<span class="small italic">{{ Carbon::parse($history->created_at)->diffForHumans() }} </span>
-<span>({{ $history->ip_address }})</span>
+<span class="small italic">{{ Carbon\Carbon::parse($history->created_at)->diffForHumans() }} </span>
+<span>(<a href="https://whatismyipaddress.com/ip/{{ $history->ip_address }}" target="_blank" title="{{ $history->ip_address }}">{{ $history->ip_address }}</a>)</span>

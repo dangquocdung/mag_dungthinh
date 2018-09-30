@@ -46,6 +46,7 @@ class CropAvatar
      */
     public function __construct($src, $data, $file)
     {
+        $this->src = $src;
         $this->props = $file;
         $this->setData($data);
         $this->crop($this->data);
@@ -69,13 +70,14 @@ class CropAvatar
      * @param $data
      * @author Sang Nguyen
      * @since 08/19/2015
+     * @throws \League\Flysystem\FileNotFoundException
      */
     protected function crop($data)
     {
         if (!empty($data)) {
             $tmpFile = storage_path() . DIRECTORY_SEPARATOR . microtime(true) . '.' . $this->props['ext'];
             $tmpThumbFile = storage_path() . DIRECTORY_SEPARATOR . microtime(true) . '_thumb.' . $this->props['ext'];
-            file_put_contents($tmpFile, Storage::read($this->props['path']));
+            file_put_contents($tmpFile, Storage::disk()->read($this->props['path']));
             $type = exif_imagetype($tmpFile);
             $src_img = null;
             switch ($type) {
@@ -131,7 +133,7 @@ class CropAvatar
                     return;
                 } else {
                     // cleanup
-                    Storage::put($this->props['realPath'], file_get_contents($tmpThumbFile), 'public');
+                    Storage::disk()->put($this->props['realPath'], file_get_contents($tmpThumbFile), 'public');
                     @unlink($tmpFile);
                     @unlink($tmpThumbFile);
 

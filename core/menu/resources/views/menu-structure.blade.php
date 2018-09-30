@@ -1,6 +1,6 @@
 @if (!empty($menu) && $menu->id)
     <input type="hidden" name="deleted_nodes">
-    <textarea name="menu_nodes" id="nestable-output" class="form-control hide"></textarea>
+    <textarea name="menu_nodes" id="nestable-output" class="form-control hidden"></textarea>
     <div class="row widget-menu">
         <div class="col-md-4">
             <div class="panel-group" id="accordion">
@@ -37,13 +37,18 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="target">{{ trans('core.menu::menu.target') }}</label>
-                                            <select name="target" class="form-control select-full" id="target">
-                                                <option value="_self">{{ trans('core.menu::menu.self_open_link') }}</option>
-                                                <option value="_blank">{{ trans('core.menu::menu.blank_open_link') }}</option>
-                                            </select>
+                                            <div class="ui-select-wrapper">
+                                                <select name="target" class="ui-select" id="target">
+                                                    <option value="_self">{{ trans('core.menu::menu.self_open_link') }}</option>
+                                                    <option value="_blank">{{ trans('core.menu::menu.blank_open_link') }}</option>
+                                                </select>
+                                                <svg class="svg-next-icon svg-next-icon-size-16">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                                                </svg>
+                                            </div>
                                         </div>
 
-                                        <div class="text-right form-group node-actions hide">
+                                        <div class="text-right form-group node-actions hidden">
                                             <a class="btn red btn-remove" href="#">{{ trans('core.menu::menu.remove') }}</a>
                                             <a class="btn blue btn-cancel" href="#">{{ trans('core.menu::menu.cancel') }}</a>
                                         </div>

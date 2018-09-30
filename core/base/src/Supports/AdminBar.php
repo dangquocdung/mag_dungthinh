@@ -39,17 +39,8 @@ class AdminBar
      */
     public function __construct()
     {
-        $this->groups['appearance']['items'] = [
-            'Menu' => route('menus.list'),
-            'Theme' => route('theme.list'),
-            'Widget' => route('widgets.list'),
-            'Setting' => route('settings.options'),
-        ];
-
-        $this->groups['add-new']['items'] = [
-            'User' => route('users.list'),
-            'Page' => route('pages.list'),
-        ];
+        $this->groups['appearance']['items'] = [];
+        $this->groups['add-new']['items'] = [];
     }
 
     /**
@@ -93,6 +84,7 @@ class AdminBar
     public function registerGroup($slug, $title, $link = 'javascript:;')
     {
         if (isset($this->groups[$slug])) {
+            $this->groups[$slug]['items'][$title] = $link;
             return $this;
         }
         $this->groups[$slug] = [

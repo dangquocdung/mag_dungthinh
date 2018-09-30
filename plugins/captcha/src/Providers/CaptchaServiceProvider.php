@@ -20,7 +20,7 @@ class CaptchaServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function register()
     {
@@ -28,8 +28,8 @@ class CaptchaServiceProvider extends ServiceProvider
 
         $this->app->bind(Captcha::class, function () {
             return new Captcha(
-                config('plugins.captcha.general.secret'),
-                config('plugins.captcha.general.sitekey'),
+                setting('captcha_secret', config('plugins.captcha.general.secret')),
+                setting('captcha_site_key', config('plugins.captcha.general.site_key')),
                 config('plugins.captcha.general.lang'),
                 config('plugins.captcha.general.attributes', [])
             );
@@ -39,7 +39,7 @@ class CaptchaServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function boot()
     {
@@ -58,6 +58,10 @@ class CaptchaServiceProvider extends ServiceProvider
 
         $this->setIsInConsole($this->app->runningInConsole())
             ->setNamespace('plugins/captcha')
-            ->loadAndPublishConfigurations(['general']);
+            ->loadAndPublishConfigurations(['general'])
+            ->loadAndPublishViews()
+            ->loadAndPublishTranslations();
+
+        $this->app->register(HookServiceProvider::class);
     }
 }

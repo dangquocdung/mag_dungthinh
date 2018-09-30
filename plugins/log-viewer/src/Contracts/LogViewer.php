@@ -16,7 +16,7 @@ interface LogViewer extends Patternable
      * @param  bool|false $flip
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function levels($flip = false);
 
@@ -26,7 +26,7 @@ interface LogViewer extends Patternable
      * @param  string|null $locale
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function levelsNames($locale = null);
 
@@ -36,7 +36,7 @@ interface LogViewer extends Patternable
      * @param  string $path
      *
      * @return \Botble\LogViewer\LogViewer
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPath($path);
 
@@ -44,7 +44,7 @@ interface LogViewer extends Patternable
      * Get all logs.
      *
      * @return LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function all();
 
@@ -54,7 +54,7 @@ interface LogViewer extends Patternable
      * @param  int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function paginate($perPage = 30);
 
@@ -64,7 +64,7 @@ interface LogViewer extends Patternable
      * @param  string $date
      *
      * @return Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get($date);
 
@@ -75,7 +75,7 @@ interface LogViewer extends Patternable
      * @param  string $level
      *
      * @return LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function entries($date, $level = 'all');
 
@@ -87,7 +87,7 @@ interface LogViewer extends Patternable
      * @param  array $headers
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function download($date, $filename = null, $headers = []);
 
@@ -95,7 +95,7 @@ interface LogViewer extends Patternable
      * Get logs statistics.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats();
 
@@ -105,7 +105,7 @@ interface LogViewer extends Patternable
      * @param  string|null $locale
      *
      * @return StatsTable
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function statsTable($locale = null);
 
@@ -117,7 +117,7 @@ interface LogViewer extends Patternable
      * @return bool
      *
      * @throws FilesystemException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function delete($date);
 
@@ -125,7 +125,7 @@ interface LogViewer extends Patternable
      * List the log files.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function files();
 
@@ -133,7 +133,7 @@ interface LogViewer extends Patternable
      * List the log files (only dates).
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates();
 
@@ -141,7 +141,7 @@ interface LogViewer extends Patternable
      * Get logs count.
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function count();
 
@@ -151,7 +151,7 @@ interface LogViewer extends Patternable
      * @param  string $level
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function total($level = 'all');
 
@@ -161,7 +161,7 @@ interface LogViewer extends Patternable
      * @param  bool|false $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false);
 
@@ -171,7 +171,7 @@ interface LogViewer extends Patternable
      * @param  bool|true $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function menu($trans = true);
 
@@ -179,7 +179,7 @@ interface LogViewer extends Patternable
      * Determine if the log folder is empty or not.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isEmpty();
 }

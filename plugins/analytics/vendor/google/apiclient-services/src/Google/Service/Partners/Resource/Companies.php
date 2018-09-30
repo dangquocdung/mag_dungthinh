@@ -31,10 +31,10 @@ class Google_Service_Partners_Resource_Companies extends Google_Service_Resource
    * @param string $companyId The ID of the company to retrieve.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string requestMetadata.userOverrides.userId Logged-in user ID to
-   * impersonate instead of the user's ID.
    * @opt_param string requestMetadata.partnersSessionId Google Partners session
    * ID.
+   * @opt_param string requestMetadata.userOverrides.userId Logged-in user ID to
+   * impersonate instead of the user's ID.
    * @opt_param string view The view of `Company` resource to be returned. This
    * must not be `COMPANY_VIEW_UNSPECIFIED`.
    * @opt_param string requestMetadata.locale Locale to use for the current
@@ -47,18 +47,18 @@ class Google_Service_Partners_Resource_Companies extends Google_Service_Resource
    * created by a team which redirected the traffic to us.
    * @opt_param string requestMetadata.userOverrides.ipAddress IP address to use
    * instead of the user's geo-located IP address.
-   * @opt_param string requestMetadata.experimentIds Experiment IDs the current
-   * request belongs to.
    * @opt_param string currencyCode If the company's budget is in a different
    * currency code than this one, then the converted budget is converted to this
    * currency code.
+   * @opt_param string requestMetadata.experimentIds Experiment IDs the current
+   * request belongs to.
+   * @opt_param string requestMetadata.trafficSource.trafficSubId Second level
+   * identifier to indicate where the traffic comes from. An identifier has
+   * multiple letters created by a team which redirected the traffic to us.
    * @opt_param string orderBy How to order addresses within the returned company.
    * Currently, only `address` and `address desc` is supported which will sorted
    * by closest to farthest in distance from given address and farthest to closest
    * distance from given address respectively.
-   * @opt_param string requestMetadata.trafficSource.trafficSubId Second level
-   * identifier to indicate where the traffic comes from. An identifier has
-   * multiple letters created by a team which redirected the traffic to us.
    * @return Google_Service_Partners_GetCompanyResponse
    */
   public function get($companyId, $optParams = array())
@@ -97,10 +97,10 @@ class Google_Service_Partners_Resource_Companies extends Google_Service_Resource
    * "services" field.
    * @opt_param string maxMonthlyBudget.currencyCode The 3-letter currency code
    * defined in ISO 4217.
-   * @opt_param string minMonthlyBudget.currencyCode The 3-letter currency code
-   * defined in ISO 4217.
    * @opt_param string requestMetadata.userOverrides.userId Logged-in user ID to
    * impersonate instead of the user's ID.
+   * @opt_param string minMonthlyBudget.currencyCode The 3-letter currency code
+   * defined in ISO 4217.
    * @opt_param string view The view of the `Company` resource to be returned.
    * This must not be `COMPANY_VIEW_UNSPECIFIED`.
    * @opt_param string requestMetadata.locale Locale to use for the current
@@ -118,11 +118,11 @@ class Google_Service_Partners_Resource_Companies extends Google_Service_Resource
    * @opt_param string services List of services that the returned agencies should
    * provide. If this is not empty, any returned agency must have at least one of
    * these services, or one of the specializations in the "specializations" field.
+   * @opt_param string maxMonthlyBudget.units The whole units of the amount. For
+   * example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
    * @opt_param string requestMetadata.trafficSource.trafficSourceId Identifier to
    * indicate where the traffic comes from. An identifier has multiple letters
    * created by a team which redirected the traffic to us.
-   * @opt_param string maxMonthlyBudget.units The whole units of the amount. For
-   * example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
    * @opt_param string requestMetadata.trafficSource.trafficSubId Second level
    * identifier to indicate where the traffic comes from. An identifier has
    * multiple letters created by a team which redirected the traffic to us.

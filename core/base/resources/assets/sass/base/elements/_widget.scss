@@ -86,8 +86,9 @@
             top         : -3px;
             position    : relative;
             font-size   : 13px;
-            font-family : FontAwesome;
+            font-family : Font Awesome\ 5 Free;
             color       : #acacac;
+            font-weight : 900;
 
             &:before {
                 content : "\f065";
@@ -413,4 +414,8 @@
     .widget-body {
         min-height : 0;
     }
+}
+
+.panel-group .widget.panel {
+    margin : 10px 0;
 }

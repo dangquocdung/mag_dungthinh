@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateAuditHistory extends Migration
 {
@@ -12,7 +13,8 @@ class CreateAuditHistory extends Migration
      */
     public function up()
     {
-        Schema::create('audit_history', function ($table) {
+        Schema::create('audit_history', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->string('module', 60)->index();
             $table->text('request')->nullable();

@@ -27,7 +27,7 @@ class Factory implements FactoryContract
      *
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      * @param  \Botble\LogViewer\Contracts\Utilities\LogLevels $levels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(
         FilesystemContract $filesystem,
@@ -42,7 +42,7 @@ class Factory implements FactoryContract
      * Get the filesystem instance.
      *
      * @return \Botble\LogViewer\Contracts\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getFilesystem()
     {
@@ -55,7 +55,7 @@ class Factory implements FactoryContract
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      *
      * @return \Botble\LogViewer\Utilities\Factory
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setFilesystem(FilesystemContract $filesystem)
     {
@@ -68,7 +68,7 @@ class Factory implements FactoryContract
      * Get the log levels instance.
      *
      * @return \Botble\LogViewer\Contracts\Utilities\LogLevels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getLevels()
     {
@@ -81,7 +81,7 @@ class Factory implements FactoryContract
      * @param  \Botble\LogViewer\Contracts\Utilities\LogLevels $levels
      *
      * @return \Botble\LogViewer\Utilities\Factory
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setLevels(LogLevelsContract $levels)
     {
@@ -96,7 +96,7 @@ class Factory implements FactoryContract
      * @param  string $storagePath
      *
      * @return \Botble\LogViewer\Utilities\Factory
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPath($storagePath)
     {
@@ -109,7 +109,7 @@ class Factory implements FactoryContract
      * Get the log pattern.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getPattern()
     {
@@ -124,7 +124,7 @@ class Factory implements FactoryContract
      * @param  string $extension
      *
      * @return \Botble\LogViewer\Utilities\Factory
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPattern(
         $prefix = FilesystemContract::PATTERN_PREFIX,
@@ -141,7 +141,7 @@ class Factory implements FactoryContract
      * Get all logs.
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function logs()
     {
@@ -152,7 +152,7 @@ class Factory implements FactoryContract
      * Get all logs (alias).
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function all()
     {
@@ -165,7 +165,7 @@ class Factory implements FactoryContract
      * @param  int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function paginate($perPage = 30)
     {
@@ -178,7 +178,7 @@ class Factory implements FactoryContract
      * @param  string $date
      *
      * @return \Botble\LogViewer\Entities\Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function log($date)
     {
@@ -191,7 +191,7 @@ class Factory implements FactoryContract
      * @param  string $date
      *
      * @return \Botble\LogViewer\Entities\Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get($date)
     {
@@ -205,7 +205,7 @@ class Factory implements FactoryContract
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function entries($date, $level = 'all')
     {
@@ -216,7 +216,7 @@ class Factory implements FactoryContract
      * Get logs statistics.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats()
     {
@@ -229,7 +229,7 @@ class Factory implements FactoryContract
      * @param  string|null $locale
      *
      * @return \Botble\LogViewer\Tables\StatsTable
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function statsTable($locale = null)
     {
@@ -240,7 +240,7 @@ class Factory implements FactoryContract
      * List the log files (dates).
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates()
     {
@@ -251,7 +251,7 @@ class Factory implements FactoryContract
      * Get logs count.
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function count()
     {
@@ -264,7 +264,7 @@ class Factory implements FactoryContract
      * @param  string $level
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function total($level = 'all')
     {
@@ -277,7 +277,7 @@ class Factory implements FactoryContract
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false)
     {
@@ -290,7 +290,7 @@ class Factory implements FactoryContract
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function menu($trans = true)
     {
@@ -301,7 +301,7 @@ class Factory implements FactoryContract
      * Determine if the log folder is empty or not.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isEmpty()
     {

@@ -2,11 +2,11 @@
 @section('content')
     <div class="tabbable-custom tabbable-tabdrop">
         <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#tab_detail" data-toggle="tab">{{ trans('core.base::tabs.detail') }}</a>
+            <li class="nav-item">
+                <a href="#tab_detail" class="nav-link active" data-toggle="tab">{{ trans('core.base::tabs.detail') }}</a>
             </li>
-            <li>
-                <a href="#tab_settings" data-toggle="tab">{{ trans('plugins.language::language.settings') }}</a>
+            <li class="nav-item">
+                <a href="#tab_settings" class="nav-link" data-toggle="tab">{{ trans('plugins.language::language.settings') }}</a>
             </li>
             {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TABS, null, LANGUAGE_MODULE_SCREEN_NAME) !!}
         </ul>
@@ -111,26 +111,47 @@
                         <div class="col-md-6">
                             <br>
                             <div class="form-group @if ($errors->has('language_hide_default')) has-error @endif">
-                                {!! Form::onOff('language_hide_default', old('language_hide_default', setting('language_hide_default', false))) !!}
-                                <label for="language_hide_default">{{ trans('plugins.language::language.language_hide_default') }}</label>
+                                <label class="text-title-field"
+                                       for="language_hide_default">{{ trans('plugins.language::language.language_hide_default') }}
+                                </label>
+                                <label class="hrv-label">
+                                    <input type="radio" name="language_hide_default" class="hrv-radio"
+                                           value="1"
+                                           @if (setting('language_hide_default', true)) checked @endif>{{ trans('core.setting::setting.general.yes') }}
+                                </label>
+                                <label class="hrv-label">
+                                    <input type="radio" name="language_hide_default" class="hrv-radio"
+                                           value="0"
+                                           @if (!setting('language_hide_default', true)) checked @endif>{{ trans('core.setting::setting.general.no') }}
+                                </label>
                             </div>
                             <div class="form-group @if ($errors->has('language_display')) has-error @endif">
                                 <label for="language_display">{{ trans('plugins.language::language.language_display') }}</label>
-                                {!! Form::select('language_display', ['all' => trans('plugins.language::language.language_display_all'), 'flag' => trans('plugins.language::language.language_display_flag_only'), 'name' => trans('plugins.language::language.language_display_name_only')], setting('language_display', 'all'), ['class' => 'select-full', 'id' => 'language_display']) !!}
+                                <div class="ui-select-wrapper">
+                                    {!! Form::select('language_display', ['all' => trans('plugins.language::language.language_display_all'), 'flag' => trans('plugins.language::language.language_display_flag_only'), 'name' => trans('plugins.language::language.language_display_name_only')], setting('language_display', 'all'), ['class' => 'ui-select', 'id' => 'language_display']) !!}
+                                    <svg class="svg-next-icon svg-next-icon-size-16">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                                    </svg>
+                                </div>
                             </div>
 
                             <div class="form-group @if ($errors->has('language_switcher_display')) has-error @endif">
                                 <label for="language_switcher_display">{{ trans('plugins.language::language.switcher_display') }}</label>
-                                {!! Form::select('language_switcher_display', ['dropdown' => trans('plugins.language::language.language_switcher_display_dropdown'), 'list' => trans('plugins.language::language.language_switcher_display_list')], setting('language_switcher_display', 'dropdown'), ['class' => 'select-full', 'id' => 'language_switcher_display']) !!}
+                                <div class="ui-select-wrapper">
+                                    {!! Form::select('language_switcher_display', ['dropdown' => trans('plugins.language::language.language_switcher_display_dropdown'), 'list' => trans('plugins.language::language.language_switcher_display_list')], setting('language_switcher_display', 'dropdown'), ['class' => 'ui-select', 'id' => 'language_switcher_display']) !!}
+                                    <svg class="svg-next-icon svg-next-icon-size-16">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                                    </svg>
+                                </div>
                             </div>
 
                             <div class="form-group @if ($errors->has('language_hide_languages')) has-error @endif">
                                 <label for="language_hide_languages">{{ trans('plugins.language::language.hide_languages') }}</label>
-                                <p><small>{{ trans('plugins.language::language.hide_languages_description') }}</small></p>
+                                <p><span style="font-size: 90%;">{{ trans('plugins.language::language.hide_languages_description') }}</span></p>
                                 <ul class="list-item-checkbox">
                                     @foreach (Language::getActiveLanguage() as $language)
                                         @if (!$language->lang_is_default)
-                                            <li>
+                                            <li style="padding-left: 10px;">
                                                 <input type="checkbox" class="icheck" name="language_hide_languages[]" value="{{ $language->lang_id }}" id="language_hide_languages_item-{{ $language->lang_code }}" @if (in_array($language->lang_id, json_decode(setting('language_hide_languages', '[]'), true))) checked="checked" @endif>
                                                 <label for="language_hide_languages_item-{{ $language->lang_code }}">{{ $language->lang_name }}</label>
                                             </li>
@@ -138,6 +159,22 @@
                                     @endforeach
                                 </ul>
                                 {!! Form::helper(trans_choice('plugins.language::language.hide_languages_helper_display_hidden', count(json_decode(setting('language_hide_languages', '[]'), true)), ['language' => Language::getHiddenLanguageText()])) !!}
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-title-field"
+                                       for="language_show_default_item_if_current_version_not_existed">{{ trans('plugins.language::language.language_show_default_item_if_current_version_not_existed') }}
+                                </label>
+                                <label class="hrv-label">
+                                    <input type="radio" name="language_show_default_item_if_current_version_not_existed" class="hrv-radio"
+                                           value="1"
+                                           @if (setting('language_show_default_item_if_current_version_not_existed', true)) checked @endif>{{ trans('core.setting::setting.general.yes') }}
+                                </label>
+                                <label class="hrv-label">
+                                    <input type="radio" name="language_show_default_item_if_current_version_not_existed" class="hrv-radio"
+                                           value="0"
+                                           @if (!setting('language_show_default_item_if_current_version_not_existed', true)) checked @endif>{{ trans('core.setting::setting.general.no') }}
+                                </label>
                             </div>
 
                             <div class="text-left">
@@ -151,16 +188,4 @@
             </div>
         </div>
     </div>
-@stop
-@section('javascript')
-    <script>
-        var BLanguage = BLanguage || {};
-
-        BLanguage.routes = {
-            set_default: '{{ route('languages.set.default') }}',
-            get_language: '{{ route('languages.get') }}',
-            store: '{{ route('languages.store') }}',
-            edit: '{{ route('languages.edit') }}'
-        };
-    </script>
 @stop

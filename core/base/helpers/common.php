@@ -130,7 +130,7 @@ if (!function_exists('table_featured')) {
 function check_database_connection()
 {
     try {
-        DB::connection()->reconnect();
+        DB::connection(config('database.default'))->reconnect();
         return true;
     } catch (Exception $ex) {
         return false;
@@ -423,9 +423,9 @@ if (!function_exists('get_cms_version')) {
     function get_cms_version()
     {
         try {
-            return get_file_data(base_path('/core/base/VERSION'), false);
+            return get_file_data(base_path('/core/VERSION'), false);
         } catch (Exception $exception) {
-            return '3.1';
+            return '3.3';
         }
     }
 }

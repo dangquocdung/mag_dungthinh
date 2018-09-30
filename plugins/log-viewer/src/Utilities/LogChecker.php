@@ -55,7 +55,7 @@ class LogChecker implements LogCheckerContract
      *
      * @param  \Illuminate\Contracts\Config\Repository $config
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(ConfigContract $config, FilesystemContract $filesystem)
     {
@@ -71,7 +71,7 @@ class LogChecker implements LogCheckerContract
      * @param  \Illuminate\Contracts\Config\Repository $config
      *
      * @return \Botble\LogViewer\Utilities\LogChecker
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setConfig(ConfigContract $config)
     {
@@ -86,7 +86,7 @@ class LogChecker implements LogCheckerContract
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      *
      * @return \Botble\LogViewer\Utilities\LogChecker
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setFilesystem(FilesystemContract $filesystem)
     {
@@ -99,7 +99,7 @@ class LogChecker implements LogCheckerContract
      * Refresh the checks.
      *
      * @return \Botble\LogViewer\Utilities\LogChecker
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function refresh()
     {
@@ -123,7 +123,7 @@ class LogChecker implements LogCheckerContract
      * @param  string $handler
      *
      * @return \Botble\LogViewer\Utilities\LogChecker
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function setHandler($handler)
     {
@@ -134,7 +134,7 @@ class LogChecker implements LogCheckerContract
 
     /**
      * Check the handler mode.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function checkHandler()
     {
@@ -149,7 +149,7 @@ class LogChecker implements LogCheckerContract
      * Is a daily handler mode ?
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isDaily()
     {
@@ -162,7 +162,7 @@ class LogChecker implements LogCheckerContract
      * @param  string $handler
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isSameHandler($handler)
     {
@@ -171,7 +171,7 @@ class LogChecker implements LogCheckerContract
 
     /**
      * Check all log files.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function checkLogFiles()
     {
@@ -184,7 +184,7 @@ class LogChecker implements LogCheckerContract
      * Check a log file.
      *
      * @param  string $path
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function checkLogFile($path)
     {
@@ -211,7 +211,7 @@ class LogChecker implements LogCheckerContract
      * @param  string $file
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isSingleLogFile($file)
     {
@@ -224,7 +224,7 @@ class LogChecker implements LogCheckerContract
      * @param  string $file
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isInvalidLogDate($file)
     {
@@ -241,7 +241,7 @@ class LogChecker implements LogCheckerContract
      * Get messages.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function messages()
     {
@@ -254,7 +254,7 @@ class LogChecker implements LogCheckerContract
      * Check if the checker fails.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function fails()
     {
@@ -265,7 +265,7 @@ class LogChecker implements LogCheckerContract
      * Check if the checker passes.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function passes()
     {
@@ -278,7 +278,7 @@ class LogChecker implements LogCheckerContract
      * Get the requirements.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function requirements()
     {

@@ -26,8 +26,8 @@ class CreatePagesTable extends Migration
             $table->tinyInteger('featured')->default(0);
             $table->tinyInteger('order')->default(0)->nullable();
             $table->string('description', 400)->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
             $table->engine = 'InnoDB';
         });
     }

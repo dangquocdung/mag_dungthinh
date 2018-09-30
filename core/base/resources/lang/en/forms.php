@@ -35,6 +35,7 @@ return [
     'update' => 'Update',
     'publish' => 'Publish',
     'remove_image' => 'Remove image',
+    'remove_file' => 'Remove file',
     'order' => 'Order',
     'alias' => 'Alias',
     'basic_information' => 'Basic information',
@@ -43,4 +44,5 @@ return [
     'add' => 'Add',
     'link' => 'Link',
     'show_hide_editor' => 'Show/Hide Editor',
+    'basic_info_title' => 'Basic information',
 ];

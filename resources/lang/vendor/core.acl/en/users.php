@@ -28,7 +28,6 @@ return [
     'save' => 'Save',
     'cannot_delete' => 'User could not be deleted',
     'deleted' => 'User deleted',
-    'list' => 'List Users',
     'last_login' => 'Last Login',
     'error_update_profile_image' => 'Error when update profile image',
     'email_reminder_template' => '<h3>Hello :name</h3><p>The system has received a request to restore the password for your account, to complete this task please click the link below.</p><p><a href=":link">Reset password now</a></p><p>If not you ask recover password, please ignore this email.</p><p>This email is valid for 60 minutes after receiving the email.</p>',
@@ -61,4 +60,5 @@ return [
         'male' => 'Male',
         'female' => 'Female',
     ],
+    'total_users' => 'Total users',
 ];

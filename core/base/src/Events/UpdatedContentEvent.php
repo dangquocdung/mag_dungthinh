@@ -28,7 +28,7 @@ class UpdatedContentEvent extends Event
      * CreatedContentEvent constructor.
      * @param string $screen
      * @param Request $request
-     * @param \Eloquent|false $data
+     * @param \Eloquent|false|\stdClass $data
      */
     public function __construct($screen, $request, $data)
     {

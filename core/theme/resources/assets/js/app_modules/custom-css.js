@@ -1,3 +1,3 @@
-$(document).ready(function () {
+$(document).ready(() => {
     Botble.initCodeEditor('custom_css');
 });

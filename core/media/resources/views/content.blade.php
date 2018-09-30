@@ -20,20 +20,20 @@
                         @if (array_key_exists('image', config('media.mime_types', [])))
                             <li>
                                 <a href="#" class="js-rv-media-change-filter" data-type="filter" data-value="image">
-                                    <i class="fa fa-file-image-o"></i> {{ trans('media::media.image') }}
+                                    <i class="fa fa-file-image"></i> {{ trans('media::media.image') }}
                                 </a>
                             </li>
                         @endif
                         @if (array_key_exists('video', config('media.mime_types', [])))
                             <li>
                                 <a href="#" class="js-rv-media-change-filter" data-type="filter" data-value="video">
-                                    <i class="fa fa-file-video-o"></i> {{ trans('media::media.video') }}
+                                    <i class="fa fa-file-video"></i> {{ trans('media::media.video') }}
                                 </a>
                             </li>
                         @endif
                         <li>
                             <a href="#" class="js-rv-media-change-filter" data-type="filter" data-value="document">
-                                <i class="fa fa-file-o"></i> {{ trans('media::media.document') }}
+                                <i class="fa fa-file"></i> {{ trans('media::media.document') }}
                             </a>
                         </li>
                     </ul>
@@ -59,7 +59,7 @@
                         @endif
                         <li>
                             <a href="#" class="js-rv-media-change-filter" data-type="view_in" data-value="recent">
-                                <i class="fa fa-clock-o"></i> {{ trans('media::media.recent') }}
+                                <i class="fa fa-clock"></i> {{ trans('media::media.recent') }}
                             </a>
                         </li>
                         <li>
@@ -86,7 +86,7 @@
                         </label>
                         @if (RvMedia::hasPermission('files.create'))
                             <button class="btn btn-success js-dropzone-upload">
-                                <i class="fa fa-cloud-upload"></i> {{ trans('media::media.upload') }}
+                                <i class="fas fa-cloud-upload-alt"></i> {{ trans('media::media.upload') }}
                             </button>
                         @endif
                         @if (config('media.allow_external_services') && RvMedia::hasPermission('files.create'))
@@ -101,7 +101,7 @@
                                                 <i class="fa fa-youtube"></i> {{ trans('media::media.youtube') }}
                                             </a>
                                         </li>
-                                        @if (app()->environment() == 'demo')
+                                        @if (app()->environment('demo'))
                                             <li>
                                                 <a href="#" data-toggle="modal" data-target="#modal_coming_soon">
                                                     <i class="fa fa-vimeo"></i> {{ trans('media::media.vimeo') }}
@@ -128,7 +128,7 @@
                             </button>
                         @endif
                         <button class="btn btn-success js-change-action" data-type="refresh">
-                            <i class="fa fa-refresh"></i> {{ trans('media::media.refresh') }}
+                            <i class="fas fa-sync"></i> {{ trans('media::media.refresh') }}
                         </button>
 
                         @if (config('media.sidebar_display') != 'vertical')
@@ -146,20 +146,20 @@
                                         @if (array_key_exists('image', config('media.mime_types', [])))
                                             <li>
                                                 <a href="#" class="js-rv-media-change-filter" data-type="filter" data-value="image">
-                                                    <i class="fa fa-file-image-o"></i> {{ trans('media::media.image') }}
+                                                    <i class="fa fa-file-image"></i> {{ trans('media::media.image') }}
                                                 </a>
                                             </li>
                                         @endif
                                         @if (array_key_exists('video', config('media.mime_types', [])))
                                             <li>
                                                 <a href="#" class="js-rv-media-change-filter" data-type="filter" data-value="video">
-                                                    <i class="fa fa-file-video-o"></i> {{ trans('media::media.video') }}
+                                                    <i class="fa fa-file-video"></i> {{ trans('media::media.video') }}
                                                 </a>
                                             </li>
                                         @endif
                                         <li>
                                             <a href="#" class="js-rv-media-change-filter" data-type="filter" data-value="document">
-                                                <i class="fa fa-file-o"></i> {{ trans('media::media.document') }}
+                                                <i class="fa fa-file"></i> {{ trans('media::media.document') }}
                                             </a>
                                         </li>
                                     </ul>
@@ -184,7 +184,7 @@
                                     </li>
                                     <li>
                                         <a href="#" class="js-rv-media-change-filter" data-type="view_in" data-value="recent">
-                                            <i class="fa fa-clock-o"></i> {{ trans('media::media.recent') }}
+                                            <i class="fa fa-clock"></i> {{ trans('media::media.recent') }}
                                         </a>
                                     </li>
                                     <li>
@@ -199,7 +199,7 @@
 
                         @if (RvMedia::hasAnyPermission(['folders.delete', 'files.delete']))
                             <button class="btn btn-danger js-files-action hidden" data-action="empty_trash">
-                                <i class="fa fa-trash-o"></i> {{ trans('media::media.empty_trash') }}
+                                <i class="fa fa-trash"></i> {{ trans('media::media.empty_trash') }}
                             </button>
                         @endif
 
@@ -220,7 +220,7 @@
                     <div class="rv-media-tools">
                         <div class="btn-group" role="group">
                             <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle"
+                                <button class="btn btn-secondary dropdown-toggle"
                                         type="button"
                                         data-toggle="dropdown">
                                     {{ trans('media::media.sort') }} <i class="fa fa-sort-alpha-desc"></i>
@@ -296,7 +296,7 @@
                                 </ul>
                             </div>
                             <div class="dropdown rv-dropdown-actions disabled">
-                                <button class="btn btn-default dropdown-toggle"
+                                <button class="btn btn-secondary dropdown-toggle"
                                         type="button" data-toggle="dropdown">
                                     {{ trans('media::media.actions') }} &nbsp;<i class="fa fa-ellipsis-v"></i>
                                 </button>
@@ -304,10 +304,10 @@
                             </div>
                         </div>
                         <div class="btn-group js-rv-media-change-view-type" role="group">
-                            <button class="btn btn-default" type="button" data-type="tiles">
+                            <button class="btn btn-secondary" type="button" data-type="tiles">
                                 <i class="fa fa-th-large"></i>
                             </button>
-                            <button class="btn btn-default" type="button" data-type="list">
+                            <button class="btn btn-secondary" type="button" data-type="list">
                                 <i class="fa fa-th-list"></i>
                             </button>
                         </div>
@@ -322,7 +322,7 @@
                 <div class="rv-media-items"></div>
                 <div class="rv-media-details hidden">
                     <div class="rv-media-thumbnail">
-                        <i class="fa fa-picture-o"></i>
+                        <i class="far fa-image"></i>
                     </div>
                     <div class="rv-media-description">
                         <div class="rv-media-name">
@@ -355,12 +355,12 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title">
+                            <i class="fab fa-windows"></i> {{ trans('media::media.coming_soon') }}
+                        </h4>
                         <button type="button" class="close" data-dismiss-modal="#modal_coming_soon" aria-label="{{ trans('media::media.close') }}">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-windows"></i> {{ trans('media::media.coming_soon') }}
-                        </h4>
                     </div>
                     <div class="modal-body">
                         <p>These features are on development</p>
@@ -373,23 +373,23 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title">
+                            <i class="fab fa-windows"></i> {{ trans('media::media.add_from_youtube') }}
+                        </h4>
                         <button type="button" class="close" data-dismiss-modal="#modal_add_from_youtube" aria-label="{{ trans('media::media.close') }}">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-windows"></i> {{ trans('media::media.add_from_youtube') }}
-                        </h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="input-group">
-                                <label class="input-group-addon custom-checkbox">
+                                <label class="input-group-prepend custom-checkbox">
                                     <input type="checkbox">
-                                    <span class="pull-left"></span>
+                                    <span class="float-left"></span>
                                     <small>{{ trans('media::media.playlist') }}</small>
                                 </label>
                                 <input type="text" class="form-control rv-youtube-url" placeholder="https://">
-                                <div class="input-group-btn">
+                                <div class="input-group-prepend">
                                     <button class="btn btn-success rv-btn-add-youtube-url" type="button">{{ trans('media::media.add_url') }}
                                     </button>
                                 </div>
@@ -404,18 +404,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title">
+                            <i class="fab fa-windows"></i> {{ trans('media::media.create_folder') }}
+                        </h4>
                         <button type="button" class="close" data-dismiss-modal="#modal_add_folder" aria-label="{{ trans('media::media.close') }}">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-windows"></i> {{ trans('media::media.create_folder') }}
-                        </h4>
                     </div>
                     <div class="modal-body">
                         <form class="rv-form form-add-folder">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="{{ trans('media::media.folder_name') }}">
-                                <div class="input-group-btn">
+                                <div class="input-group-prepend">
                                     <button class="btn btn-success rv-btn-add-folder" type="submit">{{ trans('media::media.create') }}</button>
                                 </div>
                             </div>
@@ -430,19 +430,19 @@
                 <div class="modal-content">
                     <form class="rv-form form-rename">
                         <div class="modal-header">
+                            <h4 class="modal-title">
+                                <i class="fab fa-windows"></i> {{ trans('media::media.rename') }}
+                            </h4>
                             <button type="button" class="close" data-dismiss-modal="#modal_rename_items" aria-label="{{ trans('media::media.close') }}">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title">
-                                <i class="fa fa-windows"></i> {{ trans('media::media.rename') }}
-                            </h4>
                         </div>
                         <div class="modal-body">
                             <div class="rename-items"></div>
                             <div class="modal-notice"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss-modal="#modal_rename_items">{{ trans('media::media.close') }}</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss-modal="#modal_rename_items">{{ trans('media::media.close') }}</button>
                             <button type="submit" class="btn btn-primary">{{ trans('media::media.save_changes') }}</button>
                         </div>
                     </form>
@@ -454,12 +454,12 @@
                 <div class="modal-content">
                     <form class="rv-form form-delete-items">
                         <div class="modal-header">
+                            <h4 class="modal-title">
+                                <i class="fab fa-windows"></i> {{ trans('media::media.move_to_trash') }}
+                            </h4>
                             <button type="button" class="close" data-dismiss-modal="#modal_trash_items" aria-label="{{ trans('media::media.close') }}">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title">
-                                <i class="fa fa-windows"></i> {{ trans('media::media.move_to_trash') }}
-                            </h4>
                         </div>
                         <div class="modal-body">
                             <p>{{ trans('media::media.confirm_trash') }}</p>
@@ -478,12 +478,12 @@
                 <div class="modal-content">
                     <form class="rv-form form-delete-items">
                         <div class="modal-header">
+                            <h4 class="modal-title">
+                                <i class="fab fa-windows"></i> {{ trans('media::media.confirm_delete') }}
+                            </h4>
                             <button type="button" class="close" data-dismiss-modal="#modal_delete_items" aria-label="{{ trans('media::media.close') }}">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title">
-                                <i class="fa fa-windows"></i> {{ trans('media::media.confirm_delete') }}
-                            </h4>
                         </div>
                         <div class="modal-body">
                             <p>{{ trans('media::media.confirm_delete_description') }}</p>
@@ -502,12 +502,12 @@
                 <div class="modal-content">
                     <form class="rv-form form-empty-trash">
                         <div class="modal-header">
+                            <h4 class="modal-title">
+                                <i class="fab fa-windows"></i> {{ trans('media::media.empty_trash_title') }}
+                            </h4>
                             <button type="button" class="close" data-dismiss-modal="#modal_empty_trash" aria-label="{{ trans('media::media.close') }}">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title">
-                                <i class="fa fa-windows"></i> {{ trans('media::media.empty_trash_title') }}
-                            </h4>
                         </div>
                         <div class="modal-body">
                             <p>{{ trans('media::media.empty_trash_description') }}</p>
@@ -550,14 +550,14 @@
     <div class="rv-media-list">
         <ul>
             <li class="no-items">
-                <i class="fa fa-cloud-upload"></i>
+                <i class="fas fa-cloud-upload-alt"></i>
                 <h3>Drop files and folders here</h3>
                 <p>Or use the upload button above.</p>
             </li>
             <li class="rv-media-list-title up-one-level js-up-one-level" title="{{ trans('media::media.up_level') }}">
                 <div class="custom-checkbox"></div>
                 <div class="rv-media-file-name">
-                    <i class="fa fa-level-up"></i>
+                    <i class="fas fa-level-up-alt"></i>
                     <span>...</span>
                 </div>
                 <div class="rv-media-file-size"></div>
@@ -578,7 +578,7 @@
             <li class="rv-media-list-title up-one-level js-up-one-level">
                 <div class="rv-media-item" data-context="__type__" title="{{ trans('media::media.up_level') }}">
                     <div class="rv-media-thumbnail">
-                        <i class="fa fa-level-up"></i>
+                        <i class="fas fa-level-up-alt"></i>
                     </div>
                     <div class="rv-media-description">
                         <div class="title">...</div>
@@ -644,7 +644,11 @@
 <script type="text/x-custom-template" id="rv_media_rename_item">
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon"><i class="__icon__"></i></span>
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="__icon__"></i>
+                </div>
+            </div>
             <input class="form-control" placeholder="__placeholder__" value="__value__">
         </div>
     </div>

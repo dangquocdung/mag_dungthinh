@@ -71,10 +71,10 @@
                                                                                             target="_blank"
                                                                                             style="text-decoration: none; color: #a7a9ac; font-weight: normal;">
                                                                                         {{ site_admin_email }}</a><br>
-                                                                                    Phone: <a
-                                                                                            href="tel:"
-                                                                                            target="_blank"
+                                                                                    Website: <a
+                                                                                            href="{{ site_url }}"
                                                                                             style="text-decoration: none; color: #a7a9ac; font-weight: normal;">
+                                                                                        {{ site_url }}
                                                                                         </a>
                                                                                 </td>
                                                                             </tr>

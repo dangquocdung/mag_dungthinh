@@ -109,7 +109,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
 
         $activation->fill([
             'completed' => true,
-            'completed_at' => Carbon::now(),
+            'completed_at' => Carbon::now(config('app.timezone')),
         ]);
 
         $activation->save();
@@ -134,6 +134,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
 
     /**
      * {@inheritDoc}
+     * @throws \Exception
      */
     public function remove(User $user)
     {
@@ -171,7 +172,7 @@ class IlluminateActivationRepository implements ActivationRepositoryInterface
      */
     protected function expires()
     {
-        return Carbon::now()->subSeconds($this->expires);
+        return Carbon::now(config('app.timezone'))->subSeconds($this->expires);
     }
 
     /**

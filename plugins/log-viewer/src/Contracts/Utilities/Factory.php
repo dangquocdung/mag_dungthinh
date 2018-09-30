@@ -10,7 +10,7 @@ interface Factory extends Patternable
      * Get the filesystem instance.
      *
      * @return \Botble\LogViewer\Contracts\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getFilesystem();
 
@@ -20,7 +20,7 @@ interface Factory extends Patternable
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setFilesystem(Filesystem $filesystem);
 
@@ -28,7 +28,7 @@ interface Factory extends Patternable
      * Get the log levels instance.
      *
      * @return  \Botble\LogViewer\Contracts\Utilities\LogLevels  $levels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getLevels();
 
@@ -38,7 +38,7 @@ interface Factory extends Patternable
      * @param  \Botble\LogViewer\Contracts\Utilities\LogLevels $levels
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setLevels(LogLevels $levels);
 
@@ -48,7 +48,7 @@ interface Factory extends Patternable
      * @param  string $storagePath
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPath($storagePath);
 
@@ -56,7 +56,7 @@ interface Factory extends Patternable
      * Get all logs.
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function logs();
 
@@ -64,7 +64,7 @@ interface Factory extends Patternable
      * Get all logs (alias).
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function all();
 
@@ -74,7 +74,7 @@ interface Factory extends Patternable
      * @param  int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function paginate($perPage = 30);
 
@@ -84,7 +84,7 @@ interface Factory extends Patternable
      * @param  string $date
      *
      * @return \Botble\LogViewer\Entities\Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function log($date);
 
@@ -94,7 +94,7 @@ interface Factory extends Patternable
      * @param  string $date
      *
      * @return \Botble\LogViewer\Entities\Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get($date);
 
@@ -105,7 +105,7 @@ interface Factory extends Patternable
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function entries($date, $level = 'all');
 
@@ -113,7 +113,7 @@ interface Factory extends Patternable
      * List the log files (dates).
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates();
 
@@ -121,7 +121,7 @@ interface Factory extends Patternable
      * Get logs count.
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function count();
 
@@ -131,7 +131,7 @@ interface Factory extends Patternable
      * @param  string $level
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function total($level = 'all');
 
@@ -141,7 +141,7 @@ interface Factory extends Patternable
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false);
 
@@ -151,7 +151,7 @@ interface Factory extends Patternable
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function menu($trans = true);
 
@@ -159,7 +159,7 @@ interface Factory extends Patternable
      * Get logs statistics.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats();
 
@@ -169,7 +169,7 @@ interface Factory extends Patternable
      * @param  string|null $locale
      *
      * @return \Botble\LogViewer\Tables\StatsTable
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function statsTable($locale = null);
 
@@ -177,7 +177,7 @@ interface Factory extends Patternable
      * Determine if the log folder is empty or not.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isEmpty();
 }

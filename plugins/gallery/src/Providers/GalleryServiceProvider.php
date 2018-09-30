@@ -18,6 +18,8 @@ use Botble\Gallery\Repositories\Caches\GalleryCacheDecorator;
 use Botble\Gallery\Repositories\Eloquent\GalleryRepository;
 use Botble\Gallery\Repositories\Interfaces\GalleryInterface;
 use Botble\Support\Services\Cache\Cache;
+use Language;
+use SeoHelper;
 
 class GalleryServiceProvider extends ServiceProvider
 {
@@ -63,7 +65,7 @@ class GalleryServiceProvider extends ServiceProvider
     {
         $this->setIsInConsole($this->app->runningInConsole())
             ->setNamespace('plugins/gallery')
-            ->loadAndPublishConfigurations(['permissions'])
+            ->loadAndPublishConfigurations(['general', 'permissions'])
             ->loadRoutes()
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
@@ -87,11 +89,15 @@ class GalleryServiceProvider extends ServiceProvider
         });
 
         if (defined('LANGUAGE_MODULE_SCREEN_NAME')) {
-            config(['plugins.language.general.supported' => array_merge(config('plugins.language.general.supported'), [GALLERY_MODULE_SCREEN_NAME])]);
+            Language::registerModule([GALLERY_MODULE_SCREEN_NAME]);
         }
 
         $this->app->booted(function () {
             config(['core.slug.general.supported' => array_merge(config('core.slug.general.supported'), [GALLERY_MODULE_SCREEN_NAME])]);
+
+            config(['core.slug.general.prefixes.' . GALLERY_MODULE_SCREEN_NAME => 'gallery']);
+
+            SeoHelper::registerModule([GALLERY_MODULE_SCREEN_NAME]);
         });
     }
 }

@@ -32,8 +32,8 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $slug
-     * @param $status
+     * @param string $slug
+     * @param int $status
      * @return mixed
      * @author Sang Nguyen
      */
@@ -64,7 +64,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $user_id
+     * @param int $user_id
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
@@ -84,7 +84,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $tag
+     * @param int $tag
      * @param int $paginate
      * @return mixed
      * @author Sang Nguyen
@@ -95,7 +95,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $slug
+     * @param string $slug
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
@@ -117,7 +117,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $query
+     * @param string $query
      * @param int $limit
      * @param int $paginate
      * @return mixed
@@ -129,13 +129,13 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $category
+     * @param int|array $category_id
      * @param int $paginate
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
      */
-    public function getByCategory($category, $paginate = 12, $limit = 0)
+    public function getByCategory($category_id, $paginate = 12, $limit = 0)
     {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
@@ -151,7 +151,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @param array $args
      * @return mixed
      * @author Sang Nguyen

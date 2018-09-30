@@ -35,6 +35,8 @@ class UserForm extends FormAbstract
         $this
             ->setModuleName(USER_MODULE_SCREEN_NAME)
             ->setValidatorClass(CreateUserRequest::class)
+            ->setWrapperClass('form-body row')
+            ->withCustomFields()
             ->add('first_name', 'text', [
                 'label' => trans('core.acl::users.info.first_name'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -96,7 +98,7 @@ class UserForm extends FormAbstract
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
                 ],
             ])
-            ->add('role_id', 'select', [
+            ->add('role_id', 'customSelect', [
                 'label' => trans('core.acl::users.role'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr' => [

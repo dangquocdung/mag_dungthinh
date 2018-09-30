@@ -19,7 +19,8 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
      */
     public function getDataSiteMap()
     {
-        $data = $this->model->where('pages.status', 1)
+        $data = $this->model
+            ->where('pages.status', 1)
             ->select('pages.*')
             ->orderBy('pages.created_at', 'desc');
         return $this->applyBeforeExecuteQuery($data, $this->screen)->get();
@@ -32,8 +33,9 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
      */
     public function getFeaturedPages($limit)
     {
-        $data = $this->model->where(['pages.status' => 1, 'pages.featured' => 1])
-            ->orderBy('pages.order', 'asc')
+        $data = $this->model
+            ->where(['pages.status' => 1, 'pages.featured' => 1])
+            ->orderBy('pages.created_at', 'asc')
             ->select('pages.*')
             ->limit($limit)
             ->orderBy('pages.created_at', 'desc');
@@ -48,11 +50,15 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
      */
     public function whereIn($array, $select = [])
     {
-        $pages = $this->model->whereIn('pages.id', $array)->where('pages.status', 1);
+        $pages = $this->model
+            ->whereIn('pages.id', $array)
+            ->where('pages.status', 1);
         if (empty($select)) {
             $select = 'pages.*';
         }
-        $data = $pages->select($select)->orderBy('pages.order', 'ASC');
+        $data = $pages
+            ->select($select)
+            ->orderBy('pages.created_at', 'ASC');
         return $this->applyBeforeExecuteQuery($data, $this->screen)->get();
     }
 

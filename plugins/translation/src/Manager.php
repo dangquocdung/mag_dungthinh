@@ -300,6 +300,9 @@ class Manager
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function cleanTranslations()
     {
         Translation::whereNull('value')->delete();

@@ -18,9 +18,9 @@ class Action extends ActionHookEvent
                 foreach ($listeners as $arguments) {
                     if ($hook === $action) {
                         $parameters = [];
-                        for ($i = 0; $i < $arguments['arguments']; $i++) {
-                            if (isset($args[$i])) {
-                                $parameters[] = $args[$i];
+                        for ($index = 0; $index < $arguments['arguments']; $index++) {
+                            if (isset($args[$index])) {
+                                $parameters[] = $args[$index];
                             }
                         }
                         call_user_func_array($this->getFunction($arguments['callback']), $parameters);

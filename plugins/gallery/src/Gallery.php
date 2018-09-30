@@ -2,17 +2,11 @@
 
 namespace Botble\Gallery;
 
-use Botble\Gallery\Events\GalleryBoxEvent;
 use Botble\Gallery\Repositories\Interfaces\GalleryMetaInterface;
 use Theme;
 
 class Gallery
 {
-    /**
-     * @var array
-     */
-    protected $screens = [];
-
     /**
      * @var GalleryMetaInterface
      */
@@ -21,39 +15,25 @@ class Gallery
     /**
      * Gallery constructor.
      * @author Sang Nguyen
+     * @param GalleryMetaInterface $galleryMetaRepository
      */
     public function __construct(GalleryMetaInterface $galleryMetaRepository)
     {
-        $this->screens = [
-            GALLERY_MODULE_SCREEN_NAME,
-            PAGE_MODULE_SCREEN_NAME,
-        ];
-
-        if (defined('POST_MODULE_SCREEN_NAME')) {
-            $this->screens[] = POST_MODULE_SCREEN_NAME;
-        }
-
         $this->galleryMetaRepository = $galleryMetaRepository;
     }
 
     /**
-     * @param $module
+     * @param string | array $screen
+     * @return Gallery
      * @author Sang Nguyen
      */
     public function registerModule($screen)
     {
-        $this->screens[] = $screen;
-    }
-
-    /**
-     * @return array
-     * @author Sang Nguyen
-     */
-    public function getScreens()
-    {
-        event(GalleryBoxEvent::class);
-
-        return $this->screens;
+        if (!is_array($screen)) {
+            $screen = [$screen];
+        }
+        config(['plugins.gallery.general.supported' => array_merge(config('plugins.gallery.general.supported'), $screen)]);
+        return $this;
     }
 
     /**
@@ -63,7 +43,7 @@ class Gallery
      */
     public function saveGallery($screen, $request, $data)
     {
-        if ($data != false && in_array($screen, Gallery::getScreens())) {
+        if ($data != false && in_array($screen, config('plugins.gallery.general.supported'))) {
             if (empty($request->input('gallery'))) {
                 $this->galleryMetaRepository->deleteBy([
                     'content_id' => $data->id,
@@ -91,7 +71,7 @@ class Gallery
      */
     public function deleteGallery($screen, $data)
     {
-        if (in_array($screen, Gallery::getScreens())) {
+        if (in_array($screen, config('plugins.gallery.general.supported'))) {
             $this->galleryMetaRepository->deleteBy([
                 'content_id' => $data->id,
                 'reference' => $screen,
@@ -106,11 +86,16 @@ class Gallery
      */
     public function registerAssets()
     {
-        Theme::asset()->add('lightgallery-css', 'vendor/core/plugins/gallery/css/lightgallery.min.css');
-        Theme::asset()->container('footer')->add('lightgallery-js', 'vendor/core/plugins/gallery/js/lightgallery.min.js', ['jquery']);
-        Theme::asset()->container('footer')->add('imagesloaded', 'vendor/core/plugins/gallery/js/imagesloaded.pkgd.min.js', ['jquery']);
-        Theme::asset()->container('footer')->add('masonry', 'vendor/core/plugins/gallery/js/masonry.pkgd.min.js', ['jquery']);
-        Theme::asset()->container('footer')->add('gallery-js', 'vendor/core/plugins/gallery/js/gallery.js', ['jquery']);
+        Theme::asset()
+            ->add('lightgallery-css', 'vendor/core/plugins/gallery/css/lightgallery.min.css')
+            ->add('gallery-css', 'vendor/core/plugins/gallery/css/gallery.css');
+
+        Theme::asset()
+            ->container('footer')
+            ->add('lightgallery-js', 'vendor/core/plugins/gallery/js/lightgallery.min.js', ['jquery'])
+            ->add('imagesloaded', 'vendor/core/plugins/gallery/js/imagesloaded.pkgd.min.js', ['jquery'])
+            ->add('masonry', 'vendor/core/plugins/gallery/js/masonry.pkgd.min.js', ['jquery'])
+            ->add('gallery-js', 'vendor/core/plugins/gallery/js/gallery.js', ['jquery']);
 
         return $this;
     }

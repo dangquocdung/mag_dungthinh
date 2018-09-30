@@ -21,6 +21,8 @@ use Botble\Blog\Models\Tag;
 use Botble\Blog\Repositories\Caches\TagCacheDecorator;
 use Botble\Blog\Repositories\Eloquent\TagRepository;
 use Botble\Blog\Repositories\Interfaces\TagInterface;
+use Language;
+use SeoHelper;
 
 /**
  * Class BlogServiceProvider
@@ -82,7 +84,9 @@ class BlogServiceProvider extends ServiceProvider
             ->loadAndPublishConfigurations(['permissions'])
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
-            ->loadMigrations();
+            ->loadMigrations()
+            ->publishPublicFolder()
+            ->publishAssetsFolder();
 
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
@@ -128,12 +132,14 @@ class BlogServiceProvider extends ServiceProvider
         });
 
         if (defined('LANGUAGE_MODULE_SCREEN_NAME')) {
-            config(['plugins.language.general.supported' => array_merge(config('plugins.language.general.supported'), [POST_MODULE_SCREEN_NAME, CATEGORY_MODULE_SCREEN_NAME, TAG_MODULE_SCREEN_NAME])]);
+            Language::registerModule([POST_MODULE_SCREEN_NAME, CATEGORY_MODULE_SCREEN_NAME, TAG_MODULE_SCREEN_NAME]);
         }
 
         $this->app->booted(function () {
             config(['core.slug.general.supported' => array_merge(config('core.slug.general.supported'), [POST_MODULE_SCREEN_NAME, CATEGORY_MODULE_SCREEN_NAME, TAG_MODULE_SCREEN_NAME])]);
-            config(['core.seo-helper.general.supported' => array_merge(config('core.seo-helper.general.supported'), [POST_MODULE_SCREEN_NAME, CATEGORY_MODULE_SCREEN_NAME, TAG_MODULE_SCREEN_NAME])]);
+            config(['core.slug.general.prefixes.' . TAG_MODULE_SCREEN_NAME => 'tag']);
+
+            SeoHelper::registerModule([POST_MODULE_SCREEN_NAME, CATEGORY_MODULE_SCREEN_NAME, TAG_MODULE_SCREEN_NAME]);
         });
 
         view()->composer(['core.blog::themes.post', 'core.blog::themes.category', 'core.blog::themes.tag'], function(View $view) {

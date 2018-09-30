@@ -12,7 +12,7 @@
         @foreach($requests as $request)
             <tr>
                 <td>{{ $loop->index + 1 }}</td>
-                <td><a href="{{ $request->url }}" target="_blank">{{ string_limit_words($request->url, 55) }}</a></td>
+                <td><a href="{{ $request->url }}" target="_blank">{{ str_limit($request->url, 80) }}</a></td>
                 <td>{{ $request->status_code }}</td>
             </tr>
         @endforeach
@@ -23,8 +23,5 @@
     @include('core.dashboard::partials.paginate', ['data' => $requests, 'limit' => $limit])
 </div>
 @else
-    <div class="dashboard_widget_msg">
-        <p class="smiley" aria-hidden="true"></p>
-        <p>{{ trans('plugins.request-log::request-log.no_request_error') }}</p>
-    </div>
+    @include('core.dashboard::partials.no-data', ['message' => trans('plugins.request-log::request-log.no_request_error')])
 @endif

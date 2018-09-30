@@ -2,6 +2,7 @@
 
 namespace Botble\Menu\Providers;
 
+use Botble\Base\Events\SessionStarted;
 use Botble\Base\Supports\Helper;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
 use Botble\Menu\Facades\MenuFacade;
@@ -14,6 +15,7 @@ use Botble\Menu\Repositories\Eloquent\MenuRepository;
 use Botble\Menu\Repositories\Interfaces\MenuInterface;
 use Botble\Menu\Repositories\Interfaces\MenuNodeInterface;
 use Botble\Support\Services\Cache\Cache;
+use Event;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -72,5 +74,20 @@ class MenuServiceProvider extends ServiceProvider
             ->loadMigrations()
             ->publishAssetsFolder()
             ->publishPublicFolder();
+
+        Event::listen(SessionStarted::class, function () {
+            dashboard_menu()
+                ->registerItem([
+                    'id' => 'cms-core-menu',
+                    'priority' => 2,
+                    'parent_id' => 'cms-core-appearance',
+                    'name' => trans('core.base::layouts.menu'),
+                    'icon' => null,
+                    'url' => route('menus.list'),
+                    'permissions' => ['menus.list'],
+                ]);
+
+            admin_bar()->registerLink('Menu', route('menus.list'), 'appearance');
+        });
     }
 }

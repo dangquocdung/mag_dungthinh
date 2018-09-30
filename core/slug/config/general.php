@@ -5,4 +5,7 @@ return [
     'supported' => [
         'page',
     ],
+    'prefixes' => [
+
+    ],
 ];

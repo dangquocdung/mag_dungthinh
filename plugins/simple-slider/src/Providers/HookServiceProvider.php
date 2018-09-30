@@ -18,12 +18,18 @@ class HookServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Theme::asset()->container('footer')->add('owl.carousel', 'vendor/core/plugins/simple-slider/packages/owl-carousel/owl.carousel.css');
-        Theme::asset()->container('footer')->add('simple-slider-css', 'vendor/core/plugins/simple-slider/css/simple-slider.css');
-        Theme::asset()->container('footer')->add('carousel', 'vendor/core/plugins/simple-slider/packages/owl-carousel/owl.carousel.js', ['jquery']);
-        Theme::asset()->container('footer')->add('simple-slider-js', 'vendor/core/plugins/simple-slider/js/simple-slider.js', ['jquery']);
+        if (setting('simple_slider_using_assets', true) && defined('THEME_OPTIONS_MODULE_SCREEN_NAME')) {
+            Theme::asset()
+                ->container('footer')
+                ->add('owl.carousel', 'vendor/core/plugins/simple-slider/packages/owl-carousel/owl.carousel.css')
+                ->add('simple-slider-css', 'vendor/core/plugins/simple-slider/css/simple-slider.css')
+                ->add('carousel', 'vendor/core/plugins/simple-slider/packages/owl-carousel/owl.carousel.js', ['jquery'])
+                ->add('simple-slider-js', 'vendor/core/plugins/simple-slider/js/simple-slider.js', ['jquery']);
+        }
 
         add_shortcode('simple-slider', __('Simple Slider'), __('Add a simple slider'), [$this, 'render']);
+
+        add_filter(BASE_FILTER_AFTER_SETTING_CONTENT, [$this, 'addSettings'], 301, 1);
     }
 
     /**
@@ -33,17 +39,26 @@ class HookServiceProvider extends ServiceProvider
      */
     public function render($shortcode)
     {
-        $simple_slider = app(SimpleSliderInterface::class)->getFirstBy([
+        $simple_slider = $this->app->make(SimpleSliderInterface::class)->getFirstBy([
             'key' => $shortcode->key,
             'status' => 1,
         ]);
-
-        $simple_slider = apply_filters(BASE_FILTER_BEFORE_GET_SINGLE, $simple_slider, app(SimpleSliderInterface::class)->getModel(), SIMPLE_SLIDER_MODULE_SCREEN_NAME);
 
         if (empty($simple_slider)) {
             return null;
         }
 
         return view('plugins.simple-slider::sliders', ['sliders' => $simple_slider->slider_items]);
+    }
+
+    /**
+     * @param null $data
+     * @return string
+     * @throws \Throwable
+     * @author Sang Nguyen
+     */
+    public function addSettings($data = null)
+    {
+        return $data . view('plugins.simple-slider::setting')->render();
     }
 }

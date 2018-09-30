@@ -104,7 +104,7 @@ class MediaServiceProvider extends ServiceProvider
                 'priority' => 995,
                 'parent_id' => null,
                 'name' => trans('media::media.menu_name'),
-                'icon' => 'fa fa-picture-o',
+                'icon' => 'far fa-images',
                 'url' => route('media.index'),
                 'permissions' => ['media.index'],
             ]);

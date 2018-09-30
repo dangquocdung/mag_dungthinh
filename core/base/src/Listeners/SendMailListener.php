@@ -29,17 +29,21 @@ class SendMailListener
     /**
      * Handle the event.
      *
-     * @param  SendMailEvent $event
+     * @param SendMailEvent $event
      * @return void
      * @author Sang Nguyen
+     * @throws Exception
      */
     public function handle(SendMailEvent $event)
     {
         try {
-            $this->mailer->to($event->args['to'], $event->args['name'])
+            $this->mailer->to($event->to)
                 ->send(new EmailAbstract($event->content, $event->title, $event->args));
-            info('Sent mail to ' . $event->args['to'] . ' successfully!');
+            info('Sent mail to ' . $event->to . ' successfully!');
         } catch (Exception $ex) {
+            if ($event->debug) {
+                throw $ex;
+            }
             Log::error($ex->getMessage());
         }
     }

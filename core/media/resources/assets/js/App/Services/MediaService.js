@@ -25,7 +25,7 @@ export class MediaService {
         let _self = this;
 
         _self.getFileDetails({
-            icon: 'fa fa-picture-o',
+            icon: 'far fa-image',
             nothing_selected: '',
         });
 
@@ -57,10 +57,10 @@ export class MediaService {
             type: 'GET',
             data: params,
             dataType: 'json',
-            beforeSend: function () {
+            beforeSend: () => {
                 Helpers.showAjaxLoading();
             },
-            success: function (res) {
+            success: (res) => {
                 _self.MediaList.renderData(res.data, reload, load_more_file);
                 _self.fetchQuota();
                 _self.renderBreadcrumbs(res.data.breadcrumbs);
@@ -81,10 +81,10 @@ export class MediaService {
                     }
                 }
             },
-            complete: function (data) {
+            complete: () => {
                 Helpers.hideAjaxLoading();
             },
-            error: function (data) {
+            error: (data) => {
                 MessageService.handleError(data);
             }
         });
@@ -99,10 +99,7 @@ export class MediaService {
             url: RV_MEDIA_URL.get_quota,
             type: 'GET',
             dataType: 'json',
-            beforeSend: function () {
-
-            },
-            success: function (res) {
+            success: (res) => {
                 let data = res.data;
 
                 $('.rv-media-aside-bottom .used-analytics span').html(data.used + ' / ' + data.quota);
@@ -110,7 +107,7 @@ export class MediaService {
                     width: data.percent + '%',
                 });
             },
-            error: function (data) {
+            error: (data) => {
                 MessageService.handleError(data);
             }
         });
@@ -121,7 +118,7 @@ export class MediaService {
         let $breadcrumbContainer = $('.rv-media-breadcrumb .breadcrumb');
         $breadcrumbContainer.find('li').remove();
 
-        _.each(breadcrumbItems, function (value, index) {
+        _.each(breadcrumbItems, (value) => {
             let template = _self.breadcrumbTemplate;
             template = template
                 .replace(/__name__/gi, value.name || '')
@@ -135,7 +132,7 @@ export class MediaService {
     static refreshFilter() {
         let $rvMediaContainer = $('.rv-media-container');
         let view_in = Helpers.getRequestParams().view_in;
-        if (view_in !== 'all_media' && Helpers.getRequestParams().folder_id == 0) {
+        if (view_in !== 'all_media' && parseInt(Helpers.getRequestParams().folder_id) === 0) {
             $('.rv-media-actions .btn:not([data-type="refresh"]):not(label)').addClass('disabled');
             $rvMediaContainer.attr('data-allow-upload', 'false');
         } else {

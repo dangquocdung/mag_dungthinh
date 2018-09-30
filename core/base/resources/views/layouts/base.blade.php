@@ -1,52 +1,42 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>{{ page_title()->getTitle() }}</title>
+    <title>{{ page_title()->getTitle() }}</title>
 
-        <meta name='robots' content='noindex,follow' />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="noindex,follow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <link rel="icon shortcut" href="{{ url('/images/favicon.png') }}">
+    <link rel="icon shortcut" href="{{ url(config('core.base.general.favicon')) }}">
+    <link rel='stylesheet'
+          href='//fonts.googleapis.com/css?family=Roboto:100%2C100italic%2C300%2C300italic%2C400%2Citalic%2C500%2C500italic%2C700%2C700italic%2C900%2C900italic|Roboto+Slab:100%2C300%2C400%2C700&#038;subset=greek-ext%2Cgreek%2Ccyrillic-ext%2Clatin-ext%2Clatin%2Cvietnamese%2Ccyrillic'
+          type='text/css' media='all'/>
 
-        {!! Assets::renderHeader() !!}
+    {!! Assets::renderHeader() !!}
 
-        <script src="{{ url('vendor/core/media/packages/dropzone/dropzone.js') }}"></script>
+    @yield('head')
 
-        @if (array_key_exists($active_theme, $themes))
-            {!! Html::style($themes[$active_theme] . '?v=' . time()) !!}
-        @endif
+    @stack('header')
+</head>
+<body class="@yield('body-class', 'page-sidebar-closed-hide-logo page-content-white page-container-bg-solid')">
 
-        @yield('head')
-    </head>
+    @yield('page')
 
-    <body class="@yield('body-class')" id="@yield('body-id', 'module')">
+    @include('core.base::elements.common')
 
-        <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    {!! Assets::renderFooter() !!}
 
-        @yield('page')
+    @yield('javascript')
 
-
-        @include('core.base::elements.common')
-
-        {!! Assets::renderFooter() !!}
-
-        @yield('javascript')
-
-        @stack('footer')
-
-    </body>
-
+    @stack('footer')
+</body>
 </html>

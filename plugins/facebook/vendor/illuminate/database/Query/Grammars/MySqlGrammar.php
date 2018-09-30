@@ -3,6 +3,7 @@
 namespace Illuminate\Database\Query\Grammars;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JsonExpression;
 
@@ -61,6 +62,21 @@ class MySqlGrammar extends Grammar
     protected function compileJsonContains($column, $value)
     {
         return 'json_contains('.$this->wrap($column).', '.$value.')';
+    }
+
+    /**
+     * Compile a "JSON length" statement into SQL.
+     *
+     * @param  string  $column
+     * @param  string  $operator
+     * @param  string  $value
+     * @return string
+     */
+    protected function compileJsonLength($column, $operator, $value)
+    {
+        list($field, $path) = $this->wrapJsonFieldAndPath($column);
+
+        return 'json_length('.$field.$path.') '.$operator.' '.$value;
     }
 
     /**
@@ -276,7 +292,7 @@ class MySqlGrammar extends Grammar
     {
         $joins = ' '.$this->compileJoins($query, $query->joins);
 
-        $alias = strpos(strtolower($table), ' as ') !== false
+        $alias = stripos($table, ' as ') !== false
                 ? explode(' as ', $table)[1] : $table;
 
         return trim("delete {$alias} from {$table}{$joins} {$where}");
@@ -301,11 +317,15 @@ class MySqlGrammar extends Grammar
      */
     protected function wrapJsonSelector($value)
     {
-        $path = explode('->', $value);
+        $delimiter = Str::contains($value, '->>')
+            ? '->>'
+            : '->';
+
+        $path = explode($delimiter, $value);
 
         $field = $this->wrapSegments(explode('.', array_shift($path)));
 
-        return sprintf('%s->\'$.%s\'', $field, collect($path)->map(function ($part) {
+        return sprintf('%s'.$delimiter.'\'$.%s\'', $field, collect($path)->map(function ($part) {
             return '"'.$part.'"';
         })->implode('.'));
     }

@@ -37,7 +37,7 @@ class LogViewer implements LogViewerContract
      * @param  \Botble\LogViewer\Contracts\Utilities\Factory $factory
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      * @param  \Botble\LogViewer\Contracts\Utilities\LogLevels $levels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(
         FactoryContract $factory,
@@ -56,7 +56,7 @@ class LogViewer implements LogViewerContract
      * @param  bool $flip
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function levels($flip = false)
     {
@@ -69,7 +69,7 @@ class LogViewer implements LogViewerContract
      * @param  string|null $locale
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function levelsNames($locale = null)
     {
@@ -82,7 +82,7 @@ class LogViewer implements LogViewerContract
      * @param  string $path
      *
      * @return \Botble\LogViewer\LogViewer
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPath($path)
     {
@@ -95,7 +95,7 @@ class LogViewer implements LogViewerContract
      * Get the log pattern.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getPattern()
     {
@@ -110,7 +110,7 @@ class LogViewer implements LogViewerContract
      * @param  string $extension
      *
      * @return \Botble\LogViewer\LogViewer
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPattern(
         $prefix = FilesystemContract::PATTERN_PREFIX,
@@ -127,7 +127,7 @@ class LogViewer implements LogViewerContract
      * Get all logs.
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function all()
     {
@@ -140,7 +140,7 @@ class LogViewer implements LogViewerContract
      * @param  int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function paginate($perPage = 30)
     {
@@ -153,7 +153,7 @@ class LogViewer implements LogViewerContract
      * @param  string $date
      *
      * @return \Botble\LogViewer\Entities\Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get($date)
     {
@@ -167,7 +167,7 @@ class LogViewer implements LogViewerContract
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function entries($date, $level = 'all')
     {
@@ -182,7 +182,7 @@ class LogViewer implements LogViewerContract
      * @param  array $headers
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function download($date, $filename = null, $headers = [])
     {
@@ -199,7 +199,7 @@ class LogViewer implements LogViewerContract
      * Get logs statistics.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats()
     {
@@ -212,7 +212,7 @@ class LogViewer implements LogViewerContract
      * @param  string|null $locale
      *
      * @return \Botble\LogViewer\Tables\StatsTable
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function statsTable($locale = null)
     {
@@ -225,7 +225,7 @@ class LogViewer implements LogViewerContract
      * @param  string $date
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      * @throws Exceptions\FilesystemException
      */
     public function delete($date)
@@ -237,7 +237,7 @@ class LogViewer implements LogViewerContract
      * Get all valid log files.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function files()
     {
@@ -248,7 +248,7 @@ class LogViewer implements LogViewerContract
      * List the log files (only dates).
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates()
     {
@@ -259,7 +259,7 @@ class LogViewer implements LogViewerContract
      * Get logs count.
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function count()
     {
@@ -272,7 +272,7 @@ class LogViewer implements LogViewerContract
      * @param  string $level
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function total($level = 'all')
     {
@@ -285,7 +285,7 @@ class LogViewer implements LogViewerContract
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false)
     {
@@ -298,7 +298,7 @@ class LogViewer implements LogViewerContract
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function menu($trans = true)
     {
@@ -309,7 +309,7 @@ class LogViewer implements LogViewerContract
      * Determine if the log folder is empty or not.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isEmpty()
     {

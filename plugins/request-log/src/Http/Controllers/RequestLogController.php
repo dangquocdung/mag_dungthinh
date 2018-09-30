@@ -33,11 +33,12 @@ class RequestLogController extends BaseController
      * @author Sang Nguyen
      * @throws \Throwable
      */
-    public function getWidgetRequestErrors(BaseHttpResponse $response)
+    public function getWidgetRequestErrors(Request $request, BaseHttpResponse $response)
     {
-        $limit = request()->input('paginate', 10);
+        $limit = $request->input('paginate', 10);
         $requests = $this->requestLogRepository->getModel()->paginate($limit);
-        return $response->setData(view('plugins.request-log::widgets.request-errors', compact('requests', 'limit'))->render());
+        return $response
+            ->setData(view('plugins.request-log::widgets.request-errors', compact('requests', 'limit'))->render());
     }
 
     /**
@@ -70,7 +71,9 @@ class RequestLogController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -84,7 +87,9 @@ class RequestLogController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {

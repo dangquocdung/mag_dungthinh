@@ -27,8 +27,14 @@ class RenderingJsonFeedListener
     /**
      * RenderingSiteMapListener constructor.
      * @param PostInterface $postRepository
+     * @param CategoryInterface $categoryRepository
+     * @param TagInterface $tagRepository
      */
-    public function __construct(PostInterface $postRepository, CategoryInterface $categoryRepository, TagInterface $tagRepository)
+    public function __construct(
+        PostInterface $postRepository,
+        CategoryInterface $categoryRepository,
+        TagInterface $tagRepository
+    )
     {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;

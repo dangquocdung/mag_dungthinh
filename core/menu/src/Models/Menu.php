@@ -22,4 +22,16 @@ class Menu extends Eloquent
     {
         return $this->hasMany(MenuNode::class, 'menu_id');
     }
+
+    /**
+     * @author Sang Nguyen
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Menu $menu) {
+            MenuNode::where('menu_id', $menu->id)->delete();
+        });
+    }
 }

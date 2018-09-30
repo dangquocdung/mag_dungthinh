@@ -41,7 +41,7 @@ export class UploadService {
             previewTemplate: false,
             previewsContainer: false,
             uploadMultiple: true,
-            sending: function (file, xhr, formData) {
+            sending: (file, xhr, formData) => {
                 formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
                 formData.append('folder_id', Helpers.getRequestParams().folder_id);
                 formData.append('view_in', Helpers.getRequestParams().view_in);
@@ -69,7 +69,7 @@ export class UploadService {
             Helpers.resetPagination();
             _self.MediaService.getMedia(true);
             if (_self.totalError === 0) {
-                setTimeout(function () {
+                setTimeout(() => {
                     $('.rv-upload-progress .close-pane').trigger('click');
                 }, 5000);
             }
@@ -81,7 +81,7 @@ export class UploadService {
         /**
          * Close upload progress pane
          */
-        _self.$body.on('click', '.rv-upload-progress .close-pane', function (event) {
+        _self.$body.off('click', '.rv-upload-progress .close-pane').on('click', '.rv-upload-progress .close-pane', (event) => {
             event.preventDefault();
             $('.rv-upload-progress').addClass('hide-the-pane');
             _self.totalError = 0;
@@ -120,7 +120,7 @@ export class UploadService {
         if (file.status === 'error') {
             if (file.xhr.status === 422) {
                 let error_html = '';
-                $.each(response, function (key, item) {
+                $.each(response, (key, item) => {
                     error_html += '<span class="text-danger">' + item + '</span><br>';
                 });
                 $progressLine.find('.file-error').html(error_html);

@@ -21,7 +21,10 @@ class Setting extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'key',
+        'value',
+    ];
 
     /**
      * @var bool

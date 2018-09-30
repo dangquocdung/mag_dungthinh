@@ -3,13 +3,12 @@
 namespace Botble\Theme\Commands;
 
 use Botble\Setting\Repositories\Interfaces\SettingInterface;
+use Botble\Setting\Supports\SettingStore;
 use Botble\Theme\Events\ThemeRemoveEvent;
 use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem as File;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class ThemeRemoveCommand extends Command
 {
@@ -19,14 +18,18 @@ class ThemeRemoveCommand extends Command
      *
      * @var string
      */
-    protected $name = 'theme:remove';
+    protected $signature = 'cms:theme:remove 
+        {name : The theme that you want to remove} 
+        {--force : Force to remove theme without confirmation} 
+        {--path= : Path to theme directory}
+    ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Remove theme existing';
+    protected $description = 'Remove an existing theme';
 
     /**
      * @var Repository
@@ -43,7 +46,15 @@ class ThemeRemoveCommand extends Command
      */
     protected $widgetRepository;
 
+    /**
+     * @var SettingInterface
+     */
     protected $settingRepository;
+
+    /**
+     * @var SettingStore
+     */
+    protected $settingStore;
 
     /**
      * Create a new command instance.
@@ -52,15 +63,23 @@ class ThemeRemoveCommand extends Command
      * @param \Illuminate\Filesystem\Filesystem $files
      * @param WidgetInterface $widgetRepository
      * @param SettingInterface $settingRepository
+     * @param SettingStore $settingStore
      * @author Teepluss <admin@laravel.in.th>
      */
-    public function __construct(Repository $config, File $files, WidgetInterface $widgetRepository, SettingInterface $settingRepository)
+    public function __construct(
+        Repository $config,
+        File $files,
+        WidgetInterface $widgetRepository,
+        SettingInterface $settingRepository,
+        SettingStore $settingStore
+    )
     {
         $this->config = $config;
 
         $this->files = $files;
         $this->widgetRepository = $widgetRepository;
         $this->settingRepository = $settingRepository;
+        $this->settingStore = $settingStore;
 
         parent::__construct();
     }
@@ -73,20 +92,25 @@ class ThemeRemoveCommand extends Command
      */
     public function handle()
     {
+        if (!preg_match('/^[a-z0-9\-]+$/i', $this->argument('name'))) {
+            $this->error('Only alphabetic characters are allowed.');
+            return false;
+        }
+
         // The theme is not exists.
         if (!$this->files->isDirectory($this->getPath(null))) {
             $this->error('Theme "' . $this->getTheme() . '" is not exists.');
             return false;
         }
 
-        if (setting('theme') == $this->getTheme()) {
+        if ($this->settingStore->get('theme') == $this->getTheme()) {
             $this->error('Cannot remove activated theme, please activate another theme before removing "' . $this->getTheme() . '"!');
             return false;
         }
 
         $themePath = $this->getPath(null);
 
-        if ($this->confirm('Are you sure you want to permanently delete? [yes|no]')) {
+        if ($this->confirm('Are you sure you want to permanently delete? [yes|no]', $this->hasOption('force'))) {
             // Delete permanent.
             $this->files->deleteDirectory($themePath, false);
             $this->widgetRepository->deleteBy(['theme' => $this->getTheme()]);
@@ -110,7 +134,10 @@ class ThemeRemoveCommand extends Command
      */
     protected function getPath($path)
     {
-        $rootPath = $this->option('path');
+        $rootPath = public_path($this->config->get('core.theme.general.themeDir'));
+        if ($this->option('path')) {
+            $rootPath = $this->option('path');
+        }
 
         return $rootPath . '/' . strtolower($this->getTheme()) . '/' . $path;
     }
@@ -124,42 +151,5 @@ class ThemeRemoveCommand extends Command
     protected function getTheme()
     {
         return strtolower($this->argument('name'));
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    protected function getArguments()
-    {
-        return [
-            [
-                'name',
-                InputArgument::REQUIRED,
-                'Name of the theme to generate.',
-            ],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    protected function getOptions()
-    {
-        $path = public_path() . '/' . $this->config->get('core.theme.general.themeDir');
-
-        return [
-            [
-                'path',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Path to theme directory.', $path,
-            ],
-        ];
     }
 }

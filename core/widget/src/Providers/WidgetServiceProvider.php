@@ -129,6 +129,8 @@ class WidgetServiceProvider extends ServiceProvider
                     'url' => route('widgets.list'),
                     'permissions' => ['widgets.list'],
                 ]);
+
+            admin_bar()->registerLink('Widget', route('widgets.list'), 'appearance');
         });
     }
 }

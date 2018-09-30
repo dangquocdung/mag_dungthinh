@@ -56,10 +56,13 @@ return [
     'loading' => 'Loading data from server',
     'confirm_delete' => 'Confirm delete',
     'confirm_delete_msg' => 'Do you really want to delete this record?',
+    'confirm_delete_many_msg' => 'Do you really want to delete selected record(s)?',
     'cancel' => 'Cancel',
     'template' => 'Template',
     'email' => 'Email',
     'last_login' => 'Last login',
     'shortcode' => 'Shortcode',
     'image' => 'Image',
+    'bulk_changes' => 'Bulk changes',
+    'submit' => 'Submit',
 ];

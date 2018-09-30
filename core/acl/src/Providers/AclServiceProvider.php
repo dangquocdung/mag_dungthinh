@@ -88,16 +88,10 @@ class AclServiceProvider extends ServiceProvider
             ->loadAndPublishTranslations()
             ->publishPublicFolder()
             ->publishAssetsFolder()
-            ->loadRoutes(['web', 'api'])
+            ->loadRoutes(['web'])
             ->loadMigrations();
 
         config()->set(['auth.providers.users.model' => User::class]);
-        config([
-            'auth.guards.api' => [
-                'driver' => 'passport',
-                'provider' => 'users',
-            ],
-        ]);
 
         $this->app->register(FoundationServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
@@ -140,16 +134,9 @@ class AclServiceProvider extends ServiceProvider
                     'icon' => null,
                     'url' => route('users-supers.list'),
                     'permissions' => ['users-supers.list'],
-                ])
-                ->registerItem([
-                    'id' => 'cms-core-api-clients',
-                    'priority' => 5,
-                    'parent_id' => 'cms-core-settings',
-                    'name' => __('API Clients'),
-                    'icon' => null,
-                    'url' => route('api.clients'),
-                    'permissions' => ['api.clients'],
                 ]);
+
+            admin_bar()->registerLink('User', route('users.create'), 'add-new');
         });
     }
 }

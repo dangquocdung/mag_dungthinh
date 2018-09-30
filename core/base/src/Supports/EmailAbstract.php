@@ -5,6 +5,7 @@ namespace Botble\Base\Supports;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class EmailAbstract extends Mailable
 {
@@ -48,9 +49,10 @@ class EmailAbstract extends Mailable
      */
     public function build()
     {
+        $inlineCss = new CssToInlineStyles();
         $email = $this->from(setting('admin_email'))
             ->subject($this->subject)
-            ->html($this->content);
+            ->html($inlineCss->convert($this->content));
 
         $attachments = array_get($this->data, 'attachments');
         if (!empty($attachments)) {

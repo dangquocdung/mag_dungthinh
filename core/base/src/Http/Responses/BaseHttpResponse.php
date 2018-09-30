@@ -23,19 +23,19 @@ class BaseHttpResponse implements Responsable
     protected $message;
 
     /**
-     * @var null
+     * @var string
      */
-    protected $previous_url = null;
+    protected $previousUrl = '';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $next_url = null;
+    protected $nextUrl = '';
 
     /**
      * @var bool
      */
-    protected $with_input = false;
+    protected $withInput = false;
 
     /**
      * @var int
@@ -47,7 +47,7 @@ class BaseHttpResponse implements Responsable
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function setError($error): self
+    public function setError(bool $error = true): self
     {
         $this->error = $error;
         return $this;
@@ -76,22 +76,22 @@ class BaseHttpResponse implements Responsable
     }
 
     /**
-     * @param null $previous_url
+     * @param string $previous_url
      * @return BaseHttpResponse
      */
     public function setPreviousUrl($previous_url): self
     {
-        $this->previous_url = $previous_url;
+        $this->previousUrl = $previous_url;
         return $this;
     }
 
     /**
-     * @param null $next_url
+     * @param string $next_url
      * @return BaseHttpResponse
      */
     public function setNextUrl($next_url): self
     {
-        $this->next_url = $next_url;
+        $this->nextUrl = $next_url;
         return $this;
     }
 
@@ -99,9 +99,9 @@ class BaseHttpResponse implements Responsable
      * @param bool $with_input
      * @return BaseHttpResponse
      */
-    public function withInput(bool $with_input): self
+    public function withInput(bool $with_input = true): self
     {
-        $this->with_input = $with_input;
+        $this->withInput = $with_input;
         return $this;
     }
 
@@ -147,23 +147,23 @@ class BaseHttpResponse implements Responsable
                 ]);
         }
 
-        if ($request->input('submit') === 'save' && !empty($this->previous_url)) {
-            return $this->responseRedirect($this->previous_url);
-        } elseif (!empty($this->next_url)) {
-            return $this->responseRedirect($this->next_url);
+        if ($request->input('submit') === 'save' && !empty($this->previousUrl)) {
+            return $this->responseRedirect($this->previousUrl);
+        } elseif (!empty($this->nextUrl)) {
+            return $this->responseRedirect($this->nextUrl);
         }
 
         return $this->responseRedirect(URL::previous());
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @return \Illuminate\Http\RedirectResponse
      * @author Sang Nguyen
      */
     protected function responseRedirect($url)
     {
-        if ($this->with_input) {
+        if ($this->withInput) {
             return redirect()
                 ->to($url)
                 ->with($this->error ? 'error_msg' : 'success_msg', $this->message)

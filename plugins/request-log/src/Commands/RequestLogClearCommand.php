@@ -12,7 +12,7 @@ class RequestLogClearCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'request-logs:clear';
+    protected $signature = 'cms:request-logs:clear';
 
     /**
      * The console command description.
@@ -27,9 +27,9 @@ class RequestLogClearCommand extends Command
     protected $requestLogRepository;
 
     /**
-     * RebuildPermissions constructor.
-     * @author Sang Nguyen
+     * RequestLogClearCommand constructor.
      * @param RequestLogInterface $requestLogRepository
+     * @author Sang Nguyen
      */
     public function __construct(RequestLogInterface $requestLogRepository)
     {

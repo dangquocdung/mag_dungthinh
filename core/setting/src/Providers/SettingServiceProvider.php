@@ -10,9 +10,12 @@ use Botble\Setting\Models\Setting as SettingModel;
 use Botble\Setting\Repositories\Caches\SettingCacheDecorator;
 use Botble\Setting\Repositories\Eloquent\SettingRepository;
 use Botble\Setting\Repositories\Interfaces\SettingInterface;
+use Botble\Setting\Supports\SettingsManager;
+use Botble\Setting\Supports\SettingStore;
 use Botble\Support\Services\Cache\Cache;
 use Event;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class SettingServiceProvider extends ServiceProvider
@@ -25,15 +28,28 @@ class SettingServiceProvider extends ServiceProvider
     protected $app;
 
     /**
+     * This provider is deferred and should be lazy loaded.
+     *
+     * @var boolean
+     */
+    protected $defer = true;
+
+    /**
      * @author Sang Nguyen
      */
     public function register()
     {
+        $this->app->singleton(SettingsManager::class, function (Application $app) {
+            return new SettingsManager($app);
+        });
+
+        $this->app->bind(SettingStore::class, function (Application $app) {
+            return $app->make(SettingsManager::class)->driver();
+        });
+
         AliasLoader::getInstance()->alias('Setting', SettingFacade::class);
 
-        Helper::autoload(__DIR__ . '/../../helpers');
-
-        if (function_exists('setting') && setting('enable_cache', false)) {
+        if ($this->app->make(SettingStore::class)->get('enable_cache', false)) {
             $this->app->singleton(SettingInterface::class, function () {
                 return new SettingCacheDecorator(new SettingRepository(new SettingModel()), new Cache($this->app['cache'], SettingRepository::class));
             });
@@ -42,6 +58,8 @@ class SettingServiceProvider extends ServiceProvider
                 return new SettingRepository(new SettingModel());
             });
         }
+
+        Helper::autoload(__DIR__ . '/../../helpers');
     }
 
     /**
@@ -78,7 +96,41 @@ class SettingServiceProvider extends ServiceProvider
                     'icon' => null,
                     'url' => route('settings.options'),
                     'permissions' => ['settings.options'],
+                ])
+                ->registerItem([
+                    'id' => 'cms-core-settings-email',
+                    'priority' => 2,
+                    'parent_id' => 'cms-core-settings',
+                    'name' => trans('core.base::layouts.setting_email'),
+                    'icon' => null,
+                    'url' => route('settings.email'),
+                    'permissions' => ['settings.email'],
+                ])
+                ->registerItem([
+                    'id' => 'cms-core-settings-media',
+                    'priority' => 3,
+                    'parent_id' => 'cms-core-settings',
+                    'name' => trans('core.setting::setting.media.title'),
+                    'icon' => null,
+                    'url' => route('settings.media'),
+                    'permissions' => ['settings.media'],
                 ]);
+
+            admin_bar()->registerLink('Setting', route('settings.options'), 'appearance');
         });
+    }
+
+    /**
+     * Which IoC bindings the provider provides.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            SettingsManager::class,
+            SettingStore::class,
+            'setting',
+        ];
     }
 }

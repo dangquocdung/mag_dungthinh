@@ -42,10 +42,4 @@ return [
         'flag' => 'roles.delete',
         'parent_flag' => 'roles.list',
     ],
-
-    [
-        'name' => 'API Clients',
-        'flag' => 'api.clients',
-        'parent_flag' => 'core.system',
-    ],
 ];

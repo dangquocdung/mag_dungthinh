@@ -29,7 +29,6 @@ class LocaleSessionRedirect extends LaravelLocalizationMiddlewareBase
         session(['language' => Language::getDefaultLocale()]);
         app()->setLocale(session('language'));
 
-
         if (count($params) > 0 && Language::checkLocaleInSupportedLocales($params[0])) {
             session(['language' => $params[0]]);
 
@@ -42,7 +41,6 @@ class LocaleSessionRedirect extends LaravelLocalizationMiddlewareBase
 
         if ($locale && Language::checkLocaleInSupportedLocales($locale) && !(Language::getDefaultLocale() === $locale && Language::hideDefaultLocaleInURL())) {
             app('session')->reflash();
-            info('xx');
             $redirection = Language::getLocalizedURL($locale);
 
             return new RedirectResponse($redirection, 302, ['Vary' => 'Accept-Language']);

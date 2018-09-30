@@ -15,8 +15,7 @@ class RestructureTablesForSimpleSlidersPlugin extends Migration
     {
         Schema::rename('simple_sliders', 'simple_slider_items');
         Schema::table('simple_slider_items', function (Blueprint $table) {
-            $table->integer('simple_slider_id', false, true)->after('description');
-            $table->dropSoftDeletes();
+            $table->integer('simple_slider_id', false, true)->nullable()->after('description');
             $table->dropColumn('status');
         });
 
@@ -43,7 +42,6 @@ class RestructureTablesForSimpleSlidersPlugin extends Migration
 
         Schema::rename('simple_slider_items', 'simple_sliders');
         Schema::table('simple_sliders', function (Blueprint $table) {
-            $table->softDeletes();
             $table->tinyInteger('status')->unsigned()->default(1);
         });
 

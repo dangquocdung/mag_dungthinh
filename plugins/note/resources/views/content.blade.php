@@ -1,5 +1,5 @@
 <div class="tab-pane" id="tab_note">
-    <div class="form-group">
+    <div class="form-group row">
         <label class="col-sm-2 control-label text-right">{{ trans('plugins.blog::posts.form.note') }}</label>
         <div class="col-sm-10">
             {!! Form::textarea('note', null , ['class' => 'form-control', 'rows' => 4]) !!}

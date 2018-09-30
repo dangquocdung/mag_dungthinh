@@ -58,6 +58,7 @@ class NoteServiceProvider extends ServiceProvider
         $this->setIsInConsole($this->app->runningInConsole())
             ->setNamespace('plugins/note')
             ->loadAndPublishViews()
+            ->loadAndPublishConfigurations(['general'])
             ->loadMigrations();
 
         $this->app->register(HookServiceProvider::class);

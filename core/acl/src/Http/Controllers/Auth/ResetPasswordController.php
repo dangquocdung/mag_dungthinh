@@ -4,6 +4,7 @@ namespace Botble\ACL\Http\Controllers\Auth;
 
 use Assets;
 use Botble\Base\Http\Controllers\BaseController;
+use Illuminate\Config\Repository;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 
@@ -31,11 +32,12 @@ class ResetPasswordController extends BaseController
 
     /**
      * Create a new controller instance.
+     * @param Repository $config
      */
-    public function __construct()
+    public function __construct(Repository $config)
     {
         $this->middleware('guest');
-        $this->redirectTo = config('core.base.general.admin_dir');
+        $this->redirectTo = $config->get('core.base.general.admin_dir');
     }
 
     /**
@@ -48,8 +50,22 @@ class ResetPasswordController extends BaseController
         page_title()->setTitle(trans('core.acl::auth.reset.title'));
 
         $email = $request->email;
-        Assets::addJavascript(['jquery-validation']);
-        Assets::addAppModule(['login']);
+        Assets::addJavascript(['jquery-validation'])
+            ->addAppModule(['login'])
+            ->removeStylesheets([
+                'select2',
+                'fancybox',
+                'spectrum',
+                'simple-line-icons',
+                'custom-scrollbar',
+                'datepicker',
+            ])
+            ->removeJavascript([
+                'select2',
+                'fancybox',
+                'cookie',
+            ]);
+
         return view('core.acl::auth.reset', compact('email', 'token'));
     }
 }

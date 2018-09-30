@@ -15,12 +15,13 @@ class DashboardWidgetSettingRepository extends RepositoriesAbstract implements D
      */
     public function getListWidget()
     {
-        $data = $this->model->select([
-            'id',
-            'order',
-            'settings',
-            'widget_id',
-        ])
+        $data = $this->model
+            ->select([
+                'id',
+                'order',
+                'settings',
+                'widget_id',
+            ])
             ->with('widget')
             ->orderBy('order')
             ->where('user_id', '=', Auth::user()->getKey())

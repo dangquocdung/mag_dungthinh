@@ -1,178 +1,153 @@
-var App = function () {
+let resizeHandlers = [];
 
-    // IE mode
-    var isRTL = false;
-    var isIE8 = false;
-    var isIE9 = false;
-    var isIE10 = false;
+export class App {
+    constructor() {
+        // IE mode
+        this.isRTL = false;
+        this.isIE8 = false;
+        this.isIE9 = false;
+        this.isIE10 = false;
+        this.$body = $('body');
+        this.$html = $('html');
 
-    var resizeHandlers = [];
+        //Core handlers
+        this.handleInit(); // initialize core letiables
 
-    // theme layout color set
+        this.handleOnResize(); // set and handle responsive
 
-    var brandColors = {
-        'blue': '#89C4F4',
-        'red': '#F3565D',
-        'green': '#1bbc9b',
-        'purple': '#9b59b6',
-        'grey': '#95a5a6',
-        'yellow': '#F8CB00'
-    };
+        //Handle group element heights
+        App.addResizeHandler(this.handleHeight); // handle auto calculating height on window resize
 
-    // initializes main settings
-    var handleInit = function () {
+        //UI Component handlers
+        this.handleTabs(); // handle tabs
+        this.handleTooltips(); // handle bootstrap tooltips
+        this.handleModals(); // handle modals
 
-        if ($('body').css('direction') === 'rtl') {
-            isRTL = true;
-        }
-
-        isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
-        isIE9 = !!navigator.userAgent.match(/MSIE 9.0/);
-        isIE10 = !!navigator.userAgent.match(/MSIE 10.0/);
-
-        if (isIE10) {
-            $('html').addClass('ie10'); // detect IE10 version
-        }
-
-        if (isIE10 || isIE9 || isIE8) {
-            $('html').addClass('ie'); // detect IE10 version
-        }
-    };
-
-    // runs callback functions set by App.addResponsiveHandler().
-    var _runResizeHandlers = function () {
-        // reinitialize other subscribed elements
-        for (var i = 0; i < resizeHandlers.length; i++) {
-            var each = resizeHandlers[i];
-            each.call();
-        }
-    };
-
-    var handleOnResize = function () {
-        var windowWidth = $(window).width();
-        var resize;
-        if (isIE8) {
-            var currheight;
-            $(window).resize(function () {
-                if (currheight == document.documentElement.clientHeight) {
-                    return; //quite event since only body resized not window.
-                }
-                if (resize) {
-                    clearTimeout(resize);
-                }
-                resize = setTimeout(function () {
-                    _runResizeHandlers();
-                }, 50); // wait 50ms until window resize finishes.                
-                currheight = document.documentElement.clientHeight; // store last body client height
-            });
-        } else {
-            $(window).resize(function () {
-                if ($(window).width() != windowWidth) {
-                    windowWidth = $(window).width();
-                    if (resize) {
-                        clearTimeout(resize);
-                    }
-                    resize = setTimeout(function () {
-                        _runResizeHandlers();
-                    }, 50); // wait 50ms until window resize finishes.
-                }
-            });
-        }
-    };
-
-    // Handles custom checkboxes & radios using jQuery iCheck plugin
-    var handleiCheck = function () {
-        if (!$().iCheck) {
-            return;
-        }
-
-        $('.icheck').each(function () {
-            var checkboxClass = $(this).attr('data-checkbox') ? $(this).attr('data-checkbox') : 'icheckbox_minimal-grey';
-            var radioClass = $(this).attr('data-radio') ? $(this).attr('data-radio') : 'iradio_minimal-grey';
-
-            if (checkboxClass.indexOf('_line') > -1 || radioClass.indexOf('_line') > -1) {
-                $(this).iCheck({
-                    checkboxClass: checkboxClass,
-                    radioClass: radioClass,
-                    insert: '<div class="icheck_line-icon"></div>' + $(this).attr("data-label")
-                });
-            } else {
-                $(this).iCheck({
-                    checkboxClass: checkboxClass,
-                    radioClass: radioClass
-                });
-            }
-        });
-    };
-
-    // Handles Bootstrap confirmations
-    var handleBootstrapConfirmation = function () {
-        if (!$().confirmation) {
-            return;
-        }
-        $('[data-toggle=confirmation]').confirmation({
-            btnOkClass: 'btn btn-sm btn-success',
-            btnCancelClass: 'btn btn-sm btn-danger'
-        });
+        // Hacks
+        this.handleFixInputPlaceholderForIE(); //IE8 & IE9 input placeholder issue fix
     }
 
-    // Handles Bootstrap Accordions.
-    var handleAccordions = function () {
-        $('body').on('shown.bs.collapse', '.accordion.scrollable', function (e) {
-            App.scrollTo($(e.target));
-        });
-    };
+    // wrApper function to scroll(focus) to an element
+    static scrollTo(el, offeset) {
+        let pos = (el && el.length > 0) ? el.offset().top : 0;
 
-    // Handles Bootstrap Tabs.
-    var handleTabs = function () {
+        if (el) {
+            if ($('body').hasClass('page-header-fixed')) {
+                pos = pos - $('.page-header').height();
+            } else if ($('body').hasClass('page-header-top-fixed')) {
+                pos = pos - $('.page-header-top').height();
+            } else if ($('body').hasClass('page-header-menu-fixed')) {
+                pos = pos - $('.page-header-menu').height();
+            }
+            pos = pos + (offeset ? offeset : -1 * el.height());
+        }
+
+        $('html,body').animate({
+            scrollTop: pos
+        }, 'slow');
+    }
+
+    // function to scroll to the top
+    static scrollTop() {
+        App.scrollTo();
+    }
+
+    // To get the correct viewport width based on  http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
+    static getViewPort() {
+        let e = window,
+            a = 'inner';
+        if (!('innerWidth' in window)) {
+            a = 'client';
+            e = document.documentElement || document.body;
+        }
+
+        return {
+            width: e[a + 'Width'],
+            height: e[a + 'Height']
+        };
+    }
+
+    //check RTL mode
+    isRTL() {
+        return this.isRTL;
+    }
+
+    static getResponsiveBreakpoint(size) {
+        // bootstrap responsive breakpoints
+        let sizes = {
+            'xs': 480,     // extra small
+            'sm': 768,     // small
+            'md': 992,     // medium
+            'lg': 1200     // large
+        };
+
+        return sizes[size] ? sizes[size] : 0;
+    }
+
+    // initializes main settings
+    handleInit() {
+
+        if (this.$body.css('direction') === 'rtl') {
+            this.isRTL = true;
+        }
+
+        this.isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
+        this.isIE9 = !!navigator.userAgent.match(/MSIE 9.0/);
+        this.isIE10 = !!navigator.userAgent.match(/MSIE 10.0/);
+
+        if (this.isIE10) {
+            this.$html.addClass('ie10'); // detect IE10 version
+        }
+
+        if (this.isIE10 || this.isIE9 || this.isIE8) {
+            this.$html.addClass('ie'); // detect IE10 version
+        }
+    }
+
+    handleTabs() {
         //activate tab if tab id provided in the URL
         if (encodeURI(location.hash)) {
-            var tabid = encodeURI(location.hash.substr(1));
-            $('a[href="#' + tabid + '"]').parents('.tab-pane:hidden').each(function () {
-                var tabid = $(this).attr("id");
-                $('a[href="#' + tabid + '"]').click();
+            let tab_id = encodeURI(location.hash.substr(1));
+            let $tab = $('a[href="#' + tab_id + '"]');
+            $tab.parents('.tab-pane:hidden').each((index, el) => {
+                $('a[href="#' + $(el).attr('id') + '"]').click();
             });
-            $('a[href="#' + tabid + '"]').click();
+            $tab.click();
         }
+    }
 
-        if ($().tabdrop) {
-            $('.tabbable-tabdrop .nav-pills, .tabbable-tabdrop .nav-tabs').tabdrop({
-                text: '<i class="fa fa-ellipsis-v"></i>&nbsp;<i class="fa fa-angle-down"></i>'
-            });
-        }
-    };
-
-    // Handles Bootstrap Modals.
-    var handleModals = function () {
+    handleModals() {
+        let current = this;
         // fix stackable modal issue: when 2 or more modals opened, closing one of modal will remove .modal-open class. 
-        $('body').on('hide.bs.modal', function () {
-            if ($('.modal:visible').size() > 1 && $('html').hasClass('modal-open') === false) {
-                $('html').addClass('modal-open');
-            } else if ($('.modal:visible').size() <= 1) {
-                $('html').removeClass('modal-open');
+        this.$body.on('hide.bs.modal', () => {
+            let $modals = $('.modal:visible');
+            if ($modals.length > 1 && current.$html.hasClass('modal-open') === false) {
+                current.$html.addClass('modal-open');
+            } else if ($modals.length <= 1) {
+                current.$html.removeClass('modal-open');
             }
         });
 
         // fix page scrollbars issue
-        $('body').on('show.bs.modal', '.modal', function () {
-            if ($(this).hasClass("modal-scroll")) {
-                $('body').addClass("modal-open-noscroll");
+        this.$body.on('show.bs.modal', '.modal', (event) => {
+            if ($(event.currentTarget).hasClass('modal-scroll')) {
+                current.$body.addClass('modal-open-noscroll');
             }
         });
 
         // fix page scrollbars issue
-        $('body').on('hidden.bs.modal', '.modal', function () {
-            $('body').removeClass("modal-open-noscroll");
+        this.$body.on('hidden.bs.modal', '.modal', () => {
+            current.$body.removeClass('modal-open-noscroll');
         });
 
         // remove ajax content and remove cache on modal closed 
-        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
-            $(this).removeData('bs.modal');
+        this.$body.on('hidden.bs.modal', '.modal:not(.modal-cached)', (event) => {
+            $(event.currentTarget).removeData('bs.modal');
         });
-    };
+    }
 
     // Handles Bootstrap Tooltips.
-    var handleTooltips = function () {
+    handleTooltips() {
         // global tooltips
         $('.tooltips').tooltip();
 
@@ -202,103 +177,52 @@ var App = function () {
             container: 'body',
             title: 'Collapse/Expand'
         });
-    };
-
-    // Handles Bootstrap Dropdowns
-    var handleDropdowns = function () {
-        /*
-         Hold dropdown on click
-         */
-        $('body').on('click', '.dropdown-menu.hold-on-click', function (e) {
-            e.stopPropagation();
-        });
-    };
-
-    // Handle textarea autosize 
-    var handleTextareaAutosize = function () {
-        if (typeof(autosize) == "function") {
-            autosize(document.querySelectorAll('textarea.autosizeme'));
-        }
-    };
-
-    // Handles Bootstrap Popovers
-
-    // last popep popover
-    var lastPopedPopover;
-
-    var handlePopovers = function () {
-        $('.popovers').popover();
-
-        // close last displayed popover
-
-        $(document).on('click.bs.popover.data-api', function (e) {
-            if (lastPopedPopover) {
-                lastPopedPopover.popover('hide');
-            }
-        });
-    };
-
-    // Handles scrollable contents using jQuery SlimScroll plugin.
-    var handleScrollers = function () {
-        App.initSlimScroll('.scroller');
-    };
+    }
 
     // Fix input placeholder issue for IE8 and IE9
-    var handleFixInputPlaceholderForIE = function () {
+    handleFixInputPlaceholderForIE() {
         //fix html5 placeholder attribute for ie7 & ie8
-        if (isIE8 || isIE9) { // ie8 & ie9
+        if (this.isIE8 || this.isIE9) { // ie8 & ie9
             // this is html5 placeholder fix for inputs, inputs with placeholder-no-fix class will be skipped(e.g: we need this for password fields)
-            $('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function () {
-                var input = $(this);
+            $('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each((index, el) => {
+                let input = $(el);
 
-                if (input.val() === '' && input.attr("placeholder") !== '') {
-                    input.addClass("placeholder").val(input.attr('placeholder'));
+                if (input.val() === '' && input.attr('placeholder') !== '') {
+                    input.addClass('placeholder').val(input.attr('placeholder'));
                 }
 
-                input.focus(function () {
-                    if (input.val() == input.attr('placeholder')) {
+                input.focus(() => {
+                    if (input.val() === input.attr('placeholder')) {
                         input.val('');
                     }
                 });
 
-                input.blur(function () {
-                    if (input.val() === '' || input.val() == input.attr('placeholder')) {
+                input.blur(() => {
+                    if (input.val() === '' || input.val() === input.attr('placeholder')) {
                         input.val(input.attr('placeholder'));
                     }
                 });
             });
         }
-    };
-
-    // Handle Select2 Dropdowns
-    var handleSelect2 = function () {
-        if ($().select2) {
-            $.fn.select2.defaults.set("theme", "bootstrap");
-            $('.select2me').select2({
-                placeholder: "Select",
-                width: 'auto',
-                allowClear: true
-            });
-        }
-    };
+    }
 
     // handle group element heights
-    var handleHeight = function () {
-        $('[data-auto-height]').each(function () {
-            var parent = $(this);
-            var items = $('[data-height]', parent);
-            var height = 0;
-            var mode = parent.attr('data-mode');
-            var offset = parseInt(parent.attr('data-offset') ? parent.attr('data-offset') : 0);
+    handleHeight() {
+        $('[data-auto-height]').each((index, el) => {
+            let parent = $(el);
+            let items = $('[data-height]', parent);
+            let height = 0;
+            let mode = parent.attr('data-mode');
+            let offset = parseInt(parent.attr('data-offset') ? parent.attr('data-offset') : 0);
 
-            items.each(function () {
-                if ($(this).attr('data-height') == "height") {
-                    $(this).css('height', '');
+            items.each((key, sub) => {
+                if ($(sub).attr('data-height') === 'height') {
+                    $(sub).css('height', '');
                 } else {
-                    $(this).css('min-height', '');
+                    $(sub).css('min-height', '');
                 }
 
-                var height_ = (mode == 'base-height' ? $(this).outerHeight() : $(this).outerHeight(true));
+                let height_ = (mode === 'base-height' ? $(sub).outerHeight() : $(sub).outerHeight(true));
                 if (height_ > height) {
                     height = height_;
                 }
@@ -306,11 +230,11 @@ var App = function () {
 
             height = height + offset;
 
-            items.each(function () {
-                if ($(this).attr('data-height') == "height") {
-                    $(this).css('height', height);
+            items.each((key, sub) => {
+                if ($(sub).attr('data-height') === 'height') {
+                    $(sub).css('height', height);
                 } else {
-                    $(this).css('min-height', height);
+                    $(sub).css('min-height', height);
                 }
             });
 
@@ -320,263 +244,59 @@ var App = function () {
         });
     }
 
-    //* END:CORE HANDLERS *//
+    //public function to add callback a function which will be called on window resize
+    static addResizeHandler(func) {
+        resizeHandlers.push(func);
+    }
 
-    return {
+    //public functon to call _runresizeHandlers
+    static runResizeHandlers() {
+        App._runResizeHandlers();
+    }
 
-        //main function to initiate the theme
-        init: function () {
-            //IMPORTANT!!!: Do not modify the core handlers call order.
-
-            //Core handlers
-            handleInit(); // initialize core variables
-            handleOnResize(); // set and handle responsive    
-
-            //UI Component handlers     
-            handleiCheck(); // handles custom icheck radio and checkboxes
-            handleScrollers(); // handles slim scrolling contents
-            handleSelect2(); // handle custom Select2 dropdowns
-            handleDropdowns(); // handle dropdowns
-            handleTabs(); // handle tabs
-            handleTooltips(); // handle bootstrap tooltips
-            handlePopovers(); // handles bootstrap popovers
-            handleAccordions(); //handles accordions 
-            handleModals(); // handle modals
-            handleBootstrapConfirmation(); // handle bootstrap confirmations
-            handleTextareaAutosize(); // handle autosize textareas
-
-            //Handle group element heights
-            this.addResizeHandler(handleHeight); // handle auto calculating height on window resize
-
-            // Hacks
-            handleFixInputPlaceholderForIE(); //IE8 & IE9 input placeholder issue fix
-        },
-
-        //public function to remember last opened popover that needs to be closed on click
-        setLastPopedPopover: function (el) {
-            lastPopedPopover = el;
-        },
-
-        //public function to add callback a function which will be called on window resize
-        addResizeHandler: function (func) {
-            resizeHandlers.push(func);
-        },
-
-        //public functon to call _runresizeHandlers
-        runResizeHandlers: function () {
-            _runResizeHandlers();
-        },
-
-        // wrApper function to scroll(focus) to an element
-        scrollTo: function (el, offeset) {
-            var pos = (el && el.size() > 0) ? el.offset().top : 0;
-
-            if (el) {
-                if ($('body').hasClass('page-header-fixed')) {
-                    pos = pos - $('.page-header').height();
-                } else if ($('body').hasClass('page-header-top-fixed')) {
-                    pos = pos - $('.page-header-top').height();
-                } else if ($('body').hasClass('page-header-menu-fixed')) {
-                    pos = pos - $('.page-header-menu').height();
-                }
-                pos = pos + (offeset ? offeset : -1 * el.height());
-            }
-
-            $('html,body').animate({
-                scrollTop: pos
-            }, 'slow');
-        },
-
-        initSlimScroll: function (el) {
-            if (!$().slimScroll) {
-                return;
-            }
-
-            $(el).each(function () {
-                if ($(this).attr("data-initialized")) {
-                    return; // exit
-                }
-
-                var height;
-
-                if ($(this).attr("data-height")) {
-                    height = $(this).attr("data-height");
-                } else {
-                    height = $(this).css('height');
-                }
-
-                $(this).slimScroll({
-                    allowPageScroll: true, // allow page scroll when the element scroll is ended
-                    size: '7px',
-                    color: ($(this).attr("data-handle-color") ? $(this).attr("data-handle-color") : '#bbb'),
-                    wrapperClass: ($(this).attr("data-wrapper-class") ? $(this).attr("data-wrapper-class") : 'slimScrollDiv'),
-                    railColor: ($(this).attr("data-rail-color") ? $(this).attr("data-rail-color") : '#eaeaea'),
-                    position: isRTL ? 'left' : 'right',
-                    height: height,
-                    alwaysVisible: ($(this).attr("data-always-visible") == "1" ? true : false),
-                    railVisible: ($(this).attr("data-rail-visible") == "1" ? true : false),
-                    disableFadeOut: true
-                });
-
-                $(this).attr("data-initialized", "1");
-            });
-        },
-
-        destroySlimScroll: function (el) {
-            if (!$().slimScroll) {
-                return;
-            }
-
-            $(el).each(function () {
-                if ($(this).attr("data-initialized") === "1") { // destroy existing instance before updating the height
-                    $(this).removeAttr("data-initialized");
-                    $(this).removeAttr("style");
-
-                    var attrList = {};
-
-                    // store the custom attribures so later we will reassign.
-                    if ($(this).attr("data-handle-color")) {
-                        attrList["data-handle-color"] = $(this).attr("data-handle-color");
-                    }
-                    if ($(this).attr("data-wrapper-class")) {
-                        attrList["data-wrapper-class"] = $(this).attr("data-wrapper-class");
-                    }
-                    if ($(this).attr("data-rail-color")) {
-                        attrList["data-rail-color"] = $(this).attr("data-rail-color");
-                    }
-                    if ($(this).attr("data-always-visible")) {
-                        attrList["data-always-visible"] = $(this).attr("data-always-visible");
-                    }
-                    if ($(this).attr("data-rail-visible")) {
-                        attrList["data-rail-visible"] = $(this).attr("data-rail-visible");
-                    }
-
-                    $(this).slimScroll({
-                        wrapperClass: ($(this).attr("data-wrapper-class") ? $(this).attr("data-wrapper-class") : 'slimScrollDiv'),
-                        destroy: true
-                    });
-
-                    var the = $(this);
-
-                    // reassign custom attributes
-                    $.each(attrList, function (key, value) {
-                        the.attr(key, value);
-                    });
-
-                }
-            });
-        },
-
-        // function to scroll to the top
-        scrollTop: function () {
-            App.scrollTo();
-        },
-
-        startPageLoading: function (options) {
-            if (options && options.animate) {
-                $('.page-spinner-bar').remove();
-                $('body').append('<div class="page-spinner-bar"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
-            } else {
-                $('.page-loading').remove();
-                $('body').append('<div class="page-loading"><img src="' + this.getGlobalImgPath() + 'loading-spinner-grey.gif"/>&nbsp;&nbsp;<span>' + (options && options.message ? options.message : 'Loading...') + '</span></div>');
-            }
-        },
-
-        stopPageLoading: function () {
-            $('.page-loading, .page-spinner-bar').remove();
-        },
-
-        //public helper function to get actual input value(used in IE9 and IE8 due to placeholder attribute not supported)
-        getActualVal: function (el) {
-            el = $(el);
-            if (el.val() === el.attr('placeholder')) {
-                return '';
-            }
-            return el.val();
-        },
-
-        //public function to get a paremeter by name from URL
-        getURLParameter: function (paramName) {
-            var searchString = window.location.search.substring(1),
-                i, val, params = searchString.split("&");
-
-            for (i = 0; i < params.length; i++) {
-                val = params[i].split("=");
-                if (val[0] == paramName) {
-                    return unescape(val[1]);
-                }
-            }
-            return null;
-        },
-
-        // check for device touch support
-        isTouchDevice: function () {
-            try {
-                document.createEvent("TouchEvent");
-                return true;
-            } catch (e) {
-                return false;
-            }
-        },
-
-        // To get the correct viewport width based on  http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
-        getViewPort: function () {
-            var e = window,
-                a = 'inner';
-            if (!('innerWidth' in window)) {
-                a = 'client';
-                e = document.documentElement || document.body;
-            }
-
-            return {
-                width: e[a + 'Width'],
-                height: e[a + 'Height']
-            };
-        },
-
-        getUniqueID: function (prefix) {
-            return 'prefix_' + Math.floor(Math.random() * (new Date()).getTime());
-        },
-
-        // check IE8 mode
-        isIE8: function () {
-            return isIE8;
-        },
-
-        // check IE9 mode
-        isIE9: function () {
-            return isIE9;
-        },
-
-        //check RTL mode
-        isRTL: function () {
-            return isRTL;
-        },
-
-        // get layout color code by color name
-        getBrandColor: function (name) {
-            if (brandColors[name]) {
-                return brandColors[name];
-            } else {
-                return '';
-            }
-        },
-
-        getResponsiveBreakpoint: function (size) {
-            // bootstrap responsive breakpoints
-            var sizes = {
-                'xs': 480,     // extra small
-                'sm': 768,     // small
-                'md': 992,     // medium
-                'lg': 1200     // large
-            };
-
-            return sizes[size] ? sizes[size] : 0;
+    // runs callback functions set by App.addResponsiveHandler().
+    static _runResizeHandlers() {
+        // reinitialize other subscribed elements
+        for (let i = 0; i < resizeHandlers.length; i++) {
+            let each = resizeHandlers[i];
+            each.call();
         }
     };
 
-}();
+    handleOnResize() {
+        let windowWidth = $(window).width();
+        let resize;
+        if (this.isIE8) {
+            let currheight;
+            $(window).resize(() => {
+                if (currheight === document.documentElement.clientHeight) {
+                    return; //quite event since only body resized not window.
+                }
+                if (resize) {
+                    clearTimeout(resize);
+                }
+                resize = setTimeout(() => {
+                    App._runResizeHandlers();
+                }, 50); // wait 50ms until window resize finishes.                
+                currheight = document.documentElement.clientHeight; // store last body client height
+            });
+        } else {
+            $(window).resize(() => {
+                if ($(window).width() !== windowWidth) {
+                    windowWidth = $(window).width();
+                    if (resize) {
+                        clearTimeout(resize);
+                    }
+                    resize = setTimeout(() => {
+                        App._runResizeHandlers();
+                    }, 50); // wait 50ms until window resize finishes.
+                }
+            });
+        }
+    }
+}
 
-jQuery(document).ready(function () {
-    App.init();
+$(document).ready(() => {
+    new App();
+    window.App = App;
 });

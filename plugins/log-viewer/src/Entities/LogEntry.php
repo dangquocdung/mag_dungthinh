@@ -40,7 +40,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $level
      * @param  string $header
      * @param  string $stack
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct($level, $header, $stack)
     {
@@ -55,7 +55,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $level
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function setLevel($level)
     {
@@ -70,7 +70,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $header
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function setHeader($header)
     {
@@ -94,7 +94,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $env
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function setEnv($env)
     {
@@ -109,7 +109,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $datetime
      *
      * @return \Botble\LogViewer\Entities\LogEntry
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function setDatetime($datetime)
     {
@@ -124,7 +124,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $stack
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function setStack($stack)
     {
@@ -137,7 +137,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * Get translated level name with icon.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function level()
     {
@@ -148,7 +148,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * Get translated level name.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function name()
     {
@@ -159,7 +159,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * Get level icon.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function icon()
     {
@@ -172,7 +172,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $level
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isSameLevel($level)
     {
@@ -183,7 +183,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * Get the log entry as an array.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function toArray()
     {
@@ -201,7 +201,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  int $options
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function toJson($options = 0)
     {
@@ -212,7 +212,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * Serialize the log entry object to json data.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function jsonSerialize()
     {
@@ -223,7 +223,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * Check if the entry has a stack.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function hasStack()
     {
@@ -236,7 +236,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $header
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function cleanHeader($header)
     {
@@ -249,7 +249,7 @@ class LogEntry implements Arrayable, Jsonable, JsonSerializable
      * @param  string $header
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function extractDatetime($header)
     {

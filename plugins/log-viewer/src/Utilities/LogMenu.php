@@ -28,7 +28,7 @@ class LogMenu implements LogMenuContract
      *
      * @param  \Illuminate\Contracts\Config\Repository $config
      * @param  \Botble\LogViewer\Contracts\Utilities\LogStyler $styler
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(ConfigContract $config, LogStylerContract $styler)
     {
@@ -42,7 +42,7 @@ class LogMenu implements LogMenuContract
      * @param  \Illuminate\Contracts\Config\Repository $config
      *
      * @return \Botble\LogViewer\Utilities\LogMenu
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setConfig(ConfigContract $config)
     {
@@ -57,7 +57,7 @@ class LogMenu implements LogMenuContract
      * @param  \Botble\LogViewer\Contracts\Utilities\LogStyler $styler
      *
      * @return \Botble\LogViewer\Utilities\LogMenu
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setLogStyler(LogStylerContract $styler)
     {
@@ -73,7 +73,7 @@ class LogMenu implements LogMenuContract
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function make(Log $log, $trans = true)
     {
@@ -94,7 +94,7 @@ class LogMenu implements LogMenuContract
      * Check if the icons are enabled.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function isIconsEnabled()
     {
@@ -108,7 +108,7 @@ class LogMenu implements LogMenuContract
      * @param  mixed $default
      *
      * @return mixed
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function config($key, $default = null)
     {

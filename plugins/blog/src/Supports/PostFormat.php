@@ -15,18 +15,18 @@ class PostFormat
         ],
         'gallery' => [
             'key' => 'gallery',
-            'icon' => 'fa fa-image-o',
+            'icon' => 'fa fa-image',
             'name' => 'Gallery',
         ],
         'video' => [
             'key' => 'video',
-            'icon' => 'fa fa-camera-o',
+            'icon' => 'fa fa-camera',
             'name' => 'Video',
         ],
     ];
 
     /**
-     * @param $formats
+     * @param array $formats
      * @return void
      * @author Sang Nguyen
      * @since 16-09-2016

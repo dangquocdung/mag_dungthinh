@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 register_page_template([
     'default' => 'Default'
 ]);
@@ -44,7 +46,7 @@ theme_option()
         'label' => __('Copyright'),
         'attributes' => [
             'name' => 'copyright',
-            'value' => '© 2018 CCông ty TNHH Phần mềm máy tính Dũng Thịnh',
+            'value' => '© 2016 Botble Technologies. All right reserved. Designed by Nghia Minh',
             'options' => [
                 'class' => 'form-control',
                 'placeholder' => __('Change copyright'),

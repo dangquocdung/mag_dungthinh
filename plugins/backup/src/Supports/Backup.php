@@ -2,7 +2,7 @@
 
 namespace Botble\Backup\Supports;
 
-use Carbon;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use File;
@@ -35,7 +35,7 @@ class Backup
     }
 
     /**
-     * @param $request
+     * @param Request $request
      * @return array
      * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
@@ -43,7 +43,7 @@ class Backup
     public function createBackupFolder(Request $request)
     {
         $backupFolder = $this->createFolder(storage_path('app/backup'));
-        $now = Carbon::now()->format('Y-m-d-H-i-s');
+        $now = Carbon::now(config('app.timezone'))->format('Y-m-d-H-i-s');
         $this->folder = $this->createFolder($backupFolder . DIRECTORY_SEPARATOR . $now);
 
         $file = storage_path('app/backup/backup.json');
@@ -56,7 +56,7 @@ class Backup
         $data[$now] = [
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'date' => Carbon::now()->toDateTimeString(),
+            'date' => Carbon::now(config('app.timezone'))->toDateTimeString(),
         ];
         save_file_data($file, $data);
         return [
@@ -79,7 +79,7 @@ class Backup
     }
 
     /**
-     * @param $folder
+     * @param string $folder
      * @return mixed
      * @author Sang Nguyen
      */
@@ -99,10 +99,10 @@ class Backup
      */
     public function backupDb()
     {
-        $file = 'database-' . Carbon::now()->format('Y-m-d-H-i-s');
+        $file = 'database-' . Carbon::now(config('app.timezone'))->format('Y-m-d-H-i-s');
         $path = $this->folder . DIRECTORY_SEPARATOR . $file;
 
-        $mysql_path = rtrim(env('MYSQL_EXECUTE_PATH', ''), '/');
+        $mysql_path = rtrim(setting('backup_mysql_execute_path', ''), '/');
         if (!empty($mysql_path)) {
             $mysql_path = $mysql_path . '/';
         }
@@ -118,14 +118,14 @@ class Backup
     }
 
     /**
-     * @param $source
+     * @param string $source
      * @return bool
      * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function backupFolder($source)
     {
-        $file = $this->folder . DIRECTORY_SEPARATOR . 'uploads-' . Carbon::now()->format('Y-m-d-H-i-s') . '.zip';
+        $file = $this->folder . DIRECTORY_SEPARATOR . 'uploads-' . Carbon::now(config('app.timezone'))->format('Y-m-d-H-i-s') . '.zip';
 
         // set script timeout value
         ini_set('max_execution_time', 5000);
@@ -153,8 +153,8 @@ class Backup
     }
 
     /**
-     * @param $path
-     * @param $file
+     * @param string$path
+     * @param string $file
      * @return bool
      * @author Sang Nguyen
      * @throws Exception
@@ -178,8 +178,8 @@ class Backup
     }
 
     /**
-     * @param $fileName
-     * @param $pathTo
+     * @param string $fileName
+     * @param string $pathTo
      * @return bool
      * @author Sang Nguyen
      */
@@ -202,9 +202,9 @@ class Backup
     }
 
     /**
-     * @param $src
-     * @param $zip
-     * @param $pathLength
+     * @param string $src
+     * @param ZipArchive $zip
+     * @param string $pathLength
      * @author Sang Nguyen
      */
     public function recurseZip($src, &$zip, $pathLength)
@@ -229,8 +229,8 @@ class Backup
     }
 
     /**
-     * @param $path
-     * @param $name
+     * @param string $path
+     * @param string $name
      * @author Sang Nguyen
      * @throws Exception
      */
@@ -252,7 +252,7 @@ class Backup
     }
 
     /**
-     * @param $file
+     * @param string $file
      * @throws Exception
      * @author Sang Nguyen
      */
@@ -264,7 +264,7 @@ class Backup
     }
 
     /**
-     * @param $path
+     * @param string $path
      * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */

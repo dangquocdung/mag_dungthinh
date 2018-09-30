@@ -58,8 +58,22 @@ class LoginController extends BaseController
     {
         page_title()->setTitle(trans('core.acl::auth.login_title'));
 
-        Assets::addJavascript(['jquery-validation']);
-        Assets::addAppModule(['login']);
+        Assets::addJavascript(['jquery-validation'])
+            ->addAppModule(['login'])
+            ->removeStylesheets([
+                'select2',
+                'fancybox',
+                'spectrum',
+                'simple-line-icons',
+                'custom-scrollbar',
+                'datepicker',
+            ])
+            ->removeJavascript([
+                'select2',
+                'fancybox',
+                'cookie',
+            ]);
+
         return view('core.acl::auth.login');
     }
 
@@ -70,6 +84,7 @@ class LoginController extends BaseController
      * @return BaseHttpResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Illuminate\Validation\ValidationException
+     * @author Sang Nguyen
      */
     public function login(Request $request)
     {
@@ -88,13 +103,13 @@ class LoginController extends BaseController
         if (!empty($user)) {
             if (!AclManager::getActivationRepository()->completed($user)) {
                 return $this->response
-                    ->setError(true)
+                    ->setError()
                     ->setMessage(trans('core.acl::auth.login.not_active'));
             }
         }
 
         if ($this->attemptLogin($request)) {
-            AclManager::getUserRepository()->update(['id' => $user->id], ['last_login' => Carbon::now()]);
+            AclManager::getUserRepository()->update(['id' => $user->id], ['last_login' => Carbon::now(config('app.timezone'))]);
             if (!session()->has('url.intended')) {
                 session()->flash('url.intended', url()->current());
             }

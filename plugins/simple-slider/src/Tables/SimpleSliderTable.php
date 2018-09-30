@@ -18,11 +18,6 @@ class SimpleSliderTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -31,7 +26,11 @@ class SimpleSliderTable extends TableAbstract
      * @param UrlGenerator $urlGenerator
      * @param SimpleSliderInterface $simpleSliderRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlGenerator, SimpleSliderInterface $simpleSliderRepository)
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlGenerator,
+        SimpleSliderInterface $simpleSliderRepository
+    )
     {
         $this->repository = $simpleSliderRepository;
         $this->setOption('id', 'table-simple_sliders');
@@ -90,8 +89,7 @@ class SimpleSliderTable extends TableAbstract
                 'simple_sliders.key',
                 'simple_sliders.status',
                 'simple_sliders.created_at',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, SIMPLE_SLIDER_MODULE_SCREEN_NAME));
     }
 

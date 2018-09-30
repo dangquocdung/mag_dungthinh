@@ -45,7 +45,7 @@ class AnalyticsClientFactory
 
     /**
      * @param GoogleClient $client
-     * @param $config
+     * @param array $config
      */
     protected static function configureCache(GoogleClient $client, $config)
     {

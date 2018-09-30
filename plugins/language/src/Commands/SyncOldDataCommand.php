@@ -15,7 +15,7 @@ class SyncOldDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'language:sync {table : The table need to set default language} {reference : screen name of that object}';
+    protected $signature = 'cms:language:sync {table : The table need to set default language} {reference : screen name of that object}';
 
     /**
      * The console command description.
@@ -30,7 +30,7 @@ class SyncOldDataCommand extends Command
      */
     public function handle()
     {
-        if (!preg_match('/^[a-z\-]+$/i', $this->argument('table')) || !preg_match('/^[a-z\-]+$/i', $this->argument('reference'))) {
+        if (!preg_match('/^[a-z\-_]+$/i', $this->argument('table')) || !preg_match('/^[a-z\-_]+$/i', $this->argument('reference'))) {
             $this->error('Only alphabetic characters are allowed.');
             return false;
         }
@@ -40,12 +40,18 @@ class SyncOldDataCommand extends Command
             return false;
         }
 
+        if (!Schema::hasColumn($this->argument('table'), 'id')) {
+            $this->error('That table does not have ID column!');
+            return false;
+        }
+
         $data = DB::table($this->argument('table'))->get();
         foreach ($data as $item) {
-            $existed = DB::table('language_meta')->where([
-                'lang_meta_content_id' => $item->id,
-                'lang_meta_reference' => $this->argument('reference'),
-            ])
+            $existed = DB::table('language_meta')
+                ->where([
+                    'lang_meta_content_id' => $item->id,
+                    'lang_meta_reference' => $this->argument('reference'),
+                ])
                 ->first();
             if (empty($existed)) {
                 DB::table('language_meta')->insert([

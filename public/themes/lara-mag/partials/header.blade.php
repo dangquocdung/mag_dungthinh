@@ -4,7 +4,7 @@
             <section class="header-menu-top-left fleft">
                 {!!
                     Menu::generateMenu([
-                        'slug' => 'menu-tren-cung',
+                        'slug' => 'top-header',
                         'options' => ['id' => 'menu-header-top-menu', 'class' => 'menu'],
                         'theme' => true,
                     ])
@@ -23,10 +23,9 @@
             <h1 class="logo fleft">
                 <a href="{{ route('public.index') }}" title="{{ setting('site_title') }}">
                 @if (!theme_option('logo'))
-                    <span>Dũng Thịnh</span>
+                    <span>Lara</span>Mag
                 @else
-                    <span>Dũng Thịnh</span>
-                    {{--  <img src="{{ theme_option('logo') }}" alt="{{ setting('site_title') }}" title="{{ setting('site_title') }}"/>  --}}
+                    <img src="{{ theme_option('logo') }}" alt="{{ setting('site_title') }}" title="{{ setting('site_title') }}"/>
                 @endif
                 </a>
             </h1><!-- end .logo -->
@@ -46,11 +45,11 @@
             <section class="main-nav fleft">
                 <section class="main-nav-inner tf">
                     <section class="close-nav">
-                        <i class="fa fa-times" aria-hidden="true"></i> Đóng menu
+                        <i class="fa fa-times" aria-hidden="true"></i> {{ __('Close menu') }}
                     </section><!-- end .close nav -->
                     {!!
                         Menu::generateMenu([
-                            'slug' => 'menu-chinh',
+                            'slug' => 'main-menu',
                             'options' => ['id' => 'menu-header-main-menu', 'class' => 'menu'],
                             'theme' => true,
                         ])

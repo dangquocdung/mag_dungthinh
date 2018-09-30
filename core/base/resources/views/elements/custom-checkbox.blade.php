@@ -13,13 +13,12 @@ $values = (array)$values;
         $selected = isset($value[3]) ? (bool)$value[3] : false;
         $disabled = isset($value[4]) ? (bool)$value[4] : false;
     @endphp
-    <label class="mt-checkbox mt-checkbox-outline {{ $disabled ? 'mt-checkbox-disabled' : '' }}">
+    <label>
         <input type="checkbox"
                value="{{ $currentValue }}"
                {{ $selected ? 'checked' : '' }}
                name="{{ $name }}" {{ $disabled ? 'disabled' : '' }}>
-        <span></span>
-        <span class="text">{{ $label }}</span>
+        {{ $label }}
     </label>
 @endforeach
 @if (sizeof($values) > 1) </div> @endif

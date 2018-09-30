@@ -2,7 +2,7 @@
     'use strict';
     window.fbAsyncInit = function() {
         FB.init({
-            appId            : '{{ env('FACEBOOK_APP_ID') }}',
+            appId            : '{{ setting('facebook_app_id', env('FACEBOOK_APP_ID')) }}',
             autoLogAppEvents : true,
             xfbml            : true,
             version          : 'v2.11'

@@ -1,9 +1,9 @@
 <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+    <a href="javascript:;" class="dropdown-toggle dropdown-header-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="icon-envelope-open"></i>
         <span class="badge badge-default"> {{ count($contacts) }} </span>
     </a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu-right">
         <li class="external">
             <h3>{!! trans('plugins.contact::contact.new_msg_notice', ['count' => count($contacts)]) !!}</h3>
             <a href="{{ route('contacts.list') }}">{{ trans('plugins.contact::contact.view_all') }}</a>
@@ -14,9 +14,9 @@
                     <li>
                         <a href="{{ route('contacts.edit', $contact->id) }}">
                             <span class="photo">
-                                <img src="{{ url(config('core.acl.general.avatar.default')) }}" class="img-circle" alt="{{ $contact->name }}">
+                                <img src="{{ url(config('core.acl.general.avatar.default')) }}" class="rounded-circle" alt="{{ $contact->name }}">
                             </span>
-                            <span class="subject"><span class="from"> {{ $contact->name }} </span><span class="time">{{ Carbon::parse($contact->created_at)->toDateTimeString() }} </span></span>
+                            <span class="subject"><span class="from"> {{ $contact->name }} </span><span class="time">{{ Carbon\Carbon::parse($contact->created_at)->toDateTimeString() }} </span></span>
                             <span class="message"> {{ $contact->phone }} - {{ $contact->email }} </span>
                         </a>
                     </li>

@@ -22,4 +22,5 @@ return [
     'to the system' => 'vào hệ thống',
     'updated profile' => 'cập nhật tài khoản',
     'user' => 'thành viên',
+    'widget_audit_logs' => 'Lịch sử hoạt động',
 ];

@@ -26,4 +26,9 @@ return [
         'json_credential' => 'Service Account Credentials',
         'json_credential_description' => 'Service Account Credentials',
     ],
+
+    'widget_analytics_page' => 'Top Most Visit Pages',
+    'widget_analytics_browser' => 'Top Browsers',
+    'widget_analytics_referrer' => 'Top Referrers',
+    'widget_analytics_general' => 'Site Analytics',
 ];

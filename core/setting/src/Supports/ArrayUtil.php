@@ -15,7 +15,7 @@ class ArrayUtil
      * @param  mixed $default If the element is not found, return this.
      *
      * @return mixed
-     * @author Andreas Lutro <anlutro@gmail.com>
+     * @author Andreas Lutro
      */
     public static function get(array $data, $key, $default = null)
     {
@@ -47,7 +47,7 @@ class ArrayUtil
      * @param $keys
      * @param null $default
      * @return array
-     * @author Andreas Lutro <anlutro@gmail.com>
+     * @author Andreas Lutro
      */
     protected static function getArray(array $input, $keys, $default = null)
     {
@@ -67,7 +67,7 @@ class ArrayUtil
      * @param  string $key
      *
      * @return boolean
-     * @author Andreas Lutro <anlutro@gmail.com>
+     * @author Andreas Lutro
      */
     public static function has(array $data, $key)
     {
@@ -92,7 +92,7 @@ class ArrayUtil
      * @param array $data
      * @param string $key Specify a nested element by separating keys with full stops.
      * @param mixed $value
-     * @author Andreas Lutro <anlutro@gmail.com>
+     * @author Andreas Lutro
      */
     public static function set(array &$data, $key, $value)
     {
@@ -119,7 +119,7 @@ class ArrayUtil
      *
      * @param  array &$data
      * @param  string $key Specify a nested element by separating keys with full stops.
-     * @author Andreas Lutro <anlutro@gmail.com>
+     * @author Andreas Lutro
      */
     public static function forget(array &$data, $key)
     {

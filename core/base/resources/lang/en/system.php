@@ -80,5 +80,10 @@ return [
     'dependency_name' => 'Dependency Name',
     'plugins' => 'Plugins',
     'missing_required_plugins' => 'Please activate plugin(s): :plugins before activate this plugin!',
-
+    'remove' => 'Remove',
+    'remove_plugin_success' => 'Remove plugin successfully!',
+    'remove_plugin' => 'Remove plugin',
+    'remove_plugin_confirm_message' => 'Do you really want to remove this plugin?',
+    'remove_plugin_confirm_yes' => 'Yes, remove it!',
+    'total_plugins' => 'Total plugins',
 ];

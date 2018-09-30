@@ -137,3 +137,15 @@ if (!defined('BASE_FILTER_BEFORE_GET_ADMIN_LIST_ITEM')) {
 if (!defined('BASE_FILTER_EMAIL_TEMPLATE')) {
     define('BASE_FILTER_EMAIL_TEMPLATE', 'base_filter_email_template');
 }
+
+if (!defined('BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM')) {
+    define('BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM', 'base_filter_after_login_or_register_form');
+}
+
+if (!defined('BASE_FILTER_BEFORE_RENDER_FORM')) {
+    define('BASE_FILTER_BEFORE_RENDER_FORM', 'base_filter_before_render_form');
+}
+
+if (!defined('BASE_FILTER_FORM_EDITOR_BUTTONS')) {
+    define('BASE_FILTER_FORM_EDITOR_BUTTONS', 'base_filter_form_editor_buttons');
+}

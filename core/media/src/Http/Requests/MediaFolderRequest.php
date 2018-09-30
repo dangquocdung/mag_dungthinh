@@ -16,7 +16,17 @@ class MediaFolderRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|regex:/^[\pL\s\ \_\-0-9]+$/u'
+            'name' => 'required|regex:/^[\pL\s\ \_\-0-9]+$/u',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.regex' => trans('media::media.name_invalid'),
         ];
     }
 }

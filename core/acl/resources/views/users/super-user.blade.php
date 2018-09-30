@@ -6,8 +6,10 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('core.base::system.user.add_user') }}</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
 
                 {!! Form::open(['route' => ['users-supers.create']]) !!}
@@ -20,7 +22,7 @@
 
                     <div class="form-actions text-right">
                         <button data-dismiss="modal"
-                                class="btn btn-default">{{ trans('core.base::system.user.cancel') }}</button>
+                                class="btn btn-secondary">{{ trans('core.base::system.user.cancel') }}</button>
                         <button type="submit" class="btn btn-success">{{ trans('core.base::system.user.create') }}</button>
                     </div>
                 </div>

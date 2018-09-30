@@ -26,21 +26,6 @@
 class Google_Service_CloudIot_Resource_ProjectsLocationsRegistriesGroupsDevices extends Google_Service_Resource
 {
   /**
-   * Deletes a device. (devices.delete)
-   *
-   * @param string $name The name of the device. For example,
-   * `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
-   * `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
-   * @param array $optParams Optional parameters.
-   * @return Google_Service_CloudIot_CloudiotEmpty
-   */
-  public function delete($name, $optParams = array())
-  {
-    $params = array('name' => $name);
-    $params = array_merge($params, $optParams);
-    return $this->call('delete', array($params), "Google_Service_CloudIot_CloudiotEmpty");
-  }
-  /**
    * Gets details about a device. (devices.get)
    *
    * @param string $name The name of the device. For example,
@@ -58,6 +43,37 @@ class Google_Service_CloudIot_Resource_ProjectsLocationsRegistriesGroupsDevices 
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
     return $this->call('get', array($params), "Google_Service_CloudIot_Device");
+  }
+  /**
+   * List devices in a device registry.
+   * (devices.listProjectsLocationsRegistriesGroupsDevices)
+   *
+   * @param string $parent The device registry path. Required. For example,
+   * `projects/my-project/locations/us-central1/registries/my-registry`.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string pageToken The value returned by the last
+   * `ListDevicesResponse`; indicates that this is a continuation of a prior
+   * `ListDevices` call and the system should return the next page of data.
+   * @opt_param string fieldMask The fields of the `Device` resource to be
+   * returned in the response. The fields `id` and `num_id` are always returned,
+   * along with any other fields specified.
+   * @opt_param int pageSize The maximum number of devices to return in the
+   * response. If this value is zero, the service will select a default size. A
+   * call may return fewer objects than requested. A non-empty `next_page_token`
+   * in the response indicates that more data is available.
+   * @opt_param string deviceIds A list of device string IDs. For example,
+   * `['device0', 'device12']`. If empty, this field is ignored. Maximum IDs:
+   * 10,000
+   * @opt_param string deviceNumIds A list of device numeric IDs. If empty, this
+   * field is ignored. Maximum IDs: 10,000.
+   * @return Google_Service_CloudIot_ListDevicesResponse
+   */
+  public function listProjectsLocationsRegistriesGroupsDevices($parent, $optParams = array())
+  {
+    $params = array('parent' => $parent);
+    $params = array_merge($params, $optParams);
+    return $this->call('list', array($params), "Google_Service_CloudIot_ListDevicesResponse");
   }
   /**
    * Modifies the configuration for the device, which is eventually sent from the

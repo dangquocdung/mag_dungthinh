@@ -12,7 +12,7 @@ interface LogStyler
      * @param  string|null $default
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function icon($level, $default = null);
 
@@ -23,7 +23,7 @@ interface LogStyler
      * @param  string|null $default
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function color($level, $default = null);
 }

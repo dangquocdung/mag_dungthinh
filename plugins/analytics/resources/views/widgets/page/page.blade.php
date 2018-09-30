@@ -12,7 +12,7 @@
                 @foreach ($pages as $page)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
-                        <td class="text-left"><a href="{{ $page['url'] }}" target="_blank">{{ string_limit_words($page['pageTitle'], 80) }}</a></td>
+                        <td class="text-left"><a href="{{ $page['url'] }}" target="_blank">{{ str_limit($page['pageTitle'], 100) }}</a></td>
                         <td>{{ $page['pageViews'] }} ({{ ucfirst(trans('plugins.analytics::analytics.views')) }})</td>
                     </tr>
                 @endforeach
@@ -20,5 +20,5 @@
         </table>
     </div>
 @else
-    <p>{{ trans('core.base::tables.no_data') }}</p>
+    @include('core.dashboard::partials.no-data')
 @endif

@@ -19,7 +19,7 @@
             <a data-original-title="Edit this language" class="tip edit-language-button" data-id="{{ $item->lang_id }}" href="#">{{ trans('plugins.language::language.edit') }}</a> |
         </span>
         <span>
-            <a class="deleteDialog tip" data-toggle="modal" data-section="{{ route('languages.delete', $item->lang_id) }}" role="button" data-original-title="{{ trans('plugins.language::language.delete_tooltip') }}">{{ trans('plugins.language::language.delete') }}</a>
+            <a href="#" class="deleteDialog tip" data-toggle="modal" data-section="{{ route('languages.delete', $item->lang_id) }}" role="button" data-original-title="{{ trans('plugins.language::language.delete_tooltip') }}">{{ trans('plugins.language::language.delete') }}</a>
         </span>
     </td>
 </tr>

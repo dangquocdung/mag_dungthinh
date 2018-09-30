@@ -1,7 +1,6 @@
 import {MediaConfig} from './App/Config/MediaConfig';
 import {Helpers} from './App/Helpers/Helpers';
 import {MediaService} from './App/Services/MediaService';
-import {MessageService} from './App/Services/MessageService';
 import {FolderService} from './App/Services/FolderService';
 import {UploadService} from './App/Services/UploadService';
 import {ActionsService} from './App/Services/ActionsService';
@@ -70,14 +69,14 @@ class MediaManagement {
         setTimeout(() => {
             $('.rv-media-details').removeClass('hidden');
         }, 300);
-        $mediaDetailsCheckbox.on('change', function (event) {
+        $mediaDetailsCheckbox.on('change', (event) => {
             event.preventDefault();
-            MediaConfig.hide_details_pane = $(this).is(':checked');
+            MediaConfig.hide_details_pane = $(event.currentTarget).is(':checked');
             Helpers.storeConfig();
         });
 
-        $(document).on('click', 'button[data-dismiss-modal]', function () {
-            let modal = $(this).data('dismiss-modal');
+        $(document).off('click', 'button[data-dismiss-modal]').on('click', 'button[data-dismiss-modal]', (event) => {
+            let modal = $(event.currentTarget).data('dismiss-modal');
             $(modal).modal('hide');
         });
     }
@@ -94,7 +93,7 @@ class MediaManagement {
         /*Shift key*/
         let shift_key = false;
 
-        $(document).on('keyup keydown', function (e) {
+        $(document).on('keyup keydown', (e) => {
             /*User hold ctrl key*/
             ctrl_key = e.ctrlKey;
             /*User hold command key*/
@@ -104,37 +103,37 @@ class MediaManagement {
         });
 
         _self.$body
-            .on('click', '.js-media-list-title', function (event) {
-                event.preventDefault();
-                let $current = $(this);
+            .off('click', '.js-media-list-title').on('click', '.js-media-list-title', (event) => {
+            event.preventDefault();
+            let $current = $(event.currentTarget);
 
-                if (shift_key) {
-                    let firstItem = _.first(Helpers.getSelectedItems());
-                    if (firstItem) {
-                        let firstIndex = firstItem.index_key;
-                        let currentIndex = $current.index();
-                        $('.rv-media-items li').each(function (index) {
-                            if (index > firstIndex && index <= currentIndex) {
-                                $(this).find('input[type=checkbox]').prop('checked', true);
-                            }
-                        });
-                    }
-                } else {
-                    if (!ctrl_key && !meta_key) {
-                        $current.closest('.rv-media-items').find('input[type=checkbox]').prop('checked', false);
-                    }
+            if (shift_key) {
+                let firstItem = _.first(Helpers.getSelectedItems());
+                if (firstItem) {
+                    let firstIndex = firstItem.index_key;
+                    let currentIndex = $current.index();
+                    $('.rv-media-items li').each((index, el) => {
+                        if (index > firstIndex && index <= currentIndex) {
+                            $(el).find('input[type=checkbox]').prop('checked', true);
+                        }
+                    });
                 }
+            } else {
+                if (!ctrl_key && !meta_key) {
+                    $current.closest('.rv-media-items').find('input[type=checkbox]').prop('checked', false);
+                }
+            }
 
-                let $lineCheckBox = $current.find('input[type=checkbox]');
-                $lineCheckBox.prop('checked', true);
-                ActionsService.handleDropdown();
+            let $lineCheckBox = $current.find('input[type=checkbox]');
+            $lineCheckBox.prop('checked', true);
+            ActionsService.handleDropdown();
 
-                _self.MediaService.getFileDetails($current.data());
-            })
-            .on('dblclick', '.js-media-list-title', function (event) {
+            _self.MediaService.getFileDetails($current.data());
+        })
+            .on('dblclick', '.js-media-list-title', (event) => {
                 event.preventDefault();
 
-                let data = $(this).data();
+                let data = $(event.currentTarget).data();
                 if (data.is_folder === true) {
                     Helpers.resetPagination();
                     _self.FolderService.changeFolder(data.id);
@@ -149,22 +148,22 @@ class MediaManagement {
                     }
                 }
             })
-            .on('dblclick', '.js-up-one-level', function (event) {
+            .on('dblclick', '.js-up-one-level', (event) => {
                 event.preventDefault();
                 let count = $('.rv-media-breadcrumb .breadcrumb li').length;
                 $('.rv-media-breadcrumb .breadcrumb li:nth-child(' + (count - 1) + ') a').trigger('click');
             })
-            .on('contextmenu', '.js-context-menu', function (e) {
-                if (!$(this).find('input[type=checkbox]').is(':checked')) {
-                    $(this).trigger('click');
+            .on('contextmenu', '.js-context-menu', (event) => {
+                if (!$(event.currentTarget).find('input[type=checkbox]').is(':checked')) {
+                    $(event.currentTarget).trigger('click');
                 }
             })
-            .on('click contextmenu', '.rv-media-items', function (e) {
+            .on('click contextmenu', '.rv-media-items', (e) => {
                 if (!_.size(e.target.closest('.js-context-menu'))) {
                     $('.rv-media-items input[type="checkbox"]').prop('checked', false);
                     $('.rv-dropdown-actions').addClass('disabled');
                     _self.MediaService.getFileDetails({
-                        icon: 'fa fa-picture-o',
+                        icon: 'far fa-image',
                         nothing_selected: '',
                     });
                 }
@@ -174,9 +173,9 @@ class MediaManagement {
 
     changeViewType() {
         let _self = this;
-        _self.$body.on('click', '.js-rv-media-change-view-type .btn', function (event) {
+        _self.$body.off('click', '.js-rv-media-change-view-type .btn').on('click', '.js-rv-media-change-view-type .btn', (event) => {
             event.preventDefault();
-            let $current = $(this);
+            let $current = $(event.currentTarget);
             if ($current.hasClass('active')) {
                 return;
             }
@@ -208,10 +207,10 @@ class MediaManagement {
 
     changeFilter() {
         let _self = this;
-        _self.$body.on('click', '.js-rv-media-change-filter', function (event) {
+        _self.$body.off('click', '.js-rv-media-change-filter').on('click', '.js-rv-media-change-filter', (event) => {
             event.preventDefault();
             if (!Helpers.isOnAjaxLoading()) {
-                let $current = $(this);
+                let $current = $(event.currentTarget);
                 let $parent = $current.closest('ul');
                 let data = $current.data();
 
@@ -243,9 +242,9 @@ class MediaManagement {
     search() {
         let _self = this;
         $('.input-search-wrapper input[type="text"]').val(Helpers.getRequestParams().search || '');
-        _self.$body.on('submit', '.input-search-wrapper', function (event) {
+        _self.$body.off('submit', '.input-search-wrapper').on('submit', '.input-search-wrapper', (event) => {
             event.preventDefault();
-            MediaConfig.request_params.search = $(this).find('input[type="text"]').val();
+            MediaConfig.request_params.search = $(event.currentTarget).find('input[type="text"]').val();
 
             Helpers.storeConfig();
             Helpers.resetPagination();
@@ -257,57 +256,59 @@ class MediaManagement {
         let _self = this;
 
         _self.$body
-            .on('click', '.rv-media-actions .js-change-action[data-type="refresh"]', function (event) {
-                event.preventDefault();
+            .off('click', '.rv-media-actions .js-change-action[data-type="refresh"]').on('click', '.rv-media-actions .js-change-action[data-type="refresh"]', (event) => {
+            event.preventDefault();
 
-                Helpers.resetPagination();
+            Helpers.resetPagination();
 
-                let ele_options = typeof window.rvMedia.$el !== 'undefined' ? window.rvMedia.$el.data('rv-media') : undefined;
-                if (typeof ele_options !== 'undefined' && ele_options.length > 0 && typeof ele_options[0].selected_file_id !== 'undefined') {
-                    _self.MediaService.getMedia(true, true);
-                } else
-                    _self.MediaService.getMedia(true, false);
-            })
-            .on('click', '.rv-media-items li.no-items', function (event) {
-                event.preventDefault();
-                $('.rv-media-header .rv-media-top-header .rv-media-actions .js-dropzone-upload').trigger('click');
-            })
-            .on('submit', '.form-add-folder', function (event) {
-                event.preventDefault();
-                let $input = $(this).find('input[type=text]');
-                let folderName = $input.val();
-                _self.FolderService.create(folderName);
-                $input.val('');
-            })
-            .on('click', '.js-change-folder', function (event) {
-                event.preventDefault();
-                let folderId = $(this).data('folder');
+            let ele_options = typeof window.rvMedia.$el !== 'undefined' ? window.rvMedia.$el.data('rv-media') : undefined;
+            if (typeof ele_options !== 'undefined' && ele_options.length > 0 && typeof ele_options[0].selected_file_id !== 'undefined') {
+                _self.MediaService.getMedia(true, true);
+            } else {
+                _self.MediaService.getMedia(true, false);
+            }
+        })
+            .off('click', '.rv-media-items li.no-items').on('click', '.rv-media-items li.no-items', (event) => {
+            event.preventDefault();
+            $('.rv-media-header .rv-media-top-header .rv-media-actions .js-dropzone-upload').trigger('click');
+        })
+            .off('submit', '.form-add-folder').on('submit', '.form-add-folder', (event) => {
+            event.preventDefault();
+            let $input = $(event.currentTarget).find('input[type=text]');
+            let folderName = $input.val();
+            _self.FolderService.create(folderName);
+            $input.val('');
+            return false;
+        })
+            .off('click', '.js-change-folder').on('click', '.js-change-folder', (event) => {
+            event.preventDefault();
+            let folderId = $(event.currentTarget).data('folder');
+            Helpers.resetPagination();
+            _self.FolderService.changeFolder(folderId);
+        })
+            .off('click', '.js-files-action').on('click', '.js-files-action', (event) => {
+            event.preventDefault();
+            ActionsService.handleGlobalAction($(event.currentTarget).data('action'), () => {
                 Helpers.resetPagination();
-                _self.FolderService.changeFolder(folderId);
-            })
-            .on('click', '.js-files-action', function (event) {
-                event.preventDefault();
-                ActionsService.handleGlobalAction($(this).data('action'), function (res) {
-                    Helpers.resetPagination();
-                    _self.MediaService.getMedia(true);
-                });
-            })
+                _self.MediaService.getMedia(true);
+            });
+        })
         ;
     }
 
     handleModals() {
         let _self = this;
         /*Rename files*/
-        _self.$body.on('show.bs.modal', '#modal_rename_items', function (event) {
+        _self.$body.on('show.bs.modal', '#modal_rename_items', () => {
             ActionsService.renderRenameItems();
         });
-        _self.$body.on('submit', '#modal_rename_items .form-rename', function (event) {
+        _self.$body.off('submit', '#modal_rename_items .form-rename').on('submit', '#modal_rename_items .form-rename', (event) => {
             event.preventDefault();
             let items = [];
-            let $form = $(this);
+            let $form = $(event.currentTarget);
 
-            $('#modal_rename_items .form-control').each(function () {
-                let $current = $(this);
+            $('#modal_rename_items .form-control').each((index, el) => {
+                let $current = $(el);
                 let data = $current.closest('.form-group').data();
                 data.name = $current.val();
                 items.push(data);
@@ -316,13 +317,13 @@ class MediaManagement {
             ActionsService.processAction({
                 action: $form.data('action'),
                 selected: items
-            }, function (res) {
+            }, (res) => {
                 if (!res.error) {
                     $form.closest('.modal').modal('hide');
                     _self.MediaService.getMedia(true);
                 } else {
-                    $('#modal_rename_items .form-group').each(function () {
-                        let $current = $(this);
+                    $('#modal_rename_items .form-group').each((index, el) => {
+                        let $current = $(el);
                         if (_.includes(res.data, $current.data('id'))) {
                             $current.addClass('has-error');
                         } else {
@@ -334,12 +335,12 @@ class MediaManagement {
         });
 
         /*Delete files*/
-        _self.$body.on('submit', '.form-delete-items', function (event) {
+        _self.$body.off('submit', '.form-delete-items').on('submit', '.form-delete-items', (event) => {
             event.preventDefault();
             let items = [];
-            let $form = $(this);
+            let $form = $(event.currentTarget);
 
-            _.each(Helpers.getSelectedItems(), function (value) {
+            _.each(Helpers.getSelectedItems(), (value) => {
                 items.push({
                     id: value.id,
                     is_folder: value.is_folder,
@@ -349,7 +350,7 @@ class MediaManagement {
             ActionsService.processAction({
                 action: $form.data('action'),
                 selected: items
-            }, function (res) {
+            }, (res) => {
                 $form.closest('.modal').modal('hide');
                 if (!res.error) {
                     _self.MediaService.getMedia(true);
@@ -358,13 +359,13 @@ class MediaManagement {
         });
 
         /*Empty trash*/
-        _self.$body.on('submit', '#modal_empty_trash .rv-form', function (event) {
+        _self.$body.off('submit', '#modal_empty_trash .rv-form').on('submit', '#modal_empty_trash .rv-form', (event) => {
             event.preventDefault();
-            let $form = $(this);
+            let $form = $(event.currentTarget);
 
             ActionsService.processAction({
                 action: $form.data('action')
-            }, function (res) {
+            }, () => {
                 $form.closest('.modal').modal('hide');
                 _self.MediaService.getMedia(true);
             });
@@ -402,7 +403,7 @@ class MediaManagement {
     bindIntegrateModalEvents() {
         let $main_modal = $('#rv_media_modal');
         let _self = this;
-        $main_modal.off('click', '.js-insert-to-editor').on('click', '.js-insert-to-editor', function (event) {
+        $main_modal.off('click', '.js-insert-to-editor').on('click', '.js-insert-to-editor', (event) => {
             event.preventDefault();
             let selectedFiles = Helpers.getSelectedFiles();
             if (_.size(selectedFiles) > 0) {
@@ -413,7 +414,7 @@ class MediaManagement {
             }
         });
 
-        $main_modal.off('dblclick', '.js-media-list-title').on('dblclick', '.js-media-list-title', function (event) {
+        $main_modal.off('dblclick', '.js-media-list-title').on('dblclick', '.js-media-list-title', (event) => {
             event.preventDefault();
             if (Helpers.getConfigs().request_params.view_in !== 'trash') {
                 let selectedFiles = Helpers.getSelectedFiles();
@@ -441,13 +442,13 @@ class MediaManagement {
     //scroll get more media
     scrollGetMore() {
         let _self = this;
-        $('.rv-media-main .rv-media-items').bind('DOMMouseScroll mousewheel', function (e) {
+        $('.rv-media-main .rv-media-items').bind('DOMMouseScroll mousewheel', (e) => {
             if (e.originalEvent.detail > 0 || e.originalEvent.wheelDelta < 0) {
                 let $load_more = false;
-                if ($(this).closest('.media-modal').length > 0) {
-                    $load_more = $(this).scrollTop() + $(this).innerHeight() / 2 >= $(this)[0].scrollHeight - 450
+                if ($(e.currentTarget).closest('.media-modal').length > 0) {
+                    $load_more = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() / 2 >= $(e.currentTarget)[0].scrollHeight - 450
                 } else {
-                    $load_more = $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 150
+                    $load_more = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() >= $(e.currentTarget)[0].scrollHeight - 150
                 }
 
                 if ($load_more) {
@@ -462,7 +463,7 @@ class MediaManagement {
     }
 }
 
-$(document).ready(function () {
+$(document).ready(() => {
     window.rvMedia = window.rvMedia || {};
 
     MediaManagement.setupSecurity();

@@ -2,6 +2,7 @@
 
 namespace Botble\ACL\Listeners;
 
+use Auth;
 use Botble\ACL\Events\RoleUpdateEvent;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
 
@@ -51,6 +52,6 @@ class RoleUpdateListener
                 'permissions' => json_encode($permissions),
             ]);
         }
-        cache()->forget(md5('cache-dashboard-menu'));
+        cache()->forget(md5('cache-dashboard-menu-' . Auth::user()->getKey()));
     }
 }

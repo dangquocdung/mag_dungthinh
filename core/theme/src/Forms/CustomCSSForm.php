@@ -24,7 +24,7 @@ class CustomCSSForm extends FormAbstract
             ->setUrl(route('theme.custom-css.post'))
             ->setValidatorClass(CustomCssRequest::class)
             ->add('custom_css', 'textarea', [
-                'label' => __('Custom CSS'),
+                'label' => trans('core.theme::theme.custom_css'),
                 'label_attr' => ['class' => 'control-label'],
                 'value' => $css,
                 'help_block' => [

@@ -9,7 +9,7 @@ use Botble\LogViewer\Contracts\Table as TableContract;
  * Class     Table
  *
  * @package  Botble\LogViewer\Bases
- * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ * @author   ARCANEDEV
  */
 abstract class Table implements TableContract
 {
@@ -49,7 +49,7 @@ abstract class Table implements TableContract
      * @param  array $data
      * @param  \Botble\LogViewer\Contracts\Utilities\LogLevels $levels
      * @param  string|null $locale
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(array $data, LogLevelsContract $levels, $locale = null)
     {
@@ -69,7 +69,7 @@ abstract class Table implements TableContract
      * @param  \Botble\LogViewer\Contracts\Utilities\LogLevels $levels
      *
      * @return \Botble\LogViewer\Bases\Table
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function setLevels(LogLevelsContract $levels)
     {
@@ -84,7 +84,7 @@ abstract class Table implements TableContract
      * @param  string|null $locale
      *
      * @return \Botble\LogViewer\Bases\Table
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function setLocale($locale)
     {
@@ -101,7 +101,7 @@ abstract class Table implements TableContract
      * Get table header.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function header()
     {
@@ -112,7 +112,7 @@ abstract class Table implements TableContract
      * Get table rows.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function rows()
     {
@@ -123,7 +123,7 @@ abstract class Table implements TableContract
      * Get table footer.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function footer()
     {
@@ -134,7 +134,7 @@ abstract class Table implements TableContract
      * Get raw data.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function data()
     {
@@ -147,7 +147,7 @@ abstract class Table implements TableContract
      * @param  array $data
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function setData(array $data)
     {
@@ -158,7 +158,7 @@ abstract class Table implements TableContract
 
     /**
      * Prepare the table.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function init()
     {
@@ -173,7 +173,7 @@ abstract class Table implements TableContract
      * @param  array $data
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     abstract protected function prepareHeader(array $data);
 
@@ -183,7 +183,7 @@ abstract class Table implements TableContract
      * @param  array $data
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     abstract protected function prepareRows(array $data);
 
@@ -193,7 +193,7 @@ abstract class Table implements TableContract
      * @param  array $data
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     abstract protected function prepareFooter(array $data);
 
@@ -203,7 +203,7 @@ abstract class Table implements TableContract
      * @param  string $key
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function translate($key)
     {
@@ -219,7 +219,7 @@ abstract class Table implements TableContract
      * @param  string $level
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function color($level)
     {

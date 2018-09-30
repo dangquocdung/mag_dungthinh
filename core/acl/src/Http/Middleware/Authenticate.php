@@ -22,7 +22,7 @@ class Authenticate extends BaseAuthenticate
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        $this->authenticate($guards);
+        $this->authenticate($request, $guards);
 
         if (!$guards) {
             $route = $request->route()->getAction();

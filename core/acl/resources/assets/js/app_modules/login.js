@@ -1,6 +1,5 @@
-var Login = function () {
-
-    var handleLogin = function () {
+class Login {
+    handleLogin() {
 
         $('.login-form').validate({
             errorElement: 'span', //default input error message container
@@ -20,52 +19,52 @@ var Login = function () {
 
             messages: {
                 username: {
-                    required: "Username is required."
+                    required: 'Username is required.'
                 },
                 password: {
-                    required: "Password is required."
+                    required: 'Password is required.'
                 }
             },
 
-            invalidHandler: function (event, validator) { //display error alert on form submit
+            invalidHandler: () => { //display error alert on form submit
                 $('.alert-danger', $('.login-form')).show();
             },
 
-            highlight: function (element) { // hightlight error inputs
+            highlight: (element) => { // hightlight error inputs
                 $(element)
                     .closest('.form-group').addClass('has-error'); // set error class to the control group
             },
 
-            success: function (label) {
+            success: (label) => {
                 label.closest('.form-group').removeClass('has-error');
                 label.remove();
             },
 
-            errorPlacement: function (error, element) {
+            errorPlacement: (error, element) => {
                 error.insertAfter(element.closest('.form-control'));
             },
 
-            submitHandler: function (form) {
+            submitHandler: (form) => {
                 form.submit(); // form validation success, call ajax form submit
             }
         });
 
-        $('.login-form input').keypress(function (e) {
-            if (e.which == 13) {
+        $('.login-form input').keypress((e) => {
+            if (e.which === 13) {
                 if ($('.login-form').validate().form()) {
                     $('.login-form').submit(); //form validation success, call ajax form submit
                 }
                 return false;
             }
         });
-    };
+    }
 
-    var handleForgetPassword = function () {
+    handleForgetPassword() {
         $('.forget-form').validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
-            ignore: "",
+            ignore: '',
             rules: {
                 email: {
                     required: true,
@@ -75,35 +74,35 @@ var Login = function () {
 
             messages: {
                 email: {
-                    required: "Email is required."
+                    required: 'Email is required.'
                 }
             },
 
-            invalidHandler: function (event, validator) { //display error alert on form submit   
+            invalidHandler: () => { //display error alert on form submit
                 $('.alert-danger', $('.forget-form')).show();
             },
 
-            highlight: function (element) { // hightlight error inputs
+            highlight: (element) => { // hightlight error inputs
                 $(element)
                     .closest('.form-group').addClass('has-error'); // set error class to the control group
             },
 
-            success: function (label) {
+            success: (label) => {
                 label.closest('.form-group').removeClass('has-error');
                 label.remove();
             },
 
-            errorPlacement: function (error, element) {
+            errorPlacement: (error, element) => {
                 error.insertAfter(element.closest('.form-control'));
             },
 
-            submitHandler: function (form) {
+            submitHandler: (form) => {
                 form.submit();
             }
         });
 
-        $('.forget-form input').keypress(function (e) {
-            if (e.which == 13) {
+        $('.forget-form input').keypress((e) => {
+            if (e.which === 13) {
                 if ($('.forget-form').validate().form()) {
                     $('.forget-form').submit();
                 }
@@ -111,21 +110,14 @@ var Login = function () {
             }
         });
 
-    };
+    }
 
-    return {
-        //main function to initiate the module
-        init: function () {
+    init() {
+        this.handleLogin();
+        this.handleForgetPassword();
+    }
+}
 
-            handleLogin();
-            handleForgetPassword();
-
-        }
-
-    };
-
-}();
-
-jQuery(document).ready(function () {
-    Login.init();
+$(document).ready(() => {
+    new Login().init();
 });

@@ -26,7 +26,7 @@ class View extends IlluminateView implements ArrayAccess, Renderable
      * @param  string $path
      * @param  array $data
      * @param \Botble\Shortcode\Compilers\ShortcodeCompiler $shortcode
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function __construct(Factory $factory, $engine, $view, $path, $data = [], ShortcodeCompiler $shortcode)
@@ -37,7 +37,7 @@ class View extends IlluminateView implements ArrayAccess, Renderable
 
     /**
      * Enable the shortcodes
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function withShortcodes()
@@ -49,7 +49,7 @@ class View extends IlluminateView implements ArrayAccess, Renderable
 
     /**
      * Disable the shortcodes
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function withoutShortcodes()
@@ -61,7 +61,7 @@ class View extends IlluminateView implements ArrayAccess, Renderable
 
     /**
      * @return $this
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function withStripShortcodes()
@@ -75,7 +75,7 @@ class View extends IlluminateView implements ArrayAccess, Renderable
      * Get the contents of the view instance.
      *
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     protected function renderContents()

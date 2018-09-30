@@ -47,7 +47,9 @@ trait LoadAndPublishDataTrait
         foreach ($file_names as $file_name) {
             $this->mergeConfigFrom($this->getConfigFilePath($file_name), $this->getDotedNamespace() . '.' . $file_name);
             if ($this->is_in_console) {
-                $this->publishes([$this->getConfigFilePath($file_name) => config_path($this->getDashedNamespace() . '.' . $file_name . '.php')], 'config');
+                $this->publishes([
+                    $this->getConfigFilePath($file_name) => config_path($this->getDashedNamespace() . '.' . $file_name . '.php')
+                ], 'config');
             }
         }
         return $this;
@@ -98,9 +100,7 @@ trait LoadAndPublishDataTrait
      */
     public function loadMigrations(): self
     {
-        if ($this->is_in_console) {
-            $this->loadMigrationsFrom($this->getMigrationsPath());
-        }
+        $this->loadMigrationsFrom($this->getMigrationsPath());
         return $this;
     }
 
@@ -116,12 +116,15 @@ trait LoadAndPublishDataTrait
     }
 
     /**
+     * @param null $path
      * @return $this
      */
-    public function publishPublicFolder(): self
+    public function publishPublicFolder($path = null): self
     {
         if ($this->is_in_console) {
-            $path = str_contains($this->getDotedNamespace(), 'plugins.') ? 'vendor/core/' . $this->getDashedNamespace() : 'vendor/core';
+            if (empty($path)) {
+                $path = str_contains($this->getDotedNamespace(), 'plugins.') ? 'vendor/core/' . $this->getDashedNamespace() : 'vendor/core';
+            }
             $this->publishes([$this->getPublicPath() => public_path($path)], 'public');
         }
         return $this;

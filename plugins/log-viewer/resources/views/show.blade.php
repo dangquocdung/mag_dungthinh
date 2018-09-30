@@ -11,12 +11,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="height: 48px;line-height: 30px;">
                     {{ trans('plugins.log-viewer::log-viewer.log_info') }} :
-                    <div class="group-btns pull-right">
+                    <div class="group-btns float-right">
                         <a href="{{ route('log-viewer::logs.download', [$log->date]) }}" class="btn btn-success">
                             <i class="fa fa-download"></i> {{ trans('plugins.log-viewer::log-viewer.download') }}
                         </a>
                         <a href="#delete-log-modal" class="btn btn-danger" data-toggle="modal">
-                            <i class="fa fa-trash-o"></i> {{ trans('plugins.log-viewer::log-viewer.delete') }}
+                            <i class="fa fa-trash"></i> {{ trans('plugins.log-viewer::log-viewer.delete') }}
                         </a>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                 @if ($entries->hasPages())
                     <div class="panel-heading">
                         {!! $entries->render() !!}
-                        <span class="label label-info pull-right">
+                        <span class="label label-info float-right">
                             {{ trans('plugins.log-viewer::log-viewer.page') }} {!! $entries->currentPage() !!} {{ trans('plugins.log-viewer::log-viewer.of') }} {!! $entries->lastPage() !!}
                         </span>
                     </div>
@@ -90,7 +90,7 @@
                                 </td>
                                 <td class="text-right">
                                     @if ($entry->hasStack())
-                                        <a class="btn btn-default" role="button" data-toggle="collapse"
+                                        <a class="btn btn-secondary" role="button" data-toggle="collapse"
                                            href="#log-stack-{{ $key }}" aria-expanded="false"
                                            aria-controls="log-stack-{{ $key }}">
                                             <i class="fa fa-toggle-on"></i> {{ trans('plugins.log-viewer::log-viewer.stack') }}
@@ -115,7 +115,7 @@
                 @if ($entries->hasPages())
                     <div class="panel-footer">
                         {!! $entries->render() !!}
-                        <span class="label label-info pull-right">
+                        <span class="label label-info float-right">
                             Page {!! $entries->currentPage() !!} of {!! $entries->lastPage() !!}
                         </span>
                     </div>
@@ -141,7 +141,7 @@
                             <p>{!! trans('plugins.log-viewer::log-viewer.confirm_delete_msg', ['date' => $log->date]) !!}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-default pull-left" data-dismiss="modal">{{ trans('core.base::forms.cancel') }}</button>
+                            <button type="button" class="btn btn-sm btn-secondary float-left" data-dismiss="modal">{{ trans('core.base::forms.cancel') }}</button>
                             <button type="submit" class="btn btn-sm btn-danger" data-loading-text="{{ trans('plugins.log-viewer::log-viewer.loading') }}">{{ trans('plugins.log-viewer::log-viewer.delete_button') }}</button>
                         </div>
                     </div>

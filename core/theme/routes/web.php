@@ -8,9 +8,16 @@ Route::group(['namespace' => 'Botble\Theme\Http\Controllers', 'middleware' => 'w
                 'uses' => 'ThemeController@getList',
             ]);
 
-            Route::get('/active/{theme}', [
+            Route::post('/active', [
                 'as' => 'theme.active',
-                'uses' => 'ThemeController@getActiveTheme',
+                'uses' => 'ThemeController@postActivateTheme',
+                'permission' => 'theme.list',
+            ]);
+
+            Route::post('/remove', [
+                'as' => 'theme.remove',
+                'uses' => 'ThemeController@postRemoveTheme',
+                'middleware' => 'preventDemo',
                 'permission' => 'theme.list',
             ]);
         });

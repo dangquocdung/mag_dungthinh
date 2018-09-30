@@ -18,11 +18,6 @@ class TagTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -86,8 +81,7 @@ class TagTable extends TableAbstract
                 'tags.name',
                 'tags.created_at',
                 'tags.status',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, TAG_MODULE_SCREEN_NAME));
     }
 
@@ -156,7 +150,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBulkChanges(): array
     {

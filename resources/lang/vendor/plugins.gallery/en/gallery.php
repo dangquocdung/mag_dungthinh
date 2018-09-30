@@ -1,4 +1,5 @@
 <?php
+
 return [
     'create' => 'Create new gallery',
     'edit' => 'Edit gallery',
@@ -12,6 +13,7 @@ return [
     'delete_photo' => 'Delete this photo',
     'gallery_box' => 'Gallery images',
     'by' => 'By',
-
     'menu_name' => 'Galleries',
+    'gallery_images' => 'Gallery images',
+    'add_gallery_short_code' => 'Add a gallery',
 ];

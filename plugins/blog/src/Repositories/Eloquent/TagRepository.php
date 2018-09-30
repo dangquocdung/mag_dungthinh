@@ -26,7 +26,7 @@ class TagRepository extends RepositoriesAbstract implements TagInterface
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @return mixed
      * @author Sang Nguyen
      */

@@ -2,8 +2,6 @@
 
 namespace Botble\Base\Supports;
 
-use Theme;
-
 class JsonFeedManager
 {
     /**

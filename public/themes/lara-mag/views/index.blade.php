@@ -13,7 +13,7 @@
                             <span><i class="fa fa-calendar" aria-hidden="true"></i>{{ date_from_database($post->created_at, 'Y-m-d') }}</span>
                         </section><!-- end .featured-home-post-item-date -->
                         <section class="featured-home-post-item-des">
-                            {{ string_limit_words($post->description, 80) }}
+                            {{ str_limit($post->description, 80) }}
                         </section><!-- end .featured-home-post-item-des -->
                     </section><!-- end .featured-home-post-item-info -->
                 </section><!-- end .featured-home-post-item -->
@@ -81,7 +81,7 @@
                 @endforeach
             @endif
             @if (function_exists('get_galleries'))
-                @php $galleries = get_galleries(8); @endphp
+                @php $galleries = get_galleries(8); Gallery::registerAssets(); @endphp
                 @if (!$galleries->isEmpty())
                         <section class="block-post-wrap-item block-post1-wrap-item fleft bsize" style="width: 100%;">
                         <section class="block-post-wrap-head sidebar-item-head tf">
@@ -92,10 +92,10 @@
                                     @foreach ($galleries as $gallery)
                                         <div class="gallery-item">
                                             <div class="img-wrap">
-                                                <a href="{{ route('public.single', $gallery->slug) }}"><img src="{{ get_object_image($gallery->image, 'medium') }}" alt="{{ $gallery->name }}"></a>
+                                                <a href="{{ route('public.gallery', $gallery->slug) }}"><img src="{{ get_object_image($gallery->image, 'medium') }}" alt="{{ $gallery->name }}"></a>
                                             </div>
                                             <div class="gallery-detail">
-                                                <div class="gallery-title"><a href="{{ route('public.single', $gallery->slug) }}">{{ $gallery->name }}</a></div>
+                                                <div class="gallery-title"><a href="{{ route('public.gallery', $gallery->slug) }}">{{ $gallery->name }}</a></div>
                                                 <div class="gallery-author">{{ __('Posted At') }}: {{ date_from_database($gallery->created_at, 'Y-m-d') }}</div>
                                             </div>
                                         </div>

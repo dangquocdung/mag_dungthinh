@@ -1,127 +1,136 @@
-$(document).ready(function () {
-    var list_widgets = [{
-        name: 'wrap-widgets',
-        pull: 'clone',
-        put: false
-    }];
+class WidgetManagement {
+    init() {
+        let list_widgets = [{
+            name: 'wrap-widgets',
+            pull: 'clone',
+            put: false
+        }];
 
-    $.each($('.sidebar-item'), function () {
-        list_widgets.push({name: 'wrap-widgets', pull: true, put: true});
-    });
-
-    list_widgets.forEach(function (groupOpts, i) {
-        Sortable.create(document.getElementById('wrap-widget-' + (i + 1)), {
-            sort: (i != 0),
-            group: groupOpts,
-            delay: 0, // time in milliseconds to define when the sorting should start
-            disabled: false, // Disables the sortable if set to true.
-            store: null, // @see Store
-            animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
-            handle: '.widget-handle',
-            ghostClass: 'sortable-ghost', // Class name for the drop placeholder
-            chosenClass: 'sortable-chosen', // Class name for the chosen item
-            dataIdAttr: 'data-id',
-
-            forceFallback: false, // ignore the HTML5 DnD behaviour and force the fallback to kick in
-            fallbackClass: "sortable-fallback", // Class name for the cloned DOM Element when using forceFallback
-            fallbackOnBody: false,  // Appends the cloned DOM Element into the Document's Body
-
-            scroll: true, // or HTMLElement
-            scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
-            scrollSpeed: 10, // px
-
-            // dragging ended
-            onEnd: function (evt) {
-                if (evt.from !== evt.to) {
-                    saveWidget($(evt.from).closest('.sidebar-item'));
-                }
-                saveWidget($(evt.item).closest('.sidebar-item'));
-            }
-        });
-    });
-
-    var widget_wrap = $('#wrap-widgets');
-    widget_wrap.on('click', '.widget-control-delete', function (event) {
-        event.preventDefault();
-        var widget = $(this).closest('li');
-        $(this).html('<i class="fa fa-spinner fa-spin"></i>' + $(this).text());
-        $.ajax({
-            type: 'POST',
-            cache: false,
-            url: BWidget.routes.delete,
-            data: {
-                widget_id: widget.data('id'),
-                position: widget.data('position'),
-                sidebar_id: $(this).closest('.sidebar-item').data('id')
-            },
-            beforeSend: function () {
-                Botble.showNotice('info', Botble.languages.notices_msg.processing_request);
-            },
-            success: function (data) {
-                if (data.error) {
-                    Botble.showNotice('error', data.message);
-                } else {
-                    Botble.showNotice('success', data.message);
-                    widget.fadeOut().remove();
-                }
-                widget.find('.widget-control-delete i').remove();
-            },
-            error: function (data) {
-                Botble.handleError(data);
-                widget.find('.widget-control-delete i').remove();
-            }
+        $.each($('.sidebar-item'), () => {
+            list_widgets.push({name: 'wrap-widgets', pull: true, put: true});
         });
 
-    });
+        let saveWidget = (parentElement) => {
+            if (parentElement.length > 0) {
+                let items = [];
+                $.each(parentElement.find('li'), (index, widget) => {
+                    items.push($(widget).find('form').serialize());
+                });
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: BWidget.routes.save_widgets_sidebar,
+                    data: {
+                        items: items,
+                        sidebar_id: parentElement.data('id')
+                    },
+                    beforeSend: () => {
+                        Botble.showNotice('info', BotbleVariables.languages.notices_msg.processing_request);
+                    },
+                    success: (data) => {
+                        if (data.error) {
+                            Botble.showNotice('error', data.message);
+                        } else {
+                            parentElement.find('ul').html(data.data);
+                            Botble.callScroll($('.list-page-select-widget'));
+                            Botble.showNotice('success', data.message);
+                        }
 
-    widget_wrap.on('click', '#added-widget .widget-handle', function () {
-        $(this).closest('li').find('.widget-content').slideToggle(300);
-        $(this).find('.fa').toggleClass('fa-caret-up');
-        $(this).find('.fa').toggleClass('fa-caret-down');
-    });
+                        parentElement.find('.widget_save i').remove();
+                    },
+                    error: (data) => {
+                        Botble.handleError(data);
+                        parentElement.find('.widget_save i').remove();
+                    }
+                });
+            }
+        };
 
-    widget_wrap.on('click', '.widget_save', function (event) {
-        event.preventDefault();
-        $(this).html('<i class="fa fa-spinner fa-spin"></i>' + $(this).text());
-        saveWidget($(this).closest('.sidebar-item'));
-    });
+        list_widgets.forEach((groupOpts, i) => {
+            Sortable.create(document.getElementById('wrap-widget-' + (i + 1)), {
+                sort: (i !== 0),
+                group: groupOpts,
+                delay: 0, // time in milliseconds to define when the sorting should start
+                disabled: false, // Disables the sortable if set to true.
+                store: null, // @see Store
+                animation: 150, // ms, animation speed moving items when sorting, `0` — without animation
+                handle: '.widget-handle',
+                ghostClass: 'sortable-ghost', // Class name for the drop placeholder
+                chosenClass: 'sortable-chosen', // Class name for the chosen item
+                dataIdAttr: 'data-id',
 
-    function saveWidget(parentElement) {
-        if (parentElement.length > 0) {
-            var items = [];
-            $.each(parentElement.find('li'), function (index, widget) {
-                items.push($(widget).find('form').serialize());
+                forceFallback: false, // ignore the HTML5 DnD behaviour and force the fallback to kick in
+                fallbackClass: "sortable-fallback", // Class name for the cloned DOM Element when using forceFallback
+                fallbackOnBody: false,  // Appends the cloned DOM Element into the Document's Body
+
+                scroll: true, // or HTMLElement
+                scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
+                scrollSpeed: 10, // px
+
+                // dragging ended
+                onEnd: (evt) => {
+                    if (evt.from !== evt.to) {
+                        saveWidget($(evt.from).closest('.sidebar-item'));
+                    }
+                    saveWidget($(evt.item).closest('.sidebar-item'));
+                }
             });
+        });
+
+        let widget_wrap = $('#wrap-widgets');
+        widget_wrap.on('click', '.widget-control-delete', (event) => {
+            event.preventDefault();
+            let _self = $(event.currentTarget);
+
+            let widget = _self.closest('li');
+            _self.addClass('button-loading');
             $.ajax({
                 type: 'POST',
                 cache: false,
-                url: BWidget.routes.save_widgets_sidebar,
+                url: BWidget.routes.delete,
                 data: {
-                    items: items,
-                    sidebar_id: parentElement.data('id')
+                    widget_id: widget.data('id'),
+                    position: widget.data('position'),
+                    sidebar_id: _self.closest('.sidebar-item').data('id')
                 },
-                beforeSend: function () {
-                    Botble.showNotice('info', Botble.languages.notices_msg.processing_request);
+                beforeSend: () => {
+                    Botble.showNotice('info', BotbleVariables.languages.notices_msg.processing_request);
                 },
-                success: function (data) {
+                success: (data) => {
                     if (data.error) {
                         Botble.showNotice('error', data.message);
                     } else {
-                        parentElement.find('ul').html(data.data);
-                        $('.styled').uniform();
-                        Botble.callScroll($('.list-page-select-widget'));
                         Botble.showNotice('success', data.message);
+                        widget.fadeOut().remove();
                     }
-
-                    parentElement.find('.widget_save i').remove();
+                    widget.find('.widget-control-delete').removeClass('button-loading');
                 },
-                error: function (data) {
+                error: (data) => {
                     Botble.handleError(data);
-                    parentElement.find('.widget_save i').remove();
+                    widget.find('.widget-control-delete').removeClass('button-loading');
                 }
             });
-        }
-    }
 
-    Botble.callScroll($('.list-page-select-widget'));
+        });
+
+        widget_wrap.on('click', '#added-widget .widget-handle', (event) => {
+            let _self = $(event.currentTarget);
+            _self.closest('li').find('.widget-content').slideToggle(300);
+            _self.find('.fa').toggleClass('fa-caret-up');
+            _self.find('.fa').toggleClass('fa-caret-down');
+        });
+
+        widget_wrap.on('click', '.widget_save', (event) => {
+            event.preventDefault();
+            let _self = $(event.currentTarget);
+            _self.addClass('button-loading');
+            saveWidget(_self.closest('.sidebar-item'));
+        });
+
+        Botble.callScroll($('.list-page-select-widget'));
+    }
+}
+
+$(document).ready(() => {
+    new WidgetManagement().init();
 });

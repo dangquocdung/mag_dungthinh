@@ -40,6 +40,12 @@ Route::group(['namespace' => 'Botble\SimpleSlider\Http\Controllers', 'middleware
                 'uses' => 'SimpleSliderController@postDeleteMany',
                 'permission' => 'simple-slider.delete',
             ]);
+
+            Route::post('/sorting', [
+                'as' => 'simple-slider.sorting',
+                'uses' => 'SimpleSliderController@postSorting',
+                'permission' => 'simple-slider.edit',
+            ]);
         });
 
         Route::group(['prefix' => 'simple-slider-items'], function () {

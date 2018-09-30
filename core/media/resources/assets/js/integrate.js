@@ -29,16 +29,16 @@ class rvMedia {
         let defaultOptions = {
             multiple: true,
             type: '*',
-            onSelectFiles: function (files, $el) {
+            onSelectFiles: (files, $el) => {
 
             }
         };
 
         options = $.extend(true, defaultOptions, options);
 
-        let clickCallback = function (event) {
+        let clickCallback = (event) => {
             event.preventDefault();
-            let $current = $(this);
+            let $current = $(event.currentTarget);
             $('#rv_media_modal').modal();
 
             window.rvMedia.options = options;
@@ -61,13 +61,14 @@ class rvMedia {
             }
 
             if ($('#rv_media_body .rv-media-container').length === 0) {
-                $('#rv_media_body').load(RV_MEDIA_URL.popup, function (data) {
+                $('#rv_media_body').load(RV_MEDIA_URL.popup, (data) => {
                     if (data.error) {
                         alert(data.message);
                     }
                     $('#rv_media_body')
                         .removeClass('media-modal-loading')
                         .closest('.modal-content').removeClass('bb-loading');
+                    $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
                 });
             } else {
                 $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
@@ -75,9 +76,9 @@ class rvMedia {
         };
 
         if (typeof selector === 'string') {
-            $body.on('click', selector, clickCallback);
+            $body.off('click', selector).on('click', selector, clickCallback);
         } else {
-            selector.on('click', clickCallback);
+            selector.off('click').on('click', clickCallback);
         }
     }
 }

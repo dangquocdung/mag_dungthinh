@@ -4,9 +4,6 @@ namespace Botble\Base\Charts\Supports;
 
 use Assets;
 
-/**
- * Main model class
- */
 class Base
 {
 
@@ -43,6 +40,21 @@ class Base
     protected $data = [];
 
     /**
+     * @var string
+     */
+    protected $hoverCallback;
+
+    /**
+     * @var string
+     */
+    protected $formatter;
+
+    /**
+     * @var string
+     */
+    protected $dateFormat;
+
+    /**
      * @var array
      */
     protected $functions = [
@@ -52,14 +64,18 @@ class Base
     ];
 
     /**
+     * @var bool
+     */
+    protected $useInlineJs = false;
+
+    /**
      * Create an instance of Morris class
      *
      * @brief Construct
      *
-     * @param string $elementId The element id
      * @param string $chart Optional. Chart Type of chart. Default ChartTypes::LINE
      *
-     * @return Base
+     * @return void
      */
     public function __construct($chart = ChartTypes::LINE)
     {
@@ -68,7 +84,7 @@ class Base
     }
 
     /**
-     * @param $elementId
+     * @param string $elementId
      */
     public function setElementId($elementId)
     {
@@ -136,7 +152,7 @@ class Base
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed|null
      */
     public function __get($name)
@@ -157,8 +173,8 @@ class Base
     }
 
     /**
-     * @param $name
-     * @param $arguments
+     * @param string $name
+     * @param array $arguments
      * @return Base|bool
      */
     public function __call($name, $arguments)
@@ -180,8 +196,8 @@ class Base
      */
     public function renderChart()
     {
-        Assets::addStylesheets(['morris']);
-        Assets::addJavascript(['morris', 'raphael']);
+        Assets::addStylesheets(['morris'])
+            ->addJavascript(['morris', 'raphael']);
 
         $this->init();
 
@@ -195,6 +211,24 @@ class Base
      */
     public function init()
     {
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUseInlineJs(): bool
+    {
+        return $this->useInlineJs;
+    }
+
+    /**
+     * @param bool $useInlineJs
+     * @return $this
+     */
+    public function setUseInlineJs(bool $useInlineJs): self
+    {
+        $this->useInlineJs = $useInlineJs;
         return $this;
     }
 }

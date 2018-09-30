@@ -27,3 +27,11 @@ if (!defined('USER_ACTION_AFTER_UPDATE_PROFILE')) {
 if (!defined('USER_ACTION_AFTER_UPDATE_PASSWORD')) {
     define('USER_ACTION_AFTER_UPDATE_PASSWORD', 'action_after_update_password');
 }
+
+if (!defined('ACL_FILTER_PROFILE_FORM_TABS')) {
+    define('ACL_FILTER_PROFILE_FORM_TABS', 'acl_filter_profile_tabs');
+}
+
+if (!defined('ACL_FILTER_PROFILE_FORM_TAB_CONTENTS')) {
+    define('ACL_FILTER_PROFILE_FORM_TAB_CONTENTS', 'acl_filter_profile_tab_contents');
+}

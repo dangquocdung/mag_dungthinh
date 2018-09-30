@@ -11,7 +11,7 @@
         <div class="col-md-9">
             @if ($showFields && $form->hasMainFields())
                 <div class="main-form">
-                    <div class="form-body">
+                    <div class="{{ $form->getWrapperClass() }}">
                             @foreach ($fields as $key => $field)
                                 @if ($field->getName() == $form->getBreakFieldPoint())
                                     @break

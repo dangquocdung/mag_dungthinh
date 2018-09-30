@@ -20,37 +20,22 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6">
-                        <div class="checkbox checkbox-primary">
-                            <label class="check mt-checkbox mt-checkbox-outline">
-                                {!! Form::checkbox('remember', '1', null, ['class' => 'styled']) !!} {{ trans('core.acl::auth.login.remember') }}
-                            </label>
-                        </div>
+                    <div class="col-6">
+                        <label>
+                            {!! Form::checkbox('remember', 1, null, ['class' => 'styled']) !!} {{ trans('core.acl::auth.login.remember') }}
+                        </label>
                     </div>
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <a class="lost-pass-link" href="{{ route('access.password.request') }}" title="{{ trans('core.acl::auth.forgot_password.title') }}">{{ trans('core.acl::auth.lost_your_password') }}</a>
                     </div>
                 </div>
             </div>
 
             <div class="form-group form-actions">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> {{ trans('core.acl::auth.login.login') }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> {{ trans('core.acl::auth.login.login') }}</button>
             </div>
 
-            <div class="login-options">
-                <h4>{{ trans('core.acl::auth.login_via_social') }}</h4>
-                <ul class="social-icons">
-                    <li>
-                        <a class="social-icon-color facebook" data-original-title="facebook" href="{{ route('auth.social', 'facebook') }}"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color googleplus" data-original-title="Google Plus" href="{{ route('auth.social', 'google') }}"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color github" data-original-title="Github" href="{{ route('auth.social', 'github') }}"></a>
-                    </li>
-                </ul>
-            </div>
+            {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, 'core/acl') !!}
 
         {!! Form::close() !!}
     </div>

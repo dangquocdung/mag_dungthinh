@@ -154,6 +154,7 @@ class AssetContainer
     public function add($name, $source, $dependencies = [], $attributes = [])
     {
         $this->added($name, $source, $dependencies, $attributes);
+        return $this;
     }
 
     /**
@@ -308,6 +309,7 @@ class AssetContainer
      * @param  array $attributes
      * @return AssetContainer
      * @author Teepluss <admin@laravel.in.th>
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function style($name, $source, $dependencies = [], $attributes = [])
     {
@@ -345,6 +347,7 @@ class AssetContainer
      * @param  string $source
      * @return string
      * @author Teepluss <admin@laravel.in.th>
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function evaluatePath($source)
     {
@@ -388,6 +391,7 @@ class AssetContainer
      * @param  array $attributes
      * @return AssetContainer
      * @author Teepluss <admin@laravel.in.th>
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function script($name, $source, $dependencies = [], $attributes = [])
     {
@@ -409,6 +413,7 @@ class AssetContainer
      *
      * @return  string
      * @author Teepluss <admin@laravel.in.th>
+     * @throws Exception
      */
     public function styles()
     {
@@ -421,6 +426,7 @@ class AssetContainer
      * @param  string $group
      * @return string
      * @author Teepluss <admin@laravel.in.th>
+     * @throws Exception
      */
     protected function group($group)
     {
@@ -438,11 +444,57 @@ class AssetContainer
     }
 
     /**
+     * @param $group
+     * @throws Exception
+     */
+    public function getAssets($group)
+    {
+        if (!isset($this->assets[$group])) {
+            return [];
+        }
+        $assets = [];
+        foreach (array_keys($this->arrange($this->assets[$group])) as $name) {
+            $assets[] = $this->assetUrl($group, $name);
+        }
+
+        return $assets;
+    }
+
+    /**
+     * @param $group
+     * @param $name
+     * @return string
+     */
+    protected function assetUrl($group, $name)
+    {
+        if (!isset($this->assets[$group][$name])) {
+            return '';
+        }
+
+        $asset = $this->assets[$group][$name];
+
+        // If the bundle source is not a complete URL, we will go ahead and prepend
+        // the bundle's asset path to the source provided with the asset. This will
+        // ensure that we attach the correct path to the asset.
+        if (filter_var($asset['source'], FILTER_VALIDATE_URL) === false) {
+            $asset['source'] = $this->path($asset['source']);
+        }
+
+        // If source is not a path to asset, render without wrap a HTML.
+        if (strpos($asset['source'], '<') !== false) {
+            return $asset['source'];
+        }
+
+        return $this->configAssetUrl($asset['source']);
+    }
+
+    /**
      * Sort and retrieve assets based on their dependencies
      *
      * @param   array $assets
      * @return  array
      * @author Teepluss <admin@laravel.in.th>
+     * @throws Exception
      */
     protected function arrange($assets)
     {
@@ -467,6 +519,7 @@ class AssetContainer
      * @param  array $assets
      * @return void
      * @author Teepluss <admin@laravel.in.th>
+     * @throws Exception
      */
     protected function evaluateAsset($asset, $value, $original, &$sorted, &$assets)
     {
@@ -651,6 +704,7 @@ class AssetContainer
      *
      * @return  string
      * @author Teepluss <admin@laravel.in.th>
+     * @throws Exception
      */
     public function scripts()
     {

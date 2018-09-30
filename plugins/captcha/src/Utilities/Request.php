@@ -15,7 +15,7 @@ class Request implements RequestContract
      * @param  bool $curled
      * @throws InvalidUrlException
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function send($url, $curled = true)
     {

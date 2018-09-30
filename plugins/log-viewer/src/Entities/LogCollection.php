@@ -19,7 +19,7 @@ class LogCollection extends Collection
      * LogCollection constructor.
      *
      * @param  array $items
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct($items = [])
     {
@@ -37,7 +37,7 @@ class LogCollection extends Collection
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setFilesystem(FilesystemContract $filesystem)
     {
@@ -50,7 +50,7 @@ class LogCollection extends Collection
      * Load all logs.
      *
      * @return \Botble\LogViewer\Entities\LogCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function load()
     {
@@ -72,7 +72,7 @@ class LogCollection extends Collection
      * @return \Botble\LogViewer\Entities\Log
      *
      * @throws \Botble\LogViewer\Exceptions\LogNotFoundException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get($date, $default = null)
     {
@@ -89,7 +89,7 @@ class LogCollection extends Collection
      * @param  int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function paginate($perPage = 30)
     {
@@ -113,7 +113,7 @@ class LogCollection extends Collection
      * @param  string $date
      *
      * @return \Botble\LogViewer\Entities\Log
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function log($date)
     {
@@ -128,7 +128,7 @@ class LogCollection extends Collection
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function entries($date, $level = 'all')
     {
@@ -139,7 +139,7 @@ class LogCollection extends Collection
      * Get logs statistics.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats()
     {
@@ -156,7 +156,7 @@ class LogCollection extends Collection
      * List the log files (dates).
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates()
     {
@@ -169,7 +169,7 @@ class LogCollection extends Collection
      * @param  string $level
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function total($level = 'all')
     {
@@ -184,7 +184,7 @@ class LogCollection extends Collection
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false)
     {
@@ -203,7 +203,7 @@ class LogCollection extends Collection
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function menu($trans = true)
     {

@@ -13,7 +13,7 @@ class ResetCommand extends Command
      *
      * @var string
      */
-    protected $name = 'translations:reset';
+    protected $name = 'cms:translations:reset';
 
     /**
      * The console command description.

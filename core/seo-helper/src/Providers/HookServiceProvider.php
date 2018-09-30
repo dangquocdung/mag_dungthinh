@@ -8,6 +8,10 @@ use SeoHelper;
 
 class HookServiceProvider extends ServiceProvider
 {
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * Boot the service provider.
@@ -27,7 +31,7 @@ class HookServiceProvider extends ServiceProvider
     {
         if (in_array($screen, config('core.seo-helper.general.supported'))) {
             Assets::addAppModule(['seo-helper']);
-            add_meta_box('seo_wrap', trans('core.seo-helper::seo-helper.meta_box_header'), [$this, 'seoMetaBox'], $screen);
+            add_meta_box('seo_wrap', trans('core.seo-helper::seo-helper.meta_box_header'), [$this, 'seoMetaBox'], $screen, 'advanced', 'low');
         }
     }
 

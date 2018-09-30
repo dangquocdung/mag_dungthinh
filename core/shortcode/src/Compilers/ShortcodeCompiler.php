@@ -37,7 +37,7 @@ class ShortcodeCompiler
      * Enable
      *
      * @return void
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function enable()
@@ -49,7 +49,7 @@ class ShortcodeCompiler
      * Disable
      *
      * @return void
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function disable()
@@ -64,7 +64,7 @@ class ShortcodeCompiler
      * @param $name
      * @param null $description
      * @param callable|string $callback
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function add($key, $name, $description = null, $callback)
@@ -77,7 +77,7 @@ class ShortcodeCompiler
      *
      * @param  string $value
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function compile($value)
@@ -102,7 +102,7 @@ class ShortcodeCompiler
      * Check if shortcode have been registered
      *
      * @return boolean
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function hasShortcodes()
@@ -115,7 +115,7 @@ class ShortcodeCompiler
      *
      * @param  array $token
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     protected function parseToken($token)
@@ -133,7 +133,7 @@ class ShortcodeCompiler
      *
      * @param  string $value
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     protected function renderShortcodes($value)
@@ -148,7 +148,7 @@ class ShortcodeCompiler
      *
      * @param  array $matches
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function render($matches)
@@ -171,7 +171,7 @@ class ShortcodeCompiler
      *
      * @param $matches
      * @return mixed
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     protected function compileShortcode($matches)
@@ -193,7 +193,7 @@ class ShortcodeCompiler
      * Set the matches
      *
      * @param array $matches
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     protected function setMatches($matches = [])
@@ -205,7 +205,7 @@ class ShortcodeCompiler
      * Return the shortcode name
      *
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function getName()
@@ -217,7 +217,7 @@ class ShortcodeCompiler
      * Return the shortcode content
      *
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function getContent()
@@ -231,7 +231,7 @@ class ShortcodeCompiler
      *
      * @param  string $key
      * @return callable|array
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function getCallback($key)
@@ -260,7 +260,7 @@ class ShortcodeCompiler
      * @param $text
      * @author Wordpress
      * @return array
-     * @modified Asif Iqbal <webwizo@gmail.com>
+     * @modified Asif Iqbal
      * @since 2.1
      */
     protected function parseAttributes($text)
@@ -294,7 +294,7 @@ class ShortcodeCompiler
      * Get shortcode names
      *
      * @return string
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function getShortcodeNames()
@@ -307,7 +307,7 @@ class ShortcodeCompiler
      *
      * @author Wordpress
      * @return string
-     * @modified Asif Iqbal <webwizo@gmail.com>
+     * @modified Asif Iqbal
      * @since 2.1
      */
     protected function getRegex()
@@ -322,7 +322,7 @@ class ShortcodeCompiler
      *
      * @param string $content Content to remove shortcode tags.
      * @return string Content without shortcode tags.
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function strip($content)
@@ -337,7 +337,7 @@ class ShortcodeCompiler
 
     /**
      * @return mixed
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function getStrip()
@@ -347,7 +347,7 @@ class ShortcodeCompiler
 
     /**
      * @param boolean $strip
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function setStrip($strip)
@@ -360,7 +360,7 @@ class ShortcodeCompiler
      *
      * @param string $match
      * @return string Content without shortcode tag.
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     protected function stripTag($match)

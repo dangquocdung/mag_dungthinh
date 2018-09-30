@@ -3,8 +3,10 @@
 namespace Botble\Assets;
 
 use Botble\Base\Supports\Language;
+use Collective\Html\HtmlBuilder;
 use File;
-use Html;
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class Assets
@@ -14,6 +16,17 @@ use Html;
  */
 class Assets
 {
+
+    /**
+     * @var Repository
+     */
+    protected $config;
+
+    /**
+     * @var HtmlBuilder
+     */
+    protected $htmlBuilder;
+
     /**
      * @var array
      */
@@ -50,13 +63,20 @@ class Assets
     /**
      * Assets constructor.
      * @author Sang Nguyen
+     * @param Repository $config
+     * @param Application $application
+     * @param HtmlBuilder $htmlBuilder
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function __construct()
+    public function __construct(Repository $config, Application $application, HtmlBuilder $htmlBuilder)
     {
-        $this->javascript = config('core.assets.general.javascript');
-        $this->stylesheets = config('core.assets.general.stylesheets');
+        $this->config = $config;
+        $this->htmlBuilder = $htmlBuilder;
+        $this->javascript = $this->config->get('core.assets.general.javascript');
+        $this->stylesheets = $this->config->get('core.assets.general.stylesheets');
 
-        $this->build = config('core.assets.general.enable_version') ? '?v=' . env('VERSION', time()) : null;
+        $version = env('ASSET_VERSION', !$application->environment('local') ? (float)get_cms_version() : time());
+        $this->build = $this->config->get('core.assets.general.enable_version') ? '?v=' . $version : null;
     }
 
     /**
@@ -104,7 +124,7 @@ class Assets
         foreach ($assets as &$item) {
             $item = $item . $this->build;
             if (!in_array($item, $this->appendedCss)) {
-                $this->appendedCss[] = $item;
+                $this->appendedCss[] = ['src' => $item, 'attributes' => []];
             }
         }
         return $this;
@@ -125,7 +145,7 @@ class Assets
         foreach ($assets as &$item) {
             $item = $item . $this->build;
             if (!in_array($item, $this->appendedJs[$location])) {
-                $this->appendedJs[$location][] = $item;
+                $this->appendedJs[$location][] = ['src' => $item, 'attributes' => []];
             }
         }
         return $this;
@@ -200,39 +220,45 @@ class Assets
             foreach ($this->javascript as $js) {
                 $jsConfig = 'core.assets.general.resources.javascript.' . $js;
 
-                if (config()->has($jsConfig)) {
-                    if ($location != null && config($jsConfig . '.location') !== $location) {
+                if ($this->config->has($jsConfig)) {
+                    if ($location != null && $this->config->get($jsConfig . '.location') !== $location) {
                         // Skip assets that don't match this location
                         continue;
                     }
 
-                    $src = config($jsConfig . '.src.local');
+                    $src = $this->config->get($jsConfig . '.src.local');
                     $cdn = false;
-                    if (config($jsConfig . '.use_cdn') && !config('core.assets.general.offline')) {
-                        $src = config($jsConfig . '.src.cdn');
+                    if ($this->config->get($jsConfig . '.use_cdn') && !$this->config->get('core.assets.general.offline')) {
+                        $src = $this->config->get($jsConfig . '.src.cdn');
                         $cdn = true;
                     }
 
-                    if (config($jsConfig . '.include_style')) {
+                    if ($this->config->get($jsConfig . '.include_style')) {
                         $this->addStylesheets([$js]);
+                    }
+
+                    $attributes = $this->config->get($jsConfig . '.attributes', []);
+                    if ($cdn == false) {
+                        array_forget($attributes, 'integrity');
+                        array_forget($attributes, 'crossorigin');
                     }
 
                     $version = $version ? $this->build : '';
                     if (!is_array($src)) {
-                        $scripts[] = $src . $version;
+                        $scripts[] = ['src' => $src . $version, 'attributes' => $attributes];
                     } else {
                         foreach ($src as $s) {
-                            $scripts[] = $s . $version;
+                            $scripts[] = ['src' => $s . $version, 'attributes' => $attributes];
                         }
                     }
 
-                    if (empty($src) && $cdn && $location === 'top' && config()->has($jsConfig . '.fallback')) {
+                    if (empty($src) && $cdn && $location === 'top' && $this->config->has($jsConfig . '.fallback')) {
                         // Fallback to local script if CDN fails
-                        $fallback = config($jsConfig . '.fallback');
+                        $fallback = $this->config->get($jsConfig . '.fallback');
                         $scripts[] = [
-                            'url' => $src,
+                            'src' => $src,
                             'fallback' => $fallback,
-                            'fallbackURL' => config($jsConfig . '.src.local'),
+                            'fallbackURL' => $this->config->get($jsConfig . '.src.local'),
                         ];
                     }
                 }
@@ -264,17 +290,28 @@ class Assets
             // get the final scripts need for page
             $this->stylesheets = array_unique($this->stylesheets);
             foreach ($this->stylesheets as $style) {
-                if (config()->has('core.assets.general.resources.stylesheets.' . $style)) {
-                    $src = config('core.assets.general.resources.stylesheets.' . $style . '.src.local');
-                    if (config('core.assets.general.resources.stylesheets.' . $style . '.use_cdn') && !config('core.assets.general.offline')) {
-                        $src = config('core.assets.general.resources.stylesheets.' . $style . '.src.cdn');
+                if ($this->config->has('core.assets.general.resources.stylesheets.' . $style)) {
+                    $src = $this->config->get('core.assets.general.resources.stylesheets.' . $style . '.src.local');
+                    $cdn = false;
+                    if ($this->config->get('core.assets.general.resources.stylesheets.' . $style . '.use_cdn') && !$this->config->get('core.assets.general.offline')) {
+                        $src = $this->config->get('core.assets.general.resources.stylesheets.' . $style . '.src.cdn');
+                        $cdn = true;
+                    }
+
+                    $attributes = $this->config->get('core.assets.general.resources.stylesheets.' . $style . '.attributes', []);
+                    if ($cdn == false) {
+                        array_forget($attributes, 'integrity');
+                        array_forget($attributes, 'crossorigin');
                     }
 
                     if (!is_array($src)) {
                         $src = [$src];
                     }
                     foreach ($src as $s) {
-                        $stylesheets[] = $s . ($version ? $this->build : '');
+                        $stylesheets[] = [
+                            'src' => $s . ($version ? $this->build : ''),
+                            'attributes' => $attributes,
+                        ];
                     }
                 }
             }
@@ -300,7 +337,7 @@ class Assets
             $this->appModules = array_unique($this->appModules);
             foreach ($this->appModules as $module) {
                 if (($module = $this->getModule($module, $version)) !== null) {
-                    $modules[] = $module;
+                    $modules[] = ['src' => $module, 'attributes' => []];
                 }
             }
         }
@@ -390,15 +427,23 @@ class Assets
     public function getJavascriptItemToHtml($name, $version = true)
     {
         $config = 'core.assets.general.resources.javascript.' . $name;
-        if (config()->has($config)) {
+        if ($this->config->has($config)) {
 
-            $src = config($config . '.src.local');
-            if (config($config . '.use_cdn') && !config('core.assets.general.offline')) {
-                $src = config($config . '.src.cdn');
+            $src = $this->config->get($config . '.src.local');
+            if ($this->config->get($config . '.use_cdn') && !$this->config->get('core.assets.general.offline')) {
+                $src = $this->config->get($config . '.src.cdn');
             }
 
-            $src = $src . '?v=' . ($version ? $this->build : '');
-            return Html::script($src, ['class' => 'hidden'])->toHtml();
+            if (!is_array($src)) {
+                $src = [$src];
+            }
+
+            $html = '';
+            foreach ($src as $item) {
+                $html .= $this->htmlBuilder->script($item . '?v=' . ($version ? $this->build : ''), ['class' => 'hidden'])->toHtml();
+            }
+
+            return $html;
         }
 
         return null;
@@ -412,15 +457,23 @@ class Assets
     public function getStylesheetItemToHtml($name, $version = true)
     {
         $config = 'core.assets.general.resources.stylesheets.' . $name;
-        if (config()->has($config)) {
+        if ($this->config->has($config)) {
 
-            $src = config($config . '.src.local');
-            if (config($config . '.use_cdn') && !config('core.assets.general.offline')) {
-                $src = config($config . '.src.cdn');
+            $src = $this->config->get($config . '.src.local');
+            if ($this->config->get($config . '.use_cdn') && !$this->config->get('core.assets.general.offline')) {
+                $src = $this->config->get($config . '.src.cdn');
             }
 
-            $src = $src . '?v=' . ($version ? $this->build : '');
-            return Html::style($src, ['class' => 'hidden'])->toHtml();
+            if (!is_array($src)) {
+                $src = [$src];
+            }
+
+            $html = '';
+            foreach ($src as $item) {
+                $html .= $this->htmlBuilder->style($item . '?v=' . ($version ? $this->build : ''), ['class' => 'hidden'])->toHtml();
+            }
+
+            return $html;
         }
 
         return null;
@@ -438,7 +491,7 @@ class Assets
             return null;
         }
 
-        return Html::script($src, ['class' => 'hidden'])->toHtml();
+        return $this->htmlBuilder->script($src, ['class' => 'hidden'])->toHtml();
     }
 
     /**

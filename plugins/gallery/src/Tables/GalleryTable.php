@@ -19,11 +19,6 @@ class GalleryTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -92,8 +87,7 @@ class GalleryTable extends TableAbstract
                 'galleries.created_at',
                 'galleries.status',
                 'galleries.image',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, GALLERY_MODULE_SCREEN_NAME));
     }
 
@@ -112,7 +106,8 @@ class GalleryTable extends TableAbstract
             ],
             'image' => [
                 'name' => 'galleries.image',
-                'title' => __('Image'),
+                'title' => trans('core.base::tables.image'),
+                'width' => '70px',
             ],
             'name' => [
                 'name' => 'galleries.name',

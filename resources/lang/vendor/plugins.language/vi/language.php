@@ -43,7 +43,7 @@ return [
     'language_display_all' => 'Hiển thị cả cờ và tên ngôn ngữ',
     'language_display_flag_only' => 'Chỉ hiển thị cờ',
     'language_display_name_only' => 'Chỉ hiển thị tên',
-    'language_hide_default' => 'Ẩn ngôn ngữ mặc định',
+    'language_hide_default' => 'Ẩn ngôn ngữ mặc định trên URL',
     'language_switcher_display_dropdown' => 'Dropdown',
     'language_switcher_display_list' => 'Danh sách',
     'settings' => 'Cài đặt',

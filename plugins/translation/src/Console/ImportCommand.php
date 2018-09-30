@@ -14,7 +14,7 @@ class ImportCommand extends Command
      *
      * @var string
      */
-    protected $name = 'translations:import';
+    protected $name = 'cms:translations:import';
 
     /**
      * The console command description.

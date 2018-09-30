@@ -21,14 +21,14 @@ class Captcha implements CaptchaContract
      *
      * @var string
      */
-    private $secret;
+    protected $secret;
 
     /**
      * Your site key
      *
      * @var string
      */
-    private $siteKey;
+    protected $siteKey;
 
     /**
      * Forces the widget to render in a specific language.
@@ -41,7 +41,7 @@ class Captcha implements CaptchaContract
     /**
      * Decides if we've already loaded the script file or not.
      *
-     * @param bool
+     * @var bool
      */
     protected $scriptLoaded = false;
 
@@ -66,7 +66,8 @@ class Captcha implements CaptchaContract
      * @param  string $siteKey
      * @param  string|null $lang
      * @param  array $attributes
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws ApiException
      */
     public function __construct($secret, $siteKey, $lang = null, array $attributes = [])
     {
@@ -84,7 +85,8 @@ class Captcha implements CaptchaContract
      * @param  string $secret
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws ApiException
      */
     protected function setSecret($secret)
     {
@@ -101,7 +103,8 @@ class Captcha implements CaptchaContract
      * @param  string $siteKey
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws ApiException
      */
     protected function setSiteKey($siteKey)
     {
@@ -118,7 +121,7 @@ class Captcha implements CaptchaContract
      * @param  string $lang
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setLang($lang)
     {
@@ -133,9 +136,9 @@ class Captcha implements CaptchaContract
      * @param  string|null $callbackName
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function getScriptSrc($callbackName = null)
+    protected function getScriptSrc($callbackName = null)
     {
         $queries = [];
 
@@ -157,7 +160,7 @@ class Captcha implements CaptchaContract
      * @param  RequestContract $request
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setRequestClient(RequestContract $request)
     {
@@ -172,7 +175,7 @@ class Captcha implements CaptchaContract
      * @param  AttributesContract $attributes
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setAttributes(AttributesContract $attributes)
     {
@@ -188,7 +191,7 @@ class Captcha implements CaptchaContract
      * @param  array $attributes
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function display($name = null, array $attributes = [])
     {
@@ -207,7 +210,7 @@ class Captcha implements CaptchaContract
      * @param  array $attributes
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function image($name = null, array $attributes = [])
     {
@@ -224,7 +227,7 @@ class Captcha implements CaptchaContract
      * @param  array $attributes
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function audio($name = null, array $attributes = [])
     {
@@ -241,7 +244,7 @@ class Captcha implements CaptchaContract
      * @param  string $clientIp
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function verify($response, $clientIp = null)
     {
@@ -265,7 +268,7 @@ class Captcha implements CaptchaContract
      * @param  \Psr\Http\Message\ServerRequestInterface $request
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function verifyRequest(ServerRequestInterface $request)
     {
@@ -289,7 +292,7 @@ class Captcha implements CaptchaContract
      * @param  string|null $callbackName
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function script($callbackName = null)
     {
@@ -310,7 +313,7 @@ class Captcha implements CaptchaContract
      * @param  string $callbackName
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function scriptWithCallback(array $captcha, $callbackName = 'captchaRenderCallback')
     {
@@ -335,9 +338,9 @@ class Captcha implements CaptchaContract
      * @param  array $captcha
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function renderCaptchas(array $captcha)
+    protected function renderCaptchas(array $captcha)
     {
         return implode(PHP_EOL, array_map(function ($captcha) {
             return 'if (document.getElementById("' . $captcha . '")) { grecaptcha.render("' . $captcha . '", {"sitekey" : "' . $this->siteKey . '"}); }';
@@ -348,9 +351,9 @@ class Captcha implements CaptchaContract
      * Check if has lang.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function hasLang()
+    protected function hasLang()
     {
         return !empty($this->lang);
     }
@@ -361,9 +364,9 @@ class Captcha implements CaptchaContract
      * @param  string|null $callbackName
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function hasCallbackName($callbackName)
+    protected function hasCallbackName($callbackName)
     {
         return !(empty($callbackName) || trim($callbackName) === '');
     }
@@ -373,7 +376,8 @@ class Captcha implements CaptchaContract
      *
      * @param  string $name
      * @param  string $value
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws ApiException
      */
     private function checkKey($name, &$value)
     {
@@ -391,9 +395,9 @@ class Captcha implements CaptchaContract
      * @param  string $value
      *
      * @throws ApiException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function checkIsString($name, $value)
+    protected function checkIsString($name, $value)
     {
         if (!is_string($value)) {
             throw new ApiException(
@@ -409,9 +413,9 @@ class Captcha implements CaptchaContract
      * @param string $value
      *
      * @throws ApiException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function checkIsNotEmpty($name, $value)
+    protected function checkIsNotEmpty($name, $value)
     {
         if (empty($value)) {
             throw new ApiException('The ' . $name . ' must not be empty');
@@ -424,9 +428,9 @@ class Captcha implements CaptchaContract
      * @param  array $query
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function sendVerifyRequest(array $query = [])
+    protected function sendVerifyRequest(array $query = [])
     {
         $query = array_filter($query);
         $url = static::VERIFY_URL . '?' . http_build_query($query);

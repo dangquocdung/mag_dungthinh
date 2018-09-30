@@ -3,7 +3,6 @@
 namespace Botble\Slug\Models;
 
 use Eloquent;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Botble\Slug\Models\Slug
@@ -12,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Slug extends Eloquent
 {
-    use SoftDeletes;
-
     /**
      * The database table used by the model.
      *
@@ -28,5 +25,6 @@ class Slug extends Eloquent
         'key',
         'reference',
         'reference_id',
+        'prefix',
     ];
 }

@@ -37,6 +37,13 @@ Route::group(['namespace' => 'Botble\Base\Http\Controllers', 'middleware' => 'we
                 'middleware' => 'preventDemo',
                 'permission' => 'plugins.list',
             ]);
+
+            Route::post('/remove', [
+                'as' => 'plugins.remove',
+                'uses' => 'SystemController@postRemovePlugin',
+                'middleware' => 'preventDemo',
+                'permission' => 'plugins.list',
+            ]);
         });
     });
 

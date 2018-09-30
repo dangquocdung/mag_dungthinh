@@ -60,6 +60,11 @@ class ThumbnailService
     protected $fileName;
 
     /**
+     * @var UploadsManager
+     */
+    protected $uploadManager;
+
+    /**
      * ThumbnailService constructor.
      * @author Sang Nguyen
      */

@@ -27,7 +27,6 @@ if (!function_exists('get_page_by_slug')) {
     }
 }
 
-
 if (!function_exists('get_all_pages')) {
     /**
      * @param boolean $active

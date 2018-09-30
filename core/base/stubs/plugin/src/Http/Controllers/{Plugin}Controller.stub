@@ -2,11 +2,12 @@
 
 namespace Botble\{Plugin}\Http\Controllers;
 
+use Botble\Base\Events\BeforeEditContentEvent;
 use Botble\{Plugin}\Http\Requests\{Plugin}Request;
 use Botble\{Plugin}\Repositories\Interfaces\{Plugin}Interface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Exception\Exception;
+use Exception;
 use Botble\{Plugin}\Tables\{Plugin}Table;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
@@ -42,9 +43,9 @@ class {Plugin}Controller extends BaseController
     public function getList({Plugin}Table $table)
     {
 
-        page_title()->setTitle(trans('plugins.{-plugin}::{-plugin}.list'));
+        page_title()->setTitle(trans('plugins.{-plugin}::{-plugin}.name'));
 
-        return $table->renderTable(['title' => trans('plugins.{-plugin}::{-plugin}.list')]);
+        return $table->renderTable();
     }
 
     /**
@@ -82,13 +83,16 @@ class {Plugin}Controller extends BaseController
      * Show edit form
      *
      * @param $id
+     * @param Request $request
      * @param FormBuilder $formBuilder
      * @return string
      * @author Sang Nguyen
      */
-    public function getEdit($id, FormBuilder $formBuilder)
+    public function getEdit($id, FormBuilder $formBuilder, Request $request)
     {
         ${plugin} = $this->{+plugin}Repository->findOrFail($id);
+
+        event(new BeforeEditContentEvent({PLUGIN}_MODULE_SCREEN_NAME, $request, ${plugin}));
 
         page_title()->setTitle(trans('plugins.{-plugin}::{-plugin}.edit') . ' #' . $id);
 
@@ -133,7 +137,9 @@ class {Plugin}Controller extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.cannot_delete'));
         }
     }
 
@@ -147,7 +153,9 @@ class {Plugin}Controller extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {

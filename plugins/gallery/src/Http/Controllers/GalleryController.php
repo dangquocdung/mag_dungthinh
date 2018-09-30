@@ -45,10 +45,7 @@ class GalleryController extends BaseController
     {
         page_title()->setTitle(trans('plugins.gallery::gallery.list'));
 
-        return $dataTable->renderTable([
-            'title' => trans('plugins.gallery::gallery.list'),
-            'icon' => 'fa fa-photo',
-        ]);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -146,7 +143,9 @@ class GalleryController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.cannot_delete'));
         }
     }
 
@@ -160,7 +159,9 @@ class GalleryController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {

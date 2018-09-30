@@ -3,6 +3,7 @@
 namespace Botble\ACL\Listeners;
 
 use Assets;
+use Auth;
 use Botble\ACL\Models\User;
 use Botble\ACL\Models\UserMeta;
 use Illuminate\Auth\Events\Login;
@@ -33,7 +34,7 @@ class LoginListener
                     session()->put('admin-locale', $locale);
                 }
 
-                cache()->forget(md5('cache-dashboard-menu'));
+                cache()->forget(md5('cache-dashboard-menu-' . Auth::user()->getKey()));
             }
         }
     }

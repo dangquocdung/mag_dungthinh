@@ -15,7 +15,6 @@ return [
     ],
     'create' => 'Create new tag',
     'edit' => 'Edit tag',
-    'list' => 'List tags',
     'cannot_delete' => 'Tag could not be deleted',
     'deleted' => 'Tag deleted',
     'menu' => 'Tags',

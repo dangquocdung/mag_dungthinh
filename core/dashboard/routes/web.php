@@ -7,12 +7,7 @@ Route::group(['namespace' => 'Botble\Dashboard\Http\Controllers', 'middleware' =
             'uses' => 'DashboardController@getDashboard',
         ]);
 
-        Route::group(['prefix' => 'widgets', 'permission' => false], function () {
-            Route::post('/edit', [
-                'as' => 'dashboard.edit_widget_settings',
-                'uses' => 'DashboardController@postEditWidgetSettings',
-            ]);
-
+        Route::group(['prefix' => 'widgets', 'permission' => 'dashboard.index'], function () {
             Route::get('/hide', [
                 'as' => 'dashboard.hide_widget',
                 'uses' => 'DashboardController@getHideWidget',

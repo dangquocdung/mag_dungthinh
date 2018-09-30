@@ -1,4 +1,4 @@
-<div class="widget meta-boxes form-actions form-actions-default action-{{ $direction or 'horizontal' }}">
+<div class="widget meta-boxes form-actions form-actions-default action-{{ $direction ?? 'horizontal' }}">
     <div class="widget-title">
         <h4>
             <span>{{ __('Actions') }}</span>
@@ -6,12 +6,15 @@
     </div>
     <div class="widget-body">
         <div class="btn-set">
-            <a href="{{ route('roles.list') }}" class="btn btn-warning" id="cancelButton">{{ trans('core.acl::permissions.cancel') }}</a>
-            <input type="reset" value="{{ trans('core.acl::permissions.reset') }}" class="btn btn-default">
             @if ($role)
-                <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-primary">{{ trans('core.acl::permissions.duplicate') }}</a>
+                <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-warning"><i class="fa fa-copy"></i> {{ trans('core.acl::permissions.duplicate') }}</a>
             @endif
-            <input type="submit" value="{{ trans('core.acl::permissions.save') }}" class="btn btn-success">
+            <button type="submit" name="submit" value="save" class="btn btn-info">
+                <i class="fa fa-save"></i> {{ trans('core.base::forms.save') }}
+            </button>
+            <button type="submit" name="submit" value="apply" class="btn btn-success">
+                <i class="fa fa-check-circle"></i> {{ trans('core.base::forms.save_and_continue') }}
+            </button>
         </div>
     </div>
 </div>
@@ -19,11 +22,14 @@
 <div class="form-actions form-actions-fixed-top hidden">
     {!! AdminBreadcrumb::render() !!}
     <div class="btn-set">
-        <a href="{{ route('roles.list') }}" class="btn btn-warning" id="cancelButton">{{ trans('core.acl::permissions.cancel') }}</a>
-        <input type="reset" value="{{ trans('core.acl::permissions.reset') }}" class="btn btn-default">
         @if ($role)
-            <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-primary">{{ trans('core.acl::permissions.duplicate') }}</a>
+            <a href="{{ route('roles.duplicate', [$role->id]) }}" class="btn btn-warning"><i class="fa fa-copy"></i> {{ trans('core.acl::permissions.duplicate') }}</a>
         @endif
-        <input type="submit" value="{{ trans('core.acl::permissions.save') }}" class="btn btn-success">
+        <button type="submit" name="submit" value="save" class="btn btn-info">
+            <i class="fa fa-save"></i> {{ trans('core.base::forms.save') }}
+        </button>
+        <button type="submit" name="submit" value="apply" class="btn btn-success">
+            <i class="fa fa-check-circle"></i> {{ trans('core.base::forms.save_and_continue') }}
+        </button>
     </div>
 </div>

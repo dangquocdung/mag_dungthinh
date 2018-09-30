@@ -18,14 +18,20 @@ class RequestLog extends Eloquent
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['url', 'status_code'];
+    protected $fillable = [
+        'url',
+        'status_code',
+    ];
 
     /**
      * @param $value

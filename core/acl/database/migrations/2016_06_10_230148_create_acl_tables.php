@@ -13,6 +13,10 @@ class CreateAclTables extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('name');
+        });
+
+        Schema::table('users', function (Blueprint $table) {
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->string('first_name')->nullable();
@@ -39,9 +43,7 @@ class CreateAclTables extends Migration
             $table->boolean('super_user')->default(0);
             $table->boolean('manage_supers')->default(0);
             $table->boolean('completed_profile')->default(0);
-            $table->dropColumn('name');
-
-            $table->engine = 'InnoDB';
+            $table->string('password')->nullable()->change();
         });
 
         Schema::create('activations', function (Blueprint $table) {
@@ -51,8 +53,6 @@ class CreateAclTables extends Migration
             $table->boolean('completed')->default(0);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
-
-            $table->engine = 'InnoDB';
         });
 
         Schema::create('roles', function (Blueprint $table) {
@@ -64,10 +64,8 @@ class CreateAclTables extends Migration
             $table->tinyInteger('is_default')->unsigned()->default(0);
             $table->integer('created_by')->unsigned()->references('id')->on('users')->index();
             $table->integer('updated_by')->unsigned()->references('id')->on('users')->index();
-            $table->softDeletes();
             $table->timestamps();
-
-            $table->engine = 'InnoDB';
+            $table->softDeletes();
         });
 
         Schema::create('role_users', function (Blueprint $table) {
@@ -75,11 +73,9 @@ class CreateAclTables extends Migration
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->integer('role_id')->unsigned()->references('id')->on('roles')->index();
             $table->nullableTimestamps();
-
-            $table->engine = 'InnoDB';
         });
 
-        Schema::create('permission_flags', function ($table) {
+        Schema::create('permission_flags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('flag', 100)->unique();
             $table->string('name', 100);
@@ -87,24 +83,19 @@ class CreateAclTables extends Migration
             $table->integer('is_feature')->default(0);
             $table->integer('feature_visible')->default(1);
             $table->integer('permission_visible')->default(1);
-
-            $table->engine = 'InnoDB';
             $table->timestamps();
         });
 
-        Schema::create('role_flags', function ($table) {
+        Schema::create('role_flags', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->references('id')->on('roles')->unsigned()->index();
             $table->integer('flag_id')->unsigned()->references('id')->on('permission_flags')->index();
-
-            $table->engine = 'InnoDB';
         });
 
-        Schema::create('features', function ($table) {
+        Schema::create('features', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('feature_id')->references('id')->on('permission_flags')->unsigned()->index();
             $table->timestamps();
-            $table->engine = 'InnoDB';
         });
 
         Schema::create('invites', function (Blueprint $table) {
@@ -115,16 +106,14 @@ class CreateAclTables extends Migration
             $table->integer('invitee_id');
             $table->integer('role_id');
             $table->timestamps();
-            $table->engine = 'InnoDB';
         });
 
-        Schema::create('user_meta', function ($table) {
+        Schema::create('user_meta', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key')->nullable();
             $table->string('value')->nullable();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
 
-            $table->engine = 'InnoDB';
             $table->timestamps();
         });
     }

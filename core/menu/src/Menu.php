@@ -8,6 +8,7 @@ use Botble\Menu\Repositories\Interfaces\MenuNodeInterface;
 use Botble\Support\Services\Cache\Cache;
 use Collective\Html\HtmlBuilder;
 use Exception;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Schema;
@@ -45,19 +46,20 @@ class Menu
      * @param MenuInterface $menu
      * @param HtmlBuilder $html
      * @param MenuNodeInterface $menuNodeRepository
-     * @param Cache $cache
+     * @param CacheManager $cache
      * @author Sang Nguyen
      */
     public function __construct(
         MenuInterface $menu,
         HtmlBuilder $html,
-        MenuNodeInterface $menuNodeRepository
+        MenuNodeInterface $menuNodeRepository,
+        CacheManager $cache
     )
     {
         $this->menuRepository = $menu;
         $this->html = $html;
         $this->menuNodeRepository = $menuNodeRepository;
-        $this->cache = new Cache(app('cache'), MenuRepository::class);
+        $this->cache = new Cache($cache, MenuRepository::class);
     }
 
     /**
@@ -144,9 +146,8 @@ class Menu
             return Theme::partial($view, $data);
         } elseif ($view) {
             return view($view, $data)->render();
-        } else {
-            return view('core.menu::partials.default', $data)->render();
         }
+        return view('core.menu::partials.default', $data)->render();
     }
 
     /**
@@ -205,9 +206,8 @@ class Menu
             return Theme::partial($view, $data);
         } elseif ($view) {
             return view($view, $data)->render();
-        } else {
-            return view('core.menu::partials.select', $data)->render();
         }
+        return view('core.menu::partials.select', $data)->render();
     }
 
     /**
@@ -255,7 +255,7 @@ class Menu
      * @param $menu_id
      * @param $parent_id
      * @param int $has_child
-     * @return mixed
+     * @return int
      * @author Sang Nguyen, Tedozi Manson
      */
     protected function saveMenuNode($menu_item, $menu_id, $parent_id, $has_child = 0)

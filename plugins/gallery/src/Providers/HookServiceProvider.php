@@ -3,14 +3,14 @@
 namespace Botble\Gallery\Providers;
 
 use Assets;
-use Botble\Gallery\Repositories\Interfaces\GalleryInterface;
-use Eloquent;
-use Gallery;
 use Illuminate\Support\ServiceProvider;
-use Theme;
 
 class HookServiceProvider extends ServiceProvider
 {
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * @author Sang Nguyen
@@ -19,11 +19,8 @@ class HookServiceProvider extends ServiceProvider
     public function boot()
     {
         add_action(BASE_ACTION_META_BOXES, [$this, 'addGalleryBox'], 13, 3);
-        add_shortcode('gallery', __('Gallery images'), __('Add a gallery'), [$this, 'render']);
+        add_shortcode('gallery', trans('plugins.gallery::gallery.gallery_images'), trans('plugins.gallery::gallery.add_gallery_short_code'), [$this, 'render']);
         shortcode()->setAdminConfig('gallery', view('plugins.gallery::partials.short-code-admin-config')->render());
-        add_filter(BASE_FILTER_PUBLIC_SINGLE_DATA, [$this, 'handleSingleView'], 3, 1);
-
-        Theme::asset()->add('gallery-css', 'vendor/core/plugins/gallery/css/gallery.css');
     }
 
     /**
@@ -32,7 +29,7 @@ class HookServiceProvider extends ServiceProvider
      */
     public function addGalleryBox($screen)
     {
-        if (in_array($screen, Gallery::getScreens())) {
+        if (in_array($screen, config('plugins.gallery.general.supported'))) {
             Assets::addStylesheetsDirectly(['vendor/core/plugins/gallery/css/admin-gallery.css']);
             add_meta_box('gallery_wrap', trans('plugins.gallery::gallery.gallery_box'), [$this, 'galleryMetaField'], $screen, 'advanced', 'default');
         }
@@ -60,31 +57,5 @@ class HookServiceProvider extends ServiceProvider
     public function render($shortcode)
     {
         return render_galleries($shortcode->limit);
-    }
-
-    /**
-     * @param $slug
-     * @return array
-     * @author Sang Nguyen
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    public function handleSingleView($slug)
-    {
-        if ($slug instanceof Eloquent && $slug->reference == GALLERY_MODULE_SCREEN_NAME) {
-            Gallery::registerAssets();
-            $gallery = app(GalleryInterface::class)->findById($slug->reference_id);
-            $gallery = apply_filters(BASE_FILTER_BEFORE_GET_SINGLE, $gallery, app(GalleryInterface::class)->getModel(), GALLERY_MODULE_SCREEN_NAME);
-
-            Theme::breadcrumb()->add(__('Home'), route('public.index'))->add($gallery->name, route('public.single', $slug->key));
-
-            do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, GALLERY_MODULE_SCREEN_NAME, $gallery);
-
-            return [
-                'view' => 'gallery',
-                'default_view' => 'plugins.gallery::themes.gallery',
-                'data' => compact('gallery'),
-            ];
-        }
-        return $slug;
     }
 }

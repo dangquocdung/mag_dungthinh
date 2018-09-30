@@ -4,8 +4,8 @@ namespace Botble\ACL\Commands;
 
 use Botble\ACL\Models\User;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
+use Botble\Base\Supports\EmailHandler;
 use Carbon\Carbon;
-use EmailHandler;
 use Illuminate\Console\Command;
 
 class SendUserBirthdayEmailCommand extends Command
@@ -15,7 +15,7 @@ class SendUserBirthdayEmailCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cms:send_email_user_birthday';
+    protected $signature = 'cms:cms:send_email_user_birthday';
 
     /**
      * The console command description.
@@ -30,14 +30,21 @@ class SendUserBirthdayEmailCommand extends Command
     protected $userRepository;
 
     /**
+     * @var EmailHandler
+     */
+    protected $emailHandler;
+
+    /**
      * RebuildPermissions constructor.
      * @author Sang Nguyen
      * @param UserInterface $userRepository
+     * @param EmailHandler $emailHandler
      */
-    public function __construct(UserInterface $userRepository)
+    public function __construct(UserInterface $userRepository, EmailHandler $emailHandler)
     {
         parent::__construct();
         $this->userRepository = $userRepository;
+        $this->emailHandler = $emailHandler;
     }
 
     /**
@@ -53,14 +60,11 @@ class SendUserBirthdayEmailCommand extends Command
              * @var User $user
              */
             if (acl_is_user_activated($user)) {
-                if (!empty($user->dob) && Carbon::parse($user->dob)->diffInDays(Carbon::now()) == 0) {
-                    EmailHandler::send(
+                if (!empty($user->dob) && Carbon::parse($user->dob)->diffInDays(Carbon::now(config('app.timezone'))) == 0) {
+                    $this->emailHandler->send(
                         view('core.base::emails.birthday', compact('user'))->render(),
                         trans('core.base::mail.happy_birthday'),
-                        [
-                            'to' => $user->email,
-                            'name' => $user->getFullName(),
-                        ]
+                        $user->email
                     );
                     $this->info('Sent birthday email to user ' . $user->getFullName());
                 }

@@ -5,7 +5,10 @@ namespace Botble\Blog\Http\Controllers;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Blog\Repositories\Interfaces\PostInterface;
+use Botble\Blog\Repositories\Interfaces\TagInterface;
 use Botble\Page\Repositories\Interfaces\PageInterface;
+use Botble\SeoHelper\SeoOpenGraph;
+use Botble\Slug\Repositories\Interfaces\SlugInterface;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use SeoHelper;
@@ -13,6 +16,27 @@ use Theme;
 
 class PublicController extends Controller
 {
+
+    /**
+     * @var TagInterface
+     */
+    protected $tagRepository;
+
+    /**
+     * @var SlugInterface
+     */
+    protected $slugRepository;
+
+    /**
+     * PublicController constructor.
+     * @param TagInterface $tagRepository
+     * @param SlugInterface $slugRepository
+     */
+    public function __construct(TagInterface $tagRepository, SlugInterface $slugRepository)
+    {
+        $this->tagRepository = $tagRepository;
+        $this->slugRepository = $slugRepository;
+    }
 
     /**
      * @param Request $request
@@ -30,7 +54,7 @@ class PublicController extends Controller
         BaseHttpResponse $response
     )
     {
-        $query = $request->get('q');
+        $query = $request->input('q');
         if (!empty($query)) {
             $posts = $postRepository->getSearch($query);
             $pages = $pageRepository->getSearch($query);
@@ -48,7 +72,9 @@ class PublicController extends Controller
                 return $response->setData(apply_filters(BASE_FILTER_SET_DATA_SEARCH, $data, 10, 1));
             }
         }
-        return $response->setError(true)->setMessage(trans('core.base::layouts.no_search_result'));
+        return $response
+            ->setError()
+            ->setMessage(trans('core.base::layouts.no_search_result'));
     }
 
     /**
@@ -59,16 +85,20 @@ class PublicController extends Controller
      */
     public function getSearch(Request $request, PostInterface $postRepository)
     {
-        SeoHelper::setTitle(__('Search result for: ') . '"' . $request->get('q') . '"')->setDescription(__('Search result for: ') . '"' . $request->get('q') . '"');
+        $query = $request->input('q');
+        SeoHelper::setTitle(__('Search result for: ') . '"' . $query . '"')
+            ->setDescription(__('Search result for: ') . '"' . $query . '"');
 
-        $posts = $postRepository->getSearch($request->get('q'), 0, 12);
+        $posts = $postRepository->getSearch($query, 0, 12);
 
-        Theme::breadcrumb()->add(__('Home'), route('public.index'))->add(__('Search result for: ') . '"' . $request->get('q') . '"', route('public.search'));
+        Theme::breadcrumb()
+            ->add(__('Home'), route('public.index'))
+            ->add(__('Search result for: ') . '"' . $query . '"', route('public.search'));
         return Theme::scope('search', compact('posts'))->render();
     }
 
     /**
-     * @param $slug
+     * @param string $slug
      * @param UserInterface $userRepository
      * @return \Response
      * @author Sang Nguyen
@@ -84,9 +114,46 @@ class PublicController extends Controller
         admin_bar()->registerLink('Edit this user', route('user.profile.view', $author->id));
 
         SeoHelper::setTitle($author->getFullName())->setDescription($author->about);
-        Theme::breadcrumb()->add(__('Home'), route('public.index'))->add($author->getFullName(), route('public.author', $slug));
+        Theme::breadcrumb()
+            ->add(__('Home'), route('public.index'))
+            ->add($author->getFullName(), route('public.author', $slug));
 
         do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, USER_MODULE_SCREEN_NAME, $author);
         return Theme::scope('author', compact('author'), 'plugins.blog::themes.author')->render();
+    }
+
+    /**
+     * @param string $slug
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function getTag($slug)
+    {
+        $slug = $this->slugRepository->getFirstBy(['key' => $slug, 'reference' => TAG_MODULE_SCREEN_NAME]);
+        if (!$slug) {
+            abort(404);
+        }
+        $tag = $this->tagRepository->getFirstBy(['id' => $slug->reference_id, 'status' => 1]);
+
+        if (!$tag) {
+            abort(404);
+        }
+
+        SeoHelper::setTitle($tag->name)->setDescription($tag->description);
+
+        $meta = new SeoOpenGraph();
+        $meta->setDescription($tag->description);
+        $meta->setUrl(route('public.tag', $slug->key));
+        $meta->setTitle($tag->name);
+        $meta->setType('article');
+
+        admin_bar()->registerLink(trans('plugins.blog::tags.edit_this_tag'), route('tags.edit', $tag->id));
+
+        $posts = get_posts_by_tag($tag->id);
+
+        Theme::breadcrumb()->add(__('Home'), route('public.index'))->add($tag->name, route('public.tag', $slug->key));
+
+        do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, TAG_MODULE_SCREEN_NAME, $tag);
+
+        return Theme::scope('tag', compact('tag', 'posts'), 'plugins.blog::themes.tag')->render();
     }
 }

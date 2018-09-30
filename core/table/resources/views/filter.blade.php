@@ -5,17 +5,27 @@
 
     <div class="sample-filter-item-wrap hidden">
         <div class="filter-item form-filter">
-            <select name="filter_columns[]" class="filter-column-key">
-                <option value="">{{ trans('core.table::general.select_field') }}</option>
-                @foreach($columns as $column_key => $column)
-                    <option value="{{ $column_key }}">{{ $column['title'] }}</option>
-                @endforeach
-            </select>
-            <select name="filter_operators[]" class="filter-operator filter-column-operator">
-                <option value="=">{{ trans('core.table::general.is_equal_to') }}</option>
-                <option value=">">{{ trans('core.table::general.greater_than') }}</option>
-                <option value="<">{{ trans('core.table::general.less_than') }}</option>
-            </select>
+            <div class="ui-select-wrapper">
+                <select name="filter_columns[]" class="ui-select filter-column-key">
+                    <option value="">{{ trans('core.table::general.select_field') }}</option>
+                    @foreach($columns as $column_key => $column)
+                        <option value="{{ $column_key }}">{{ $column['title'] }}</option>
+                    @endforeach
+                </select>
+                <svg class="svg-next-icon svg-next-icon-size-16">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                </svg>
+            </div>
+            <div class="ui-select-wrapper">
+                <select name="filter_operators[]" class="ui-select filter-operator filter-column-operator">
+                    <option value="=">{{ trans('core.table::general.is_equal_to') }}</option>
+                    <option value=">">{{ trans('core.table::general.greater_than') }}</option>
+                    <option value="<">{{ trans('core.table::general.less_than') }}</option>
+                </select>
+                <svg class="svg-next-icon svg-next-icon-size-16">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                </svg>
+            </div>
             <span class="filter-column-value-wrap">
                 <input class="form-control filter-column-value" type="text" placeholder="{{ trans('core.table::general.value') }}"
                        name="filter_values[]">
@@ -32,20 +42,30 @@
         <div class="filter_list inline-block filter-items-wrap">
             @foreach($request_filters as $filter_key => $filter_item)
                 <div class="filter-item form-filter @if ($loop->first) filter-item-default @endif">
-                    <select name="filter_columns[]" class="select-full filter-column-key">
-                        <option value="">{{ trans('core.table::general.select_field') }}</option>
-                        @foreach($columns as $column_key => $column)
-                            <option value="{{ $column_key }}" @if ($filter_item['column'] == $column_key) selected @endif>{{ $column['title'] }}</option>
-                        @endforeach
-                    </select>
-                    <select name="filter_operators[]" class="select-full filter-column-operator">
-                        <option value="="
-                                @if ($filter_item['operator'] == '=') selected @endif>{{ trans('core.table::general.is_equal_to') }}</option>
-                        <option value=">"
-                                @if ($filter_item['operator'] == '>') selected @endif>{{ trans('core.table::general.greater_than') }}</option>
-                        <option value="<"
-                                @if ($filter_item['operator'] == '<') selected @endif>{{ trans('core.table::general.less_than') }}</option>
-                    </select>
+                    <div class="ui-select-wrapper">
+                        <select name="filter_columns[]" class="ui-select filter-column-key">
+                            <option value="">{{ trans('core.table::general.select_field') }}</option>
+                            @foreach($columns as $column_key => $column)
+                                <option value="{{ $column_key }}" @if ($filter_item['column'] == $column_key) selected @endif>{{ $column['title'] }}</option>
+                            @endforeach
+                        </select>
+                        <svg class="svg-next-icon svg-next-icon-size-16">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                        </svg>
+                    </div>
+                    <div class="ui-select-wrapper">
+                        <select name="filter_operators[]" class="ui-select filter-column-operator">
+                            <option value="="
+                                    @if ($filter_item['operator'] == '=') selected @endif>{{ trans('core.table::general.is_equal_to') }}</option>
+                            <option value=">"
+                                    @if ($filter_item['operator'] == '>') selected @endif>{{ trans('core.table::general.greater_than') }}</option>
+                            <option value="<"
+                                    @if ($filter_item['operator'] == '<') selected @endif>{{ trans('core.table::general.less_than') }}</option>
+                        </select>
+                        <svg class="svg-next-icon svg-next-icon-size-16">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                        </svg>
+                    </div>
                     <span class="filter-column-value-wrap">
                         <input class="form-control filter-column-value" type="text" placeholder="{{ trans('core.table::general.value') }}"
                                name="filter_values[]" value="{{ $filter_item['value'] }}">
@@ -63,7 +83,7 @@
             @endforeach
         </div>
         <div style="margin-top: 10px;">
-            <a href="javascript:;" class="btn btn-default add-more-filter">{{ trans('core.table::general.add_additional_filter') }}</a>
+            <a href="javascript:;" class="btn btn-secondary add-more-filter">{{ trans('core.table::general.add_additional_filter') }}</a>
             <a href="{{ URL::current() }}" class="btn btn-info @if (!request()->has('filter_table_id')) hidden @endif">{{ trans('core.table::general.reset') }}</a>
             <button type="submit" class="btn btn-primary btn-apply">{{ trans('core.table::general.apply') }}</button>
         </div>

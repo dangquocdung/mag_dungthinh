@@ -42,7 +42,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  string $date
      * @param  string $path
      * @param  string $raw
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct($date, $path, $raw)
     {
@@ -59,7 +59,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get log path.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getPath()
     {
@@ -70,7 +70,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get raw log content.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getRaw()
     {
@@ -81,7 +81,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get file info.
      *
      * @return \SplFileInfo
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function file()
     {
@@ -92,7 +92,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get file size.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function size()
     {
@@ -103,7 +103,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get file creation date.
      *
      * @return \Carbon\Carbon
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function createdAt()
     {
@@ -114,7 +114,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get file modification date.
      *
      * @return \Carbon\Carbon
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function updatedAt()
     {
@@ -129,7 +129,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  string $raw
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function make($date, $path, $raw)
     {
@@ -142,7 +142,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function entries($level = 'all')
     {
@@ -159,7 +159,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  string $level
      *
      * @return \Botble\LogViewer\Entities\LogEntryCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getByLevel($level)
     {
@@ -170,7 +170,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get log stats.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function stats()
     {
@@ -183,7 +183,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function tree($trans = false)
     {
@@ -196,7 +196,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function menu($trans = true)
     {
@@ -207,7 +207,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Get the log as a plain array.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function toArray()
     {
@@ -224,7 +224,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  int $options
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function toJson($options = 0)
     {
@@ -235,7 +235,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * Serialize the log object to json data.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function jsonSerialize()
     {
@@ -249,7 +249,7 @@ class Log implements Arrayable, Jsonable, JsonSerializable
      * @param  int $precision
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function formatSize($bytes, $precision = 2)
     {

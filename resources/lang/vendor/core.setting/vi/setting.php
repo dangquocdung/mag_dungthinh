@@ -83,4 +83,5 @@ return [
     'template' => 'Mẫu',
     'description' => 'Mô tả',
     'enable' => 'Bật',
+    'test_send_mail' => 'Gửi thử nghiệm',
 ];

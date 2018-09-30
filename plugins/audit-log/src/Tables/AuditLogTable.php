@@ -17,11 +17,6 @@ class AuditLogTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = false;
 
     /**
@@ -74,8 +69,7 @@ class AuditLogTable extends TableAbstract
         $model = $this->repository->getModel();
         $query = $model
             ->with(['user'])
-            ->select('audit_history.*')
-            ->latest();
+            ->select('audit_history.*');
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, AUDIT_LOG_MODULE_SCREEN_NAME));
     }
 
@@ -93,12 +87,12 @@ class AuditLogTable extends TableAbstract
             ],
             'action' => [
                 'name' => 'audit_history.action',
-                'title' => __('Action'),
+                'title' => trans('plugins.audit-log::history.action'),
                 'class' => 'text-left',
             ],
             'user_agent' => [
                 'name' => 'audit_history.user_agent',
-                'title' => __('User Agent'),
+                'title' => trans('plugins.audit-log::history.user_agent'),
                 'class' => 'text-left',
             ],
         ];

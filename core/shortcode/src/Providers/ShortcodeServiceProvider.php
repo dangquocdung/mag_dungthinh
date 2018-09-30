@@ -19,7 +19,7 @@ class ShortcodeServiceProvider extends ServiceProvider
      * Register the service provider.
      *
      * @return void
-     * @author Asif Iqbal <webwizo@gmail.com>
+     * @author Asif Iqbal
      * @since 2.1
      */
     public function register()

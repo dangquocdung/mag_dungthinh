@@ -17,7 +17,6 @@ use RvMedia;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Theme;
 use URL;
 
 class Handler extends ExceptionHandler
@@ -43,17 +42,25 @@ class Handler extends ExceptionHandler
         }
 
         if ($ex instanceof AuthorizationException) {
-            return $this->handleResponseData(403, $request);
+            $response = $this->handleResponseData(403, $request);
+            if ($response) {
+                return $response;
+            }
         }
 
-        if ($this->isHttpException($ex)) {
+        if ($this->isHttpException($ex) && !app()->isDownForMaintenance()) {
             $code = $ex->getStatusCode();
 
             do_action(BASE_ACTION_SITE_ERROR, $code);
 
             if (in_array($code, [401, 403, 404, 500, 503])) {
-                return $this->handleResponseData($code, $request);
+                $response = $this->handleResponseData($code, $request);
+                if ($response) {
+                    return $response;
+                }
             }
+        } elseif (app()->isDownForMaintenance() && view()->exists('theme.' . setting('theme') . '::views.503')) {
+            return response()->view('theme.' . setting('theme') . '::views.503', ['exception' => $ex], 503);
         }
 
         return parent::render($request, $ex);
@@ -72,7 +79,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         if ($this->shouldReport($exception) && !$this->isExceptionFromBot()) {
-            if (config('core.base.general.error_reporting.via_email') == true) {
+            if (!app()->environment('local') && setting('enable_send_error_reporting_via_email', false)) {
                 EmailHandler::sendErrorException($exception);
             }
 
@@ -124,7 +131,7 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson()) {
             return (new BaseHttpResponse())
-                ->setError(true)
+                ->setError()
                 ->setMessage($exception->getMessage())
                 ->setCode(401)
                 ->toResponse($request);
@@ -134,9 +141,9 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * @param $code
+     * @param integer $code
      * @param Request $request
-     * @return BaseHttpResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return bool|BaseHttpResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function handleResponseData($code, $request)
@@ -145,7 +152,7 @@ class Handler extends ExceptionHandler
             admin_bar()->setIsDisplay(false);
             if ($code == 401) {
                 return (new BaseHttpResponse())
-                    ->setError(true)
+                    ->setError()
                     ->setMessage(trans('core.acl::permissions.access_denied_message'))
                     ->setCode($code)
                     ->toResponse($request);
@@ -158,11 +165,10 @@ class Handler extends ExceptionHandler
             return response()->view('core.base::errors.' . $code, [], $code);
         }
 
-        /**
-         * @var \Botble\Theme\Theme $theme
-         */
-        $theme = Theme::uses(setting('theme'))->layout(setting('layout', 'default'));
-        Theme::breadcrumb()->add(__('Home'), route('public.index'))->add($code);
-        return $theme->scope($code, [], 'core.base::themes.' . $code)->render();
+        if (view()->exists('theme.' . setting('theme') . '::views.' . $code)) {
+            return response()->view('theme.' . setting('theme') . '::views.' . $code, [], $code);
+        }
+
+        return false;
     }
 }

@@ -2,8 +2,11 @@
 
 namespace Botble\Base\Commands;
 
+use Artisan;
+use Botble\Setting\Supports\SettingStore;
 use Composer\Autoload\ClassLoader;
 use Exception;
+use File;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
@@ -22,7 +25,7 @@ class PluginActivateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugin:activate {name : The plugin that you want to activate}';
+    protected $signature = 'cms:plugin:activate {name : The plugin that you want to activate}';
 
     /**
      * The console command description.
@@ -32,16 +35,23 @@ class PluginActivateCommand extends Command
     protected $description = 'Activate a plugin in /plugins directory';
 
     /**
+     * @var SettingStore
+     */
+    protected $settingStore;
+
+    /**
      * Create a new key generator command.
      *
      * @param \Illuminate\Filesystem\Filesystem $files
+     * @param SettingStore $settingStore
      * @author Sang Nguyen
      */
-    public function __construct(Filesystem $files)
+    public function __construct(Filesystem $files, SettingStore $settingStore)
     {
         parent::__construct();
 
         $this->files = $files;
+        $this->settingStore = $settingStore;
     }
 
     /**
@@ -81,16 +91,34 @@ class PluginActivateCommand extends Command
                     $loader = new ClassLoader();
                     $loader->setPsr4($content['namespace'], base_path('plugins/' . $plugin . '/src'));
                     $loader->register(true);
+
+                    if (class_exists($content['namespace'] . 'Plugin')) {
+                        call_user_func([$content['namespace'] . 'Plugin', 'activate']);
+                    }
+
+                    if (File::isDirectory(base_path('plugins/' . $plugin . '/public'))) {
+                        File::copyDirectory(base_path('plugins/' . $plugin . '/public'), public_path('vendor/core/plugins/' . $plugin));
+
+                        Artisan::call('vendor:publish', [
+                            '--force' => true,
+                            '--tag' => 'public',
+                            '--provider' => $content['provider'],
+                        ]);
+                    }
+
+                    if (File::isDirectory(base_path('plugins/' . $plugin . '/database/migrations'))) {
+                        Artisan::call('migrate', [
+                            '--force' => true,
+                            '--path' => 'plugins/' . $plugin . '/database/migrations',
+                        ]);
+                    }
                 }
 
-                if (class_exists($content['namespace'] . 'Plugin')) {
-                    call_user_func([$content['namespace'] . 'Plugin', 'activate']);
-                }
+                $this->settingStore
+                    ->set('activated_plugins', json_encode(array_values(array_merge($activated_plugins, [$plugin]))))
+                    ->save();
 
-                setting()->set('activated_plugins', json_encode(array_values(array_merge($activated_plugins, [$plugin]))));
-                setting()->save();
-
-                cache()->forget(md5('cache-dashboard-menu'));
+                $this->call('cache:clear');
 
                 $this->line('<info>Activate plugin successfully!</info>');
             } else {

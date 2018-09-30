@@ -52,6 +52,7 @@ class EventServiceProvider extends ServiceProvider
 
         Event::listen(['cache:cleared'], function () {
             File::delete(storage_path('cache_keys.json'));
+            File::delete(storage_path('settings.json'));
         });
     }
 }

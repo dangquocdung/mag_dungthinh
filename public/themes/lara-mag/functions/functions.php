@@ -5,7 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Illuminate\Http\Request;
 
 register_page_template([
-    'default' => 'Default'
+    'default' => 'Default',
 ]);
 
 register_sidebar([
@@ -59,7 +59,7 @@ theme_option()
                         'class' => 'form-control',
                         'placeholder' => __('Link to target URL'),
                         'data-counter' => 255,
-                    ]
+                    ],
                 ],
             ],
             [
@@ -96,8 +96,7 @@ theme_option()
         'label' => __('Copyright'),
         'attributes' => [
             'name' => 'copyright',
-            'value' => '© 2018 Công ty TNHH Phần mềm máy tính Dũng Thịnh
-            ',
+            'value' => '© 2016 Botble Technologies. All right reserved. Designed by Nghia Minh',
             'options' => [
                 'class' => 'form-control',
                 'placeholder' => __('Change copyright'),
@@ -117,7 +116,7 @@ add_action(BASE_ACTION_META_BOXES, 'add_addition_fields_in_post_screen', 24, 3);
 function add_addition_fields_in_post_screen($screen, $context)
 {
     if (is_plugin_active('blog') && $screen == POST_MODULE_SCREEN_NAME && $context == 'advanced') {
-        add_meta_box('additional_post_fields', 'Addition Information', 'post_additional_fields', $screen, $context, 'default');
+        add_meta_box('additional_post_fields', __('Addition Information'), 'post_additional_fields', $screen, $context, 'default');
     }
 }
 
@@ -144,7 +143,7 @@ add_action(BASE_ACTION_AFTER_UPDATE_CONTENT, 'save_addition_post_fields', 231, 3
  * @param $object
  * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
  */
-function save_addition_post_fields($type, Request $request, $object)
+function save_addition_post_fields($type, $request, $object)
 {
     if (is_plugin_active('blog') && $type == POST_MODULE_SCREEN_NAME) {
         save_meta_data($object->id, 'video_link', $request->input('video_link'), $type);

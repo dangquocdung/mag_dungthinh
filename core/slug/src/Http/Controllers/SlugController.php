@@ -37,6 +37,6 @@ class SlugController extends BaseController
      */
     public function postCreate(SlugRequest $request)
     {
-        return $this->slugService->create($request->input('name'), $request->input('slug_id'));
+        return $this->slugService->create($request->input('name'), $request->input('slug_id'), $request->input('screen'));
     }
 }

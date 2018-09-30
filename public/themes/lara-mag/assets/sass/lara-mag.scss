@@ -210,16 +210,15 @@ h1.logo a span {
 
 section.pagination{text-align: center; margin: 20px auto}ul.pagination{display: inline-block}
 
-#fb-root {
-    display: none;
-}
-
-.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style], .fb_iframe .fb_iframe_widget {
+.fb-comments.fb_iframe_widget,
+.fb-comments.fb_iframe_widget span,
+.fb-comments.fb_iframe_widget span iframe[style],
+.fb-comments.fb_iframe .fb_iframe_widget {
     min-width: 100% !important;
     width: 100% !important;
 }
 
-.fb_iframe_widget iframe {
+.fb-comments.fb_iframe_widget iframe {
     left: 0 !important;
 }
 

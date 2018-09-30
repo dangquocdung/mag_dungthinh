@@ -4,7 +4,6 @@ return [
     'menu' => 'Contact',
     'model' => 'Contact',
     'models' => 'Contact',
-    'list' => 'List contact',
     'edit' => 'View contact',
     'tables' => [
         'phone' => 'Phone',

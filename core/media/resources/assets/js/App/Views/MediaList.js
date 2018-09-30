@@ -44,7 +44,7 @@ export class MediaList {
             $('.rv-media-items').removeClass('has-items');
         }
 
-        _.forEach(data.folders, function (value, index) {
+        _.forEach(data.folders, (value) => {
             let item = _self.item[Helpers.getRequestParams().view_type];
             item = item
                 .replace(/__type__/gi, 'folder')
@@ -52,9 +52,9 @@ export class MediaList {
                 .replace(/__name__/gi, value.name || '')
                 .replace(/__size__/gi, '')
                 .replace(/__date__/gi, value.created_at || '')
-                .replace(/__thumb__/gi, '<i class="fa fa-folder-o"></i>');
+                .replace(/__thumb__/gi, '<i class="fa fa-folder"></i>');
             let $item = $(item);
-            _.forEach(value, function (val, index) {
+            _.forEach(value, (val, index) => {
                 $item.data(index, val);
             });
             $item.data('is_folder', true);
@@ -62,7 +62,7 @@ export class MediaList {
             $itemsWrapper.append($item);
         });
 
-        _.forEach(data.files, function (value) {
+        _.forEach(data.files, (value) => {
             let item = _self.item[Helpers.getRequestParams().view_type];
             item = item
                 .replace(/__type__/gi, 'file')
@@ -87,7 +87,7 @@ export class MediaList {
             }
             let $item = $(item);
             $item.data('is_folder', false);
-            _.forEach(value, function (val, index) {
+            _.forEach(value, (val, index) => {
                 $item.data(index, val);
             });
             $itemsWrapper.append($item);

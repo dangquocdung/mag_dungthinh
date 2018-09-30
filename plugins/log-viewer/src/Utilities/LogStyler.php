@@ -18,7 +18,7 @@ class LogStyler implements LogStylerContract
      * Create a new instance.
      *
      * @param  \Illuminate\Contracts\Config\Repository $config
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(ConfigContract $config)
     {
@@ -32,7 +32,7 @@ class LogStyler implements LogStylerContract
      * @param  mixed $default
      *
      * @return mixed
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function get($key, $default = null)
     {
@@ -46,7 +46,7 @@ class LogStyler implements LogStylerContract
      * @param  string|null $default
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function icon($level, $default = null)
     {
@@ -60,7 +60,7 @@ class LogStyler implements LogStylerContract
      * @param  string|null $default
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function color($level, $default = null)
     {

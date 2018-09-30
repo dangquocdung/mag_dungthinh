@@ -17,13 +17,6 @@ class Tag extends Eloquent
     protected $table = 'tags';
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['deleted_at'];
-
-    /**
      * The date fields for the model.clear
      *
      * @var array
@@ -31,7 +24,6 @@ class Tag extends Eloquent
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**
@@ -58,5 +50,14 @@ class Tag extends Eloquent
     public function posts()
     {
         return $this->belongsToMany(Post::class, 'post_tag');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function (Tag $tag) {
+            $tag->posts()->detach();
+        });
     }
 }

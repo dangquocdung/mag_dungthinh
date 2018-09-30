@@ -40,7 +40,6 @@ export class Helpers {
     }
 
     static jsonEncode(object) {
-        "use strict";
         if (typeof object === 'undefined') {
             object = null;
         }
@@ -48,7 +47,6 @@ export class Helpers {
     };
 
     static jsonDecode(jsonString, defaultValue) {
-        "use strict";
         if (!jsonString) {
             return defaultValue;
         }
@@ -93,7 +91,7 @@ export class Helpers {
 
     static addToRecent(id) {
         if (id instanceof Array) {
-            _.each(id, function (value) {
+            _.each(id, (value) => {
                 RecentItems.push(value);
             });
         } else {
@@ -103,8 +101,8 @@ export class Helpers {
 
     static getItems() {
         let items = [];
-        $('.js-media-list-title').each(function () {
-            let $box = $(this);
+        $('.js-media-list-title').each((index, el) => {
+            let $box = $(el);
             let data = $box.data() || {};
             data.index_key = $box.index();
             items.push(data);
@@ -114,8 +112,8 @@ export class Helpers {
 
     static getSelectedItems() {
         let selected = [];
-        $('.js-media-list-title input[type=checkbox]:checked').each(function () {
-            let $box = $(this).closest('.js-media-list-title');
+        $('.js-media-list-title input[type=checkbox]:checked').each((index, el) => {
+            let $box = $(el).closest('.js-media-list-title');
             let data = $box.data() || {};
             data.index_key = $box.index();
             selected.push(data);
@@ -125,8 +123,8 @@ export class Helpers {
 
     static getSelectedFiles() {
         let selected = [];
-        $('.js-media-list-title[data-context=file] input[type=checkbox]:checked').each(function () {
-            let $box = $(this).closest('.js-media-list-title');
+        $('.js-media-list-title[data-context=file] input[type=checkbox]:checked').each((index, el) => {
+            let $box = $(el).closest('.js-media-list-title');
             let data = $box.data() || {};
             data.index_key = $box.index();
             selected.push(data);
@@ -136,8 +134,8 @@ export class Helpers {
 
     static getSelectedFolder() {
         let selected = [];
-        $('.js-media-list-title[data-context=folder] input[type=checkbox]:checked').each(function () {
-            let $box = $(this).closest('.js-media-list-title');
+        $('.js-media-list-title[data-context=folder] input[type=checkbox]:checked').each((index, el) => {
+            let $box = $(el).closest('.js-media-list-title');
             let data = $box.data() || {};
             data.index_key = $box.index();
             selected.push(data);

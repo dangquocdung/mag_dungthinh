@@ -13,20 +13,27 @@ class MailConfigServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (config('core.base.general.allow_config_mail_server_from_admin') && check_database_connection()) {
-            $mail_config = [
-                'driver' => setting('email_driver', config('mail.driver')),
-                'host' => setting('email_host', config('mail.host')),
-                'port' => (int)setting('email_port', config('mail.port')),
-                'encryption' => setting('email_encryption', config('mail.encryption')),
-                'username' => setting('email_username', config('mail.username')),
-                'password' => setting('email_password', config('mail.password')),
-                'from' => [
-                    'address' => setting('email_from_address', config('mail.from.address')),
-                    'name' => setting('email_from_name', config('mail.from.name')),
+        $mail_config = [
+            'driver' => setting('email_driver', config('mail.driver')),
+            'host' => setting('email_host', config('mail.host')),
+            'port' => (int)setting('email_port', config('mail.port')),
+            'encryption' => setting('email_encryption', config('mail.encryption')),
+            'username' => setting('email_username', config('mail.username')),
+            'password' => setting('email_password', config('mail.password')),
+            'from' => [
+                'address' => setting('email_from_address', config('mail.from.address')),
+                'name' => setting('email_from_name', config('mail.from.name')),
+            ],
+        ];
+        config(['mail' => $mail_config]);
+
+        if (setting('email_driver', config('mail.driver')) === 'mailgun') {
+            config([
+                'services.mailgun' => [
+                    'domain' => setting('email_mail_gun_domain', config('services.mailgun.domain')),
+                    'secret' => setting('email_mail_gun_secret', config('services.mailgun.secret')),
                 ],
-            ];
-            config(['mail' => $mail_config]);
+            ]);
         }
     }
 }

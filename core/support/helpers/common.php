@@ -4,12 +4,12 @@ use Carbon\Carbon;
 
 if (!function_exists('format_time')) {
     /**
-     * @param DateTime $timestamp
+     * @param Carbon $timestamp
      * @param $format
      * @return mixed
      * @author Sang Nguyen
      */
-    function format_time(DateTime $timestamp, $format = 'j M Y H:i')
+    function format_time(Carbon $timestamp, $format = 'j M Y H:i')
     {
         $first = Carbon::create(0000, 0, 0, 00, 00, 00);
         if ($timestamp->lte($first)) {
@@ -63,6 +63,7 @@ if (!function_exists('string_limit_words')) {
      * @param $limit
      * @return string
      * @author Sang Nguyen
+     * @deprecated
      */
     function string_limit_words($string, $limit)
     {

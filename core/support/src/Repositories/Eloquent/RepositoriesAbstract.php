@@ -8,6 +8,7 @@ use Botble\Support\Repositories\Interfaces\RepositoryInterface;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -61,15 +62,22 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param $data
      * @param $screen
+     * @param bool $is_single
      * @return Builder
      * @author Sang Nguyen
      */
-    public function applyBeforeExecuteQuery($data, $screen)
+    public function applyBeforeExecuteQuery($data, $screen, $is_single = false)
     {
         if (is_in_admin()) {
-            $data = apply_filters(BASE_FILTER_BEFORE_GET_ADMIN_LIST_ITEM, $data, $this->originalModel, $screen);
+            if (!$is_single) {
+                $data = apply_filters(BASE_FILTER_BEFORE_GET_ADMIN_LIST_ITEM, $data, $this->originalModel, $screen);
+            }
         } else {
-            $data = apply_filters(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, $data, $this->originalModel, $screen);
+            if (!$is_single) {
+                $data = apply_filters(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, $data, $this->originalModel, $screen);
+            } else {
+                $data = apply_filters(BASE_FILTER_BEFORE_GET_SINGLE, $data, $this->originalModel, $screen);
+            }
         }
 
         $this->resetModel();
@@ -196,7 +204,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
             $data = $this->model->where($condition);
         }
 
-        return $this->applyBeforeExecuteQuery($data, $this->screen)->first();
+        return $this->applyBeforeExecuteQuery($data, $this->screen, true)->first();
     }
 
     /**
@@ -226,7 +234,9 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     {
         $this->applyCriteria();
 
-        $data = $this->make($with)->where('id', $id)->first();
+        $data = $this->make($with)->where('id', $id);
+        $data = $this->applyBeforeExecuteQuery($data, $this->screen, true);
+        $data = $data->first();
         $this->resetModel();
         return $data;
     }
@@ -241,9 +251,18 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     {
         $this->applyCriteria();
 
-        $data = $this->make($with)->findOrFail($id);
+        $data = $this->make($with)->where('id', $id);
+        $data = $this->applyBeforeExecuteQuery($data, $this->screen, true);
+        $result = $data->first();
         $this->resetModel();
-        return $data;
+
+        if (!empty($result)) {
+            return $result;
+        }
+
+        throw (new ModelNotFoundException)->setModel(
+            get_class($this->originalModel), $id
+        );
     }
 
     /**
@@ -295,7 +314,9 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     {
         $this->applyCriteria();
 
-        $this->applyConditions($condition);
+        if (!empty($condition)) {
+            $this->applyConditions($condition);
+        }
 
         $data = $this->make($with)->select($select);
         return $this->applyBeforeExecuteQuery($data, $this->screen)->get();
@@ -557,7 +578,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
         }
 
         if ($params['take'] == 1) {
-            $result = $this->applyBeforeExecuteQuery($data, $this->screen)->first();
+            $result = $this->applyBeforeExecuteQuery($data, $this->screen, true)->first();
         } elseif ($params['take']) {
             $result = $this->applyBeforeExecuteQuery($data, $this->screen)->take($params['take'])->get();
         } elseif ($params['paginate']['per_page']) {
@@ -619,7 +640,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
             return $query->select($select)->first();
         }
 
-        return $this->applyBeforeExecuteQuery($query, $this->screen)->first();
+        return $this->applyBeforeExecuteQuery($query, $this->screen, true)->first();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Botble\Setting\Facades;
 
-use Botble\Setting\Setting;
+use Botble\Setting\Supports\SettingStore;
 use Illuminate\Support\Facades\Facade;
 
 class SettingFacade extends Facade
@@ -15,6 +15,6 @@ class SettingFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return Setting::class;
+        return SettingStore::class;
     }
 }

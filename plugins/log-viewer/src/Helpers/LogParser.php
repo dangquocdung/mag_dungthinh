@@ -19,7 +19,7 @@ class LogParser
      * @param  string $raw
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function parse($raw)
     {
@@ -49,7 +49,7 @@ class LogParser
      * @param  string $raw
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected static function parseRawData($raw)
     {
@@ -71,7 +71,7 @@ class LogParser
      * @param  array $heading
      * @param  array $data
      * @param  int $key
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected static function populateEntries($heading, $data, $key)
     {
@@ -93,7 +93,7 @@ class LogParser
      * @param  string $level
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected static function hasLogLevel($heading, $level)
     {

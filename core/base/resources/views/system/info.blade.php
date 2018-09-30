@@ -63,38 +63,44 @@
     <div class="row"> <!-- Main Row -->
 
         <div class="col-sm-8"> <!-- Package & Dependency column -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ trans('core.base::system.installed_packages') }}</h3>
+            <div class="widget meta-boxes">
+                <div class="widget-title">
+                    <h4>
+                        <span>{{ trans('core.base::system.installed_packages') }}</span>
+                    </h4>
                 </div>
-                <div class="panel-body">
+                <div class="widget-body">
                     {!! $infoTable->renderTable() !!}
                 </div>
             </div>
         </div> <!-- / Package & Dependency column -->
 
         <div class="col-sm-4"> <!-- Server Environment column -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ trans('core.base::system.system_environment') }}</h3>
+            <div class="widget meta-boxes">
+                <div class="widget-title">
+                    <h4>
+                        <span>{{ trans('core.base::system.system_environment') }}</span>
+                    </h4>
                 </div>
 
                 <ul class="list-group">
                     <li class="list-group-item">{{ trans('core.base::system.framework_version') }}: {{ $systemEnv['version'] }}</li>
                     <li class="list-group-item">{{ trans('core.base::system.timezone') }}: {{ $systemEnv['timezone'] }}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.debug_mode') }}: {!! $systemEnv['debug_mode'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.storage_dir_writable') }}: {!! $systemEnv['storage_dir_writable'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.cache_dir_writable') }}: {!! $systemEnv['cache_dir_writable'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.debug_mode') }}: {!! $systemEnv['debug_mode'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.storage_dir_writable') }}: {!! $systemEnv['storage_dir_writable'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.cache_dir_writable') }}: {!! $systemEnv['cache_dir_writable'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
                     <li class="list-group-item">{{ trans('core.base::system.app_size') }}: {{ $systemEnv['app_size'] }}</li>
                     @foreach($systemExtras as $extraStatKey => $extraStatValue)
-                        <li class="list-group-item">{{ $extraStatKey }}: {!! is_bool($extraStatValue) ? ($extraStatValue ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>') : $extraStatValue !!}</li>
+                        <li class="list-group-item">{{ $extraStatKey }}: {!! is_bool($extraStatValue) ? ($extraStatValue ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>') : $extraStatValue !!}</li>
                     @endforeach
                 </ul>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ trans('core.base::system.server_environment') }}</h3>
+            <div class="widget meta-boxes">
+                <div class="widget-title">
+                    <h4>
+                        <span>{{ trans('core.base::system.server_environment') }}</span>
+                    </h4>
                 </div>
 
                 <ul class="list-group">
@@ -102,31 +108,33 @@
                     <li class="list-group-item">{{ trans('core.base::system.server_software') }}: {{ $serverEnv['server_software'] }}</li>
                     <li class="list-group-item">{{ trans('core.base::system.server_os') }}: {{ $serverEnv['server_os'] }}</li>
                     <li class="list-group-item">{{ trans('core.base::system.database') }}: {{ $serverEnv['database_connection_name'] }}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.ssl_installed') }}: {!! $serverEnv['ssl_installed'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.ssl_installed') }}: {!! $serverEnv['ssl_installed'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
                     <li class="list-group-item">{{ trans('core.base::system.cache_driver') }}: {{ $serverEnv['cache_driver'] }}</li>
                     <li class="list-group-item">{{ trans('core.base::system.session_driver') }}: {{ $serverEnv['session_driver'] }}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.openssl_ext') }}: {!! $serverEnv['openssl'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.mbstring_ext') }}: {!! $serverEnv['mbstring'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.pdo_ext') }}: {!! $serverEnv['pdo'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.curl_ext') }}: {!! $serverEnv['curl'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.exif_ext') }}: {!! $serverEnv['exif'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.file_info_ext') }}: {!! $serverEnv['fileinfo'] ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>' !!}</li>
-                    <li class="list-group-item">{{ trans('core.base::system.tokenizer_ext') }}: {!! $serverEnv['tokenizer']  ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>'!!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.openssl_ext') }}: {!! $serverEnv['openssl'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.mbstring_ext') }}: {!! $serverEnv['mbstring'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.pdo_ext') }}: {!! $serverEnv['pdo'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.curl_ext') }}: {!! $serverEnv['curl'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.exif_ext') }}: {!! $serverEnv['exif'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.file_info_ext') }}: {!! $serverEnv['fileinfo'] ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>' !!}</li>
+                    <li class="list-group-item">{{ trans('core.base::system.tokenizer_ext') }}: {!! $serverEnv['tokenizer']  ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>'!!}</li>
                     @foreach($serverExtras as $extraStatKey => $extraStatValue)
-                        <li class="list-group-item">{{ $extraStatKey }}: {!! is_bool($extraStatValue) ? ($extraStatValue ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>') : $extraStatValue !!}</li>
+                        <li class="list-group-item">{{ $extraStatKey }}: {!! is_bool($extraStatValue) ? ($extraStatValue ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>') : $extraStatValue !!}</li>
                     @endforeach
                 </ul>
             </div>
 
             @if(!empty($extraStats))
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ trans('core.base::system.extra_stats') }}</h3>
+                <div class="widget meta-boxes">
+                    <div class="widget-title">
+                        <h4>
+                            <span>{{ trans('core.base::system.extra_stats') }}</span>
+                        </h4>
                     </div>
 
                     <ul class="list-group">
                         @foreach($extraStats as $extraStatKey => $extraStatValue)
-                            <li class="list-group-item">{{ $extraStatKey }}: {!! is_bool($extraStatValue) ? ($extraStatValue ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>') : $extraStatValue !!}</li>
+                            <li class="list-group-item">{{ $extraStatKey }}: {!! is_bool($extraStatValue) ? ($extraStatValue ? '<span class="fas fa-check"></span>' : '<span class="fas fa-times"></span>') : $extraStatValue !!}</li>
                         @endforeach
                     </ul>
                 </div>

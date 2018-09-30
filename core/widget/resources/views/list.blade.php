@@ -18,10 +18,10 @@
                                     <input type="hidden" name="id" value="{{ $widget->getId() }}">
                                     {!! $widget->form() !!}
                                     <div class="widget-control-actions">
-                                        <div class="pull-left">
+                                        <div class="float-left">
                                             <button class="btn btn-danger widget-control-delete">{{ trans('core.widget::global.delete') }}</button>
                                         </div>
-                                        <div class="pull-right text-right">
+                                        <div class="float-right text-right">
                                             <button class="btn btn-primary widget_save">{{ trans('core.base::forms.save') }}</button>
                                         </div>
                                         <div class="clearfix"></div>

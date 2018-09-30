@@ -14,7 +14,7 @@ interface TagInterface extends RepositoryInterface
     public function getDataSiteMap();
 
     /**
-     * @param $limit
+     * @param int $limit
      * @return mixed
      * @author Sang Nguyen
      */

@@ -2,9 +2,6 @@
 
 namespace Botble\Base\Charts\Supports;
 
-/**
- * Charts common model
- */
 class Chart extends Base
 {
 
@@ -67,7 +64,7 @@ class Chart extends Base
      *
      * @brief Min Y
      *
-     * @var string $ymin
+     * @var integer $ymin
      */
     protected $ymin = 0;
 
@@ -132,7 +129,7 @@ class Chart extends Base
      *
      * @brief Grid text color
      *
-     * @var int $gridTextSize
+     * @var string $gridTextSize
      */
     protected $gridTextSize = '12';
 

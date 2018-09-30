@@ -14,7 +14,7 @@ interface LogMenu
      * @param  \Illuminate\Contracts\Config\Repository $config
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setConfig(ConfigContract $config);
 
@@ -24,7 +24,7 @@ interface LogMenu
      * @param  \Botble\LogViewer\Contracts\Utilities\LogStyler $styler
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setLogStyler(LogStyler $styler);
 
@@ -35,7 +35,7 @@ interface LogMenu
      * @param  bool $trans
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function make(Log $log, $trans = true);
 }

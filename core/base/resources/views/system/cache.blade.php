@@ -1,13 +1,12 @@
 @extends('core.base::layouts.master')
 @section('content')
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">
-                <i class="fa fa-refresh"></i>
-                {{ trans('core.base::cache.cache_commands') }}
-            </h3>
+    <div class="widget meta-boxes">
+        <div class="widget-title">
+            <h4>
+                <span><i class="fas fa-sync"></i> {{ trans('core.base::cache.cache_commands') }}</span>
+            </h4>
         </div>
-        <div class="box-body">
+        <div class="widget-body">
             <table class="table table-bordered vertical-middle table-hover">
                 <colgroup>
                     <col width="70%">

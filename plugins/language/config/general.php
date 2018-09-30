@@ -20,6 +20,4 @@ return [
     //
     'hideDefaultLocaleInURL' => env('LANGUAGE_HIDE_DEFAULT_LOCALE_IN_URL', true),
 
-    'show_item_in_default_language_if_current_version_not_existed' => env('LANGUAGE_SHOW_ITEM_IN_DEFAULT_IF_CURRENT_VERSION_NOT_EXISTED', true),
-
 ];

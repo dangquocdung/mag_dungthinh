@@ -6,6 +6,7 @@ use Botble\Media\Repositories\Interfaces\MediaFileInterface;
 use Botble\Media\Repositories\Interfaces\MediaFolderInterface;
 use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
 use Exception;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -25,6 +26,9 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     {
         $data = $this->model->withTrashed();
 
+        /**
+         * @var \Eloquent $data
+         */
         return $data->sum('size');
     }
 
@@ -85,6 +89,9 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     {
         $count = $this->model->where('name', '=', $name)->where('folder_id', '=', $folder)->withTrashed();
 
+        /**
+         * @var \Eloquent $count
+         */
         $count = $count->count();
 
         return $count > 0;
@@ -191,19 +198,31 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                 $this->model = $this->model
                     ->leftJoin('media_folders', 'media_folders.id', '=', 'media_files.folder_id')
                     ->where(function ($query) {
+                        /**
+                         * @var Builder $query
+                         */
                         $query
-                            ->where(function ($query) {
-                                $query
+                            ->where(function ($sub) {
+                                /**
+                                 * @var Builder $sub
+                                 */
+                                $sub
                                     ->where('media_files.folder_id', '=', 0)
                                     ->whereNull('media_files.deleted_at');
                             })
-                            ->orWhere(function ($query) {
-                                $query
+                            ->orWhere(function ($sub) {
+                                /**
+                                 * @var Builder $sub
+                                 */
+                                $sub
                                     ->whereNull('media_files.deleted_at')
                                     ->whereNotNull('media_folders.deleted_at');
                             })
-                            ->orWhere(function ($query) {
-                                $query
+                            ->orWhere(function ($sub) {
+                                /**
+                                 * @var Builder $sub
+                                 */
+                                $sub
                                     ->whereNull('media_files.deleted_at')
                                     ->whereNull('media_folders.id');
                             });
@@ -250,6 +269,8 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     /**
      * @param $folderId
      * @param array $params
+     * @param bool $withFolders
+     * @param array $folderParams
      * @return mixed
      */
     public function getTrashed($folderId, array $params = [], $withFolders = true, $folderParams = [])
@@ -313,8 +334,14 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                 ->select($folderParams['select']);
 
             if ($folderId == 0) {
+                /**
+                 * @var \Eloquent $folder
+                 */
                 $folder = $folder->leftJoin('media_folders as mf_parent', 'mf_parent.id', '=', 'media_folders.parent_id')
                     ->where(function ($query) {
+                        /**
+                         * @var \Eloquent $query
+                         */
                         $query
                             ->orWhere('media_folders.parent_id', '=', 0)
                             ->orWhere('mf_parent.deleted_at', '=', null);
@@ -335,6 +362,9 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                 $this->model = $this->model
                     ->leftJoin('media_folders', 'media_folders.id', '=', 'media_files.folder_id')
                     ->where(function ($query) {
+                        /**
+                         * @var \Eloquent $query
+                         */
                         $query
                             ->where('media_files.folder_id', '=', 0)
                             ->orWhereNull('media_folders.deleted_at');
@@ -357,9 +387,15 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     {
         $files = $this->model->onlyTrashed();
 
+        /**
+         * @var \Eloquent $files
+         */
         $files = $files->get();
 
         foreach ($files as $file) {
+            /**
+             * @var \Eloquent $file
+             */
             $file->forceDelete();
         }
         return true;
@@ -377,6 +413,9 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
 
         if ($params['filter'] != 'everything') {
             $this->model = $this->model->where(function ($query) use ($params) {
+                /**
+                 * @var \Eloquent $query
+                 */
                 $allMimes = [];
                 foreach (config('media.mime_types') as $key => $value) {
                     if ($key == $params['filter']) {
@@ -413,6 +452,17 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                 ->get();
         } else {
             $result = $this->model->get();
+        }
+
+        if (!empty($params['selected_file_id'])) {
+            if (!$params['paginate']['current_paged'] || $params['paginate']['current_paged'] == 1) {
+                $current_file = $this->originalModel;
+
+                $current_file = $current_file
+                    ->where('id', '=', $params['selected_file_id'])
+                    ->select($params['select'])
+                    ->first();
+            }
         }
 
         if (isset($current_file) && $params['is_popup']) {

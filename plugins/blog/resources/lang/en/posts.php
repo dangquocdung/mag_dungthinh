@@ -3,7 +3,6 @@
 return [
     'model' => 'Post',
     'models' => 'Posts',
-    'list' => 'List Posts',
     'create' => 'Create new post',
     'edit' => 'Edit post',
     'form' => [
@@ -25,4 +24,6 @@ return [
     'edit_this_post' => 'Edit this post',
     'no_new_post_now' => 'There is no new post now!',
     'menu_name' => 'Posts',
+    'widget_posts_recent' => 'Recent Posts',
+    'categories' => 'Categories',
 ];

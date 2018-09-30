@@ -20,5 +20,5 @@
         </table>
     </div>
 @else
-    <p>{{ trans('core.base::tables.no_data') }}</p>
+    @include('core.dashboard::partials.no-data')
 @endif

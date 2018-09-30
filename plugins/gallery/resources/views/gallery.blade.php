@@ -13,10 +13,10 @@
                                 @foreach ($galleries as $gallery)
                                     <div class="gallery-item">
                                         <div class="img-wrap">
-                                            <a href="{{ route('public.single', ['slug' => $gallery->slug]) }}"><img src="{{ get_object_image($gallery->image, 'medium') }}" alt="{{ $gallery->name }}"></a>
+                                            <a href="{{ route('public.gallery', ['slug' => $gallery->slug]) }}"><img src="{{ get_object_image($gallery->image, 'medium') }}" alt="{{ $gallery->name }}"></a>
                                         </div>
                                         <div class="gallery-detail">
-                                            <div class="gallery-title"><a href="{{ route('public.single', ['slug' => $gallery->slug]) }}">{{ $gallery->name }}</a></div>
+                                            <div class="gallery-title"><a href="{{ route('public.gallery', ['slug' => $gallery->slug]) }}">{{ $gallery->name }}</a></div>
                                             <div class="gallery-author">{{ trans('plugins.gallery::gallery.by') }} {{ $gallery->user ? $gallery->user->getFullName() : '' }}</div>
                                         </div>
                                     </div>

@@ -1,1 +1,1 @@
-<i class="fa fa-trash-o"></i> {{ trans('core.base::tables.delete') }}
+<i class="fa fa-trash"></i> {{ trans('core.base::tables.delete') }}

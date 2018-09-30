@@ -2,10 +2,8 @@
 
 namespace Botble\Backup;
 
-use Artisan;
-use Botble\Backup\Providers\BackupServiceProvider;
 use Botble\Base\Interfaces\PluginInterface;
-use Botble\Base\Supports\Helper;
+use File;
 
 class Plugin implements PluginInterface
 {
@@ -16,11 +14,6 @@ class Plugin implements PluginInterface
     public static function activate()
     {
 
-        Artisan::call('vendor:publish', [
-            '--force' => true,
-            '--tag' => 'public',
-            '--provider' => BackupServiceProvider::class,
-        ]);
     }
 
     /**
@@ -35,6 +28,9 @@ class Plugin implements PluginInterface
      */
     public static function remove()
     {
-        Helper::removePluginAssets('backup');
+        $backup_path = storage_path('app/backup');
+        if (File::isDirectory($backup_path)) {
+            File::deleteDirectory($backup_path);
+        }
     }
 }

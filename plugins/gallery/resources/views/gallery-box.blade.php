@@ -4,7 +4,7 @@
         <div class="row">
             @if (!empty($value))
                 @foreach ($value as $key => $item)
-                    <div class="col-md-2 col-sm-3 col-xs-4 photo-gallery-item" data-id="{{ $key }}">
+                    <div class="col-md-2 col-sm-3 col-4 photo-gallery-item" data-id="{{ $key }}">
                         <div class="gallery_image_wrapper">
                             <img src="{{ get_image_url(array_get($item, 'img'), 'thumb') }}" alt="{{ trans('plugins.gallery::gallery.item') }}">
                         </div>
@@ -15,7 +15,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="form-group">
-        <a class="btn_select_gallery">{{ trans('plugins.gallery::gallery.select_image') }}</a>
+        <a href="#" class="btn_select_gallery">{{ trans('plugins.gallery::gallery.select_image') }}</a>&nbsp;
         <a href="#" class="text-danger reset-gallery @if (empty($value)) hidden @endif">{{ trans('plugins.gallery::gallery.reset') }}</a>
     </div>
 </div>
@@ -24,8 +24,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('plugins.gallery::gallery.update_photo_description') }}</strong></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
 
             <div class="modal-body with-padding">
@@ -33,9 +33,9 @@
             </div>
 
             <div class="modal-footer">
-                <button class="pull-left btn btn-danger" id="delete-gallery-item" href="#">{{ trans('plugins.gallery::gallery.delete_photo') }}</button>
-                <button class="pull-right btn btn-default" data-dismiss="modal">{{ trans('core.base::forms.cancel') }}</button>
-                <button class="pull-right btn btn-primary" id="update-gallery-item">{{ trans('core.base::forms.update') }}</button>
+                <button class="float-left btn btn-danger" id="delete-gallery-item" href="#">{{ trans('plugins.gallery::gallery.delete_photo') }}</button>
+                <button class="float-right btn btn-secondary" data-dismiss="modal">{{ trans('core.base::forms.cancel') }}</button>
+                <button class="float-right btn btn-primary" id="update-gallery-item">{{ trans('core.base::forms.update') }}</button>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
     $(document).ready(function () {
 
         $('.btn_select_gallery').rvMedia({
-            onSelectFiles: function (files, $el) {
+            onSelectFiles: function (files) {
                 var result = $('#gallery-data');
                 var images = [];
                 var last_index = 0;
@@ -59,7 +59,7 @@
                 }
                 $.each(files, function (index, file) {
                     images.push({'img': file.url, 'description': null});
-                    $('.list-photos-gallery .row').append('<div class="col-md-2 col-sm-3 col-xs-4 photo-gallery-item" data-id="' + (last_index + index) + '"><div class="gallery_image_wrapper"><img src="' + file.thumb + '" /></div></div>');
+                    $('.list-photos-gallery .row').append('<div class="col-md-2 col-sm-3 col-4 photo-gallery-item" data-id="' + (last_index + index) + '"><div class="gallery_image_wrapper"><img src="' + file.thumb + '" /></div></div>');
                 });
                 result.val(JSON.stringify(images));
                 $('.reset-gallery').removeClass('hidden');
@@ -102,7 +102,7 @@
             });
             gallery_field.val(JSON.stringify(newListImages));
             parent.remove();
-            if (list_photo_gallery.find('.photo-gallery-item').length == 0) {
+            if (list_photo_gallery.find('.photo-gallery-item').length === 0) {
                 $('.reset-gallery').addClass('hidden');
             }
         });

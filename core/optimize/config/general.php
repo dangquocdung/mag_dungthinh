@@ -4,17 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Enable Optimize Speed
-    |--------------------------------------------------------------------------
-    |
-    | Set this field to false to disable the optimize service.
-    | You would probably replace that in your local configuration to get a readable output.
-    |
-    */
-    'enable' => env('CMS_OPTIMIZE_PAGE_SPEED_ENABLED', false),
-
-    /*
-    |--------------------------------------------------------------------------
     | Skip Routes
     |--------------------------------------------------------------------------
     |

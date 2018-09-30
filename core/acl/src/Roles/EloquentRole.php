@@ -37,9 +37,7 @@ class EloquentRole extends Model implements RoleInterface, PermissibleInterface
      */
     public function delete()
     {
-        $isSoftDeleted = array_key_exists('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this));
-
-        if ($this->exists && !$isSoftDeleted) {
+        if ($this->exists) {
             $this->users()->detach();
         }
 

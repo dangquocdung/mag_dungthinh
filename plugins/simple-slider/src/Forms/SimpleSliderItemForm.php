@@ -43,7 +43,7 @@ class SimpleSliderItemForm extends FormAbstract
                 'attr' => [
                     'rows' => 4,
                     'placeholder' => trans('core.base::forms.description_placeholder'),
-                    'data-counter' => 400,
+                    'data-counter' => 2000,
                 ],
             ])
             ->add('order', 'number', [
@@ -59,16 +59,16 @@ class SimpleSliderItemForm extends FormAbstract
                 'label_attr' => ['class' => 'control-label required'],
             ])
             ->add('close', 'button', [
-                'label' => 'Cancel',
+                'label' => trans('core.base::forms.cancel'),
                 'attr' => [
                     'class' => 'btn btn-warning',
                     'data-fancybox-close' => true,
                 ],
             ])
             ->add('submit', 'submit', [
-                'label' => 'Save',
+                'label' => trans('core.base::forms.save'),
                 'attr' => [
-                    'class' => 'btn btn-info pull-right',
+                    'class' => 'btn btn-info float-right',
                 ],
             ]);
     }

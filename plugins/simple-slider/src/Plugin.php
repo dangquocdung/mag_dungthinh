@@ -2,7 +2,6 @@
 
 namespace Botble\SimpleSlider;
 
-use Artisan;
 use Schema;
 use Botble\Base\Interfaces\PluginInterface;
 
@@ -13,10 +12,6 @@ class Plugin implements PluginInterface
      */
     public static function activate()
     {
-        Artisan::call('migrate', [
-            '--force' => true,
-            '--path' => 'plugins/simple-slider/database/migrations',
-        ]);
     }
 
     /**
@@ -32,6 +27,7 @@ class Plugin implements PluginInterface
      */
     public static function remove()
     {
-        Schema::dropIfExists('simple-sliders');
+        Schema::dropIfExists('simple_sliders');
+        Schema::dropIfExists('simple_slider_items');
     }
 }

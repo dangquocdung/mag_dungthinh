@@ -2,7 +2,7 @@
 
 namespace Botble\Backup\Http\Controllers;
 
-use Artisan;
+use App\Console\Kernel;
 use Assets;
 use Botble\Backup\Supports\Backup;
 use Botble\Base\Http\Controllers\BaseController;
@@ -38,8 +38,8 @@ class BackupController extends BaseController
     {
         page_title()->setTitle(trans('plugins.backup::backup.menu_name'));
 
-        Assets::addJavascriptDirectly(['vendor/core/plugins/backup/js/backup.js']);
-        Assets::addStylesheetsDirectly(['vendor/core/plugins/backup/css/backup.css']);
+        Assets::addJavascriptDirectly(['vendor/core/plugins/backup/js/backup.js'])
+            ->addStylesheetsDirectly(['vendor/core/plugins/backup/css/backup.css']);
         $backups = $this->backup->getBackupList();
         return view('plugins.backup::index', compact('backups'));
     }
@@ -58,15 +58,18 @@ class BackupController extends BaseController
             $this->backup->backupDb();
             $this->backup->backupFolder(public_path('uploads'));
             do_action(BACKUP_ACTION_AFTER_BACKUP, BACKUP_MODULE_SCREEN_NAME, $request);
-            return $response->setData(view('plugins.backup::partials.backup-item', $data)->render())
+            return $response
+                ->setData(view('plugins.backup::partials.backup-item', $data)->render())
                 ->setMessage(trans('plugins.backup::backup.create_backup_success'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
     /**
-     * @param $folder
+     * @param string $folder
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -77,18 +80,21 @@ class BackupController extends BaseController
             $this->backup->deleteFolderBackup(storage_path('app/backup/') . $folder);
             return $response->setMessage(trans('plugins.backup::backup.delete_backup_success'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
     /**
-     * @param $folder
+     * @param string $folder
      * @param Request $request
      * @param BaseHttpResponse $response
+     * @param Kernel $kernel
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function getRestore($folder, Request $request, BaseHttpResponse $response)
+    public function getRestore($folder, Request $request, BaseHttpResponse $response, Kernel $kernel)
     {
         try {
             info('Starting restore backup...');
@@ -111,9 +117,9 @@ class BackupController extends BaseController
                     $this->backup->restore($path . DIRECTORY_SEPARATOR . $file, $pathTo);
                 }
             }
-            Artisan::call('cache:clear');
+            $kernel->call('cache:clear');
             try {
-                Artisan::call('key:generate');
+                $kernel->call('key:generate');
             } catch (Exception $exception) {
                 info($exception->getMessage());
             }
@@ -121,12 +127,14 @@ class BackupController extends BaseController
             info('Restore backup completed!');
             return $response->setMessage(trans('plugins.backup::backup.restore_backup_success'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
     /**
-     * @param $folder
+     * @param string $folder
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|boolean
      * @author Sang Nguyen
      */
@@ -142,7 +150,7 @@ class BackupController extends BaseController
     }
 
     /**
-     * @param $folder
+     * @param string $folder
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|boolean
      * @author Sang Nguyen
      */

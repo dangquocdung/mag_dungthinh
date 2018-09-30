@@ -3,9 +3,15 @@
 namespace Botble\Facebook\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Theme;
 
 class HookServiceProvider extends ServiceProvider
 {
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
     /**
      * Boot the service provider.
      * @author Sang Nguyen
@@ -19,7 +25,7 @@ class HookServiceProvider extends ServiceProvider
             add_filter(THEME_FRONT_FOOTER, [$this, 'registerFacebookChat'], 1921);
         }
 
-        if (setting('facebook_access_token') && setting('facebook_auto_post_to_fan_page', 0)) {
+        if (setting('facebook_access_token') && setting('facebook_auto_post_to_fan_page', 0) && env('FACEBOOK_USE_TOKEN', false)) {
             add_action(BASE_ACTION_META_BOXES, [$this, 'addFacebookBox'], 134, 3);
         }
 
@@ -82,6 +88,7 @@ class HookServiceProvider extends ServiceProvider
      */
     public function addFacebookComments()
     {
+        Theme::asset()->add('facebook-css', asset('/vendor/core/plugins/facebook/css/facebook.css'));
         return view('plugins.facebook::comments')->render();
     }
 }

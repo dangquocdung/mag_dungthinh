@@ -13,7 +13,7 @@ return [
             'path' => env('RV_MEDIA_UPLOAD_PATH', '/uploads'),
         ],
         's3' => [
-            'path' => env('AWS_SERVER_URL'),
+            'path' => setting('media_aws_url'),
         ],
     ],
     'route' => [

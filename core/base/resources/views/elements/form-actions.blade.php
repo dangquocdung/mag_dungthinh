@@ -1,4 +1,4 @@
-<div class="widget meta-boxes form-actions form-actions-default action-{{ $direction or 'horizontal' }}">
+<div class="widget meta-boxes form-actions form-actions-default action-{{ $direction ?? 'horizontal' }}">
     <div class="widget-title">
         <h4>
             @if (isset($icon) && !empty($icon))
@@ -14,6 +14,7 @@
                 <i class="fa fa-save"></i> {{ trans('core.base::forms.save') }}
             </button>
             @if (!isset($only_save) || $only_save == false)
+                &nbsp;
             <button type="submit" name="submit" value="apply" class="btn btn-success">
                 <i class="fa fa-check-circle"></i> {{ trans('core.base::forms.save_and_continue') }}
             </button>
@@ -30,6 +31,7 @@
             <i class="fa fa-save"></i> {{ trans('core.base::forms.save') }}
         </button>
         @if (!isset($only_save) || $only_save == false)
+            &nbsp;
             <button type="submit" name="submit" value="apply" class="btn btn-success">
                 <i class="fa fa-check-circle"></i> {{ trans('core.base::forms.save_and_continue') }}
             </button>

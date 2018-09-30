@@ -20,8 +20,6 @@
                 @if (defined('GALLERY_MODULE_SCREEN_NAME') && !empty($galleries = gallery_meta_data($post->id, POST_MODULE_SCREEN_NAME)))
                     {!! render_object_gallery($galleries, ($post->categories()->first() ? $post->categories()->first()->name : __('Uncategorized'))) !!}
                 @endif
-                
-
                 {!! $post->content !!}
                 <br>
                 <div class="list-tag">
@@ -29,7 +27,7 @@
                         <span>
                             <span class="tag-list-title">{{ __('Tags') }}: </span>
                             @foreach ($post->tags as $tag)
-                                <a href="{{ route('public.single', $tag->slug) }}">{{ $tag->name }}</a>
+                                <a href="{{ route('public.tag', $tag->slug) }}">{{ $tag->name }}</a>
                             @endforeach
                         </span>
                     @endif

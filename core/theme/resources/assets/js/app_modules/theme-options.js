@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     if ($(document).find('.colorpicker-input').length > 0) {
         $(document).find('.colorpicker-input').colorpicker();
     }

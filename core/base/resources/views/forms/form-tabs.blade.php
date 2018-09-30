@@ -9,10 +9,10 @@
     @endif
     <div class="row">
         <div class="col-md-9">
-            <div class="tabbable-custom tabbable-tabdrop">
+            <div class="tabbable-custom">
                 <ul class="nav nav-tabs ">
-                    <li class="active">
-                        <a href="#tab_detail" data-toggle="tab">{{ trans('core.base::tabs.detail') }} </a>
+                    <li class="nav-item">
+                        <a href="#tab_detail" class="nav-link active" data-toggle="tab">{{ trans('core.base::tabs.detail') }} </a>
                     </li>
                     {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TABS, null, $form->getModuleName(), $form->getModel()) !!}
                 </ul>

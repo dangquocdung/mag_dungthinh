@@ -1,108 +1,336 @@
-(function ($, DataTable) {
+(($, DataTable) => {
     'use strict';
+
+    let _buildParams = (dt, action) => {
+        let params = dt.ajax.params();
+        params.action = action;
+        params._token = $('meta[name="csrf-token"]').attr('content');
+
+        return params;
+    };
+
+    let _downloadFromUrl = function (url, params) {
+        let postUrl = url + '/export';
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', postUrl, true);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function () {
+            if (this.status === 200) {
+                let filename = '';
+                let disposition = xhr.getResponseHeader('Content-Disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    let matches = filenameRegex.exec(disposition);
+                    if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                }
+                let type = xhr.getResponseHeader('Content-Type');
+
+                let blob = new Blob([this.response], {type: type});
+                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                    window.navigator.msSaveBlob(blob, filename);
+                } else {
+                    let URL = window.URL || window.webkitURL;
+                    let downloadUrl = URL.createObjectURL(blob);
+
+                    if (filename) {
+                        // use HTML5 a[download] attribute to specify filename
+                        let a = document.createElement('a');
+                        // safari doesn't support this yet
+                        if (typeof a.download === 'undefined') {
+                            window.location = downloadUrl;
+                        } else {
+                            a.href = downloadUrl;
+                            a.download = filename;
+                            document.body.appendChild(a);
+                            a.click();
+                        }
+                    } else {
+                        window.location = downloadUrl;
+                    }
+
+                    setTimeout(() => {
+                        URL.revokeObjectURL(downloadUrl);
+                    }, 100); // cleanup
+                }
+            }
+        };
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send($.param(params));
+    };
+
+    let _buildUrl = (dt, action) => {
+        let url = dt.ajax.url() || '';
+        let params = dt.ajax.params();
+        params.action = action;
+
+        if (url.indexOf('?') > -1) {
+            return url + '&' + $.param(params);
+        }
+
+        return url + '?' + $.param(params);
+    };
+
+    DataTable.ext.buttons.excel = {
+        className: 'buttons-excel',
+
+        text: (dt) => {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', BotbleVariables.languages.tables.excel);
+        },
+
+        action: (e, dt) => {
+            window.location = _buildUrl(dt, 'excel');
+        }
+    };
+
+    DataTable.ext.buttons.postExcel = {
+        className: 'buttons-excel',
+
+        text: (dt) => {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', BotbleVariables.languages.tables.excel);
+        },
+
+        action: (e, dt) => {
+            let url = dt.ajax.url() || window.location.href;
+            let params = _buildParams(dt, 'excel');
+
+            _downloadFromUrl(url, params);
+        }
+    };
+
+    DataTable.ext.buttons.export = {
+        extend: 'collection',
+
+        className: 'buttons-export',
+
+        text: (dt) => {
+            return '<i class="fa fa-download"></i> ' + dt.i18n('buttons.export', BotbleVariables.languages.tables.export) + '&nbsp;<span class="caret"/>';
+        },
+
+        buttons: ['csv', 'excel', 'pdf']
+    };
+
+    DataTable.ext.buttons.csv = {
+        className: 'buttons-csv',
+
+        text: (dt) => {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', BotbleVariables.languages.tables.csv);
+        },
+
+        action: (e, dt) => {
+            window.location = _buildUrl(dt, 'csv');
+        }
+    };
+
+    DataTable.ext.buttons.postCsv = {
+        className: 'buttons-csv',
+
+        text: (dt) => {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', BotbleVariables.languages.tables.csv);
+        },
+
+        action: (e, dt) => {
+            let url = dt.ajax.url() || window.location.href;
+            let params = _buildParams(dt, 'csv');
+
+            _downloadFromUrl(url, params);
+        }
+    };
+
+    DataTable.ext.buttons.pdf = {
+        className: 'buttons-pdf',
+
+        text: (dt) => {
+            return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
+        },
+
+        action: (e, dt) => {
+            window.location = _buildUrl(dt, 'pdf');
+        }
+    };
+
+    DataTable.ext.buttons.postPdf = {
+        className: 'buttons-pdf',
+
+        text: (dt) => {
+            return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
+        },
+
+        action: (e, dt) => {
+            let url = dt.ajax.url() || window.location.href;
+            let params = _buildParams(dt, 'pdf');
+
+            _downloadFromUrl(url, params);
+        }
+    };
+
+    DataTable.ext.buttons.print = {
+        className: 'buttons-print',
+
+        text: (dt) => {
+            return '<i class="fa fa-print"></i> ' + dt.i18n('buttons.print', BotbleVariables.languages.tables.print);
+        },
+
+        action: (e, dt) => {
+            window.location = _buildUrl(dt, 'print');
+        }
+    };
+
+    DataTable.ext.buttons.reset = {
+        className: 'buttons-reset',
+
+        text: (dt) => {
+            return '<i class="fa fa-undo"></i> ' + dt.i18n('buttons.reset', BotbleVariables.languages.tables.reset);
+        },
+
+        action: () => {
+            $('.table thead input').val('').keyup();
+            $('.table thead select').val('').change();
+        }
+    };
 
     DataTable.ext.buttons.reload = {
         className: 'buttons-reload',
 
-        text: function (dt) {
-            return '<i class="fa fa-refresh"></i> ' + dt.i18n('buttons.reload', Botble.languages.tables.reload);
+        text: (dt) => {
+            return '<i class="fas fa-sync"></i> ' + dt.i18n('buttons.reload', BotbleVariables.languages.tables.reload);
         },
 
-        action: function (e, dt) {
+        action: (e, dt) => {
 
             dt.draw(false);
         }
     };
 
-    var BTable = BTable || {};
+    DataTable.ext.buttons.create = {
+        className: 'buttons-create',
 
-    BTable.init = function () {
-        if (typeof window.LaravelDataTables !== 'undefined') {
+        text: (dt) => {
+            return '<i class="fa fa-plus"></i> ' + dt.i18n('buttons.create', 'Create');
+        },
 
-            $('.group-checkable').uniform();
-
-            $(document).on('change', '.group-checkable', function () {
-                let set = $(this).attr('data-set');
-                let checked = $(this).prop('checked');
-                $(set).each(function () {
-                    if (checked) {
-                        $(this).prop('checked', true);
-                    } else {
-                        $(this).prop('checked', false);
-                    }
-                });
-                $.uniform.update(set);
-                $(this).uniform();
-            });
-
-            $(document).on('change', '.checkboxes', function () {
-                let table = $(this).closest('.table-wrapper').find('.table').prop('id');
-
-                let ids = [];
-                let $table = $('#' + table);
-                $table.find('.checkboxes:checked').each(function (i) {
-                    ids[i] = $(this).val();
-                });
-
-                if (ids.length !== $table.find('.checkboxes').length) {
-                    $(this).closest('.table-wrapper').find('.group-checkable').prop('checked', false).uniform();
-                } else {
-                    $(this).closest('.table-wrapper').find('.group-checkable').prop('checked', true).uniform();
-                }
-            });
+        action: () => {
+            window.location = window.location.href.replace(/\/+$/, '') + '/create';
         }
     };
 
-    BTable.handleActionsRow = function () {
-        $(document).ready(function () {
+    if (typeof DataTable.ext.buttons.copyHtml5 !== 'undefined') {
+        $.extend(DataTable.ext.buttons.copyHtml5, {
+            text: (dt) => {
+                return '<i class="fa fa-copy"></i> ' + dt.i18n('buttons.copy', 'Copy');
+            }
+        });
+    }
 
-            $(document).on('click', 'table.dataTable .action-delete', function (e) {
-                e.preventDefault();
-                $('.modal-confirm-delete button[type=submit]').data({
-                    href: $(this).prop('href'),
-                    'table-name': $(this).closest('table').attr('id'),
-                    class: $(this).data('class')
+    if (typeof DataTable.ext.buttons.colvis !== 'undefined') {
+        $.extend(DataTable.ext.buttons.colvis, {
+            text: (dt) => {
+                return '<i class="fa fa-eye"></i> ' + dt.i18n('buttons.colvis', 'Column visibility');
+            }
+        });
+    }
+
+    class TableManagement {
+        constructor() {
+            this.init();
+            this.handleActionsRow();
+            this.handleActionsExport();
+        }
+
+        init() {
+            if (typeof window.LaravelDataTables !== 'undefined') {
+
+                $(document).on('change', '.table-check-all', (event) => {
+                    let _self = $(event.currentTarget);
+                    let set = _self.attr('data-set');
+                    let checked = _self.prop('checked');
+                    $(set).each((index, el) => {
+                        if (checked) {
+                            $(el).prop('checked', true);
+                        } else {
+                            $(el).prop('checked', false);
+                        }
+                    });
                 });
+
+                $(document).on('change', '.checkboxes', (event) => {
+                    let _self = $(event.currentTarget);
+                    let table = _self.closest('.table-wrapper').find('.table').prop('id');
+
+                    let ids = [];
+                    let $table = $('#' + table);
+                    $table.find('.checkboxes:checked').each((i, el) => {
+                        ids[i] = $(el).val();
+                    });
+
+                    if (ids.length !== $table.find('.checkboxes').length) {
+                        _self.closest('.table-wrapper').find('.table-check-all').prop('checked', false);
+                    } else {
+                        _self.closest('.table-wrapper').find('.table-check-all').prop('checked', true);
+                    }
+                });
+            }
+
+            $(document).on('click', '.btn-show-table-options', (event) => {
+                event.preventDefault();
+                $(event.currentTarget).closest('.table-wrapper').find('.table-configuration-wrap').slideToggle(500);
+            });
+
+            $(document).on('click', '.action-item', (event) => {
+                event.preventDefault();
+                let span = $(event.currentTarget).find('span[data-href]');
+                let action = span.data('action');
+                let url = span.data('href');
+                if (action && url !== '#') {
+                    window.location.href = url;
+                }
+            });
+        }
+
+        handleActionsRow() {
+            let that = this;
+            $(document).on('click', '.deleteDialog', (event) => {
+                event.preventDefault();
+                let _self = $(event.currentTarget);
+
+                $('.delete-crud-entry').data('section', _self.data('section')).data('parent-table', _self.closest('.table').prop('id'));
                 $('.modal-confirm-delete').modal('show');
             });
 
-            $(document).on('click', '.modal-confirm-delete button[type=submit]', function (e) {
-                e.preventDefault();
-                let url = $(this).data('href');
-                let table_name = $(this).data('table-name');
+            $('.delete-crud-entry').on('click', (event) => {
+                event.preventDefault();
+                let _self = $(event.currentTarget);
 
-                if (!url) {
-                    return;
-                }
+                $('.modal-confirm-delete').modal('hide');
+
+                let deleteURL = _self.data('section');
+
                 $.ajax({
-                    url: url,
-                    type: 'delete',
-                    dataType: 'json',
-                    data: {
-                        class: $(this).data('class')
-                    },
-                    success: function success(response) {
-                        if (!response.error) {
-                            Botble.showNotice('success', response.message);
-                            $('.modal-confirm-delete').modal('hide');
-                            window.LaravelDataTables[table_name].draw(false);
+                    url: deleteURL,
+                    type: 'GET',
+                    success: (data) => {
+                        if (data.error) {
+                            Botble.showNotice('error', data.message);
+                        } else {
+                            window.LaravelDataTables[_self.data('parent-table')].row($('a[data-section="' + deleteURL + '"]').closest('tr')).remove().draw();
+                            Botble.showNotice('success', data.message);
                         }
                     },
-                    error: function error(response) {
-                        if (response.status === 422) {
-                            Botble.showNotice('error', 'Cannot delete');
-                        }
+                    error: (data) => {
+                        Botble.handleError(data);
                     }
                 });
             });
 
-            $(document).on('click', '.delete-many-entry-trigger', function (event) {
+            $(document).on('click', '.delete-many-entry-trigger', (event) => {
                 event.preventDefault();
-                let table = $(this).closest('.table-wrapper').find('.table').prop('id');
+                let _self = $(event.currentTarget);
+
+                let table = _self.closest('.table-wrapper').find('.table').prop('id');
 
                 let ids = [];
-                $('#' + table).find('.checkboxes:checked').each(function (i) {
-                    ids[i] = $(this).val();
+                $('#' + table).find('.checkboxes:checked').each((i, el) => {
+                    ids[i] = $(el).val();
                 });
 
                 if (ids.length === 0) {
@@ -111,56 +339,56 @@
                 }
 
                 $('.delete-many-entry-button')
-                    .data('href', $(this).prop('href'))
+                    .data('href', _self.prop('href'))
                     .data('parent-table', table)
-                    .data('class', $(this).data('class'));
+                    .data('class-item', _self.data('class-item'));
                 $('.delete-many-modal').modal('show');
             });
 
-            $('.delete-many-entry-button').on('click', function (event) {
+            $('.delete-many-entry-button').on('click', (event) => {
                 event.preventDefault();
                 $('.delete-many-modal').modal('hide');
 
-                let _self = $(this);
+                let _self = $(event.currentTarget);
 
                 let $table = $('#' + _self.data('parent-table'));
 
                 let ids = [];
-                $table.find('.checkboxes:checked').each(function (i) {
-                    ids[i] = $(this).val();
+                $table.find('.checkboxes:checked').each((i, el) => {
+                    ids[i] = $(el).val();
                 });
 
                 $.ajax({
-                    url: $(this).data('href'),
+                    url: _self.data('href'),
                     type: 'POST',
                     data: {
                         ids: ids,
-                        class: _self.data('class')
+                        class: _self.data('class-item')
                     },
-                    success: function (data) {
+                    success: (data) => {
                         if (data.error) {
                             Botble.showNotice('error', data.message);
                         } else {
-                            $table.find('.group-checkable').prop('checked', false);
-                            $.uniform.update($table.find('.group-checkable'));
+                            $table.find('.table-check-all').prop('checked', false);
                             window.LaravelDataTables[_self.data('parent-table')].draw();
                             Botble.showNotice('success', data.message);
                         }
                     },
-                    error: function (data) {
+                    error: (data) => {
                         Botble.handleError(data);
                     }
                 });
             });
 
-            $(document).on('click', '.bulk-change-item', function (event) {
+            $(document).on('click', '.bulk-change-item', (event) => {
                 event.preventDefault();
+                let _self = $(event.currentTarget);
 
-                let table = $(this).closest('.table-wrapper').find('.table').prop('id');
+                let table = _self.closest('.table-wrapper').find('.table').prop('id');
 
                 let ids = [];
-                $('#' + table).find('.checkboxes:checked').each(function (i) {
-                    ids[i] = $(this).val();
+                $('#' + table).find('.checkboxes:checked').each((i, el) => {
+                    ids[i] = $(el).val();
                 });
 
                 if (ids.length === 0) {
@@ -168,27 +396,27 @@
                     return false;
                 }
 
-                BTable.loadBulkChangeData($(this));
+                that.loadBulkChangeData(_self);
 
                 $('.confirm-bulk-change-button')
                     .data('parent-table', table)
-                    .data('class', $(this).data('class'))
-                    .data('key', $(this).data('key'))
-                    .data('url', $(this).data('save-url'));
+                    .data('class-item', _self.data('class-item'))
+                    .data('key', _self.data('key'))
+                    .data('url', _self.data('save-url'));
                 $('.modal-bulk-change-items').modal('show');
             });
 
-            $(document).on('click', '.confirm-bulk-change-button', function (event) {
+            $(document).on('click', '.confirm-bulk-change-button', (event) => {
                 event.preventDefault();
-                let _self = $(this);
+                let _self = $(event.currentTarget);
                 let value = _self.closest('.modal').find('.input-value').val();
                 let input_key = _self.data('key');
 
                 let $table = $('#' + _self.data('parent-table'));
 
                 let ids = [];
-                $table.find('.checkboxes:checked').each(function (i) {
-                    ids[i] = $(this).val();
+                $table.find('.checkboxes:checked').each((i, el) => {
+                    ids[i] = $(el).val();
                 });
 
                 let text = _self.text();
@@ -201,15 +429,14 @@
                         ids: ids,
                         key: input_key,
                         value: value,
-                        class: _self.data('class')
+                        class: _self.data('class-item')
                     },
-                    success: function (data) {
+                    success: (data) => {
                         if (data.error) {
                             Botble.showNotice('error', data.message);
                         } else {
-                            $table.find('.group-checkable').prop('checked', false);
-                            $.uniform.update($table.find('.group-checkable'));
-                            $.each(ids, function (index, item) {
+                            $table.find('.table-check-all').prop('checked', false);
+                            $.each(ids, (index, item) => {
                                 window.LaravelDataTables[_self.data('parent-table')].row($table.find('.checkboxes[value="' + item + '"]').closest('tr')).remove().draw();
                             });
                             Botble.showNotice('success', data.message);
@@ -218,73 +445,63 @@
                         }
                         _self.text(text);
                     },
-                    error: function (data) {
+                    error: (data) => {
                         Botble.handleError(data);
                         _self.text(text);
                         $('.modal-bulk-change-items').modal('hide');
                     }
                 });
-
             });
-        });
-    };
+        }
 
-    BTable.loadBulkChangeData = function ($element) {
-        let $modal = $('.modal-bulk-change-items');
-        $.ajax({
-            type: 'GET',
-            url: $modal.find('.confirm-bulk-change-button').data('load-url'),
-            data: {
-                'class': $element.data('class'),
-                'key': $element.data('key'),
-            },
-            success: function (res) {
-                let data = $.map(res.data, function (value, key) {
-                    return {id: key, name: value};
-                });
-                let $parent = $('.modal-bulk-change-content');
-                $parent.html(res.html);
+        loadBulkChangeData($element) {
+            let $modal = $('.modal-bulk-change-items');
+            $.ajax({
+                type: 'GET',
+                url: $modal.find('.confirm-bulk-change-button').data('load-url'),
+                data: {
+                    'class': $element.data('class-item'),
+                    'key': $element.data('key'),
+                },
+                success: (res) => {
+                    let data = $.map(res.data, (value, key) => {
+                        return {id: key, name: value};
+                    });
+                    let $parent = $('.modal-bulk-change-content');
+                    $parent.html(res.html);
 
-                let $input = $modal.find('input[type=text].input-value');
-                if ($input.length) {
-                    $input.typeahead({source: data});
-                    $input.data('typeahead').source = data;
+                    let $input = $modal.find('input[type=text].input-value');
+                    if ($input.length) {
+                        $input.typeahead({source: data});
+                        $input.data('typeahead').source = data;
+                    }
+
+                    Botble.initResources();
+                },
+                error: (error) => {
+                    Botble.handleError(error);
                 }
+            });
+        }
 
-                Botble.initResources();
-
-                $parent.find('.datetimepicker').datetimepicker({
-                    format: 'YYYY/MM/DD',
-                });
-            },
-            error: function (error) {
-                Botble.handleError(error);
-            }
-        });
-    };
-
-    BTable.reload = function (id) {
-        window.LaravelDataTables[id].draw(false);
-    };
-
-    BTable.handleActionsExport = function () {
-        $(document).ready(function () {
-            $(document).on('click', '.export-data', function (event) {
-                let table = $(this).closest('.table-wrapper').find('.table').prop('id');
+        handleActionsExport() {
+            $(document).on('click', '.export-data', (event) => {
+                let _self = $(event.currentTarget);
+                let table = _self.closest('.table-wrapper').find('.table').prop('id');
 
                 let ids = [];
-                $('#' + table).find('.checkboxes:checked').each(function (i) {
-                    ids[i] = $(this).val();
+                $('#' + table).find('.checkboxes:checked').each((i, el) => {
+                    ids[i] = $(el).val();
                 });
 
                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    url: $(this).prop('href'),
+                    url: _self.prop('href'),
                     data: {
                         'ids-checked': ids,
                     },
-                    success: function (response) {
+                    success: (response) => {
                         let a = document.createElement('a');
                         a.href = response.file;
                         a.download = response.name;
@@ -292,24 +509,16 @@
                         a.click();
                         a.remove();
                     },
-                    error: function (error) {
+                    error: (error) => {
                         Botble.handleError(error);
                     }
                 });
             });
+        };
+    }
 
-        });
-    };
-
-    $(document).ready(function () {
-        BTable.init();
-        BTable.handleActionsRow();
-        BTable.handleActionsExport();
-
-        $(document).on('click', '.btn-show-table-options', function (event) {
-            event.preventDefault();
-            $(this).closest('.table-wrapper').find('.table-configuration-wrap').slideToggle(500);
-        });
+    $(document).ready(() => {
+        new TableManagement();
     });
 
 })(jQuery, jQuery.fn.dataTable);

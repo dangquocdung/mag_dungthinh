@@ -55,7 +55,6 @@ class SeoHelperServiceProvider extends ServiceProvider
         $this->setIsInConsole($this->app->runningInConsole())
             ->setNamespace('core/seo-helper')
             ->loadAndPublishConfigurations(['general'])
-            ->loadRoutes()
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
             ->publishAssetsFolder()

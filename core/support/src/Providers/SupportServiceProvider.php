@@ -21,13 +21,6 @@ class SupportServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
-     */
-    public function boot()
-    {
-    }
-
-    /**
      * Load module's helpers
      * @param $directory
      * @author Sang Nguyen

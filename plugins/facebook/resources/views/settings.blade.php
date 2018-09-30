@@ -27,7 +27,23 @@
                         </label>
                     </div>
 
-                    @if (!app()->environment('demo'))
+                    <div class="form-group">
+                        <label class="text-title-field"
+                               for="facebook_app_id">{{ trans('plugins.facebook::facebook.settings.app_id') }}</label>
+                        <input data-counter="120" type="text" class="next-input" name="settings[facebook_app_id]" id="facebook_app_id"
+                               value="{{ setting('facebook_app_id') }}">
+                    </div>
+
+                    @if (!app()->environment('demo') && env('FACEBOOK_USE_TOKEN', false))
+                        <div class="form-group">
+                            <label class="text-title-field"
+                                   for="facebook_app_secret">{{ trans('plugins.facebook::facebook.settings.app_secret') }}</label>
+                            <input data-counter="120" type="password" class="next-input" name="settings[facebook_app_secret]" id="facebook_app_secret"
+                                   value="{{ setting('facebook_app_secret') }}">
+                        </div>
+                    @endif
+
+                    @if (!app()->environment('demo') && env('FACEBOOK_USE_TOKEN', false))
                         <div class="form-group @if ($errors->has('settings.facebook_access_token')) has-error @endif">
                             <label for="facebook_access_token" class="text-title-field">{{ trans('plugins.facebook::facebook.settings.access_token') }}</label>
                             <div class="input-group">
@@ -42,7 +58,7 @@
                             </div>
                             @if (setting('facebook_token_expire_date') != null)
                                 @php
-                                    $expire_date = \Carbon\Carbon::createFromTimestamp(setting('facebook_token_expire_date'));
+                                    $expire_date = Carbon\Carbon::createFromTimestamp(setting('facebook_token_expire_date'));
                                 @endphp
                                 <div class="text-danger">
                                     <small>{{ trans('plugins.facebook::facebook.settings.expire_notice', ['date' => $expire_date->toDateTimeString()]) }}</small>

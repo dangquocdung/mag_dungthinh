@@ -1,15 +1,16 @@
-<section class="sub-page">
-    <section class="container" style="padding: 40px 0; min-height: 500px">
-        <h3>{{ __('Page could not be found') }}</h3>
-        <p>{{ __('This may have occurred because of several reasons') }}</p>
-        <ul>
-            <li>{{ __('The page you requested does not exist.') }}</li>
-            <li>{{ __('The link you clicked is no longer.') }}</li>
-            <li>{{ __('The page may have moved to a new location.') }}</li>
-            <li>{{ __('An error may have occurred.') }}</li>
-            <li>{{ __('You are not authorized to view the requested resource.') }}</li>
-        </ul>
+@extends('theme.' . setting('theme') . '::views.error-master')
 
-        <p>{!! __('Please try again in a few minutes, or alternatively return to the dashboard by <a href=":link">clicking here</a>.', ['link' => route('public.index')]) !!}</p>
-    </section><!-- end .container -->
-</section>
+@section('code', '404')
+@section('title', __('Page could not be found'))
+
+@section('message')
+    <h4>{{ __('This may have occurred because of several reasons') }}</h4>
+    <ul>
+        <li>{{ __('The page you requested does not exist.') }}</li>
+        <li>{{ __('The link you clicked is no longer.') }}</li>
+        <li>{{ __('The page may have moved to a new location.') }}</li>
+        <li>{{ __('An error may have occurred.') }}</li>
+        <li>{{ __('You are not authorized to view the requested resource.') }}</li>
+    </ul>
+@endsection
+

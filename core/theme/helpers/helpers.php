@@ -1,6 +1,7 @@
 <?php
 
 use Botble\Theme\Facades\ThemeOptionFacade;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 if (!function_exists('theme')) {
     /**
@@ -10,7 +11,7 @@ if (!function_exists('theme')) {
      * @param  string $layoutName
      * @return Theme
      * @author Teepluss <admin@laravel.in.th>
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     function theme($themeName = null, $layoutName = null)
     {
@@ -35,7 +36,11 @@ if (!function_exists('theme_option')) {
     function theme_option($key = null, $default = null)
     {
         if (!empty($key)) {
-            return ThemeOption::getOption($key, $default);
+            try {
+                return ThemeOption::getOption($key, $default);
+            } catch (FileNotFoundException $exception) {
+                info($exception->getMessage());
+            }
         }
 
         return ThemeOptionFacade::getFacadeRoot();

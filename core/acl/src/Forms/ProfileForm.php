@@ -17,7 +17,9 @@ class ProfileForm extends FormAbstract
             ->setModuleName(USER_MODULE_SCREEN_NAME)
             ->setFormOption('template', 'core.base::forms.form-no-wrap')
             ->setFormOption('id', 'profile-form')
+            ->setFormOption('class', 'row')
             ->setValidatorClass(UpdateProfileRequest::class)
+            ->withCustomFields()
             ->add('first_name', 'text', [
                 'label' => trans('core.acl::users.info.first_name'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -134,12 +136,9 @@ class ProfileForm extends FormAbstract
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
                 ],
             ])
-            ->add('gender', 'select', [
+            ->add('gender', 'customSelect', [
                 'label' => trans('core.acl::users.gender.title'),
                 'label_attr' => ['class' => 'control-label'],
-                'attr' => [
-                    'class' => 'form-control select-full',
-                ],
                 'wrapper' => [
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
                 ],

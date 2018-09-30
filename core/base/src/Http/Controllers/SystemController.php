@@ -2,7 +2,7 @@
 
 namespace Botble\Base\Http\Controllers;
 
-use Artisan;
+use App\Console\Kernel;
 use Assets;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Base\Supports\SystemManagement;
@@ -42,7 +42,15 @@ class SystemController extends Controller
         $serverExtras = SystemManagement::getServerExtras();
         $systemExtras = SystemManagement::getSystemExtras();
         $extraStats = SystemManagement::getExtraStats();
-        return view('core.base::system.info', compact('packages', 'infoTable', 'systemEnv', 'serverEnv', 'extraStats', 'serverExtras', 'systemExtras'));
+        return view('core.base::system.info', compact(
+            'packages',
+            'infoTable',
+            'systemEnv',
+            'serverEnv',
+            'extraStats',
+            'serverExtras',
+            'systemExtras'
+        ));
     }
 
     /**
@@ -97,45 +105,50 @@ class SystemController extends Controller
      *
      * @param Request $request
      * @param BaseHttpResponse $response
+     * @param Kernel $kernel
      * @return mixed
-     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @author Sang Nguyen
      */
-    public function getChangePluginStatus(Request $request, BaseHttpResponse $response)
+    public function getChangePluginStatus(Request $request, BaseHttpResponse $response, Kernel $kernel)
     {
         $plugin = strtolower($request->input('alias'));
 
-        $content = get_file_data(config('core.base.general.plugin_path') . DIRECTORY_SEPARATOR . $plugin . '/plugin.json');
+        $content = get_file_data(config('core.base.general.plugin_path') .
+            DIRECTORY_SEPARATOR . $plugin . '/plugin.json');
         if (!empty($content)) {
 
             try {
                 $activated_plugins = get_active_plugins();
                 if (!in_array($plugin, $activated_plugins)) {
                     if (!empty(array_get($content, 'require'))) {
-                        $valid = count(array_intersect($content['require'], $activated_plugins)) == count($content['require']);
+                        $count_required_plugins = count(array_intersect($content['require'], $activated_plugins));
+                        $valid = $count_required_plugins == count($content['require']);
                         if (!$valid) {
-                            return $response->setError(true)->setMessage(trans('core.base::system.missing_required_plugins', ['plugins' => implode(',', $content['require'])]));
+                            return $response
+                                ->setError()
+                                ->setMessage(trans('core.base::system.missing_required_plugins', [
+                                    'plugins' => implode(',', $content['require'])
+                                ]));
                         }
                     }
 
-                    Artisan::call('plugin:activate', ['name' => $plugin]);
-                    if (class_exists($content['namespace'] . 'Plugin')) {
-                        call_user_func([$content['namespace'] . 'Plugin', 'activate']);
-                    }
+                    $kernel->call('cms:plugin:activate', ['name' => $plugin]);
                 } else {
-                    Artisan::call('plugin:deactivate', ['name' => $plugin]);
-                    if (class_exists($content['namespace'] . 'Plugin')) {
-                        call_user_func([$content['namespace'] . 'Plugin', 'deactivate']);
-                    }
+                    $kernel->call('cms:plugin:deactivate', ['name' => $plugin]);
                 }
 
                 return $response->setMessage(trans('core.base::system.update_plugin_status_success'));
             } catch (Exception $ex) {
                 info($ex->getMessage());
-                return $response->setError(true)->setMessage($ex->getMessage());
+                return $response
+                    ->setError()
+                    ->setMessage($ex->getMessage());
             }
         }
-        return $response->setError(true)->setMessage(trans('core.base::system.invalid_plugin'));
+        return $response
+            ->setError()
+            ->setMessage(trans('core.base::system.invalid_plugin'));
     }
 
     /**
@@ -144,6 +157,8 @@ class SystemController extends Controller
      */
     public function getCacheManagement()
     {
+        page_title()->setTitle(trans('core.base::cache.cache_management'));
+
         Assets::addAppModule(['cache']);
         return view('core.base::system.cache');
     }
@@ -151,29 +166,60 @@ class SystemController extends Controller
     /**
      * @param Request $request
      * @param BaseHttpResponse $response
+     * @param Kernel $kernel
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function postClearCache(Request $request, BaseHttpResponse $response)
+    public function postClearCache(Request $request, BaseHttpResponse $response, Kernel $kernel)
     {
         switch ($request->input('type')) {
             case 'clear_cms_cache':
-                Artisan::call('cache:clear');
+                $kernel->call('cache:clear');
                 break;
             case 'refresh_compiled_views':
-                Artisan::call('view:clear');
+                $kernel->call('view:clear');
                 break;
             case 'clear_config_cache':
-                Artisan::call('config:clear');
+                $kernel->call('config:clear');
                 break;
             case 'clear_route_cache':
-                Artisan::call('route:clear');
+                $kernel->call('route:clear');
                 break;
             case 'clear_log':
-                Artisan::call('log:clear');
+                $kernel->call('cms:log:clear');
                 break;
         }
 
         return $response->setMessage(trans('core.base::cache.commands.' . $request->input('type') . '.success_msg'));
+    }
+
+    /**
+     * Remove plugin
+     *
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @param Kernel $kernel
+     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @author Sang Nguyen
+     */
+    public function postRemovePlugin(Request $request, BaseHttpResponse $response, Kernel $kernel)
+    {
+        $plugin = strtolower($request->input('plugin'));
+
+        if (in_array($plugin, scan_folder(base_path('plugins')))) {
+            try {
+                $kernel->call('cms:plugin:remove', ['name' => $plugin, '--force' => true]);
+                return $response->setMessage(trans('core.base::system.remove_plugin_success'));
+            } catch (Exception $ex) {
+                info($ex->getMessage());
+                return $response
+                    ->setError()
+                    ->setMessage($ex->getMessage());
+            }
+        }
+        return $response
+            ->setError()
+            ->setMessage(trans('core.base::system.invalid_plugin'));
     }
 }

@@ -20,9 +20,7 @@ class FormServiceProvider extends ServiceProvider
                 'name',
                 'value' => null,
                 'id' => null,
-                'url' => null,
-                'preview' => route('public.single', config('core.slug.general.pattern')),
-                'default_slug' => url('/'),
+                'prefix' => '',
                 'ending_url' => config('core.base.general.public_single_ending_url'),
                 'attributes' => [],
             ]);

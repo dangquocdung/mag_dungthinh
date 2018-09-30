@@ -41,7 +41,7 @@ class RebuildPermissionsCommand extends Command
 
     /**
      * Execute the console command.
-     * @param $return
+     * @param boolean $return
      * @author Sang Nguyen
      * @throws \Exception
      */

@@ -19,11 +19,6 @@ class RequestLogTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = false;
 
 
@@ -33,7 +28,11 @@ class RequestLogTable extends TableAbstract
      * @param UrlGenerator $urlGenerator
      * @param RequestLogInterface $requestLogRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlGenerator, RequestLogInterface $requestLogRepository)
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlGenerator,
+        RequestLogInterface $requestLogRepository
+    )
     {
         $this->repository = $requestLogRepository;
         $this->setOption('id', 'table-request-histories');
@@ -81,8 +80,7 @@ class RequestLogTable extends TableAbstract
                 'request_logs.url',
                 'request_logs.status_code',
                 'request_logs.count',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, REQUEST_LOG_MODULE_SCREEN_NAME));
     }
 
@@ -93,22 +91,22 @@ class RequestLogTable extends TableAbstract
     public function columns()
     {
         return [
-            'id' => [
-                'name' => 'request_logs.id',
+            'id'          => [
+                'name'  => 'request_logs.id',
                 'title' => trans('core.base::tables.id'),
                 'width' => '20px',
             ],
-            'url' => [
-                'name' => 'request_logs.url',
+            'url'         => [
+                'name'  => 'request_logs.url',
                 'title' => __('URL'),
                 'class' => 'text-left',
             ],
             'status_code' => [
-                'name' => 'request_logs.status_code',
+                'name'  => 'request_logs.status_code',
                 'title' => __('Status Code'),
             ],
-            'count' => [
-                'name' => 'request_logs.count',
+            'count'       => [
+                'name'  => 'request_logs.count',
                 'title' => __('Count'),
             ],
         ];
@@ -133,7 +131,7 @@ class RequestLogTable extends TableAbstract
         $actions = [];
 
         $actions['delete-many'] = view('core.table::partials.delete', [
-            'href' => route('request-log.delete.many'),
+            'href'       => route('request-log.delete.many'),
             'data_class' => get_class($this),
         ]);
 

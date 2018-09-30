@@ -41,8 +41,8 @@ class AuditHandlerEvent extends \Event
 
     /**
      * AuditHandlerEvent constructor.
-     * @param $module
-     * @param $action
+     * @param string $module
+     * @param string $action
      * @param int $reference_id
      * @param null $reference_name
      * @param string $type

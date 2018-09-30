@@ -19,11 +19,11 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot(Factory $view)
     {
-        $view->composer(['core.base::layouts.partials.top-header', 'core.base::layouts.base'], function (View $view) {
+        $view->composer(['core.base::layouts.partials.top-header'], function (View $view) {
             $themes = Assets::getThemes();
             $locales = Assets::getAdminLocales();
 
-            if (Auth::check()) {
+            if (Auth::check() && !session()->has('admin-theme')) {
                 $active_theme = UserMeta::getMeta('admin-theme', config('core.base.general.default-theme'));
             } elseif (session()->has('admin-theme')) {
                 $active_theme = session('admin-theme');
@@ -33,6 +33,23 @@ class ComposerServiceProvider extends ServiceProvider
 
             if (!array_key_exists($active_theme, $themes)) {
                 $active_theme = config('core.base.general.default-theme');
+            }
+
+            if (array_key_exists($active_theme, $themes)) {
+                Assets::addStylesheetsDirectly($themes[$active_theme]);
+            }
+
+            session(['admin-theme' => $active_theme]);
+
+            $view->with(compact('themes', 'locales', 'active_theme'));
+        });
+
+        $view->composer(['core.acl::auth.master'], function (View $view) {
+            $themes = Assets::getThemes();
+            $active_theme = config('core.base.general.default-theme');
+
+            if (array_key_exists($active_theme, $themes)) {
+                Assets::addStylesheetsDirectly($themes[$active_theme]);
             }
 
             $view->with(compact('themes', 'locales', 'active_theme'));

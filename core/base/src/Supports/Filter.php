@@ -31,6 +31,6 @@ class Filter extends ActionHookEvent
                 }
             }
         }
-        return $value; // return the value
+        return $value;
     }
 }

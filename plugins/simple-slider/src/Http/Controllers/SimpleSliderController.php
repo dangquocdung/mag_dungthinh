@@ -12,8 +12,9 @@ use Botble\SimpleSlider\Forms\SimpleSliderForm;
 use Botble\SimpleSlider\Http\Requests\SimpleSliderRequest;
 use Botble\SimpleSlider\Repositories\Interfaces\SimpleSliderInterface;
 use Botble\Base\Http\Controllers\BaseController;
+use Botble\SimpleSlider\Repositories\Interfaces\SimpleSliderItemInterface;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Exception\Exception;
+use Exception;
 use Botble\SimpleSlider\Tables\SimpleSliderTable;
 
 class SimpleSliderController extends BaseController
@@ -24,13 +25,23 @@ class SimpleSliderController extends BaseController
     protected $simpleSliderRepository;
 
     /**
+     * @var SimpleSliderItemInterface
+     */
+    protected $simpleSliderItemRepository;
+
+    /**
      * SimpleSliderController constructor.
      * @param SimpleSliderInterface $simpleSliderRepository
+     * @param SimpleSliderItemInterface $simpleSliderItemRepository
      * @author Sang Nguyen
      */
-    public function __construct(SimpleSliderInterface $simpleSliderRepository)
+    public function __construct(
+        SimpleSliderInterface $simpleSliderRepository,
+        SimpleSliderItemInterface $simpleSliderItemRepository
+    )
     {
         $this->simpleSliderRepository = $simpleSliderRepository;
+        $this->simpleSliderItemRepository = $simpleSliderItemRepository;
     }
 
     /**
@@ -45,7 +56,7 @@ class SimpleSliderController extends BaseController
 
         page_title()->setTitle(trans('plugins.simple-slider::simple-slider.menu'));
 
-        return $dataTable->renderTable(['title' => trans('plugins.simple-slider::simple-slider.list')]);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -58,7 +69,10 @@ class SimpleSliderController extends BaseController
     {
         page_title()->setTitle(trans('plugins.simple-slider::simple-slider.create'));
 
-        return $formBuilder->create(SimpleSliderForm::class)->removeMetaBox('slider-items')->renderForm();
+        return $formBuilder
+            ->create(SimpleSliderForm::class)
+            ->removeMetaBox('slider-items')
+            ->renderForm();
     }
 
     /**
@@ -97,7 +111,10 @@ class SimpleSliderController extends BaseController
             ->addJavascriptDirectly(['vendor/core/plugins/simple-slider/js/simple-slider-admin.js']);
 
         $simple_slider = $this->simpleSliderRepository->findById($id);
-        return $formBuilder->create(SimpleSliderForm::class)->setModel($simple_slider)->renderForm();
+        return $formBuilder
+            ->create(SimpleSliderForm::class)
+            ->setModel($simple_slider)
+            ->renderForm();
     }
 
     /**
@@ -138,7 +155,9 @@ class SimpleSliderController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.cannot_delete'));
         }
     }
 
@@ -152,7 +171,9 @@ class SimpleSliderController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {
@@ -163,4 +184,19 @@ class SimpleSliderController extends BaseController
 
         return $response->setMessage(trans('core.base::notices.delete_success_message'));
     }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     * @author Sang Nguyen
+     */
+    public function postSorting(Request $request, BaseHttpResponse $response)
+    {
+        foreach ($request->input('items', []) as $key => $id) {
+            $this->simpleSliderItemRepository->createOrUpdate(['order' => ($key + 1)], ['id' => $id]);
+        }
+        return $response->setMessage(__('Updated slide position successfully!'));
+    }
+
 }

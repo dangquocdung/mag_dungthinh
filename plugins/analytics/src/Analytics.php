@@ -212,7 +212,7 @@ class Analytics
      * @param string $metrics
      * @param array $others
      *
-     * @return array|null
+     * @return \stdClass|null
      */
     public function performQuery(Period $period, string $metrics, array $others = [])
     {

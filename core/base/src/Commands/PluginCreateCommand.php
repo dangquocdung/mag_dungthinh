@@ -2,10 +2,9 @@
 
 namespace Botble\Base\Commands;
 
-use Carbon;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Composer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
@@ -36,7 +35,7 @@ class PluginCreateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugin:create {name : The module that you want to create} {--force : Overwrite any existing files.}';
+    protected $signature = 'cms:plugin:create {name : The module that you want to create} {--force : Overwrite any existing files.}';
 
     /**
      * The console command description.
@@ -49,10 +48,9 @@ class PluginCreateCommand extends Command
      * Create a new key generator command.
      *
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @param Composer $composer
      * @author Sang Nguyen
      */
-    public function __construct(Filesystem $files, Composer $composer)
+    public function __construct(Filesystem $files)
     {
         parent::__construct();
 
@@ -118,7 +116,29 @@ class PluginCreateCommand extends Command
 
         foreach ($manager->listContents('directory://', true) as $file) {
             if ($file['type'] === 'file') {
-                $content = str_replace(['{-plugin}', '{plugin}', '{+plugin}', '{-plugins}', '{plugins}', '{Plugin}', '{PLUGIN}', '{migrate_date}'], [strtolower($this->plugin), snake_case(str_replace('-', '_', $this->plugin)), camel_case($this->plugin), str_plural($this->plugin), str_plural(snake_case(str_replace('-', '_', $this->plugin))), ucfirst(camel_case($this->plugin)), strtoupper(snake_case(str_replace('-', '_', $this->plugin))), Carbon::now()->format('Y_m_d_His')], $manager->read('directory://' . $file['path']));
+                $content = str_replace(
+                    [
+                        '{-plugin}',
+                        '{plugin}',
+                        '{+plugin}',
+                        '{-plugins}',
+                        '{plugins}',
+                        '{Plugin}',
+                        '{PLUGIN}',
+                        '{migrate_date}',
+                    ],
+                    [
+                        strtolower($this->plugin),
+                        snake_case(str_replace('-', '_', $this->plugin)),
+                        camel_case($this->plugin),
+                        str_plural($this->plugin),
+                        str_plural(snake_case(str_replace('-', '_', $this->plugin))),
+                        ucfirst(camel_case($this->plugin)),
+                        strtoupper(snake_case(str_replace('-', '_', $this->plugin))),
+                        Carbon::now(config('app.timezone'))->format('Y_m_d_His'),
+                    ],
+                    $manager->read('directory://' . $file['path'])
+                );
                 $manager->put('directory://' . $file['path'], $content);
             }
         }
@@ -126,7 +146,7 @@ class PluginCreateCommand extends Command
 
     /**
      * Rename models and repositories.
-     * @param $location
+     * @param string $location
      * @return boolean
      * @author Sang Nguyen
      */
@@ -157,8 +177,23 @@ class PluginCreateCommand extends Command
     public function transformFilename($path)
     {
         return str_replace(
-            ['{-plugin}', '{plugin}', '{+plugin}', '{plugins}', '{Plugin}', '.stub', '{migrate_date}'],
-            [strtolower($this->plugin), snake_case(str_replace('-', '_', $this->plugin)), camel_case($this->plugin), str_plural(snake_case(str_replace('-', '_', $this->plugin))), ucfirst(camel_case($this->plugin)), '.php', Carbon::now()->format('Y_m_d_His')],
+            [
+                '{-plugin}',
+                '{plugin}',
+                '{+plugin}',
+                '{plugins}',
+                '{Plugin}',
+                '.stub',
+                '{migrate_date}',
+            ],
+            [
+                strtolower($this->plugin),
+                snake_case(str_replace('-', '_', $this->plugin)),
+                camel_case($this->plugin),
+                str_plural(snake_case(str_replace('-', '_', $this->plugin))),
+                ucfirst(camel_case($this->plugin)), '.php',
+                Carbon::now(config('app.timezone'))->format('Y_m_d_His'),
+            ],
             $path
         );
     }

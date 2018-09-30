@@ -17,11 +17,6 @@ class MenuTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -85,8 +80,7 @@ class MenuTable extends TableAbstract
                 'menus.name',
                 'menus.created_at',
                 'menus.status',
-            ])
-            ->latest();
+            ]);
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, MENU_MODULE_SCREEN_NAME));
     }

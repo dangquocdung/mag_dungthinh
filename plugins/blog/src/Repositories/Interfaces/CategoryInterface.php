@@ -15,7 +15,7 @@ interface CategoryInterface extends RepositoryInterface
     public function getDataSiteMap();
 
     /**
-     * @param $limit
+     * @param int $limit
      * @author Sang Nguyen
      */
     public function getFeaturedCategories($limit);
@@ -28,7 +28,7 @@ interface CategoryInterface extends RepositoryInterface
     public function getAllCategories(array $condition = []);
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      */
     public function getCategoryById($id);
@@ -41,7 +41,7 @@ interface CategoryInterface extends RepositoryInterface
     public function getCategories(array $select, array $orderBy);
 
     /**
-     * @param $id
+     * @param int $id
      * @return array|null
      */
     public function getAllRelatedChildrenIds($id);

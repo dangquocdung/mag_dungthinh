@@ -19,10 +19,10 @@ export class Youtube {
             _self.setMessage(RV_MEDIA_CONFIG.translations.add_from.youtube.original_msg);
         });
 
-        this.$body.on('click', '#modal_add_from_youtube .rv-btn-add-youtube-url', function (event) {
+        this.$body.off('click', '#modal_add_from_youtube .rv-btn-add-youtube-url').on('click', '#modal_add_from_youtube .rv-btn-add-youtube-url', (event) => {
             event.preventDefault();
 
-            _self.checkYouTubeVideo($(this).closest('#modal_add_from_youtube').find('.rv-youtube-url'));
+            _self.checkYouTubeVideo($(event.currentTarget).closest('#modal_add_from_youtube').find('.rv-youtube-url'));
         });
     }
 
@@ -73,15 +73,15 @@ export class Youtube {
 
             $.ajax({
                 url: requestUrl + '&key=' + ExternalServiceConfig.youtube.api_key + '&part=snippet',
-                type: "GET",
-                success: function (data) {
+                type: 'GET',
+                success: (data) => {
                     if (isPlaylist) {
-                        playlistVideoCallback(data, $input.val());
+                        playlistVideoCallback();
                     } else {
                         singleVideoCallback(data, $input.val());
                     }
                 },
-                error: function (data) {
+                error: () => {
                     _self.setMessage(RV_MEDIA_CONFIG.translations.add_from.youtube.error_msg);
                 }
             });
@@ -90,7 +90,7 @@ export class Youtube {
         function singleVideoCallback(data, url) {
             $.ajax({
                 url: RV_MEDIA_URL.add_external_service,
-                type: "POST",
+                type: 'POST',
                 dataType: 'json',
                 data: {
                     type: 'youtube',
@@ -101,7 +101,7 @@ export class Youtube {
                         thumb: 'https://img.youtube.com/vi/' + data.items[0].id + '/maxresdefault.jpg'
                     }
                 },
-                success: function (res) {
+                success: (res) => {
                     if (res.error) {
                         MessageService.showMessage('error', res.message, RV_MEDIA_CONFIG.translations.message.error_header);
                     } else {
@@ -109,14 +109,14 @@ export class Youtube {
                         _self.MediaService.getMedia(true);
                     }
                 },
-                error: function (data) {
+                error: (data) => {
                     MessageService.handleError(data);
                 }
             });
             _self.$modal.modal('hide');
         }
 
-        function playlistVideoCallback(data, url) {
+        function playlistVideoCallback() {
             _self.$modal.modal('hide');
         }
     }

@@ -36,8 +36,13 @@ class AuditLogController extends BaseController
     public function getWidgetActivities(BaseHttpResponse $response)
     {
         $limit = request()->input('paginate', 10);
-        $histories = $this->auditLogRepository->getModel()->orderBy('created_at', 'desc')->paginate($limit);
-        return $response->setData(view('plugins.audit-log::widgets.activities', compact('histories', 'limit'))->render());
+        $histories = $this->auditLogRepository
+            ->getModel()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($limit);
+        return $response
+            ->setData(view('plugins.audit-log::widgets.activities', compact('histories', 'limit'))->render());
     }
 
     /**
@@ -55,7 +60,7 @@ class AuditLogController extends BaseController
 
     /**
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -70,7 +75,9 @@ class AuditLogController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -84,7 +91,9 @@ class AuditLogController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {

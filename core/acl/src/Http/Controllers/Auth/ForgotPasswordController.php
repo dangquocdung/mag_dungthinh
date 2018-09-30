@@ -6,6 +6,7 @@ use Assets;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends BaseController
 {
@@ -43,20 +44,34 @@ class ForgotPasswordController extends BaseController
      */
     public function showLinkRequestForm()
     {
-        page_title()->setTitle(trans('core.acl::auth.forgot_password.title'));
+        Assets::addJavascript(['jquery-validation'])
+            ->addAppModule(['login'])
+            ->removeStylesheets([
+                'select2',
+                'fancybox',
+                'spectrum',
+                'simple-line-icons',
+                'custom-scrollbar',
+                'datepicker',
+            ])
+            ->removeJavascript([
+                'select2',
+                'fancybox',
+                'cookie',
+            ]);
 
-        Assets::addJavascript(['jquery-validation']);
-        Assets::addAppModule(['login']);
         return view('core.acl::auth.forgot-password');
     }
 
     /**
      * Get the response for a successful password reset link.
      *
+     * @param Request $request
      * @param  string $response
      * @return BaseHttpResponse
+     * @author Sang Nguyen
      */
-    protected function sendResetLinkResponse($response)
+    protected function sendResetLinkResponse(Request $request, $response)
     {
         return $this->response->setMessage(trans($response));
     }

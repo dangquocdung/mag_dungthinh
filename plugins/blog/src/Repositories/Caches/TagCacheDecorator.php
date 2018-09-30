@@ -46,7 +46,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @return mixed
      * @author Sang Nguyen
      */

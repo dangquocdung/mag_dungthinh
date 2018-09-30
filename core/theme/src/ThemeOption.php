@@ -525,6 +525,10 @@ class ThemeOption
                 $field['attributes']['value'] = $this->getOption($field['attributes']['name']);
             }
 
+            if (isset($field['attributes']['options']['placeholder'])) {
+                $field['attributes']['options']['placeholder'] = __($field['attributes']['options']['placeholder']);
+            }
+
             if ($field['type'] == 'select') {
                 return call_user_func_array([Form::class, $field['type']], $field['attributes']);
             }

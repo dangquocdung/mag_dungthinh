@@ -29,7 +29,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
          * @author Sang Nguyen
          */
         Breadcrumbs::register('main', function (BreadcrumbsGenerator $breadcrumbs, $defaultTitle = null) {
-            $prefix = '/' . ltrim(request()->route()->getPrefix(), '/');
+            $prefix = '/' . ltrim($this->app->make('request')->route()->getPrefix(), '/');
             $url = URL::current();
             $site_title = setting('admin_title', config('core.base.general.base_name'));
             $arMenu = dashboard_menu()->getAll();
@@ -38,7 +38,11 @@ class BreadcrumbsServiceProvider extends ServiceProvider
             }
             $found = false;
             foreach ($arMenu as $menuCategory) {
-                if (($url == $menuCategory->url || (str_contains($menuCategory->url, $prefix) && $prefix != '//')) && !empty($menuCategory->name)) {
+                if (($url == $menuCategory->url ||
+                        (str_contains($menuCategory->url, $prefix) &&
+                            $prefix != '//')) &&
+                    !empty($menuCategory->name)
+                ) {
                     $found = true;
                     $breadcrumbs->push($menuCategory->name, $url);
                     if ($defaultTitle != $menuCategory->name && $defaultTitle != $site_title) {
@@ -51,7 +55,11 @@ class BreadcrumbsServiceProvider extends ServiceProvider
                 foreach ($arMenu as $menuCategory) {
                     if (!$menuCategory->children->isEmpty()) {
                         foreach ($menuCategory->children as $menuItem) {
-                            if (($url == $menuItem->url || (str_contains($menuItem->url, $prefix) && $prefix != '//')) && !empty($menuItem->name)) {
+                            if (($url == $menuItem->url ||
+                                    (str_contains($menuItem->url, $prefix) &&
+                                        $prefix != '//')) &&
+                                !empty($menuItem->name)
+                            ) {
                                 $found = true;
                                 $breadcrumbs->push($menuCategory->name, $menuCategory->url);
                                 $breadcrumbs->push($menuItem->name, $menuItem->url);

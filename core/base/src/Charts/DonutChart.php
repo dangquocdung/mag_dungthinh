@@ -5,9 +5,6 @@ namespace Botble\Base\Charts;
 use Botble\Base\Charts\Supports\Chart;
 use Botble\Base\Charts\Supports\ChartTypes;
 
-/**
- * Donut Charts
- */
 class DonutChart extends Chart
 {
 

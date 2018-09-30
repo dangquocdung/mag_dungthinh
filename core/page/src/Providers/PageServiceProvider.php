@@ -74,6 +74,8 @@ class PageServiceProvider extends ServiceProvider
                 'url' => route('pages.list'),
                 'permissions' => ['pages.list'],
             ]);
+
+            admin_bar()->registerLink('Page', route('pages.list'), 'add-new');
         });
 
         view()->composer(['core.page::themes.page'], function(View $view) {

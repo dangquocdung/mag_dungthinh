@@ -2,8 +2,10 @@
 
 namespace Botble\Base\Http\Middleware;
 
+use Botble\Setting\Supports\SettingStore;
 use Closure;
 use Html;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,11 +17,19 @@ class AdminBarMiddleware
     protected $app;
 
     /**
-     * AdminBarMiddleware constructor.
+     * @var SettingStore
      */
-    public function __construct()
+    protected $settingStore;
+
+    /**
+     * AdminBarMiddleware constructor.
+     * @param Application $application
+     * @param SettingStore $settingStore
+     */
+    public function __construct(Application $application, SettingStore $settingStore)
     {
-        $this->app = app();
+        $this->app = $application;
+        $this->settingStore = $settingStore;
     }
 
     /**
@@ -34,7 +44,7 @@ class AdminBarMiddleware
     {
         $response = $next($request);
         if ($request->user() && $request->user()->hasPermission('dashboard.index') && admin_bar()->isDisplay()) {
-            if (!!(int)setting('show_admin_bar', 1)) {
+            if (!!(int)$this->settingStore->get('show_admin_bar', 1)) {
                 $this->modifyResponse($request, $response);
             }
         }
@@ -73,7 +83,7 @@ class AdminBarMiddleware
      */
     protected function isDebugbarRequest()
     {
-        return $this->app['request']->segment(1) == '_debugbar';
+        return $this->app->make('request')->segment(1) == '_debugbar';
     }
 
     /**
@@ -94,7 +104,7 @@ class AdminBarMiddleware
     }
 
     /**
-     * @param $content
+     * @param string $content
      * @return $this
      */
     public function injectHeadContent(&$content)
@@ -110,7 +120,7 @@ class AdminBarMiddleware
     }
 
     /**
-     * @param $content
+     * @param string $content
      * @return $this
      * @throws \Throwable
      */

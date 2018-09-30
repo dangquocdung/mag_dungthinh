@@ -21,7 +21,6 @@ class CreateSimpleSliderTable extends Migration
             $table->integer('order')->unsigned()->default(0);
             $table->tinyInteger('status')->unsigned()->default(1);
 
-            $table->softDeletes();
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

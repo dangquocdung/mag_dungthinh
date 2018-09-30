@@ -49,9 +49,6 @@ class MediaFile extends Eloquent
      */
     public function folder()
     {
-        /**
-         * @var Model $this
-         */
         return $this->belongsTo(MediaFolder::class, 'id', 'folder_id');
     }
 
@@ -96,22 +93,22 @@ class MediaFile extends Eloquent
          */
         switch ($this->type) {
             case 'image':
-                $icon = 'fa fa-file-image-o';
+                $icon = 'fa fa-file-image';
                 break;
             case 'video':
-                $icon = 'fa fa-file-video-o';
+                $icon = 'fa fa-file-video';
                 break;
             case 'pdf':
-                $icon = 'fa fa-file-pdf-o';
+                $icon = 'fa fa-file-pdf';
                 break;
             case 'excel':
-                $icon = 'fa fa-file-excel-o';
+                $icon = 'fa fa-file-excel';
                 break;
             case 'youtube':
                 $icon = 'fa fa-youtube';
                 break;
             default:
-                $icon = 'fa fa-file-text-o';
+                $icon = 'fa fa-file-text';
                 break;
         }
         return $icon;
@@ -152,13 +149,5 @@ class MediaFile extends Eloquent
                 $uploadManager->deleteFile($path);
             }
         });
-    }
-
-    /**
-     * @author Sang Nguyen
-     */
-    public function __wakeup()
-    {
-        parent::boot();
     }
 }

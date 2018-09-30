@@ -10,6 +10,10 @@ use Illuminate\Support\ServiceProvider;
 
 class HookServiceProvider extends ServiceProvider
 {
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * Boot the service provider.
@@ -25,19 +29,17 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param $screen
      * @param $object
-     * @param null $public_route
+     * @param null $prefix
      * @return null|string
      * @throws \Throwable
      * @author Sang Nguyen
      */
-    public function addSlugBox($screen, $object = null, $public_route = null)
+    public function addSlugBox($screen, $object = null)
     {
         if (in_array($screen, config('core.slug.general.supported'))) {
             Assets::addAppModule(['slug']);
-            if (empty($public_route)) {
-                $public_route = 'public.single';
-            }
-            return view('core.slug::partials.slug', compact('object', 'screen', 'public_route'))->render();
+            $prefix = array_get(config('core.slug.general.prefixes', []), $screen, '');
+            return view('core.slug::partials.slug', compact('object', 'screen', 'prefix'))->render();
         }
         return null;
     }
@@ -70,7 +72,7 @@ class HookServiceProvider extends ServiceProvider
             }
             $select = array_merge($select, ['slugs.key']);
             return $data
-                ->leftJoin('slugs', function (JoinClause $join) use ($table, $model) {
+                ->leftJoin('slugs', function (JoinClause $join) use ($table) {
                     $join->on('slugs.reference_id', '=', $table . '.id');
                 })
                 ->select($select)

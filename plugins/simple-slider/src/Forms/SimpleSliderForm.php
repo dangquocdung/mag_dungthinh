@@ -43,7 +43,7 @@ class SimpleSliderForm extends FormAbstract
                     'data-counter' => 400,
                 ],
             ])
-            ->add('status', 'select', [
+            ->add('status', 'customSelect', [
                 'label' => trans('core.base::tables.status'),
                 'label_attr' => ['class' => 'control-label required'],
                 'choices' => [

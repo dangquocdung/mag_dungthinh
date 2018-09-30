@@ -23,5 +23,7 @@ return [
         'get_fan_page_id_helper' => 'You can get fan page ID using this site :link',
         'chat_box_helper' => 'To show chat box on that website, please go to :fan-page-id and add :domain to whitelist domains!',
         'auto_post_to_fan_page' => 'Auto post to fan page',
+        'app_id' => 'App ID',
+        'app_secret' => 'App Secret',
     ],
 ];

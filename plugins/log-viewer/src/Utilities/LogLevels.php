@@ -35,7 +35,7 @@ class LogLevels implements LogLevelsContract
      *
      * @param  \Illuminate\Translation\Translator $translator
      * @param  string $locale
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(Translator $translator, $locale)
     {
@@ -49,7 +49,7 @@ class LogLevels implements LogLevelsContract
      * @param  \Illuminate\Translation\Translator $translator
      *
      * @return \Botble\LogViewer\Utilities\LogLevels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTranslator(Translator $translator)
     {
@@ -62,7 +62,7 @@ class LogLevels implements LogLevelsContract
      * Get the selected locale.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getLocale()
     {
@@ -77,7 +77,7 @@ class LogLevels implements LogLevelsContract
      * @param  string $locale
      *
      * @return \Botble\LogViewer\Utilities\LogLevels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setLocale($locale)
     {
@@ -92,7 +92,7 @@ class LogLevels implements LogLevelsContract
      * @param  bool $flip
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function lists($flip = false)
     {
@@ -105,7 +105,7 @@ class LogLevels implements LogLevelsContract
      * @param  string|null $locale
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function names($locale = null)
     {
@@ -124,7 +124,7 @@ class LogLevels implements LogLevelsContract
      * @param  bool $flip
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function all($flip = false)
     {
@@ -143,7 +143,7 @@ class LogLevels implements LogLevelsContract
      * @param  string|null $locale
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get($key, $locale = null)
     {

@@ -50,15 +50,31 @@
     }
 }
 
-.multi-choices-widget ul {
-    list-style : none;
-    padding    : 0;
-    margin     : 0;
-    li {
-        display : block;
-    }
+.multi-choices-widget {
     ul {
-        padding-left : 18px;
+        list-style   : none;
+        padding      : 0;
+        margin       : 0;
+        padding-left : 5px;
+        li {
+            display : block;
+            .invalid-feedback {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+        }
+        ul {
+            padding-left : 18px;
+        }
+    }
+}
+
+.meta-boxes {
+    .mt-radio-list {
+        label {
+            display : block;
+        }
     }
 }
 
@@ -81,9 +97,10 @@
     text-align : center;
     color      : #72777c;
     font-size  : 14px;
+    width : 100%;
     .smiley:before {
         content                : "\f118";
-        font                   : 400 120px/1 FontAwesome;
+        font                   : 400 120px/1 Font Awesome\ 5 Free;
         speak                  : none;
         display                : block;
         margin                 : 0 5px 0 0;
@@ -93,18 +110,6 @@
         position               : relative;
         -webkit-font-smoothing : antialiased;
         text-decoration        : none !important;
-    }
-}
-
-.tabbable-tabdrop {
-    .nav-pills, .nav-tabs {
-        background   : #ffffff;
-        border-top   : 1px solid #dddddd;
-        border-right : 1px solid #dddddd;
-        border-left  : 1px solid #dddddd;
-        li.active:nth-child(2) a {
-            border-left : none;
-        }
     }
 }
 
@@ -129,7 +134,7 @@
     float      : left;
 }
 
-.input-group-btn {
+.input-group-prepend {
     .btn {
         width      : 34px;
         text-align : center;

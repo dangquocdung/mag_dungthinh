@@ -45,7 +45,7 @@ class PageController extends BaseController
     {
         page_title()->setTitle(trans('core.page::pages.menu_name'));
 
-        return $dataTable->renderTable(['title' => trans('core.page::pages.list'), 'icon' => 'fa fa-book']);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -133,7 +133,9 @@ class PageController extends BaseController
 
             return $response->setMessage(trans('core.page::pages.deleted'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -147,7 +149,9 @@ class PageController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.no_select'));
         }
 
         foreach ($ids as $id) {

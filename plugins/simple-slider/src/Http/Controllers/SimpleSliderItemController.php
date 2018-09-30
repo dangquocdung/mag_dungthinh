@@ -12,7 +12,7 @@ use Botble\SimpleSlider\Http\Requests\SimpleSliderItemRequest;
 use Botble\SimpleSlider\Repositories\Interfaces\SimpleSliderItemInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Exception\Exception;
+use Exception;
 use Botble\SimpleSlider\Tables\SimpleSliderItemTable;
 
 class SimpleSliderItemController extends BaseController
@@ -37,6 +37,7 @@ class SimpleSliderItemController extends BaseController
      * @param SimpleSliderItemTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @author Sang Nguyen
+     * @throws \Throwable
      */
     public function getList(SimpleSliderItemTable $dataTable)
     {
@@ -139,7 +140,9 @@ class SimpleSliderItemController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.cannot_delete'));
         }
     }
 }

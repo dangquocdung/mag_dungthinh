@@ -5,10 +5,12 @@ namespace Botble\Widget\Http\Controllers;
 use Assets;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\Setting\Supports\SettingStore;
 use Botble\Widget\Factories\AbstractWidgetFactory;
 use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 use Botble\Widget\WidgetId;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use WidgetGroup;
 
@@ -27,13 +29,14 @@ class WidgetController extends BaseController
     /**
      * WidgetController constructor.
      * @param WidgetInterface $widgetRepository
-     * @author Sang Nguyen
+     * @param SettingStore $setting
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @author Sang Nguyen
      */
-    public function __construct(WidgetInterface $widgetRepository)
+    public function __construct(WidgetInterface $widgetRepository, SettingStore $setting)
     {
         $this->widgetRepository = $widgetRepository;
-        $this->theme = setting('theme') . $this->getCurrentLocaleCode();
+        $this->theme = $setting->get('theme') . $this->getCurrentLocaleCode();
     }
 
     /**
@@ -44,10 +47,10 @@ class WidgetController extends BaseController
      */
     public function getList()
     {
-        page_title()->setTitle(trans('core.widget::global.name'));
+        page_title()->setTitle(trans('core.base::layouts.widgets'));
 
-        Assets::addJavascript(['sortable']);
-        Assets::addAppModule(['widget']);
+        Assets::addJavascript(['sortable'])
+            ->addAppModule(['widget']);
 
         $widgets = $this->widgetRepository->getByTheme($this->theme);
         foreach ($widgets as $widget) {
@@ -95,7 +98,9 @@ class WidgetController extends BaseController
                 ->setData(view('core.widget::item', compact('widget_areas'))->render())
                 ->setMessage(trans('core.widget::global.save_success'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -116,7 +121,9 @@ class WidgetController extends BaseController
             ]);
             return $response->setMessage(trans('core.widget::global.delete_success'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
     }
 
@@ -125,13 +132,14 @@ class WidgetController extends BaseController
      *
      * @param Request $request
      *
+     * @param Application $application
      * @return mixed
      */
-    public function showWidget(Request $request)
+    public function showWidget(Request $request, Application $application)
     {
         $this->prepareGlobals($request);
 
-        $factory = app()->make('botble.widget');
+        $factory = $application->make('botble.widget');
         $widgetName = $request->input('name', '');
         $widgetParams = $factory->decryptWidgetParams($request->input('params', ''));
 

@@ -16,6 +16,7 @@ use Botble\SimpleSlider\Repositories\Eloquent\SimpleSliderRepository;
 use Botble\SimpleSlider\Repositories\Interfaces\SimpleSliderInterface;
 use Botble\Support\Services\Cache\Cache;
 use Botble\Base\Supports\Helper;
+use Language;
 
 class SimpleSliderServiceProvider extends ServiceProvider
 {
@@ -75,7 +76,7 @@ class SimpleSliderServiceProvider extends ServiceProvider
                 'priority' => 100,
                 'parent_id' => null,
                 'name' => trans('plugins.simple-slider::simple-slider.menu'),
-                'icon' => 'fa fa-picture-o',
+                'icon' => 'far fa-image',
                 'url' => route('simple-slider.list'),
                 'permissions' => ['simple-slider.list'],
             ]);
@@ -83,7 +84,7 @@ class SimpleSliderServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             if (defined('LANGUAGE_MODULE_SCREEN_NAME')) {
-                config(['plugins.language.general.supported' => array_merge(config('plugins.language.general.supported'), [SIMPLE_SLIDER_MODULE_SCREEN_NAME])]);
+                Language::registerModule([SIMPLE_SLIDER_MODULE_SCREEN_NAME]);
             }
         });
     }

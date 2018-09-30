@@ -20,7 +20,7 @@ class Period
 
     /**
      * @param DateTime $startDate
-     * @param $endDate
+     * @param DateTime $endDate
      * @return Period
      * @throws InvalidPeriod
      */
@@ -36,9 +36,9 @@ class Period
      */
     public static function days(int $numberOfDays): Period
     {
-        $endDate = Carbon::today();
+        $endDate = Carbon::today(config('app.timezone'));
 
-        $startDate = Carbon::today()->subDays($numberOfDays)->startOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->subDays($numberOfDays)->startOfDay();
 
         return new static($startDate, $endDate);
     }
@@ -50,9 +50,9 @@ class Period
      */
     public static function months(int $numberOfMonths): Period
     {
-        $endDate = Carbon::today();
+        $endDate = Carbon::today(config('app.timezone'));
 
-        $startDate = Carbon::today()->subMonths($numberOfMonths)->startOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->subMonths($numberOfMonths)->startOfDay();
 
         return new static($startDate, $endDate);
     }
@@ -64,9 +64,9 @@ class Period
      */
     public static function years(int $numberOfYears): Period
     {
-        $endDate = Carbon::today();
+        $endDate = Carbon::today(config('app.timezone'));
 
-        $startDate = Carbon::today()->subYears($numberOfYears)->startOfDay();
+        $startDate = Carbon::today(config('app.timezone'))->subYears($numberOfYears)->startOfDay();
 
         return new static($startDate, $endDate);
     }

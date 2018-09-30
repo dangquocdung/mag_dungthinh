@@ -5,8 +5,9 @@ namespace Botble\Base\Http\Controllers;
 use Botble\Base\Events\RenderingJsonFeedEvent;
 use Botble\Base\Events\RenderingSingleEvent;
 use Botble\Base\Events\RenderingSiteMapEvent;
+use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Page\Repositories\Interfaces\PageInterface;
-use Botble\SeoHelper\SeoOpenGraph;
+use Botble\Setting\Supports\SettingStore;
 use Botble\Slug\Repositories\Interfaces\SlugInterface;
 use Illuminate\Routing\Controller;
 use JsonFeedManager;
@@ -22,67 +23,68 @@ class PublicController extends Controller
     protected $slugRepository;
 
     /**
+     * @var PageInterface
+     */
+    protected $pageRepository;
+
+    /**
      * PublicController constructor.
      * @param SlugInterface $slugRepository
+     * @param PageInterface $pageRepository
+     * @param SettingStore $settingStore
      */
-    public function __construct(SlugInterface $slugRepository)
+    public function __construct(SlugInterface $slugRepository, PageInterface $pageRepository, SettingStore $settingStore)
     {
         $this->slugRepository = $slugRepository;
+        $this->pageRepository = $pageRepository;
+
+        if (!$settingStore->get('show_site_name')) {
+            SeoHelper::meta()->setTitle($settingStore->get('site_title', ''));
+            if ($settingStore->get('seo_title')) {
+                SeoHelper::meta()->setTitle($settingStore->get('seo_title'));
+            }
+        }
     }
 
     /**
+     * @param SettingStore $settingStore
      * @return mixed
-     * @author Sang Nguyen
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @author Sang Nguyen
      */
-    public function getIndex()
+    public function getIndex(SettingStore $settingStore)
     {
+        $homepage = $settingStore->get('show_on_front');
+        if ($homepage) {
+            $homepage = $this->pageRepository->findById($homepage);
+            if ($homepage) {
+                return redirect()->route('public.single', $homepage->slug);
+            }
+        }
+        if (!defined('THEME_OPTIONS_MODULE_SCREEN_NAME')) {
+            return 'Homepage';
+        }
         Theme::breadcrumb()->add(__('Home'), route('public.index'));
         return Theme::scope('index')->render();
     }
 
     /**
-     * @param $key
-     * @return \Response
-     * @author Sang Nguyen
+     * @param string $key
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse|\Response
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @author Sang Nguyen
      */
-    public function getView($key)
+    public function getView($key, BaseHttpResponse $response)
     {
-        $slug = $this->slugRepository->getFirstBy(['key' => $key]);
+        $slug = $this->slugRepository->getFirstBy(['key' => $key, 'prefix' => '']);
 
         if ($slug) {
-            if ($slug->reference == 'page') {
-                $page = app(PageInterface::class)->findById($slug->reference_id);
-                $page = apply_filters(BASE_FILTER_BEFORE_GET_SINGLE, $page, app(PageInterface::class)->getModel(), PAGE_MODULE_SCREEN_NAME);
-                if (!empty($page)) {
-                    SeoHelper::setTitle($page->name)->setDescription($page->description);
-
-                    $meta = new SeoOpenGraph();
-                    if ($page->image) {
-                        $meta->setImage(url($page->image));
-                    }
-                    $meta->setDescription($page->description);
-                    $meta->setUrl(route('public.single', $slug->key));
-                    $meta->setTitle($page->name);
-                    $meta->setType('article');
-
-                    SeoHelper::setSeoOpenGraph($meta);
-
-                    if ($page->template) {
-                        Theme::uses(setting('theme'))->layout($page->template);
-                    }
-
-                    admin_bar()->registerLink(trans('core.page::pages.edit_this_page'), route('pages.edit', $page->id));
-
-                    Theme::breadcrumb()->add(__('Home'), route('public.index'))->add($page->name, route('public.single', $slug));
-
-                    do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, PAGE_MODULE_SCREEN_NAME, $page);
-                    return Theme::scope('page', compact('page'), 'core.page::themes.page')->render();
-                }
-            }
-
             $result = apply_filters(BASE_FILTER_PUBLIC_SINGLE_DATA, $slug);
+
+            if (isset($result['slug']) && $result['slug'] !== $key) {
+                return $response->setNextUrl(route('public.single', $result['slug']));
+            }
 
             event(new RenderingSingleEvent($slug));
 

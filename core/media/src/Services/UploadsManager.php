@@ -105,9 +105,7 @@ class UploadsManager
      */
     public function fileModified($path)
     {
-        return Carbon::createFromTimestamp(
-            $this->disk->lastModified($path)
-        );
+        return Carbon::createFromTimestamp($this->disk->lastModified($path));
     }
 
     /**
@@ -173,9 +171,8 @@ class UploadsManager
             }
 
             return $this->disk->delete($files);
-        } else {
-            return $this->disk->delete([$path]);
         }
+        return $this->disk->delete([$path]);
     }
 
     /**

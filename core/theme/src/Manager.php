@@ -11,6 +11,7 @@ class Manager
 
     /**
      * Construct the class
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function __construct()
     {
@@ -20,6 +21,7 @@ class Manager
     /**
      * @return array
      * @author Sang Nguyen
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getAllThemes()
     {

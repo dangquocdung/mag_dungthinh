@@ -2,8 +2,8 @@
 
 namespace Botble\SimpleSlider\Tables;
 
-use Botble\Base\Tables\TableAbstract;
 use Botble\SimpleSlider\Repositories\Interfaces\SimpleSliderItemInterface;
+use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 
@@ -30,7 +30,11 @@ class SimpleSliderItemTable extends TableAbstract
      * @param UrlGenerator $urlGenerator
      * @param SimpleSliderItemInterface $simpleSliderItemRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlGenerator, SimpleSliderItemInterface $simpleSliderItemRepository)
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlGenerator,
+        SimpleSliderItemInterface $simpleSliderItemRepository
+    )
     {
         $this->repository = $simpleSliderItemRepository;
         $this->setOption('id', 'simple-slider-items-table');
@@ -53,7 +57,11 @@ class SimpleSliderItemTable extends TableAbstract
                 return view('plugins.simple-slider::partials.thumbnail', compact('item'))->render();
             })
             ->editColumn('title', function ($item) {
-                return anchor_link('#', $item->title, ['data-fancybox' => true, 'data-type' => 'ajax', 'data-src' => route('simple-slider-item.edit', $item->id)]);
+                return anchor_link('#', $item->title, [
+                    'data-fancybox' => true,
+                    'data-type' => 'ajax',
+                    'data-src' => route('simple-slider-item.edit', $item->id),
+                ]);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -71,7 +79,7 @@ class SimpleSliderItemTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by datatables.
+     * Get the query object to be processed by table.
      *
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
      * @author Sang Nguyen
@@ -80,13 +88,14 @@ class SimpleSliderItemTable extends TableAbstract
     public function query()
     {
         $model = $this->repository->getModel();
-        $query = $model->select([
-            'simple_slider_items.id',
-            'simple_slider_items.title',
-            'simple_slider_items.image',
-            'simple_slider_items.order',
-            'simple_slider_items.created_at',
-        ])
+        $query = $model
+            ->select([
+                'simple_slider_items.id',
+                'simple_slider_items.title',
+                'simple_slider_items.image',
+                'simple_slider_items.order',
+                'simple_slider_items.created_at',
+            ])
             ->where('simple_slider_id', request()->route()->parameter('id'));
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, SIMPLE_SLIDER_ITEM_MODULE_SCREEN_NAME));
     }
@@ -116,7 +125,7 @@ class SimpleSliderItemTable extends TableAbstract
                 ],
                 'order' => [
                     'title' => trans('core.base::tables.order'),
-                    'class' => 'text-left',
+                    'class' => 'text-left order-column',
                 ],
                 'created_at' => [
                     'title' => trans('core.base::tables.created_at'),

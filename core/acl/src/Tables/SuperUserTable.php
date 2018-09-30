@@ -23,11 +23,6 @@ class SuperUserTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
@@ -82,8 +77,7 @@ class SuperUserTable extends TableAbstract
                 'users.email',
                 'users.last_login',
             ])
-            ->where(['users.super_user' => 1])
-            ->latest();
+            ->where(['users.super_user' => 1]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, SUPER_USER_MODULE_SCREEN_NAME));
     }
 

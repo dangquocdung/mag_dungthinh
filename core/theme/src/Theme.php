@@ -5,18 +5,15 @@ namespace Botble\Theme;
 use Botble\Theme\Contracts\Theme as ThemeContract;
 use Botble\Theme\Exceptions\UnknownPartialFileException;
 use Botble\Theme\Exceptions\UnknownThemeException;
-use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 use Closure;
 use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Response;
-use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Factory;
 use SeoHelper;
 use Symfony\Component\HttpFoundation\Cookie;
-use WidgetGroup;
 
 class Theme implements ThemeContract
 {
@@ -117,11 +114,6 @@ class Theme implements ThemeContract
     protected $cookie;
 
     /**
-     * @var BladeCompiler
-     */
-    protected $compilers;
-
-    /**
      * Breadcrumb.
      *
      * @var \Botble\Theme\Breadcrumb
@@ -154,9 +146,6 @@ class Theme implements ThemeContract
         $this->files = $files;
 
         $this->breadcrumb = $breadcrumb;
-
-        // Blade compiler.
-        $this->compilers = new BladeCompiler($files, 'theme');
 
         self::uses(setting('theme'))->layout(setting('layout', 'default'));
 
@@ -518,7 +507,7 @@ class Theme implements ThemeContract
         // If callback pass, so put in a queue.
         if (!empty($callback)) {
             // Preparing callback in to queues.
-            $this->events->listen($name, function () use ($callback, $variable) {
+            $this->events->listen($name, function () use ($callback) {
                 return ($callback instanceof Closure) ? $callback() : $callback;
             });
         }
@@ -710,43 +699,6 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Parses and compiles strings by using blade template system.
-     *
-     * @param  string $str
-     * @param  array $data
-     * @param  boolean $phpCompile
-     * @throws Exception
-     * @return string
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    public function blader($str, $data = [], $phpCompile = true)
-    {
-        if ($phpCompile == false) {
-            $patterns = ['|<\?|', '|<\?php|', '|<\%|', '|\?>|', '|\%>|'];
-            $replacements = ['&lt;?', '&lt;php', '&lt;%', '?&gt;', '%&gt;'];
-
-            $str = preg_replace($patterns, $replacements, $str);
-        }
-
-        // Get blade compiler.
-        $parsed = $this->compilers->compileString($str);
-
-        ob_start() and extract($data, EXTR_SKIP);
-
-        try {
-            eval('?>' . $parsed);
-        } catch (Exception $ex) {
-            ob_end_clean();
-            throw $ex;
-        }
-
-        $str = ob_get_contents();
-        ob_end_clean();
-
-        return $str;
-    }
-
-    /**
      * Check region exists.
      *
      * @param  string $region
@@ -850,12 +802,11 @@ class Theme implements ThemeContract
      *
      * @param  string $view
      * @param  array $args
-     * @param  string $type
      * @return Theme
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws Exception
      */
-    public function of($view, $args = [], $type = null)
+    public function of($view, $args = [])
     {
         // Fire event global assets.
         $this->fire('asset', $this->asset);
@@ -865,33 +816,13 @@ class Theme implements ThemeContract
         $this->fire('beforeRenderLayout.' . $this->layout, $this);
         // Keeping arguments.
         $this->arguments = $args;
-        // Compile string blade, string twig, or from file path.
-        switch ($type) {
-            case 'blade':
-                $content = $this->bladerWithOutServerScript($view, $args);
-                break;
-            default:
-                $content = $this->view->make($view, $args)->render();
-                break;
-        }
+
+        $content = $this->view->make($view, $args)->render();
         // View path of content.
         $this->content = $view;
         // Set up a content regional.
         $this->regions['content'] = $content;
         return $this;
-    }
-
-    /**
-     * Compile blade without PHP.
-     *
-     * @param  string $str
-     * @param  array $data
-     * @return string
-     * @throws Exception
-     */
-    public function bladerWithOutServerScript($str, $data = array())
-    {
-        return $this->blader($str, $data, false);
     }
 
     /**
@@ -903,7 +834,7 @@ class Theme implements ThemeContract
      * @return Theme
      * @throws \Exception
      */
-    public function ofWithLayout($view, $args = array(), $type = null)
+    public function ofWithLayout($view, $args = [], $type = null)
     {
         $view = $this->getLayoutName() . '.' . $view;
         return $this->of($view, $args, $type);
@@ -1054,9 +985,10 @@ class Theme implements ThemeContract
         }
 
         $content->withHeaders([
-            'Author-Team' => 'https://botble.com',
             'Author' => 'Sang Nguyen (sangnguyenplus@gmail.com)',
+            'Author-Team' => 'https://botble.com',
             'CMS' => 'Botble CMS',
+            'CMS-Version' => get_cms_version(),
         ]);
 
         return $content;
@@ -1109,7 +1041,7 @@ class Theme implements ThemeContract
      */
     protected function handleViewNotFound($path)
     {
-        if (app()->environment() == 'local') {
+        if (app()->environment('local')) {
             dd('Theme is not support this view, please create file "/public/themes/' . str_replace($this->getThemeNamespace(), $this->getThemeName(), str_replace('::', '/', str_replace('.', '/', $path))) . '.blade.php" to render this page!');
         } else {
             abort(404);

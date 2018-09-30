@@ -31,4 +31,6 @@ return [
     'bulk_change' => 'Bulk changes',
     'select_option' => 'Select option',
     'bulk_actions' => 'Bulk Actions',
+    'save_bulk_change_success' => 'Update data for selected record(s) successfully!',
+    'please_select_record' => 'Please select at least one record to perform this action!',
 ];

@@ -6,6 +6,7 @@ use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
 use Botble\Blog\Repositories\Interfaces\PostInterface;
 use Eloquent;
 use Exception;
+use Illuminate\Database\Query\Builder;
 
 class PostRepository extends RepositoriesAbstract implements PostInterface
 {
@@ -51,7 +52,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
@@ -67,7 +68,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * @param $category_id
+     * @param int|array $category_id
      * @param int $paginate
      * @param int $limit
      * @return mixed
@@ -93,7 +94,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * @param $user_id
+     * @param int $user_id
      * @param int $paginate
      * @return mixed
      * @author Sang Nguyen
@@ -121,7 +122,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * @param $tag
+     * @param int $tag
      * @param int $paginate
      * @return mixed
      * @author Sang Nguyen
@@ -131,6 +132,9 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
         $data = $this->model
             ->where('posts.status', '=', 1)
             ->whereHas('tags', function ($query) use ($tag) {
+                /**
+                 * @var Builder $query
+                 */
                 $query->where('tags.id', $tag);
             })
             ->select('posts.*')
@@ -160,7 +164,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * @param $query
+     * @param string $query
      * @param int $limit
      * @param int $paginate
      * @return mixed
@@ -168,7 +172,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      */
     public function getSearch($query, $limit = 10, $paginate = 10)
     {
-        $posts = $this->model->whereStatus(1);
+        $posts = $this->model->where('status', 1);
         foreach (explode(' ', $query) as $term) {
             $posts = $posts->where('name', 'LIKE', '%' . $term . '%');
         }
@@ -201,7 +205,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @param array $args
      * @return mixed
      * @author Sang Nguyen
@@ -223,7 +227,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
      */
     public function getRelatedCategoryIds($model)
     {
-        $model = $model instanceof Eloquent ? $model : $this->find($model);
+        $model = $model instanceof Eloquent ? $model : $this->findById($model);
 
         try {
             return $model->categories()->allRelatedIds()->toArray();

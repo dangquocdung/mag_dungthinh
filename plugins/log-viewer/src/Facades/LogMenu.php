@@ -10,7 +10,7 @@ class LogMenu extends Facade
      * Get the registered name of the component.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected static function getFacadeAccessor()
     {

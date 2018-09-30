@@ -43,9 +43,9 @@ class CategoryController extends BaseController
      */
     public function getList(CategoryTable $dataTable)
     {
-        page_title()->setTitle(trans('plugins.blog::categories.list'));
+        page_title()->setTitle(trans('plugins.blog::categories.menu'));
 
-        return $dataTable->renderTable(['title' => trans('plugins.blog::categories.list')]);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -87,7 +87,7 @@ class CategoryController extends BaseController
     /**
      * Show edit form
      *
-     * @param $id
+     * @param int $id
      * @return string
      * @author Sang Nguyen
      */
@@ -103,7 +103,7 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param CategoryRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
@@ -128,7 +128,7 @@ class CategoryController extends BaseController
 
     /**
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -145,7 +145,9 @@ class CategoryController extends BaseController
 
             return $response->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.cannot_delete'));
         }
     }
 

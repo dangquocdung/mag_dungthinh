@@ -68,7 +68,7 @@ class PostController extends BaseController
     {
         page_title()->setTitle(trans('plugins.blog::posts.menu_name'));
 
-        return $dataTable->renderTable(['title' => trans('plugins.blog::posts.list'), 'icon' => 'fa fa-edit']);
+        return $dataTable->renderTable();
     }
 
     /**
@@ -80,9 +80,9 @@ class PostController extends BaseController
     {
         page_title()->setTitle(trans('plugins.blog::posts.create'));
 
-        Assets::addJavascript(['bootstrap-tagsinput', 'typeahead']);
-        Assets::addStylesheets(['bootstrap-tagsinput']);
-        Assets::addAppModule(['tags']);
+        Assets::addJavascript(['bootstrap-tagsinput', 'typeahead'])
+            ->addStylesheets(['bootstrap-tagsinput'])
+            ->addAppModule(['tags']);
 
         return $formBuilder->create(PostForm::class)->renderForm();
     }
@@ -95,8 +95,12 @@ class PostController extends BaseController
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function postCreate(PostRequest $request, StoreTagService $tagService, StoreCategoryService $categoryService, BaseHttpResponse $response)
-    {
+    public function postCreate(
+        PostRequest $request,
+        StoreTagService $tagService,
+        StoreCategoryService $categoryService,
+        BaseHttpResponse $response
+    ) {
         /**
          * @var Post $post
          */
@@ -118,28 +122,29 @@ class PostController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
+     * @param FormBuilder $formBuilder
+     * @param Request $request
      * @return string
      * @author Sang Nguyen
-     * @throws Exception
      */
-    public function getEdit($id, FormBuilder $formBuilder)
+    public function getEdit($id, FormBuilder $formBuilder, Request $request)
     {
         $post = $this->postRepository->findOrFail($id);
 
-        event(new BeforeEditContentEvent(POST_MODULE_SCREEN_NAME, request(), $post));
+        event(new BeforeEditContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
 
         page_title()->setTitle(trans('plugins.blog::posts.edit') . ' #' . $id);
 
-        Assets::addJavascript(['bootstrap-tagsinput', 'typeahead']);
-        Assets::addStylesheets(['bootstrap-tagsinput']);
-        Assets::addAppModule(['tags']);
+        Assets::addJavascript(['bootstrap-tagsinput', 'typeahead'])
+            ->addStylesheets(['bootstrap-tagsinput'])
+            ->addAppModule(['tags']);
 
         return $formBuilder->create(PostForm::class)->setModel($post)->renderForm();
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param PostRequest $request
      * @param StoreTagService $tagService
      * @param StoreCategoryService $categoryService
@@ -147,8 +152,13 @@ class PostController extends BaseController
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function postEdit($id, PostRequest $request, StoreTagService $tagService, StoreCategoryService $categoryService, BaseHttpResponse $response)
-    {
+    public function postEdit(
+        $id,
+        PostRequest $request,
+        StoreTagService $tagService,
+        StoreCategoryService $categoryService,
+        BaseHttpResponse $response
+    ) {
         $post = $this->postRepository->findOrFail($id);
 
         $post->fill($request->input());
@@ -168,7 +178,7 @@ class PostController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -181,9 +191,12 @@ class PostController extends BaseController
 
             event(new DeletedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
 
-            return $response->setError(false)->setMessage(trans('core.base::notices.delete_success_message'));
+            return $response
+                ->setMessage(trans('core.base::notices.delete_success_message'));
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('core.base::notices.cannot_delete'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::notices.cannot_delete'));
         }
     }
 
@@ -197,7 +210,8 @@ class PostController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)
+            return $response
+                ->setError()
                 ->setMessage(trans('core.base::notices.no_select'));
         }
 
@@ -207,7 +221,7 @@ class PostController extends BaseController
             event(new DeletedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
         }
 
-        return $response->setError(false)
+        return $response
             ->setMessage(trans('core.base::notices.delete_success_message'));
     }
 
@@ -222,6 +236,7 @@ class PostController extends BaseController
     {
         $limit = $request->input('paginate', 10);
         $posts = $this->postRepository->getModel()->orderBy('created_at', 'desc')->paginate($limit);
-        return $response->setError(false)->setData(view('plugins.blog::posts.widgets.posts', compact('posts', 'limit'))->render());
+        return $response
+            ->setData(view('plugins.blog::posts.widgets.posts', compact('posts', 'limit'))->render());
     }
 }

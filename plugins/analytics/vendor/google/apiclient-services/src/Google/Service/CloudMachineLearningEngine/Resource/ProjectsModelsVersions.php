@@ -125,8 +125,8 @@ class Google_Service_CloudMachineLearningEngine_Resource_ProjectsModelsVersions 
   /**
    * Updates the specified Version resource.
    *
-   * Currently the only supported field to update is `description`.
-   * (versions.patch)
+   * Currently the only update-able fields are `description` and
+   * `autoScaling.minNodes`. (versions.patch)
    *
    * @param string $name Required. The name of the model.
    * @param Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version $postBody
@@ -140,7 +140,8 @@ class Google_Service_CloudMachineLearningEngine_Resource_ProjectsModelsVersions 
    * request body would specify the new value, as follows:     {
    * "description": "foo"     }
    *
-   * Currently the only supported update mask is`description`.
+   * Currently the only supported update mask fields are `description` and
+   * `autoScaling.minNodes`.
    * @return Google_Service_CloudMachineLearningEngine_GoogleLongrunningOperation
    */
   public function patch($name, Google_Service_CloudMachineLearningEngine_GoogleCloudMlV1Version $postBody, $optParams = array())

@@ -61,7 +61,9 @@ class RequestLogServiceProvider extends ServiceProvider
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
             ->loadAndPublishConfigurations(['permissions'])
-            ->loadMigrations();
+            ->loadMigrations()
+            ->publishPublicFolder()
+            ->publishAssetsFolder();
 
         $this->app->register(HookServiceProvider::class);
 

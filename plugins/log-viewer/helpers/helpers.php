@@ -5,7 +5,7 @@ if (!function_exists('log_viewer')) {
      * Get the LogViewer instance.
      *
      * @return \Botble\LogViewer\Contracts\LogViewer
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     function log_viewer()
     {
@@ -18,7 +18,7 @@ if (!function_exists('log_levels')) {
      * Get the LogLevels instance.
      *
      * @return \Botble\LogViewer\Contracts\Utilities\LogLevels
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     function log_levels()
     {
@@ -31,7 +31,7 @@ if (!function_exists('log_menu')) {
      * Get the LogMenu instance.
      *
      * @return \Botble\LogViewer\Contracts\Utilities\LogMenu
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     function log_menu()
     {
@@ -44,7 +44,7 @@ if (!function_exists('log_styler')) {
      * Get the LogStyler instance.
      *
      * @return \Botble\LogViewer\Contracts\Utilities\LogStyler
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     function log_styler()
     {
@@ -59,7 +59,7 @@ if (!function_exists('extract_date')) {
      * @param  string $string
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     function extract_date($string)
     {

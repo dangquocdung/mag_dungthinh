@@ -18,6 +18,7 @@ use Event;
 use File;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Schema;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -42,11 +43,14 @@ class ThemeServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ThemeCreateCommand::class,
-                ThemeRemoveCommand::class,
-                ThemeActivateCommand::class,
-                ThemeInstallSampleDataCommand::class,
             ]);
         }
+
+        $this->commands([
+            ThemeActivateCommand::class,
+            ThemeRemoveCommand::class,
+            ThemeInstallSampleDataCommand::class,
+        ]);
 
         Helper::autoload(__DIR__ . '/../../helpers');
     }
@@ -61,7 +65,11 @@ class ThemeServiceProvider extends ServiceProvider
             ->loadAndPublishConfigurations(['general', 'permissions'])
             ->loadRoutes()
             ->loadAndPublishViews()
-            ->loadAndPublishTranslations();
+            ->loadAndPublishTranslations()
+            ->publishAssetsFolder()
+            ->publishPublicFolder();
+
+        $this->app->register(HookServiceProvider::class);
 
         Event::listen(SessionStarted::class, function () {
             dashboard_menu()
@@ -78,7 +86,7 @@ class ThemeServiceProvider extends ServiceProvider
                     'id' => 'cms-core-theme-option',
                     'priority' => 4,
                     'parent_id' => 'cms-core-appearance',
-                    'name' => trans('core.base::layouts.theme_options'),
+                    'name' => trans('core.theme::theme.theme_options'),
                     'icon' => null,
                     'url' => route('theme.options'),
                     'permissions' => ['theme.options'],
@@ -87,18 +95,32 @@ class ThemeServiceProvider extends ServiceProvider
                     'id' => 'cms-core-appearance-custom-css',
                     'priority' => 5,
                     'parent_id' => 'cms-core-appearance',
-                    'name' => __('Custom CSS'),
+                    'name' => trans('core.theme::theme.custom_css'),
                     'icon' => null,
                     'url' => route('theme.custom-css'),
                     'permissions' => ['theme.custom-css'],
                 ]);
+
+            admin_bar()->registerLink('Theme', route('theme.list'), 'appearance');
         });
 
         $this->app->booted(function () {
             $file = public_path('themes/' . setting('theme') . '/assets/css/style.integration.css');
             if (File::exists($file)) {
-                \Theme::asset()->container('after_header')->add('theme-style-integration-css', 'themes/' . setting('theme') . '/assets/css/style.integration.css');
+                ThemeFacade::getFacadeRoot()
+                    ->asset()
+                    ->container('after_header')
+                    ->add('theme-style-integration-css', 'themes/' . setting('theme') . '/assets/css/style.integration.css');
+            }
+
+            if (check_database_connection() && Schema::hasTable('settings')) {
+                $theme = setting('theme');
+                if (!$theme) {
+                    setting()->set('theme', array_first(scan_folder(public_path('themes'))));
+                }
             }
         });
+
+        $this->app->register(ThemeManagementServiceProvider::class);
     }
 }

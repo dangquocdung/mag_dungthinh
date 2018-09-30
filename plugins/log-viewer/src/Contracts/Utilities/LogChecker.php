@@ -22,7 +22,7 @@ interface LogChecker
      * @param  \Illuminate\Contracts\Config\Repository $config
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setConfig(ConfigContract $config);
 
@@ -32,7 +32,7 @@ interface LogChecker
      * @param  \Botble\LogViewer\Contracts\Utilities\Filesystem $filesystem
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setFilesystem(Filesystem $filesystem);
 
@@ -40,7 +40,7 @@ interface LogChecker
      * Get messages.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function messages();
 
@@ -48,7 +48,7 @@ interface LogChecker
      * Check passes ??
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function passes();
 
@@ -56,7 +56,7 @@ interface LogChecker
      * Check fails ??
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function fails();
 
@@ -64,7 +64,7 @@ interface LogChecker
      * Get the requirements
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function requirements();
 }

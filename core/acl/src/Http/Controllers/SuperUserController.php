@@ -39,11 +39,11 @@ class SuperUserController extends BaseController
     {
         page_title()->setTitle(trans('core.acl::permissions.super_user_management'));
 
-        return $dataTable->renderTable(['title' => trans('core.base::system.user.list_super'), 'dataTable' => $dataTable]);
+        return $dataTable->renderTable();
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @author Sang Nguyen
@@ -51,13 +51,17 @@ class SuperUserController extends BaseController
     public function getDelete($id, BaseHttpResponse $response)
     {
         if (Auth::user()->getKey() == $id) {
-            return $response->setError(true)->setMessage(trans('core.base::system.cannot_revoke_yourself'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::system.cannot_revoke_yourself'));
         }
 
         try {
             $user = $this->userRepository->findById($id);
         } catch (Exception $exception) {
-            return $response->setError(true)->setMessage(trans('core.base::system.cannot_find_user'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::system.cannot_find_user'));
         }
         $user->updatePermission('superuser', false);
         $user->updatePermission('manage_supers', false);
@@ -77,12 +81,16 @@ class SuperUserController extends BaseController
     {
         $ids = $request->input('ids');
         if (empty($ids)) {
-            return $response->setError(true)->setMessage(trans('core.base::system.no_select'));
+            return $response
+                ->setError()
+                ->setMessage(trans('core.base::system.no_select'));
         }
 
         foreach ($ids as $id) {
             if (Auth::user()->getKey() == $id) {
-                return $response->setError(true)->setMessage(trans('core.base::system.cannot_revoke_yourself'));
+                return $response
+                    ->setError()
+                    ->setMessage(trans('core.base::system.cannot_revoke_yourself'));
             }
             $user = $this->userRepository->findOrFail($id);
             $user->updatePermission('superuser', false);
@@ -122,14 +130,14 @@ class SuperUserController extends BaseController
                     ->setMessage(trans('core.base::system.supper_granted'));
             }
             return $response
-                ->setError(true)
-                ->withInput(true)
+                ->setError()
+                ->withInput()
                 ->setNextUrl(route('users-supers.list'))
                 ->setMessage(trans('core.base::system.cant_find_user_with_email'));
         } catch (Exception $exception) {
             return $response
-                ->setError(true)
-                ->withInput(true)
+                ->setError()
+                ->withInput()
                 ->setNextUrl(route('users-supers.list'))
                 ->setMessage($exception->getMessage());
         }

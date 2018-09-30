@@ -19,22 +19,36 @@ class SendMailEvent extends Event
     public $title;
 
     /**
+     * @var string
+     */
+    public $to;
+
+    /**
      * @var array
      */
     public $args;
 
     /**
+     * @var boolean
+     */
+    public $debug = false;
+
+    /**
      * SendMailEvent constructor.
-     * @param $content
-     * @param $title
-     * @param $args
+     * @param string $content
+     * @param string $title
+     * @param $to
+     * @param array $args
+     * @param bool $debug
      * @author Sang Nguyen
      */
-    public function __construct($content, $title, $args)
+    public function __construct($content, $title, $to, $args, $debug = false)
     {
         $this->content = $content;
         $this->title = $title;
+        $this->to = $to;
         $this->args = $args;
+        $this->debug = $debug;
     }
 
     /**

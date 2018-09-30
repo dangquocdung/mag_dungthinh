@@ -3,17 +3,11 @@
 namespace Botble\Note;
 
 use Auth;
-use Botble\Note\Events\NoteBoxEvent;
 use Botble\Note\Repositories\Interfaces\NoteInterface;
 use Eloquent;
 
 class Note
 {
-    /**
-     * @var array
-     */
-    protected $screens = [];
-
     /**
      * @var NoteInterface
      */
@@ -25,35 +19,21 @@ class Note
      */
     public function __construct(NoteInterface $noteRepository)
     {
-        $this->screens = [
-            PAGE_MODULE_SCREEN_NAME,
-        ];
-
-        if (defined('POST_MODULE_SCREEN_NAME')) {
-            $this->screens[] = POST_MODULE_SCREEN_NAME;
-        }
-
         $this->noteRepository = $noteRepository;
     }
 
     /**
-     * @param $module
+     * @param string | array $screen
+     * @return Note
      * @author Sang Nguyen
      */
     public function registerModule($screen)
     {
-        $this->screens[] = $screen;
-    }
-
-    /**
-     * @return array
-     * @author Sang Nguyen
-     */
-    public function getScreens()
-    {
-        event(NoteBoxEvent::class);
-
-        return $this->screens;
+        if (!is_array($screen)) {
+            $screen = [$screen];
+        }
+        config(['plugins.note.general.supported' => array_merge(config('plugins.note.general.supported'), $screen)]);
+        return $this;
     }
 
     /**
@@ -64,7 +44,7 @@ class Note
      */
     public function saveNote($screen, $request, $object)
     {
-        if (in_array($screen, $this->getScreens()) && $request->input('note')) {
+        if (in_array($screen, config('plugins.note.general.supported')) && $request->input('note')) {
             $note = $this->noteRepository->getModel();
             $note->note = $request->input('note');
             $note->user_id = Auth::user()->getKey();

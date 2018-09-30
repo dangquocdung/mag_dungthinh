@@ -19,7 +19,6 @@ class PageRequest extends Request
             'name' => 'required|max:120',
             'content' => 'required',
             'slug' => 'required',
-            'order' => 'required|integer|min:0',
         ];
     }
 }

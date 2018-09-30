@@ -18,17 +18,13 @@ class ContactTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $has_configuration = true;
-
-    /**
-     * @var bool
-     */
     protected $has_filter = true;
 
     /**
      * TagTable constructor.
      * @param DataTables $table
      * @param UrlGenerator $urlGenerator
+     * @param ContactInterface $contactRepository
      */
     public function __construct(DataTables $table, UrlGenerator $urlGenerator, ContactInterface $contactRepository)
     {
@@ -96,8 +92,7 @@ class ContactTable extends TableAbstract
                 'contacts.email',
                 'contacts.created_at',
                 'contacts.is_read',
-            ])
-            ->latest();
+            ]);
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model, CONTACT_MODULE_SCREEN_NAME));
     }
 
@@ -186,12 +181,12 @@ class ContactTable extends TableAbstract
                 'callback' => 'getEmails',
             ],
             'contacts.phone' => [
-                'title' => __('Phone'),
+                'title' => trans('plugins.contact::contact.sender_phone'),
                 'type' => 'text',
                 'validate' => 'required|max:120',
                 'callback' => 'getPhones',
             ],
-            'contacts.status' => [
+            'contacts.is_read' => [
                 'title' => trans('core.base::tables.status'),
                 'type' => 'select',
                 'choices' => [
@@ -229,5 +224,16 @@ class ContactTable extends TableAbstract
     public function getPhones()
     {
         return $this->repository->pluck('contacts.phone', 'contacts.id');
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultButtons()
+    {
+        return [
+            'export',
+            'reload',
+        ];
     }
 }

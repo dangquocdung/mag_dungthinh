@@ -2,12 +2,10 @@
 
 namespace Botble\Theme\Commands;
 
+use Botble\Setting\Supports\SettingStore;
 use Illuminate\Console\Command;
-use Setting;
-use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem as File;
-use Symfony\Component\Console\Input\InputOption;
 
 class ThemeActivateCommand extends Command
 {
@@ -17,7 +15,10 @@ class ThemeActivateCommand extends Command
      *
      * @var string
      */
-    protected $name = 'theme:activate';
+    protected $signature = 'cms:theme:activate 
+        {name : The theme that you want to activate} 
+        {--path= : Path to theme directory}
+    ';
 
     /**
      * The console command description.
@@ -37,17 +38,23 @@ class ThemeActivateCommand extends Command
     protected $files;
 
     /**
+     * @var SettingStore
+     */
+    protected $settingStore;
+
+    /**
      * Create a new command instance.
      *
      * @param \Illuminate\Config\Repository $config
      * @param \Illuminate\Filesystem\Filesystem $files
+     * @param SettingStore $settingStore
      * @author Teepluss <admin@laravel.in.th>
      */
-    public function __construct(Repository $config, File $files)
+    public function __construct(Repository $config, File $files, SettingStore $settingStore)
     {
         $this->config = $config;
-
         $this->files = $files;
+        $this->settingStore = $settingStore;
 
         parent::__construct();
     }
@@ -60,13 +67,19 @@ class ThemeActivateCommand extends Command
      */
     public function handle()
     {
+        if (!preg_match('/^[a-z0-9\-]+$/i', $this->argument('name'))) {
+            $this->error('Only alphabetic characters are allowed.');
+            return false;
+        }
+
         if (!$this->files->isDirectory($this->getPath(null))) {
             $this->error('Theme "' . $this->getTheme() . '" is not exists.');
             return false;
         }
 
-        Setting::set('theme', $this->argument('name'));
-        Setting::save();
+        $this->settingStore
+            ->set('theme', $this->argument('name'))
+            ->save();
         $this->info('Activate theme ' . $this->argument('name') . ' successfully!');
         $this->call('cache:clear');
         return true;
@@ -93,45 +106,11 @@ class ThemeActivateCommand extends Command
      */
     protected function getPath($path)
     {
-        $rootPath = $this->option('path');
+        $rootPath = public_path($this->config->get('core.theme.general.themeDir'));
+        if ($this->option('path')) {
+            $rootPath = $this->option('path');
+        }
 
         return $rootPath . '/' . strtolower($this->getTheme()) . '/' . $path;
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    protected function getArguments()
-    {
-        return [
-            [
-                'name',
-                InputArgument::REQUIRED,
-                'Name of the theme to activate.',
-            ],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    protected function getOptions()
-    {
-        $path = public_path() . '/' . $this->config->get('core.theme.general.themeDir');
-
-        return [
-            [
-                'path',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Path to theme directory.', $path,
-            ],
-        ];
     }
 }

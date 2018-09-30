@@ -40,9 +40,10 @@ class CreatedContentListener
                 $slugService = new SlugService(app(SlugInterface::class));
 
                 $this->slugRepository->createOrUpdate([
-                    'key' => $slugService->create($slug),
+                    'key' => $slugService->create($slug, $event->data->slug_id, $event->screen),
                     'reference' => $event->screen,
                     'reference_id' => $event->data->id,
+                    'prefix' => config('core.slug.general.prefixes.' . $event->screen, ''),
                 ]);
             } catch (Exception $exception) {
                 info($exception->getMessage());

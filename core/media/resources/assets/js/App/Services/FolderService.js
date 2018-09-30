@@ -1,4 +1,3 @@
-import {MediaList} from '../Views/MediaList';
 import {MediaConfig} from '../Config/MediaConfig';
 import {MediaService} from './MediaService';
 import {MessageService} from '../Services/MessageService';
@@ -6,11 +5,10 @@ import {Helpers} from '../Helpers/Helpers';
 
 export class FolderService {
     constructor() {
-        this.MediaList = new MediaList();
         this.MediaService = new MediaService();
 
-        $('body').on('shown.bs.modal', '#modal_add_folder', function () {
-            $(this).find('.form-add-folder input[type=text]').focus();
+        $('body').on('shown.bs.modal', '#modal_add_folder', (event) => {
+            $(event.currentTarget).find('.form-add-folder input[type=text]').focus();
         });
     }
 
@@ -24,10 +22,10 @@ export class FolderService {
                 name: folderName
             },
             dataType: 'json',
-            beforeSend: function () {
+            beforeSend: () => {
                 Helpers.showAjaxLoading();
             },
-            success: function (res) {
+            success: (res) => {
                 if (res.error) {
                     MessageService.showMessage('error', res.message, RV_MEDIA_CONFIG.translations.message.error_header);
                 } else {
@@ -37,10 +35,10 @@ export class FolderService {
                     FolderService.closeModal();
                 }
             },
-            complete: function (data) {
+            complete: () => {
                 Helpers.hideAjaxLoading();
             },
-            error: function (data) {
+            error: (data) => {
                 MessageService.handleError(data);
             }
         });

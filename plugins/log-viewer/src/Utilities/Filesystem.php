@@ -49,7 +49,7 @@ class Filesystem implements FilesystemContract
      *
      * @param  \Illuminate\Filesystem\Filesystem $files
      * @param  string $storagePath
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct(IlluminateFilesystem $files, $storagePath)
     {
@@ -62,7 +62,7 @@ class Filesystem implements FilesystemContract
      * Get the files instance.
      *
      * @return \Illuminate\Filesystem\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getInstance()
     {
@@ -75,7 +75,7 @@ class Filesystem implements FilesystemContract
      * @param  string $storagePath
      *
      * @return \Botble\LogViewer\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPath($storagePath)
     {
@@ -88,7 +88,7 @@ class Filesystem implements FilesystemContract
      * Get the log pattern.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getPattern()
     {
@@ -103,7 +103,7 @@ class Filesystem implements FilesystemContract
      * @param  string $extension
      *
      * @return \Botble\LogViewer\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPattern(
         $prefix = self::PATTERN_PREFIX,
@@ -124,7 +124,7 @@ class Filesystem implements FilesystemContract
      * @param  string $datePattern
      *
      * @return \Botble\LogViewer\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDatePattern($datePattern)
     {
@@ -139,7 +139,7 @@ class Filesystem implements FilesystemContract
      * @param  string $prefixPattern
      *
      * @return \Botble\LogViewer\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPrefixPattern($prefixPattern)
     {
@@ -154,7 +154,7 @@ class Filesystem implements FilesystemContract
      * @param  string $extension
      *
      * @return \Botble\LogViewer\Utilities\Filesystem
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setExtension($extension)
     {
@@ -167,7 +167,7 @@ class Filesystem implements FilesystemContract
      * Get all log files.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function all()
     {
@@ -178,7 +178,7 @@ class Filesystem implements FilesystemContract
      * Get all valid log files.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function logs()
     {
@@ -191,7 +191,7 @@ class Filesystem implements FilesystemContract
      * @param  bool $withPaths
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function dates($withPaths = false)
     {
@@ -213,7 +213,7 @@ class Filesystem implements FilesystemContract
      * @return string
      *
      * @throws \Botble\LogViewer\Exceptions\FilesystemException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function read($date)
     {
@@ -222,7 +222,7 @@ class Filesystem implements FilesystemContract
 
             return $this->filesystem->get($path);
         } catch (Exception $exception) {
-            throw new FilesystemException($e->getMessage());
+            throw new FilesystemException($exception->getMessage());
         }
     }
 
@@ -234,7 +234,7 @@ class Filesystem implements FilesystemContract
      * @return bool
      *
      * @throws \Botble\LogViewer\Exceptions\FilesystemException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function delete($date)
     {
@@ -255,7 +255,8 @@ class Filesystem implements FilesystemContract
      * @param  string $date
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws FilesystemException
      */
     public function path($date)
     {
@@ -268,7 +269,7 @@ class Filesystem implements FilesystemContract
      * @param  string $pattern
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function getFiles($pattern)
     {
@@ -288,7 +289,7 @@ class Filesystem implements FilesystemContract
      * @return string
      *
      * @throws \Botble\LogViewer\Exceptions\FilesystemException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function getLogPath($date)
     {
@@ -307,7 +308,7 @@ class Filesystem implements FilesystemContract
      * @param  array $files
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     private function extractDates(array $files)
     {

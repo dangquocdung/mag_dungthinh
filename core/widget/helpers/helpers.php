@@ -51,7 +51,9 @@ if (!function_exists('dynamic_sidebar')) {
 
         $widgets = app(WidgetInterface::class)->getByTheme(setting('theme') . $language_code);
         foreach ($widgets as $widget) {
-            WidgetGroup::group($widget->sidebar_id)->position($widget->position)->addWidget($widget->widget_id, $widget->data);
+            WidgetGroup::group($widget->sidebar_id)
+                ->position($widget->position)
+                ->addWidget($widget->widget_id, $widget->data);
         }
 
         return WidgetGroup::group($sidebar_id)->display();

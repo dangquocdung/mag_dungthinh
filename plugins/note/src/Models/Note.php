@@ -16,13 +16,6 @@ class Note extends Eloquent
     protected $table = 'notes';
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['deleted_at'];
-
-    /**
      * The date fields for the model.clear
      *
      * @var array
@@ -30,7 +23,6 @@ class Note extends Eloquent
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**
@@ -39,7 +31,7 @@ class Note extends Eloquent
      */
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by')->withDefault();
     }
 
     /**
@@ -48,6 +40,6 @@ class Note extends Eloquent
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 }

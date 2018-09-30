@@ -144,7 +144,7 @@ ul.list-justified li {
     border-radius : 0;
 }
 
-ul.dropdown-menu.pull-right {
+ul.dropdown-menu.float-right {
     > li:first-child {
         &:before {
             right : 11px;
@@ -1121,14 +1121,14 @@ small.charcounter {
 
 .breadcrumb > li + li:before {
     content : "\f101";
-    font    : normal normal normal 14px/1 FontAwesome;
+    font    : 900 normal normal 14px/1 Font Awesome\ 5 Free;
     display : inline-block;
     padding : 0 4px;
 }
 
 .breadcrumb > li:first-child:before {
     content       : "\f015";
-    font          : normal normal normal 14px/1 FontAwesome;
+    font          : 900 normal normal 14px/1 Font Awesome\ 5 Free;
     display       : inline-block;
     padding-right : 4px;
     color         : #333333;
@@ -1407,4 +1407,23 @@ a.list-group-item-info.active, a.list-group-item-info.active:hover, a.list-group
     -webkit-border-radius : 0;
     -moz-border-radius    : 0;
     border-radius         : 0;
+}
+
+.dropdown-toggle.dropdown-header-name {
+    &:after {
+        display : none;
+    }
+}
+
+#auto-checkboxes {
+    ul {
+        > li {
+            margin-left   : 0;
+            margin-bottom : 10px;
+        }
+    }
+}
+
+.control-label {
+    font-weight : 500;
 }

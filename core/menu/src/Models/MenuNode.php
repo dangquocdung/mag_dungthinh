@@ -43,7 +43,7 @@ class MenuNode extends Eloquent
     {
         $item = new stdClass;
         $item->name = $this->title;
-        $item->url = $this->url ? url($this->url) : url('/');
+        $item->url = $this->url ? url($this->url) : route('public.index');
 
         if ($this->type != 'custom-link') {
             if ($this->key != null) {
@@ -52,7 +52,7 @@ class MenuNode extends Eloquent
                 $related = array_get(\Menu::getRelatedRouteNames(), $this->type);
                 if (Route::has($related['route'])) {
                     $related_item = DB::table($related['table'])->find($this->related_id);
-                    if ($related_item) {
+                    if ($related_item && property_exists($related_item, 'slug')) {
                         $item->url = route($related['route'], $related_item->slug);
                     }
                 }

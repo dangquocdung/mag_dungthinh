@@ -5,13 +5,11 @@ namespace Botble\Page\Models;
 use Botble\ACL\Models\User;
 use Botble\Slug\Traits\SlugTrait;
 use Eloquent;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Venturecraft\Revisionable\RevisionableTrait;
 
 class Page extends Eloquent
 {
     use RevisionableTrait;
-    use SoftDeletes;
     use SlugTrait;
 
     /**
@@ -42,13 +40,6 @@ class Page extends Eloquent
     protected $dontKeepRevisionOf = ['content'];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['deleted_at'];
-
-    /**
      * The date fields for the model.clear
      *
      * @var array
@@ -56,7 +47,6 @@ class Page extends Eloquent
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**
@@ -69,10 +59,8 @@ class Page extends Eloquent
         'content',
         'image',
         'template',
-        'icon',
         'description',
         'featured',
-        'order',
         'status',
         'user_id',
     ];
@@ -88,6 +76,6 @@ class Page extends Eloquent
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();
     }
 }

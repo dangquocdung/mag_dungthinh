@@ -15,6 +15,11 @@
     * {
         font-size : 13px;
     }
+    .form-add-folder {
+        .input-group-prepend {
+            padding : 0;
+        }
+    }
     .rv-media-wrapper {
         display   : flex;
         width     : 100%;
@@ -36,6 +41,11 @@
                 @include lib-css(flex-direction, row);
                 display : flex;
                 height  : 200px;
+            }
+            .rv-dropdown-actions {
+                .dropdown-toggle:after {
+                    display : none;
+                }
             }
         }
     }
@@ -104,6 +114,9 @@
                     white-space   : nowrap;
                     overflow      : hidden;
                     text-overflow : ellipsis;
+                }
+                .btn {
+                    background: #e5e5e5;
                 }
             }
         }

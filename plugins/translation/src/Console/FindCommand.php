@@ -13,7 +13,7 @@ class FindCommand extends Command
      *
      * @var string
      */
-    protected $name = 'translations:find';
+    protected $name = 'cms:translations:find';
 
     /**
      * The console command description.

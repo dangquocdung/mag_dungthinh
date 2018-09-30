@@ -10,11 +10,10 @@
         <div class="portlet light bordered portlet-no-padding">
             <div class="portlet-title">
                 <div class="caption">
-                    @if ($actions)
-                        <div class="wrapper-action">
+                    <div class="wrapper-action">
+                        @if ($actions)
                             <div class="btn-group">
-                                <a class="btn btn-default dropdown-toggle" href="#" data-toggle="dropdown">{{ trans('core.table::general.bulk_actions') }}
-                                    <i class="fa fa-angle-down "></i>
+                                <a class="btn btn-secondary dropdown-toggle" href="#" data-toggle="dropdown">{{ trans('core.table::general.bulk_actions') }}
                                 </a>
                                 <ul class="dropdown-menu">
                                     @foreach ($actions as $action)
@@ -24,11 +23,11 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            @if ($table->isHasFilter())
-                                <button class="btn btn-primary btn-show-table-options">{{ trans('core.table::general.filters') }}</button>
-                            @endif
-                        </div>
-                    @endif
+                        @endif
+                        @if ($table->isHasFilter())
+                            <button class="btn btn-primary btn-show-table-options">{{ trans('core.table::general.filters') }}</button>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="portlet-body">

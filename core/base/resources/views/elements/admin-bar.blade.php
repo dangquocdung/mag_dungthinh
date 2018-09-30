@@ -16,8 +16,8 @@
                             <li><a href="{{ route('dashboard.index') }}" title="Go to dashboard">{{ __('Dashboard') }}</a></li>
                             @foreach (array_get($group, 'items', []) as $title => $link)
                                 <li>
-                                    <a href="{{ $link or '' }}">
-                                        {{ $title or '' }}
+                                    <a href="{{ $link ?? '' }}">
+                                        {{ $title ?? '' }}
                                     </a>
                                 </li>
                             @endforeach

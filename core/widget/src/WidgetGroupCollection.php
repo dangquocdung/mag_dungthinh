@@ -14,6 +14,11 @@ class WidgetGroupCollection
     protected $groups;
 
     /**
+     * @var ApplicationWrapperContract
+     */
+    protected $app;
+
+    /**
      * Constructor.
      *
      * @param ApplicationWrapperContract $app
@@ -29,7 +34,7 @@ class WidgetGroupCollection
      *
      * @param $sidebar_id
      *
-     * @return WidgetGroup
+     * @return \Botble\Widget\WidgetGroup
      * @author Sang Nguyen
      */
     public function group($sidebar_id)

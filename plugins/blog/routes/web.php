@@ -42,7 +42,7 @@ Route::group(['namespace' => 'Botble\Blog\Http\Controllers', 'middleware' => 'we
             Route::get('/widgets/recent-posts', [
                 'as' => 'posts.widget.recent-posts',
                 'uses' => 'PostController@getWidgetRecentPosts',
-                'permission' => false,
+                'permission' => 'dashboard.index',
             ]);
         });
 
@@ -143,6 +143,11 @@ Route::group(['namespace' => 'Botble\Blog\Http\Controllers', 'middleware' => 'we
         Route::get('/api/search', [
             'as' => 'public.api.search',
             'uses' => 'PublicController@getApiSearch',
+        ]);
+
+        Route::get('/tag/{slug}', [
+            'as' => 'public.tag',
+            'uses' => 'PublicController@getTag',
         ]);
     });
 });

@@ -8,7 +8,7 @@ if (!function_exists('setting')) {
      *
      * @param $key
      * @param $default
-     * @return array|\Botble\Setting\Setting|string|null
+     * @return array|\Botble\Setting\Supports\SettingStore|string|null
      * @author Sang Nguyen
      */
     function setting($key = null, $default = null)
@@ -23,8 +23,6 @@ if (!function_exists('setting')) {
         }
         return SettingFacade::getFacadeRoot();
     }
-
-
 }
 
 if (!function_exists('get_setting_email_template_content')) {
@@ -45,7 +43,7 @@ if (!function_exists('get_setting_email_template_content')) {
             return get_file_data($storage_path, false);
         }
 
-        return File::exists($default_path) ? get_file_data($default_path, false) : null;
+        return File::exists($default_path) ? get_file_data($default_path, false) : '';
     }
 }
 
@@ -81,7 +79,7 @@ if (!function_exists('get_setting_email_subject')) {
      * @param $module_type : plugins or core
      * @param $name : name of plugin or core component
      * @param $mail_key : define in config/email/templates
-     * @return array|\Botble\Setting\Setting|null|string
+     * @return array|\Botble\Setting\Supports\SettingStore|null|string
      */
     function get_setting_email_subject($module_type, $module_name, $email_template_key)
     {
@@ -110,10 +108,10 @@ if (!function_exists('get_setting_email_status')) {
      * @param $module_type
      * @param $module_name
      * @param $email_template_key
-     * @return array|\Botble\Setting\Setting|null|string
+     * @return array|\Botble\Setting\Supports\SettingStore|null|string
      */
     function get_setting_email_status($module_type, $module_name, $email_template_key)
     {
-        return setting( get_setting_email_status_key($module_type, $module_name, $email_template_key), true);
+        return setting(get_setting_email_status_key($module_type, $module_name, $email_template_key), true);
     }
 }

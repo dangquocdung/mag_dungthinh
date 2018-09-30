@@ -4,6 +4,6 @@
     "provider": "Botble\\Gallery\\Providers\\GalleryServiceProvider",
     "author": "Sang Nguyen",
     "url": "http://sangnguyen.info",
-    "version": "2.6",
-    "description": "Gallery for posts, pages..."
+    "version": "2.7",
+    "description": "Create or easy to add gallery images to posts, pages..."
 }

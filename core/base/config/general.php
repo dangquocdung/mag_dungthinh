@@ -3,13 +3,13 @@
 return [
     'admin_dir' => env('ADMIN_DIR', 'admin'),
     'plugin-default-img' => '/vendor/core/images/plugin.png',
-    'plugin_path' => base_path() . '/plugins',
+    'plugin_path' => base_path('plugins'),
     'media-default-img' => '/vendor/core/images/default-image.jpg',
     'upload' => [
         'base_dir' => public_path('uploads'),
     ],
     'default-theme' => env('DEFAULT_THEME', 'default'),
-    'base_name' => env('APP_NAME', 'Dũng Thịnh'),
+    'base_name' => env('APP_NAME', 'Botble Technologies'),
     'logo' => '/vendor/core/images/logo_white.png',
     'favicon' => '/vendor/core/images/favicon.png',
     'editor' => [
@@ -27,7 +27,6 @@ return [
     ],
     'email_template' => 'core.base::system.email',
     'error_reporting' => [
-        'via_email' => env('ERROR_REPORTING_VIA_EMAIL', false),
         'to' => null,
         'via_slack' => env('SLACK_REPORT_ENABLED', false),
         'ignored_bots' => [
@@ -38,7 +37,6 @@ return [
         ],
     ],
     'enable_https_support' => env('ENABLE_HTTPS_SUPPORT', false),
-    'enable_cache_dashboard_menu' => env('ENABLE_CACHE_DASHBOARD_MENU', false),
     'date_format' => [
         'date' => 'Y-m-d',
         'date_time' => 'Y-m-d H:i:s',
@@ -49,5 +47,4 @@ return [
     ],
     'cache_site_map' => env('ENABLE_CACHE_SITE_MAP', false),
     'public_single_ending_url' => env('PUBLIC_SINGLE_ENDING_URL', null),
-    'allow_config_mail_server_from_admin' => env('ALLOW_CONFIG_MAIL_SERVER_FROM_ADMIN', false),
 ];

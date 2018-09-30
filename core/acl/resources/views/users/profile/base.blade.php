@@ -1,7 +1,7 @@
 @extends('core.base::layouts.master')
 
 @section('content')
-    <div class="user-profile">
+    <div class="user-profile row">
         <div class="col-md-3 col-sm-5 crop-avatar">
             <!-- Profile links -->
             <div class="block">
@@ -10,7 +10,7 @@
                         <div class="thumb">
                             <div class="profile-userpic mt-card-item">
                                 <div class="avatar-view mt-card-avatar mt-overlay-1">
-                                    <img src="{{ url($user->getProfileImage()) }}" class="img-responsive" alt="avatar">
+                                    <img src="{{ url($user->getProfileImage()) }}" class="img-fluid" alt="avatar">
                                     @if ($can_change_profile)
                                         <div class="mt-overlay">
                                             <ul class="mt-info">
@@ -60,8 +60,10 @@
                         <div class="modal-content">
                             <form class="avatar-form" method="post" action="{{ route('users.profile.image') }}" enctype="multipart/form-data">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title" id="avatar-modal-label"><i class="til_img"></i><strong>{{ trans('core.acl::users.change_profile_image') }}</strong></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
                                 </div>
                                 <div class="modal-body">
     
@@ -93,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-default" type="button" data-dismiss="modal">{{ trans('core.acl::users.close') }}</button>
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('core.acl::users.close') }}</button>
                                     <button class="btn btn-primary avatar-save" type="submit">{{ trans('core.acl::users.save') }}</button>
                                 </div>
                             </form>
@@ -105,40 +107,35 @@
         </div>
         <div class="col-md-9 col-sm-7">
             <div class="profile-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="tabbable-custom tabable-tabdrop">
-                            <ul class="nav nav-tabs">
-                                <li class="active">
-                                    <a href="#tab_1_1" data-toggle="tab" aria-expanded="true">{{ trans('core.acl::users.info.title') }}</a>
-                                </li>
-                                @if ($can_change_profile)
-                                    <li>
-                                        <a href="#tab_1_3" data-toggle="tab" aria-expanded="false">{{ trans('core.acl::users.change_password') }}</a>
-                                    </li>
-                                @endif
-                            </ul>
-                            <div class="tab-content">
-                            <!-- PERSONAL INFO TAB -->
-                            <div class="tab-pane active" id="tab_1_1">
-                                <div class="row">
-                                    {!! $form !!}
-                                </div>
-                            </div>
-                            <!-- END PERSONAL INFO TAB -->
-                            <!-- CHANGE PASSWORD TAB -->
-                            @if ($can_change_profile)
-                                <div class="tab-pane" id="tab_1_3">
-                                    {!! $password_form !!}
-                                </div>
-                            @endif
-                            <!-- END CHANGE PASSWORD TAB -->
-                        </div>
-                        </div>
+                <div class="tabbable-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="#tab_1_1" class="nav-link active" data-toggle="tab" aria-expanded="true">{{ trans('core.acl::users.info.title') }}</a>
+                        </li>
+                        @if ($can_change_profile)
+                            <li class="nav-item">
+                                <a href="#tab_1_3" class="nav-link" data-toggle="tab" aria-expanded="false">{{ trans('core.acl::users.change_password') }}</a>
+                            </li>
+                        @endif
+                        {!! apply_filters(ACL_FILTER_PROFILE_FORM_TABS, null) !!}
+                    </ul>
+                    <div class="tab-content">
+                    <!-- PERSONAL INFO TAB -->
+                    <div class="tab-pane active" id="tab_1_1">
+                        {!! $form !!}
                     </div>
+                    <!-- END PERSONAL INFO TAB -->
+                    <!-- CHANGE PASSWORD TAB -->
+                    @if ($can_change_profile)
+                        <div class="tab-pane" id="tab_1_3">
+                            {!! $password_form !!}
+                        </div>
+                    @endif
+                    <!-- END CHANGE PASSWORD TAB -->
+                    {!! apply_filters(ACL_FILTER_PROFILE_FORM_TAB_CONTENTS, null) !!}
+                </div>
                 </div>
             </div>
-            <!-- END PROFILE CONTENT -->
         </div>
         <div class="clearfix"></div>
     </div>

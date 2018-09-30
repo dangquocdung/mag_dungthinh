@@ -11,7 +11,8 @@ return [
             'phone' => 'Điện thoại',
             'email' => 'Email',
             'fullname' => 'Họ tên',
-            'address' => 'Địa chỉ',
+            'address' => 'Địa địa chỉ',
+            'subject' => 'Tiêu đề',
             'content' => 'Nội dung',
         ],
     'form' =>
@@ -21,10 +22,10 @@ return [
         ],
     'notices' =>
         [
-            'no_select' => 'Chọn ít nhất 1 liên hệ để thực hiện hành động này!',
+            'no_select' => 'Chọn ít nhất 1 liên hệ để thực hiện hành động này!',
             'update_success_message' => 'Cập nhật thành công',
         ],
-    'cannot_delete' => 'Không thể xóa liên hệ này',
+    'cannot_delete' => 'Không thể xóa liên hệ này',
     'deleted' => 'Liên hệ đã được xóa',
     'contact_information' => 'Thông tin liên hệ',
     'email' =>
@@ -38,16 +39,16 @@ return [
         ],
     'name' =>
         [
-            'required' => 'Họ tên không được để trống',
+            'required' => 'Họ tên không được để trống',
         ],
     'content' =>
         [
-            'required' => 'Nội dung tin nhắn không được để trống',
+            'required' => 'Nội dung tin nhắn không được để trống',
         ],
     'g-recaptcha-response' =>
         [
-            'required' => 'Hãy xác minh không phải là robot trước khi gửi tin nhắn.',
-            'captcha' => 'Bạn chưa xác minh không phải là robot thành công.',
+            'required' => 'Hãy xác minh không phải là robot trước khi gửi tin nhắn.',
+            'captcha' => 'Bạn chưa xác minh không phải là robot thành công.',
         ],
     'confirm_not_robot' => 'Xác nhận không phải người máy',
     'contact_sent_from' => 'Liên hệ này được gửi từ',
@@ -71,7 +72,7 @@ return [
     'new_msg_notice' => 'Bạn có <span class="bold">:count</span> tin nhắn mới',
     'phone' => 'Điện thoại',
     'read' => 'Đã đọc',
-    'unread' => 'Đánh dấu chưa đọc',
+    'unread' => 'Chưa đọc',
     'view_all' => 'Xem tất cả',
     'settings' => [
         'email' => [

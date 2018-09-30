@@ -5,9 +5,6 @@ namespace Botble\Base\Charts;
 use Botble\Base\Charts\Supports\Chart;
 use Botble\Base\Charts\Supports\ChartTypes;
 
-/**
- * Area Charts
- */
 class AreaChart extends Chart
 {
 
@@ -29,6 +26,21 @@ class AreaChart extends Chart
      * @var bool $behaveLikeLine
      */
     protected $behaveLikeLine = false;
+
+    /**
+     * @var array
+     */
+    protected $pointFillColors = [];
+
+    /**
+     * @var array
+     */
+    protected $pointStrokeColors = [];
+
+    /**
+     * @var array
+     */
+    protected $lineColors = [];
 
     /**
      * Create an instance of MorrisAreaCharts class

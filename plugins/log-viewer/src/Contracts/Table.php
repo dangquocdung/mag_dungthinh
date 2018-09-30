@@ -8,7 +8,7 @@ interface Table
      * Get table header.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function header();
 
@@ -16,7 +16,7 @@ interface Table
      * Get table rows.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function rows();
 
@@ -24,7 +24,7 @@ interface Table
      * Get table footer.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function footer();
 }

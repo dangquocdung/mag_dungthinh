@@ -18,10 +18,10 @@ class ContactForm extends FormAbstract
             ->setModuleName(CONTACT_MODULE_SCREEN_NAME)
             ->setValidatorClass(EditContactRequest::class)
             ->add('is_read', 'checkbox', [
-                'label' => 'Is read?',
+                'label' => trans('plugins.contact::contact.form.is_read'),
                 'label_attr' => ['class' => 'control-label'],
                 'attr' => [
-                    'class' => 'styled',
+                    'class' => 'hrv-checkbox',
                 ],
                 'value' => 1,
                 'checked' => $this->getModel() ? $this->getModel()->is_read == 1 : false,

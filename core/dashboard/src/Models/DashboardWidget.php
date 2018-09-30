@@ -2,7 +2,6 @@
 
 namespace Botble\Dashboard\Models;
 
-use Auth;
 use Eloquent;
 
 class DashboardWidget extends Eloquent
@@ -33,20 +32,23 @@ class DashboardWidget extends Eloquent
     ];
 
     /**
-     * @return mixed
-     * @author Sang Nguyen
-     */
-    public function userSetting()
-    {
-        return $this->settings()->where('user_id', '=', Auth::user()->getKey())->select(['status']);
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      * @author Sang Nguyen
      */
     public function settings()
     {
         return $this->hasMany(DashboardWidgetSetting::class, 'widget_id', 'id');
+    }
+
+    /**
+     * @author Sang Nguyen
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (DashboardWidget $widget) {
+            DashboardWidgetSetting::where('widget_id', $widget->id)->delete();
+        });
     }
 }

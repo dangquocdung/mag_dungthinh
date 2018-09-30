@@ -1,8 +1,8 @@
 @extends('core.base::layouts.master')
 @section('content')
-    <div class="box box-primary">
-        <div class="box-body box-translation">
-            <div class="col-xs-12">
+    <div class="widget meta-boxes">
+        <div class="widget-body box-translation">
+            <div class="col-12">
                 <p>{{ trans('plugins.translation::translation.export_warning') }}</p>
                 <div class="alert alert-success success-import" style="display:none;">
                     <p>{!! trans('plugins.translation::translation.import_done') !!}</p>
@@ -13,13 +13,13 @@
                 <div class="alert alert-success success-publish" style="display:none;">
                     <p>{{ trans('plugins.translation::translation.done_publishing') }} '{{ $group }}'!</p>
                 </div>
-                @if(Session::has('successPublish')) }}
+                @if (Session::has('successPublish')) }}
                     <div class="alert alert-info">
                         {{ Session::get('successPublish') }}
                     </div>
                 @endif
                 <br />
-                @if(!isset($group))
+                @if (!isset($group))
                     {!! Form::open(['route' => 'translations.import', 'class' => 'form-inline form-import', 'data-remote' => 'true', 'role' => 'form']) !!}
                         <div class="form-group">
                             <select name="replace" class="form-control">
@@ -43,10 +43,10 @@
                           action="{{ route('translations.group.publish', $group) }}" data-remote="true"
                           role="form"
                           data-confirm="{{ trans('plugins.translation::translation.confirm_publish_group', ['group' => $group]) }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        @csrf
                         <div class="form-group">
                             <button type="submit" class="btn btn-info publish-translation" data-disable-with="{{ trans('plugins.translation::translation.publishing') }}">{{ trans('plugins.translation::translation.publish_translations') }}</button>
-                            <a href="{{ route('translations.list') }}" class="btn btn-default translation-back">{{ trans('plugins.translation::translation.back') }}</a>
+                            <a href="{{ route('translations.list') }}" class="btn btn-secondary translation-back">{{ trans('plugins.translation::translation.back') }}</a>
                         </div>
                     </form>
                 @endif
@@ -61,7 +61,7 @@
                 {!! Form::close() !!}
                 @if($group)
                 <form action="{{ route('translations.group.add', $group) }}" method="POST" role="form">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    @csrf
                     <div class="form-group">
                         <textarea class="form-control" rows="3" name="keys" placeholder="{{ trans('plugins.translation::translation.add_key_description') }}"></textarea>
                     </div>
@@ -85,7 +85,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($translations as $key => $translation)
+                        @foreach ($translations as $key => $translation)
                             <tr id="{{ $key }}">
                                 <td class="text-left"><code>{{ $key }}</code></td>
                                 @foreach($locales as $locale)
@@ -94,13 +94,13 @@
                                         <a href="#edit" class="editable status-{{ $item ? $item->status : 0 }} locale-{{ $locale }}"
                                            data-locale="{{ $locale }}" data-name="{{ $locale . '|' . $key }}"
                                            data-type="textarea" data-pk="{{ $item ? $item->id : 0 }}" data-url="{{ $editUrl }}"
-                                           data-title="{{ trans('plugins.translation::translation.edit_title') }}">{{ $item ? htmlentities($item->value, ENT_QUOTES, 'UTF-8', false) : '' }}</a>
+                                           data-title="{{ trans('plugins.translation::translation.edit_title') }}">{!! ($item ? htmlentities($item->value, ENT_QUOTES, 'UTF-8', false) : '') !!}</a>
                                     </td>
                                 @endforeach
-                                @if($deleteEnabled)
+                                @if ($deleteEnabled)
                                     <td class="text-left">
                                         <a href="{{ route('translations.group.delete', ['groupKey' => $group, 'translationKey' => $key]) }}" class="delete-key" data-confirm="{{ trans('plugins.translation::translation.confirm_delete_key', ['key' => $key]) }}">
-                                            <span class="fa fa-trash-o"></span>
+                                            <span class="fa fa-trash"></span>
                                         </a>
                                     </td>
                                 @endif
@@ -116,14 +116,4 @@
             <div class="clearfix"></div>
         </div>
     </div>
-@stop
-
-@section('javascript')
-    <script>
-        var BTranslation = BTranslation || {};
-        BTranslation.routes = {
-            list: '{{ route('translations.list') }}',
-            group_view: '{{ route('translations.group.view') }}'
-        };
-    </script>
 @stop

@@ -17,4 +17,11 @@ return [
     'restore_tooltip' => 'Restore this backup',
     'demo_alert' => 'Hi guest, if you see demo site is destroyed, please help me <a href=":link">go here</a> and restore demo site to the latest revision! Thank you so much!',
     'menu_name' => 'Backups',
+
+    'settings' => [
+        'title' => 'Backup',
+        'description' => 'Settings for backup function',
+        'backup_mysql_execute_path' => 'MySQL execute path',
+        'backup_mysql_execute_path_placeholder' => 'Default: /usr/mysql/bin. Ignore it if you don\'t sure about it',
+    ],
 ];

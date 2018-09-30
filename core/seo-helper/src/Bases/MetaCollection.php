@@ -45,7 +45,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $prefix
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPrefix($prefix)
     {
@@ -60,7 +60,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  array $meta
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMany(array $meta)
     {
@@ -78,7 +78,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $content
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function add($name, $content)
     {
@@ -96,7 +96,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $content
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function addMeta($name, $content)
     {
@@ -113,7 +113,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  array|string $names
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function remove($names)
     {
@@ -126,7 +126,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -141,7 +141,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -154,7 +154,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $name
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isIgnored($name)
     {
@@ -167,7 +167,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string|array $keys
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function forget($keys)
     {
@@ -182,9 +182,9 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * Refresh meta collection items.
      *
      * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function refresh()
+    protected function refresh()
     {
         return $this->map(function (MetaContract $meta) {
             return $meta->setPrefix($this->prefix);
@@ -197,7 +197,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  array|string $names
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function prepareName($names)
     {

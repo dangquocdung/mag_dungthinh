@@ -5,6 +5,7 @@ namespace Botble\Base\Forms;
 use Assets;
 use Botble\Base\Forms\Fields\ColorField;
 use Botble\Base\Forms\Fields\CustomRadioField;
+use Botble\Base\Forms\Fields\CustomSelectField;
 use Botble\Base\Forms\Fields\EditorField;
 use Botble\Base\Forms\Fields\MediaImageField;
 use Botble\Base\Forms\Fields\OnOffField;
@@ -22,19 +23,19 @@ abstract class FormAbstract extends Form
     protected $options = [];
 
     /**
-     * @var null
+     * @var string
      */
-    protected $title = null;
+    protected $title = '';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $module_name = null;
+    protected $module_name = '';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $validatorClass = null;
+    protected $validatorClass = '';
 
     /**
      * @var array
@@ -42,19 +43,24 @@ abstract class FormAbstract extends Form
     protected $meta_boxes = [];
 
     /**
-     * @var null
+     * @var string
      */
-    protected $action_buttons = null;
+    protected $action_buttons = '';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $break_field_point = null;
+    protected $break_field_point = '';
 
     /**
      * @var bool
      */
     protected $useInlineJs = false;
+
+    /**
+     * @var string
+     */
+    protected $wrapper_class = 'form-body';
 
     /**
      * FormAbstract constructor.
@@ -70,7 +76,7 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return mixed
+     * @return array
      * @author Sang Nguyen
      */
     public function getOptions(): array
@@ -79,7 +85,7 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @param mixed $options
+     * @param array $options
      * @return $this
      * @author Sang Nguyen
      */
@@ -90,15 +96,15 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getTitle(): string
     {
-        return (string)$this->title;
+        return $this->title;
     }
 
     /**
-     * @param null $title
+     * @param string $title
      * @return $this
      */
     public function setTitle($title): self
@@ -108,15 +114,15 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getModuleName(): string
     {
-        return (string)$this->module_name;
+        return $this->module_name;
     }
 
     /**
-     * @param null $module
+     * @param string $module
      * @return $this
      */
     public function setModuleName($module): self
@@ -130,19 +136,27 @@ abstract class FormAbstract extends Form
      */
     public function getMetaBoxes(): array
     {
+        uasort($this->meta_boxes, function ($before, $after) {
+            if (array_get($before, 'priority', 0) > array_get($after, 'priority', 0)) {
+                return 1;
+            } elseif (array_get($before, 'priority', 0) < array_get($after, 'priority', 0)) {
+                return -1;
+            }
+            return 0;
+        });
         return $this->meta_boxes;
     }
 
 
     /**
-     * @param $name
-     * @return null|string
+     * @param string $name
+     * @return string
      * @throws \Throwable
      */
     public function getMetaBox($name): string
     {
         if (!array_get($this->meta_boxes, $name)) {
-            return null;
+            return '';
         }
 
         $meta_box = $this->meta_boxes[$name];
@@ -163,21 +177,21 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return FormAbstract
      */
     public function removeMetaBox($name): self
     {
-        unset($this->meta_boxes[$name]);
+        array_forget($this->meta_boxes, $name);
         return $this;
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getActionButtons(): string
     {
-        return (string)$this->action_buttons;
+        return $this->action_buttons;
     }
 
     /**
@@ -185,12 +199,12 @@ abstract class FormAbstract extends Form
      */
     public function removeActionButtons(): self
     {
-        $this->action_buttons = null;
+        $this->action_buttons = '';
         return $this;
     }
 
     /**
-     * @param null $action_buttons
+     * @param string $action_buttons
      * @return $this
      */
     public function setActionButtons($action_buttons): self
@@ -200,15 +214,15 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getValidatorClass(): string
     {
-        return (string)$this->validatorClass;
+        return $this->validatorClass;
     }
 
     /**
-     * @param null $validatorClass
+     * @param string $validatorClass
      * @return $this
      */
     public function setValidatorClass($validatorClass): self
@@ -218,15 +232,15 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getBreakFieldPoint(): string
     {
-        return (string)$this->break_field_point;
+        return $this->break_field_point;
     }
 
     /**
-     * @param null $break_field_point
+     * @param string $break_field_point
      * @return $this
      */
     public function setBreakFieldPoint(string $break_field_point): self
@@ -254,8 +268,26 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @param $model
-     * @return FormAbstract|Form
+     * @return string
+     */
+    public function getWrapperClass(): string
+    {
+        return $this->wrapper_class;
+    }
+
+    /**
+     * @param string $wrapper_class
+     * @return $this
+     */
+    public function setWrapperClass(string $wrapper_class): self
+    {
+        $this->wrapper_class = $wrapper_class;
+        return $this;
+    }
+
+    /**
+     * @param string $model
+     * @return $this
      */
     public function setModel($model): self
     {
@@ -265,12 +297,15 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return $this
      * @author Sang Nguyen
      * @return $this
      */
     public function withCustomFields(): self
     {
+        if (!$this->formHelper->hasCustomField('customSelect')) {
+            $this->addCustomField('customSelect', CustomSelectField::class);
+        }
+
         if (!$this->formHelper->hasCustomField('editor')) {
             $this->addCustomField('editor', EditorField::class);
         }
@@ -349,8 +384,10 @@ abstract class FormAbstract extends Form
      */
     public function renderForm(array $options = [], $showStart = true, $showFields = true, $showEnd = true): string
     {
-        Assets::addAppModule(['form-validation']);
-        Assets::addJavascript(['are-you-sure']);
+        Assets::addAppModule(['form-validation'])
+            ->addJavascript(['are-you-sure']);
+
+        apply_filters(BASE_FILTER_BEFORE_RENDER_FORM, $this, $this->module_name, $this->getModel());
 
         return parent::renderForm($options, $showStart, $showFields, $showEnd);
     }
@@ -358,7 +395,6 @@ abstract class FormAbstract extends Form
     /**
      * @return string
      * @throws \Exception
-     * @throws \Proengsoft\JsValidation\Facades\FormRequestArgumentException
      * @author Sang Nguyen
      */
     public function renderValidatorJs(): string
@@ -371,5 +407,16 @@ abstract class FormAbstract extends Form
         }
 
         return JsValidator::formRequest($this->getValidatorClass(), $element);
+    }
+
+    /**
+     * @param $name
+     * @param $class
+     * @return $this|Form
+     */
+    public function addCustomField($name, $class)
+    {
+        parent::addCustomField($name, $class);
+        return $this;
     }
 }

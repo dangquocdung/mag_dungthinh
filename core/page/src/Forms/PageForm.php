@@ -44,44 +44,22 @@ class PageForm extends FormAbstract
                     'with-short-code' => true,
                 ],
             ])
-            ->add('icon', 'text', [
-                'label' => trans('core.base::forms.icon'),
-                'label_attr' => ['class' => 'control-label'],
-                'attr' => [
-                    'placeholder' => 'Ex: fa fa-home',
-                    'data-counter' => 60,
-                ],
-            ])
-            ->add('order', 'number', [
-                'label' => trans('core.base::forms.order'),
-                'label_attr' => ['class' => 'control-label'],
-                'attr' => [
-                    'placeholder' => trans('core.base::forms.order_by_placeholder'),
-                ],
-                'default_value' => 0,
-            ])
             ->add('featured', 'onOff', [
                 'label' => trans('core.base::forms.featured'),
                 'label_attr' => ['class' => 'control-label'],
                 'default_value' => false,
             ])
-            ->add('status', 'select', [
+            ->add('status', 'customSelect', [
                 'label' => trans('core.base::tables.status'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr' => [
-                    'class' => 'form-control select-full',
-                ],
                 'choices' => [
                     1 => trans('core.base::system.activated'),
                     0 => trans('core.base::system.deactivated'),
                 ],
             ])
-            ->add('template', 'select', [
+            ->add('template', 'customSelect', [
                 'label' => trans('core.base::forms.template'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr' => [
-                    'class' => 'form-control select-full',
-                ],
                 'choices' => get_page_templates(),
             ])
             ->add('image', 'mediaImage', [

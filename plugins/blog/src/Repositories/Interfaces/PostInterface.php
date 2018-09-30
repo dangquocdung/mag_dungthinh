@@ -22,16 +22,16 @@ interface PostInterface extends RepositoryInterface
     public function getListPostNonInList(array $selected = [], $limit = 7);
 
     /**
-     * @param $category
+     * @param int|array $category_id
      * @param int $paginate
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
      */
-    public function getByCategory($category, $paginate = 12, $limit = 0);
+    public function getByCategory($category_id, $paginate = 12, $limit = 0);
 
     /**
-     * @param $user_id
+     * @param int $user_id
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
@@ -45,7 +45,7 @@ interface PostInterface extends RepositoryInterface
     public function getDataSiteMap();
 
     /**
-     * @param $tag
+     * @param int $tag
      * @param int $paginate
      * @return mixed
      * @author Sang Nguyen
@@ -53,7 +53,7 @@ interface PostInterface extends RepositoryInterface
     public function getByTag($tag, $paginate = 12);
 
     /**
-     * @param $id
+     * @param int $id
      * @param int $limit
      * @return mixed
      * @author Sang Nguyen
@@ -69,7 +69,7 @@ interface PostInterface extends RepositoryInterface
     public function getRecentPosts($limit = 5, $category_id = 0);
 
     /**
-     * @param $query
+     * @param string $query
      * @param int $limit
      * @param int $paginate
      * @return mixed
@@ -85,7 +85,7 @@ interface PostInterface extends RepositoryInterface
     public function getAllPosts($active = true);
 
     /**
-     * @param $limit
+     * @param int $limit
      * @param array $args
      * @return mixed
      * @author Sang Nguyen

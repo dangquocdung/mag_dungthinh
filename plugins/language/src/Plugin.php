@@ -2,10 +2,7 @@
 
 namespace Botble\Language;
 
-use Artisan;
 use Botble\Base\Interfaces\PluginInterface;
-use Botble\Base\Supports\Helper;
-use Botble\Language\Providers\LanguageServiceProvider;
 use Schema;
 
 class Plugin implements PluginInterface
@@ -16,16 +13,6 @@ class Plugin implements PluginInterface
      */
     public static function activate()
     {
-        Artisan::call('migrate', [
-            '--force' => true,
-            '--path' => 'plugins/language/database/migrations',
-        ]);
-
-        Artisan::call('vendor:publish', [
-            '--force' => true,
-            '--tag' => 'public',
-            '--provider' => LanguageServiceProvider::class,
-        ]);
     }
 
     /**
@@ -40,8 +27,6 @@ class Plugin implements PluginInterface
      */
     public static function remove()
     {
-        Helper::removePluginAssets('language');
-
         Schema::dropIfExists('languages');
         Schema::dropIfExists('language_meta');
     }

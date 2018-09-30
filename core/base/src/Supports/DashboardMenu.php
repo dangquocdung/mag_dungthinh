@@ -2,6 +2,7 @@
 
 namespace Botble\Base\Supports;
 
+use Auth;
 use Botble\ACL\Models\User;
 use RuntimeException;
 use stdClass;
@@ -65,17 +66,24 @@ class DashboardMenu
         $id = $options['id'];
 
         if (!$id) {
-            $calledClass = isset(debug_backtrace()[1]) ? debug_backtrace()[1]['class'] . '@' . debug_backtrace()[1]['function'] : null;
+            $calledClass = isset(debug_backtrace()[1]) ?
+                debug_backtrace()[1]['class'] . '@' . debug_backtrace()[1]['function']
+                :
+                null;
             throw new RuntimeException('Menu id not specified: ' . $calledClass);
         }
 
         if (isset($this->links[$id])) {
-            $calledClass = isset(debug_backtrace()[1]) ? debug_backtrace()[1]['class'] . '@' . debug_backtrace()[1]['function'] : null;
+            $calledClass = isset(debug_backtrace()[1]) ?
+                debug_backtrace()[1]['class'] . '@' . debug_backtrace()[1]['function']
+                :
+                null;
             throw new RuntimeException('Menu id already exists: ' . $id . ' on class ' . $calledClass);
         }
 
         if (isset($this->links[$options['parent_id']])) {
-            $this->links[$options['parent_id']]['permissions'] = array_merge($this->links[$options['parent_id']]['permissions'], $options['permissions']);
+            $permissions = array_merge($this->links[$options['parent_id']]['permissions'], $options['permissions']);
+            $this->links[$options['parent_id']]['permissions'] = $permissions;
         }
 
         $this->links[$id] = $options;
@@ -136,13 +144,13 @@ class DashboardMenu
      */
     public function getAll()
     {
-        if (config('core.base.general.enable_cache_dashboard_menu')) {
-            $cache_key = md5('cache-dashboard-menu');
+        if (setting('cache_admin_menu_enable', true) && Auth::check()) {
+            $cache_key = md5('cache-dashboard-menu-' . Auth::user()->getKey());
             if (!cache()->has($cache_key)) {
                 $links = collect($this->getChildren())->sortBy('priority');
                 cache()->forever($cache_key, $links);
             } else {
-                $links = cache()->get($cache_key);
+                $links = cache($cache_key);
             }
         } else {
             $links = collect($this->getChildren())->sortBy('priority');

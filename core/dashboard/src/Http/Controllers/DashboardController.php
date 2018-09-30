@@ -10,7 +10,9 @@ use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetInterface;
 use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetSettingInterface;
 use Exception;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class DashboardController extends BaseController
 {
@@ -56,37 +58,39 @@ class DashboardController extends BaseController
         page_title()->setTitle(trans('core.dashboard::dashboard.title'));
 
         Assets::addJavascript(['blockui', 'sortable', 'equal-height', 'counterup'])
-            ->addAppModule(['dashboard']);
+            ->addJavascriptDirectly(['vendor/core/js/app_modules/dashboard.js']);
 
         do_action(DASHBOARD_ACTION_REGISTER_SCRIPTS);
 
-        $widgets = $this->widgetRepository->advancedGet([
-            'with' => ['userSetting'],
-            'select' => ['id', 'name'],
-        ]);
+        /**
+         * @var Collection $widgets
+         */
+        $widgets = $this->widgetRepository->getModel()
+            ->with([
+                'settings' => function($query) {
+                    /**
+                     * @var Builder $query
+                     */
+                    $query->where('user_id', '=', Auth::user()->getKey())
+                        ->select(['status', 'order', 'settings', 'widget_id'])
+                        ->orderBy('order', 'asc');
+                }
+            ])
+            ->select(['id', 'name'])
+            ->get();
 
-        $user_widgets = apply_filters(DASHBOARD_FILTER_ADMIN_LIST, []);
-        ksort($user_widgets);
+        $widget_data = apply_filters(DASHBOARD_FILTER_ADMIN_LIST, [], $widgets);
+        ksort($widget_data);
+
+        $available_widget_ids = collect($widget_data)->pluck('id')->all();
+
+        $widgets = $widgets->reject(function ($item) use ($available_widget_ids) {
+            return !in_array($item->id, $available_widget_ids);
+        });
+
+        $user_widgets = collect($widget_data)->pluck('view')->all();
 
         return view('core.dashboard::list', compact('widgets', 'user_widgets'));
-    }
-
-    /**
-     * @param Request $request
-     * @param BaseHttpResponse $response
-     * @return BaseHttpResponse
-     * @author Sang Nguyen
-     */
-    public function postEditWidgetSettings(Request $request, BaseHttpResponse $response)
-    {
-        try {
-            $widget = $this->widgetSettingRepository->findById($request->input('id'));
-            $widget->settings = $request->input('settings');
-            $this->widgetSettingRepository->createOrUpdate($widget);
-            return $response->setMessage(trans('core.dashboard::dashboard.save_setting_success'));
-        } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
-        }
     }
 
     /**
@@ -103,13 +107,17 @@ class DashboardController extends BaseController
             ]);
 
             if (!$widget) {
-                return $response->setError(true)->setMessage(trans('core.dashboard::dashboard.widget_not_exists'));
+                return $response
+                    ->setError()
+                    ->setMessage(trans('core.dashboard::dashboard.widget_not_exists'));
             }
             $widget_setting = $this->widgetSettingRepository->firstOrCreate(['widget_id' => $widget->id, 'user_id' => Auth::user()->getKey()]);
             $widget_setting->settings = array_merge((array)$widget_setting->settings, [$request->input('setting_name') => $request->input('setting_value')]);
             $this->widgetSettingRepository->createOrUpdate($widget_setting);
         } catch (Exception $ex) {
-            return $response->setError(true)->setMessage($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage($ex->getMessage());
         }
         return $response;
     }
@@ -153,6 +161,7 @@ class DashboardController extends BaseController
                 'user_id' => Auth::user()->getKey(),
             ]);
             $widget_setting->status = 0;
+            $widget_setting->order = 99 + $widget_setting->id;
             $this->widgetRepository->createOrUpdate($widget_setting);
         }
         return $response->setMessage(trans('core.dashboard::dashboard.hide_success'));
@@ -177,6 +186,7 @@ class DashboardController extends BaseController
                 $this->widgetRepository->createOrUpdate($widget_setting);
             } else {
                 $widget_setting->status = 0;
+                $widget_setting->order = 99 + $widget_setting->id;
                 $this->widgetRepository->createOrUpdate($widget_setting);
             }
         }

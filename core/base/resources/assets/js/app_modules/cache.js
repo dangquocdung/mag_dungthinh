@@ -1,28 +1,34 @@
-$(document).ready(function () {
-    $(document).on('click', '.btn-clear-cache', function (event) {
-        event.preventDefault();
-        let _self = $(this);
-        _self.html('<i class="fa fa-spin fa-spinner" aria-hidden="true"></i> ' + _self.text());
+class CacheManagement {
+    init() {
+        $(document).on('click', '.btn-clear-cache', (event) => {
+            event.preventDefault();
+            let _self = $(event.currentTarget);
+            _self.addClass('button-loading');
 
-        $.ajax({
-            url: _self.data('url'),
-            type: 'POST',
-            data: {
-                type: _self.data('type'),
-            },
-            success: function (data) {
-                _self.find('i').remove();
+            $.ajax({
+                url: _self.data('url'),
+                type: 'POST',
+                data: {
+                    type: _self.data('type'),
+                },
+                success: (data) => {
+                    _self.removeClass('button-loading');
 
-                if (data.error) {
-                    Botble.showNotice('error', data.message);
-                } else {
-                    Botble.showNotice('success', data.message);
+                    if (data.error) {
+                        Botble.showNotice('error', data.message);
+                    } else {
+                        Botble.showNotice('success', data.message);
+                    }
+                },
+                error: (data) => {
+                    _self.removeClass('button-loading');
+                    Botble.handleError(data);
                 }
-            },
-            error: function (data) {
-                _self.find('i').remove();
-                Botble.handleError(data);
-            }
+            });
         });
-    });
+    }
+}
+
+$(document).ready(() => {
+    new CacheManagement().init();
 });

@@ -28,16 +28,16 @@ class SuperUserForm extends FormAbstract
                 ],
             ])
             ->add('close', 'button', [
-                'label' => 'Cancel',
+                'label' => trans('core.base::forms.cancel'),
                 'attr' => [
                     'class' => 'btn btn-warning',
                     'data-fancybox-close' => true,
                 ],
             ])
             ->add('submit', 'submit', [
-                'label' => __('Add'),
+                'label' => trans('core.base::forms.add'),
                 'attr' => [
-                    'class' => 'btn btn-info pull-right',
+                    'class' => 'btn btn-info float-right',
                 ],
             ]);
     }

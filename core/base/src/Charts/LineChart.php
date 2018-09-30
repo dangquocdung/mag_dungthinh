@@ -4,9 +4,6 @@ namespace Botble\Base\Charts;
 
 use Botble\Base\Charts\Supports\Chart;
 
-/**
- * Line Charts
- */
 class LineChart extends Chart
 {
 

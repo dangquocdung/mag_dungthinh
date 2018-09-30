@@ -2,8 +2,9 @@
 
 namespace Botble\Translation\Models;
 
-use DB;
 use Eloquent;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Translation model
@@ -37,7 +38,7 @@ class Translation extends Eloquent
     ];
 
     /**
-     * @param $query
+     * @param Builder $query
      * @param $group
      * @return mixed
      */
@@ -47,7 +48,7 @@ class Translation extends Eloquent
     }
 
     /**
-     * @param $query
+     * @param Builder $query
      * @param $ordered
      * @return mixed
      */
@@ -61,12 +62,12 @@ class Translation extends Eloquent
     }
 
     /**
-     * @param $query
+     * @param Builder $query
      * @return mixed
      */
     public function scopeSelectDistinctGroup($query)
     {
-        switch (DB::getDriverName()) {
+        switch (config('database.default')) {
             case 'mysql':
                 $select = 'DISTINCT `group`';
                 break;

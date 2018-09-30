@@ -22,4 +22,7 @@ return [
     'contact' => 'contact',
     'backup' => 'backup',
     'custom-field' => 'custom field',
+    'widget_audit_logs' => 'Activities Logs',
+    'action' => 'Action',
+    'user_agent' => 'User Agent',
 ];

@@ -57,7 +57,7 @@ abstract class PageSpeed
      */
     protected function isEnable()
     {
-        return config('core.optimize.general.enable', false);
+        return setting('optimize_page_speed_enable', false);
     }
 
     /**

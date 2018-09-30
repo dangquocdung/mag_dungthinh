@@ -2,7 +2,6 @@
 
 namespace Botble\Contact;
 
-use Artisan;
 use Botble\Base\Interfaces\PluginInterface;
 use Schema;
 
@@ -14,10 +13,6 @@ class Plugin implements PluginInterface
      */
     public static function activate()
     {
-        Artisan::call('migrate', [
-            '--force' => true,
-            '--path' => 'plugins/contact/database/migrations',
-        ]);
     }
 
     /**

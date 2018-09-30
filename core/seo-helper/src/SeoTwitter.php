@@ -17,7 +17,7 @@ class SeoTwitter implements SeoTwitterContract
 
     /**
      * Make SeoTwitter instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
@@ -32,7 +32,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  \Botble\SeoHelper\Contracts\Entities\TwitterCardContract $card
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setCard(TwitterCardContract $card)
     {
@@ -47,7 +47,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  string $type
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setType($type)
     {
@@ -62,7 +62,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  string $site
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSite($site)
     {
@@ -77,7 +77,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  string $title
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTitle($title)
     {
@@ -92,7 +92,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  string $description
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDescription($description)
     {
@@ -107,7 +107,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  string $url
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addImage($url)
     {
@@ -122,7 +122,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  array $meta
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMetas(array $meta)
     {
@@ -138,7 +138,7 @@ class SeoTwitter implements SeoTwitterContract
      * @param  string $content
      *
      * @return \Botble\SeoHelper\SeoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMeta($name, $content)
     {
@@ -151,7 +151,7 @@ class SeoTwitter implements SeoTwitterContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -162,7 +162,7 @@ class SeoTwitter implements SeoTwitterContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {

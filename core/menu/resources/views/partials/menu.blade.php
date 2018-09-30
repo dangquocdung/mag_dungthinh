@@ -6,49 +6,51 @@
             data-icon-font="{{ $row->icon_font }}" data-target="{{ $row->target }}">
             <div class="dd-handle dd3-handle"></div>
             <div class="dd3-content">
-                <span class="text pull-left" data-update="title">{{ $row->getRelated()->name }}</span>
-                <span class="text pull-right">{{ $row->type }}</span>
+                <span class="text float-left" data-update="title">{{ $row->getRelated()->name }}</span>
+                <span class="text float-right">{{ $row->type }}</span>
                 <a href="#" title="" class="show-item-details"><i class="fa fa-angle-down"></i></a>
                 <div class="clearfix"></div>
             </div>
             <div class="item-details">
                 <label class="pad-bot-5">
-                    <span class="text pad-top-5 dis-inline-block" data-update="title">Title</span>
+                    <span class="text pad-top-5 dis-inline-block" data-update="title">{{ trans('core.menu::menu.title') }}</span>
                     <input type="text" name="title" value="{{ $row->getRelated()->name }}"
                            data-old="{{ $row->getRelated()->name }}">
                 </label>
                 @if (!$row->related_id)
                     <label class="pad-bot-5 dis-inline-block">
-                        <span class="text pad-top-5" data-update="custom-url">Url</span>
+                        <span class="text pad-top-5" data-update="custom-url">{{ trans('core.menu::menu.url') }}</span>
                         <input type="text" name="custom-url" value="{{ $row->url }}" data-old="{{ $row->url }}">
                     </label>
                 @endif
                 <label class="pad-bot-5 dis-inline-block">
-                    <span class="text pad-top-5" data-update="icon-font">Icon - font</span>
+                    <span class="text pad-top-5" data-update="icon-font">{{ trans('core.menu::menu.icon') }}</span>
                     <input type="text" name="icon-font" value="{{ $row->icon_font }}" data-old="{{ $row->icon_font }}">
                 </label>
                 <label class="pad-bot-10">
-                    <span class="text pad-top-5 dis-inline-block">CSS class</span>
+                    <span class="text pad-top-5 dis-inline-block">{{ trans('core.menu::menu.css_class') }}</span>
                     <input type="text" name="class" value="{{ $row->css_class }}" data-old="{{ $row->css_class }}">
                 </label>
                 <label class="pad-bot-10">
-                    <span class="text pad-top-5 dis-inline-block">Target</span>
+                    <span class="text pad-top-5 dis-inline-block">{{ trans('core.menu::menu.target') }}</span>
                     <div style="width: 228px; display: inline-block">
-                        <select name="target" class="form-control select-full" id="target" data-old="{{ $row->target }}">
-                            <option value="_self" @if ($row->target == '_self') selected="selected" @endif>_self
-                            </option>
-                            <option value="_blank" @if ($row->target == '_blank') selected="selected" @endif>_blank
-                            </option>
-                            <option value="_parent" @if ($row->target == '_parent') selected="selected" @endif>_parent
-                            </option>
-                            <option value="_top" @if ($row->target == '_top') selected="selected" @endif>_top</option>
-                        </select>
+                        <div class="ui-select-wrapper">
+                            <select name="target" class="ui-select" id="target" data-old="{{ $row->target }}">
+                                <option value="_self" @if ($row->target == '_self') selected="selected" @endif>{{ trans('core.menu::menu.self_open_link') }}
+                                </option>
+                                <option value="_blank" @if ($row->target == '_blank') selected="selected" @endif>{{ trans('core.menu::menu.blank_open_link') }}
+                                </option>
+                            </select>
+                            <svg class="svg-next-icon svg-next-icon-size-16">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
+                            </svg>
+                        </div>
                     </div>
                 </label>
                 <div class="clearfix"></div>
                 <div class="text-right" style="margin-top: 5px">
-                    <a href="#" class="btn-danger btn-remove btn-sm">Remove</a>
-                    <a href="#" class="btn-primary btn-cancel btn-sm">Cancel</a>
+                    <a href="#" class="btn btn-danger btn-remove btn-sm">{{ trans('core.menu::menu.remove') }}</a>
+                    <a href="#" class="btn btn-primary btn-cancel btn-sm">{{ trans('core.menu::menu.cancel') }}</a>
                 </div>
             </div>
             <div class="clearfix"></div>

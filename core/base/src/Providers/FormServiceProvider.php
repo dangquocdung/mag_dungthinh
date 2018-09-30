@@ -89,5 +89,14 @@ class FormServiceProvider extends ServiceProvider
             'value' => null,
             'attributes' => [],
         ]);
+
+        Form::component('customSelect', 'core.base::elements.forms.custom-select', [
+            'name',
+            'list' => [],
+            'selected' => null,
+            'selectAttributes' => [],
+            'optionsAttributes' => [],
+            'optgroupsAttributes' => [],
+        ]);
     }
 }

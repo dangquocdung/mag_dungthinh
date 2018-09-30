@@ -23,39 +23,39 @@
 @endif
 
 <div class="row">
-    <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-12">
         <div class="form-group">
             <label for="contact_name" class="control-label required">{{ trans('plugins.contact::contact.form_name') }}</label>
             <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="contact_name"
-                   placeholder="Name">
+                   placeholder="{{ trans('plugins.contact::contact.form_name') }}">
         </div>
     </div>
-    <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-12">
         <div class="form-group">
             <label for="contact_email" class="control-label required">{{ trans('plugins.contact::contact.form_email') }}</label>
             <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="contact_email"
-                   placeholder="Email...">
+                   placeholder="{{ trans('plugins.contact::contact.form_email') }}">
         </div>
     </div>
-    <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-12">
         <div class="form-group">
             <label for="contact_address" class="control-label">{{ trans('plugins.contact::contact.form_address') }}</label>
             <input type="text" class="form-control" name="address" value="{{ old('address') }}" id="contact_address"
-                   placeholder="Address...">
+                   placeholder="{{ trans('plugins.contact::contact.form_address') }}">
         </div>
     </div>
-    <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-12">
         <div class="form-group">
             <label for="contact_phone" class="control-label">{{ trans('plugins.contact::contact.form_phone') }}</label>
             <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" id="contact_phone"
-                   placeholder="Phone...">
+                   placeholder="{{ trans('plugins.contact::contact.form_phone') }}">
         </div>
     </div>
-    <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-12">
         <div class="form-group">
             <label for="contact_subject" class="control-label">{{ trans('plugins.contact::contact.form_subject') }}</label>
             <input type="text" class="form-control" name="subject" value="{{ old('subject') }}" id="contact_subject"
-                   placeholder="{{ __('Subject...') }}">
+                   placeholder="{{ trans('plugins.contact::contact.form_subject') }}">
         </div>
     </div>
     <div class="col-md-12">
@@ -64,7 +64,7 @@
             <textarea name="content" id="contact_content" class="form-control" rows="5" placeholder="{{ trans('plugins.contact::contact.form_message') }}">{{ old('content') }}</textarea>
         </div>
     </div>
-    @if (setting('enable_captcha'))
+    @if (setting('enable_captcha') && is_plugin_active('captcha'))
         <div class="col-md-12">
             <div class="form-group">
                 <label for="contact_robot" class="control-label required">{{ trans('plugins.contact::contact.confirm_not_robot') }}</label>

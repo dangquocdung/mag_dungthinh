@@ -33,12 +33,12 @@ class TranslationController extends BaseController
      */
     public function getIndex($group = null)
     {
-        page_title()->setTitle(trans('plugins.translation::translation.translation_manager'));
+        page_title()->setTitle(trans('plugins.translation::translation.menu_name'));
 
         Assets::addJavascript(['bootstrap-editable'])
-            ->addStylesheets(['bootstrap-editable']);
-        Assets::addJavascriptDirectly($this->manager->getConfig('assets_dir') . '/js/translation.js');
-        Assets::addStylesheetsDirectly(['/vendor/core/plugins/translation/css/translation.css']);
+            ->addStylesheets(['bootstrap-editable'])
+            ->addJavascriptDirectly($this->manager->getConfig('assets_dir') . '/js/translation.js')
+            ->addStylesheetsDirectly(['/vendor/core/plugins/translation/css/translation.css']);
 
         $locales = $this->loadLocales();
         $groups = Translation::groupBy('group');

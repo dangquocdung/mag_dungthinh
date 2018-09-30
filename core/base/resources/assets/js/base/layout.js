@@ -1,162 +1,75 @@
-/**
- Core script to handle the entire theme and core functions
- **/
-var Layout = function () {
+import {App} from './app';
 
-    var resBreakpointMd = App.getResponsiveBreakpoint('md');
+class Layout {
 
-    //* BEGIN:CORE HANDLERS *//
-    // this function handles responsive layout on screen size resize or mobile device rotate.
+    constructor() {
+        this.resBreakpointMd = App.getResponsiveBreakpoint('md');
+        this.$body = $('body');
+
+        this.initSidebar(null);
+        this.initContent();
+        this.initFooter();
+    }
 
     // Set proper height for sidebar and content. The content and sidebar height must be synced always.
-    var handleSidebarAndContentHeight = function () {
-        var content = $('.page-content');
-        var sidebar = $('.page-sidebar');
-        var body = $('body');
-        var height;
+    handleSidebarAndContentHeight() {
+        let content = $('.page-content');
+        let sidebar = $('.page-sidebar .sidebar');
+        let header = $('.page-header-top');
+        let footer = $('.page-footer');
+        let body = this.$body;
+        let height;
 
         if (body.hasClass('page-footer-fixed') === true && body.hasClass('page-sidebar-fixed') === false) {
-            var available_height = App.getViewPort().height - $('.page-footer').outerHeight() - $('.page-header').outerHeight();
-            var sidebar_height = sidebar.outerHeight();
+            let available_height = App.getViewPort().height - footer.outerHeight() - header.outerHeight();
+            let sidebar_height = sidebar.outerHeight();
             if (sidebar_height > available_height) {
-                available_height = sidebar_height + $('.page-footer').outerHeight();
+                available_height = sidebar_height + footer.outerHeight();
             }
             if (content.height() < available_height) {
                 content.css('min-height', available_height);
             }
         } else {
             if (body.hasClass('page-sidebar-fixed')) {
-                height = _calculateFixedSidebarViewportHeight();
+                height = this._calculateFixedSidebarViewportHeight();
                 if (body.hasClass('page-footer-fixed') === false) {
-                    height = height - $('.page-footer').outerHeight();
+                    height = height - footer.outerHeight();
                 }
             } else {
-                var headerHeight = $('.page-header').outerHeight();
-                var footerHeight = $('.page-footer').outerHeight();
+                let headerHeight = header.outerHeight();
+                let footerHeight = footer.outerHeight();
 
-                if (App.getViewPort().width < resBreakpointMd) {
+                if (App.getViewPort().width < this.resBreakpointMd) {
                     height = App.getViewPort().height - headerHeight - footerHeight;
                 } else {
                     height = sidebar.height() + 20;
                 }
 
                 if ((height + headerHeight + footerHeight) <= App.getViewPort().height) {
-                    height = App.getViewPort().height - headerHeight - footerHeight;
+                    height = App.getViewPort().height - headerHeight - footerHeight + 34;
                 }
             }
             content.css('min-height', height);
         }
-    };
-
-    // Handle sidebar menu links
-    var handleSidebarMenuActiveLink = function (mode, el, $state) {
-        var url = location.hash.toLowerCase();
-        var menu = $('.page-sidebar-menu');
-
-        if (mode === 'click' || mode === 'set') {
-            el = $(el);
-        } else if (mode === 'match') {
-            menu.find('li > a').each(function () {
-                var state = $(this).attr('ui-sref');
-                if ($state && state) {
-                    if ($state.is(state)) {
-                        el = $(this);
-                        return;
-                    }
-                } else {
-                    var path = $(this).attr('href');
-                    if (path) {
-                        // url match condition
-                        path = path.toLowerCase();
-                        if (path.length > 1 && url.substr(1, path.length - 1) == path.substr(1)) {
-                            el = $(this);
-                            return;
-                        }
-                    }
-                }
-            });
-        }
-
-        if (!el || el.size() == 0) {
-            return;
-        }
-
-        if (el.attr('href') == 'javascript:;' ||
-            el.attr('ui-sref') == 'javascript:;' ||
-            el.attr('href') == '#' ||
-            el.attr('ui-sref') == '#'
-        ) {
-            return;
-        }
-
-        // begin: handle active state
-        if (menu.hasClass('page-sidebar-menu-hover-submenu') === false) {
-            menu.find('li.nav-item.open').each(function () {
-                var match = false;
-                $(this).find('li').each(function () {
-                    var state = $(this).attr('ui-sref');
-                    if ($state && state) {
-                        if ($state.is(state)) {
-                            match = true;
-                            return;
-                        }
-                    } else if ($(this).find(' > a').attr('href') === el.attr('href')) {
-                        match = true;
-                        return;
-                    }
-                });
-
-                if (match === true) {
-                    return;
-                }
-
-                $(this).removeClass('open');
-                $(this).find('> a > .arrow.open').removeClass('open');
-                $(this).find('> .sub-menu').slideUp();
-            });
-        } else {
-            menu.find('li.open').removeClass('open');
-        }
-
-        menu.find('li.active').removeClass('active');
-        menu.find('li > a > .selected').remove();
-        // end: handle active state
-
-        el.parents('li').each(function () {
-            $(this).addClass('active');
-            $(this).find('> a > span.arrow').addClass('open');
-
-            if ($(this).parent('ul.page-sidebar-menu').size() === 1) {
-                $(this).find('> a').append('<span class="selected"></span>');
-            }
-
-            if ($(this).children('ul.sub-menu').size() === 1) {
-                $(this).addClass('open');
-            }
-        });
-
-        if (mode === 'click') {
-            if (App.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass('in')) { // close the menu on mobile view while laoding a page
-                $('.page-header .responsive-toggler').click();
-            }
-        }
-    };
+    }
 
     // Handle sidebar menu
-    var handleSidebarMenu = function () {
+    handleSidebarMenu() {
+        let current = this;
+
         // offcanvas mobile menu
-        $('.page-sidebar-mobile-offcanvas .responsive-toggler').click(function (e) {
-            $('body').toggleClass('page-sidebar-mobile-offcanvas-open');
+        $('.page-sidebar-mobile-offcanvas .responsive-toggler').click((e) => {
+            current.$body.toggleClass('page-sidebar-mobile-offcanvas-open');
             e.preventDefault();
             e.stopPropagation();
         });
 
-        if ($('body').hasClass('page-sidebar-mobile-offcanvas')) {
-            $(document).on('click', function (e) {
-                if ($('body').hasClass('page-sidebar-mobile-offcanvas-open')) {
+        if (this.$body.hasClass('page-sidebar-mobile-offcanvas')) {
+            $(document).on('click', (e) => {
+                if (current.$body.hasClass('page-sidebar-mobile-offcanvas-open')) {
                     if ($(e.target).closest('.page-sidebar-mobile-offcanvas .responsive-toggler').length === 0 &&
                         $(e.target).closest('.page-sidebar-wrapper').length === 0) {
-                        $('body').removeClass('page-sidebar-mobile-offcanvas-open');
+                        current.$body.removeClass('page-sidebar-mobile-offcanvas-open');
                         e.preventDefault();
                         e.stopPropagation();
                     }
@@ -165,34 +78,34 @@ var Layout = function () {
         }
 
         // handle sidebar link click
-        $('.page-sidebar-menu').on('click', 'li > a.nav-toggle, li > a > span.nav-toggle', function (e) {
-            var that = $(this).closest('.nav-item').children('.nav-link');
+        $('.page-sidebar-menu').on('click', 'li > a.nav-toggle, li > a > span.nav-toggle', (e) => {
+            let that = $(e.currentTarget).closest('.nav-item').children('.nav-link');
+            let menu = $('.page-sidebar-menu');
 
-            if (App.getViewPort().width >= resBreakpointMd && !$('.page-sidebar-menu').attr("data-initialized") && $('body').hasClass('page-sidebar-closed') && that.parent('li').parent('.page-sidebar-menu').size() === 1) {
+            if (App.getViewPort().width >= current.resBreakpointMd && !menu.attr('data-initialized') && current.$body.hasClass('page-sidebar-closed') && that.parent('li').parent('.page-sidebar-menu').length === 1) {
                 return;
             }
 
-            var hasSubMenu = that.next().hasClass('sub-menu');
+            let hasSubMenu = that.next().hasClass('sub-menu');
 
-            if (App.getViewPort().width >= resBreakpointMd && that.parents('.page-sidebar-menu-hover-submenu').size() === 1) { // exit of hover sidebar menu
+            if (App.getViewPort().width >= current.resBreakpointMd && that.parents('.page-sidebar-menu-hover-submenu').length === 1) { // exit of hover sidebar menu
                 return;
             }
 
             if (hasSubMenu === false) {
-                if (App.getViewPort().width < resBreakpointMd && $('.page-sidebar').hasClass("in")) { // close the menu on mobile view while laoding a page
+                if (App.getViewPort().width < current.resBreakpointMd && $('.page-sidebar').hasClass('in')) { // close the menu on mobile view while laoding a page
                     $('.page-header .responsive-toggler').click();
                 }
                 return;
             }
 
-            var parent = that.parent().parent();
-            var the = that;
-            var menu = $('.page-sidebar-menu');
-            var sub = that.next();
+            let parent = that.parent().parent();
+            let the = that;
+            let sub = that.next();
 
-            var autoScroll = menu.data("auto-scroll");
-            var slideSpeed = parseInt(menu.data("slide-speed"));
-            var keepExpand = menu.data("keep-expanded");
+            let autoScroll = menu.data('auto-scroll');
+            let slideSpeed = parseInt(menu.data('slide-speed'));
+            let keepExpand = menu.data('keep-expanded');
 
             if (!keepExpand) {
                 parent.children('li.open').children('a').children('.arrow').removeClass('open');
@@ -200,37 +113,25 @@ var Layout = function () {
                 parent.children('li.open').removeClass('open');
             }
 
-            var slideOffeset = -200;
+            let slideOffeset = -200;
 
-            if (sub.is(":visible")) {
-                $('.arrow', the).removeClass("open");
-                the.parent().removeClass("open");
-                sub.slideUp(slideSpeed, function () {
-                    if (autoScroll === true && $('body').hasClass('page-sidebar-closed') === false) {
-                        if ($('body').hasClass('page-sidebar-fixed')) {
-                            menu.slimScroll({
-                                'scrollTo': (the.position()).top
-                            });
-                        } else {
-                            App.scrollTo(the, slideOffeset);
-                        }
+            if (sub.is(':visible')) {
+                $('.arrow', the).removeClass('open');
+                the.parent().removeClass('open');
+                sub.slideUp(slideSpeed, () => {
+                    if (autoScroll === true && current.$body.hasClass('page-sidebar-closed') === false) {
+                        App.scrollTo(the, slideOffeset);
                     }
-                    handleSidebarAndContentHeight();
+                    current.handleSidebarAndContentHeight();
                 });
             } else if (hasSubMenu) {
-                $('.arrow', the).addClass("open");
-                the.parent().addClass("open");
-                sub.slideDown(slideSpeed, function () {
-                    if (autoScroll === true && $('body').hasClass('page-sidebar-closed') === false) {
-                        if ($('body').hasClass('page-sidebar-fixed')) {
-                            menu.slimScroll({
-                                'scrollTo': (the.position()).top
-                            });
-                        } else {
-                            App.scrollTo(the, slideOffeset);
-                        }
+                $('.arrow', the).addClass('open');
+                the.parent().addClass('open');
+                sub.slideDown(slideSpeed, () => {
+                    if (autoScroll === true && current.$body.hasClass('page-sidebar-closed') === false) {
+                        App.scrollTo(the, slideOffeset);
                     }
-                    handleSidebarAndContentHeight();
+                    current.handleSidebarAndContentHeight();
                 });
             }
 
@@ -238,209 +139,103 @@ var Layout = function () {
         });
 
         // handle scrolling to top on responsive menu toggler click when header is fixed for mobile view
-        $(document).on('click', '.page-header-fixed-mobile .page-header .responsive-toggler', function () {
+        $(document).on('click', '.page-header-fixed-mobile .page-header .responsive-toggler', () => {
             App.scrollTop();
         });
 
         // handle sidebar hover effect
-        handleFixedSidebarHoverEffect();
-
-        // handle the search bar close
-        $('.page-sidebar').on('click', '.sidebar-search .remove', function (e) {
-            e.preventDefault();
-            $('.sidebar-search').removeClass("open");
-        });
-
-        // handle the search query submit on enter press
-        $('.page-sidebar .sidebar-search').on('keypress', 'input.form-control', function (e) {
-            if (e.which == 13) {
-                $('.sidebar-search').submit();
-                return false; //<---- Add this line
-            }
-        });
-
-        // handle the search submit(for sidebar search and responsive mode of the header search)
-        $('.sidebar-search .submit').on('click', function (e) {
-            e.preventDefault();
-            if ($('body').hasClass("page-sidebar-closed")) {
-                if ($('.sidebar-search').hasClass('open') === false) {
-                    if ($('.page-sidebar-fixed').size() === 1) {
-                        $('.page-sidebar .sidebar-toggler').click(); //trigger sidebar toggle button
-                    }
-                    $('.sidebar-search').addClass("open");
-                } else {
-                    $('.sidebar-search').submit();
-                }
-            } else {
-                $('.sidebar-search').submit();
-            }
-        });
-
-        // handle close on body click
-        if ($('.sidebar-search').size() !== 0) {
-            $('.sidebar-search .input-group').on('click', function (e) {
-                e.stopPropagation();
-            });
-
-            $('body').on('click', function () {
-                if ($('.sidebar-search').hasClass('open')) {
-                    $('.sidebar-search').removeClass("open");
-                }
-            });
-        }
-    };
+        this.handleFixedSidebarHoverEffect();
+    }
 
     // Helper function to calculate sidebar height for fixed sidebar layout.
-    var _calculateFixedSidebarViewportHeight = function () {
-        var sidebarHeight = App.getViewPort().height - $('.page-header').outerHeight(true);
-        if ($('body').hasClass("page-footer-fixed")) {
+    _calculateFixedSidebarViewportHeight() {
+        let sidebarHeight = App.getViewPort().height - $('.page-header').outerHeight(true);
+        if (this.$body.hasClass('page-footer-fixed')) {
             sidebarHeight = sidebarHeight - $('.page-footer').outerHeight();
         }
 
         return sidebarHeight;
-    };
+    }
 
     // Handles fixed sidebar
-    var handleFixedSidebar = function () {
-        var menu = $('.page-sidebar-menu');
+    handleFixedSidebar() {
+        let menu = $('.page-sidebar-menu');
 
-        handleSidebarAndContentHeight();
+        this.handleSidebarAndContentHeight();
 
-        if ($('.page-sidebar-fixed').size() === 0) {
-            App.destroySlimScroll(menu);
-            return;
+        if (App.getViewPort().width >= this.resBreakpointMd && !this.$body.hasClass('page-sidebar-menu-not-fixed')) {
+            menu.attr('data-height', this._calculateFixedSidebarViewportHeight());
+            this.handleSidebarAndContentHeight();
         }
-
-        if (App.getViewPort().width >= resBreakpointMd && !$('body').hasClass('page-sidebar-menu-not-fixed')) {
-            menu.attr("data-height", _calculateFixedSidebarViewportHeight());
-            App.destroySlimScroll(menu);
-            App.initSlimScroll(menu);
-            handleSidebarAndContentHeight();
-        }
-    };
+    }
 
     // Handles sidebar toggler to close/hide the sidebar.
-    var handleFixedSidebarHoverEffect = function () {
-        if ($('body').hasClass('page-sidebar-fixed')) {
-            $('.page-sidebar').on('mouseenter', function () {
-                if ($('body').hasClass('page-sidebar-closed')) {
-                    $(this).find('.page-sidebar-menu').removeClass('page-sidebar-menu-closed');
-                }
-            }).on('mouseleave', function () {
-                if ($('body').hasClass('page-sidebar-closed')) {
-                    $(this).find('.page-sidebar-menu').addClass('page-sidebar-menu-closed');
-                }
-            });
+    handleFixedSidebarHoverEffect() {
+        let current = this;
+        if (this.$body.hasClass('page-sidebar-fixed')) {
+            $('.page-sidebar')
+                .on('mouseenter', (event) => {
+                    if (current.$body.hasClass('page-sidebar-closed')) {
+                        $(event.currentTarget).find('.page-sidebar-menu').removeClass('page-sidebar-menu-closed');
+                    }
+                })
+                .on('mouseleave', (event) => {
+                    if (current.$body.hasClass('page-sidebar-closed')) {
+                        $(event.currentTarget).find('.page-sidebar-menu').addClass('page-sidebar-menu-closed');
+                    }
+                });
         }
-    };
+    }
 
     // Hanles sidebar toggler
-    var handleSidebarToggler = function () {
-        /**
-         if (Cookies && Cookies.get('sidebar_closed') === '1' && App.getViewPort().width >= resBreakpointMd) {
-            $('body').addClass('page-sidebar-closed');
-            $('.page-sidebar-menu').addClass('page-sidebar-menu-closed');
-        }
-         */
-
+    handleSidebarToggler() {
         // handle sidebar show/hide
-        $('body').on('click', '.sidebar-toggler', function (e) {
-            var body = $('body');
-            var sidebar = $('.page-sidebar');
-            var sidebarMenu = $('.page-sidebar-menu');
-            $(".sidebar-search", sidebar).removeClass("open");
+        let body = this.$body;
+        this.$body.on('click', '.sidebar-toggler', (event) => {
+            event.preventDefault();
+            let sidebar = $('.page-sidebar');
+            let sidebarMenu = $('.page-sidebar-menu');
 
-            if (body.hasClass("page-sidebar-closed")) {
-                body.removeClass("page-sidebar-closed");
-                sidebarMenu.removeClass("page-sidebar-menu-closed");
-                if (Cookies) {
-                    Cookies.set('sidebar_closed', '0');
-                }
+            if (body.hasClass('page-sidebar-closed')) {
+                body.removeClass('page-sidebar-closed');
+                sidebarMenu.removeClass('page-sidebar-menu-closed');
             } else {
-                body.addClass("page-sidebar-closed");
-                sidebarMenu.addClass("page-sidebar-menu-closed");
-                if (body.hasClass("page-sidebar-fixed")) {
-                    sidebarMenu.trigger("mouseleave");
-                }
-                if (Cookies) {
-                    Cookies.set('sidebar_closed', '1');
+                body.addClass('page-sidebar-closed');
+                sidebarMenu.addClass('page-sidebar-menu-closed');
+                if (body.hasClass('page-sidebar-fixed')) {
+                    sidebarMenu.trigger('mouseleave');
                 }
             }
 
             $(window).trigger('resize');
         });
-    };
-
-    // Handles the horizontal menu
-    var handleHorizontalMenu = function () {
-        //handle tab click
-        $('.page-header').on('click', '.hor-menu a[data-toggle="tab"]', function (e) {
-            e.preventDefault();
-            var nav = $(".hor-menu .nav");
-            var active_link = nav.find('li.current');
-            $('li.active', active_link).removeClass("active");
-            $('.selected', active_link).remove();
-            var new_link = $(this).parents('li').last();
-            new_link.addClass("current");
-            new_link.find("a:first").append('<span class="selected"></span>');
-        });
-
-        // handle search box expand/collapse
-        $('.page-header').on('click', '.search-form', function (e) {
-            $(this).addClass("open");
-            $(this).find('.form-control').focus();
-
-            $('.page-header .search-form .form-control').on('blur', function (e) {
-                $(this).closest('.search-form').removeClass("open");
-                $(this).unbind("blur");
-            });
-        });
-
-        // handle hor menu search form on enter press
-        $('.page-header').on('keypress', '.hor-menu .search-form .form-control', function (e) {
-            if (e.which == 13) {
-                $(this).closest('.search-form').submit();
-                return false;
-            }
-        });
-
-        // handle header search button click
-        $('.page-header').on('mousedown', '.search-form.open .submit', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).closest('.search-form').submit();
-        });
-
-
-        $(document).on('click', '.mega-menu-dropdown .dropdown-menu', function (e) {
-            e.stopPropagation();
-        });
-    };
+    }
 
     // Handles Bootstrap Tabs.
-    var handleTabs = function () {
+    handleTabs() {
+        let current = this;
         // fix content height on tab click
-        $('body').on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
-            handleSidebarAndContentHeight();
+        this.$body.on('shown.bs.tab', 'a[data-toggle="tab"]', () => {
+            current.handleSidebarAndContentHeight();
         });
     };
 
     // Handles the go to top button at the footer
-    var handleGoTop = function () {
-        var offset = 300;
-        var duration = 500;
+    handleGoTop() {
+        let offset = 300;
+        let duration = 500;
 
         if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {  // ios supported
-            $(window).bind("touchend touchcancel touchleave", function (e) {
-                if ($(this).scrollTop() > offset) {
+            $(window).bind('touchend touchcancel touchleave', (event) => {
+                if ($(event.currentTarget).scrollTop() > offset) {
                     $('.scroll-to-top').fadeIn(duration);
                 } else {
                     $('.scroll-to-top').fadeOut(duration);
                 }
             });
         } else {  // general
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > offset) {
+            $(window).scroll((event) => {
+                if ($(event.currentTarget).scrollTop() > offset) {
                     $('.scroll-to-top').fadeIn(duration);
                 } else {
                     $('.scroll-to-top').fadeOut(duration);
@@ -448,19 +243,20 @@ var Layout = function () {
             });
         }
 
-        $('.scroll-to-top').click(function (e) {
+        $('.scroll-to-top').click((e) => {
             e.preventDefault();
             $('html, body').animate({scrollTop: 0}, duration);
             return false;
         });
-    };
+    }
 
-    // Hanlde 100% height elements(block, portlet, etc)
-    var handle100HeightContent = function () {
+    // Handle 100% height elements(block, portlet, etc)
+    handle100HeightContent() {
 
-        $('.full-height-content').each(function () {
-            var target = $(this);
-            var height;
+        let current = this;
+        $('.full-height-content').each((index, el) => {
+            let target = $(el);
+            let height;
 
             height = App.getViewPort().height -
                 $('.page-header').outerHeight(true) -
@@ -469,94 +265,53 @@ var Layout = function () {
                 $('.page-bar').outerHeight(true);
 
             if (target.hasClass('portlet')) {
-                var portletBody = target.find('.portlet-body');
-
-                App.destroySlimScroll(portletBody.find('.full-height-content-body')); // destroy slimscroll
+                let portletBody = target.find('.portlet-body');
 
                 height = height -
                     target.find('.portlet-title').outerHeight(true) -
                     parseInt(target.find('.portlet-body').css('padding-top')) -
                     parseInt(target.find('.portlet-body').css('padding-bottom')) - 5;
 
-                if (App.getViewPort().width >= resBreakpointMd && target.hasClass("full-height-content-scrollable")) {
+                if (App.getViewPort().width >= current.resBreakpointMd && target.hasClass('full-height-content-scrollable')) {
                     height = height - 35;
                     portletBody.find('.full-height-content-body').css('height', height);
-                    App.initSlimScroll(portletBody.find('.full-height-content-body'));
                 } else {
                     portletBody.css('min-height', height);
                 }
             } else {
-                App.destroySlimScroll(target.find('.full-height-content-body')); // destroy slimscroll
-
-                if (App.getViewPort().width >= resBreakpointMd && target.hasClass("full-height-content-scrollable")) {
+                if (App.getViewPort().width >= current.resBreakpointMd && target.hasClass('full-height-content-scrollable')) {
                     height = height - 35;
                     target.find('.full-height-content-body').css('height', height);
-                    App.initSlimScroll(target.find('.full-height-content-body'));
                 } else {
                     target.css('min-height', height);
                 }
             }
         });
-    };
-    //* END:CORE HANDLERS *//
+    }
 
-    return {
-        // Main init methods to initialize the layout
-        //IMPORTANT!!!: Do not modify the core handlers call order.
+    initSidebar() {
+        //layout handlers
+        this.handleFixedSidebar(); // handles fixed sidebar menu
+        this.handleSidebarMenu(); // handles main menu
+        this.handleSidebarToggler(); // handles sidebar hide/show
 
-        initHeader: function () {
-            handleHorizontalMenu(); // handles horizontal menu
-        },
+        App.addResizeHandler(this.handleFixedSidebar); // reinitialize fixed sidebar on window resize
+    }
 
-        setSidebarMenuActiveLink: function (mode, el) {
-            handleSidebarMenuActiveLink(mode, el, null);
-        },
+    initContent() {
+        this.handle100HeightContent(); // handles 100% height elements(block, portlet, etc)
+        this.handleTabs(); // handle bootstrap tabs
 
+        App.addResizeHandler(this.handleSidebarAndContentHeight); // recalculate sidebar & content height on window resize
+        App.addResizeHandler(this.handle100HeightContent); // reinitialize content height on window resize
+    }
 
-        initSidebar: function ($state) {
-            //layout handlers
-            handleFixedSidebar(); // handles fixed sidebar menu
-            handleSidebarMenu(); // handles main menu
-            handleSidebarToggler(); // handles sidebar hide/show
+    initFooter() {
+        this.handleGoTop(); //handles scroll to top functionality in the footer
+    }
+}
 
-            App.addResizeHandler(handleFixedSidebar); // reinitialize fixed sidebar on window resize
-        },
-
-        initContent: function () {
-            handle100HeightContent(); // handles 100% height elements(block, portlet, etc)
-            handleTabs(); // handle bootstrah tabs
-
-            App.addResizeHandler(handleSidebarAndContentHeight); // recalculate sidebar & content height on window resize
-            App.addResizeHandler(handle100HeightContent); // reinitialize content height on window resize
-        },
-
-        initFooter: function () {
-            handleGoTop(); //handles scroll to top functionality in the footer
-        },
-
-        init: function () {
-            this.initHeader();
-            this.initSidebar(null);
-            this.initContent();
-            this.initFooter();
-        },
-
-        //public function to fix the sidebar and content height accordingly
-        fixContentHeight: function () {
-            handleSidebarAndContentHeight();
-        },
-
-        initFixedSidebarHoverEffect: function () {
-            handleFixedSidebarHoverEffect();
-        },
-
-        initFixedSidebar: function () {
-            handleFixedSidebar();
-        },
-    };
-
-}();
-
-jQuery(document).ready(function () {
-    Layout.init();
+$(document).ready(() => {
+    new Layout();
+    window.Layout = Layout;
 });

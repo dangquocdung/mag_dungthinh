@@ -126,12 +126,13 @@ abstract class CacheAbstractDecorator implements RepositoryInterface
     /**
      * @param $data
      * @param $screen
+     * @param bool $is_single
      * @return Builder
      * @author Sang Nguyen
      */
-    public function applyBeforeExecuteQuery($data, $screen)
+    public function applyBeforeExecuteQuery($data, $screen, $is_single = false)
     {
-        return $this->repository->applyBeforeExecuteQuery($data, $screen);
+        return $this->repository->applyBeforeExecuteQuery($data, $screen, $is_single);
     }
 
     /**
@@ -178,7 +179,7 @@ abstract class CacheAbstractDecorator implements RepositoryInterface
     public function getDataIfExistCache($function, array $args)
     {
         try {
-            $cacheKey = md5(get_class($this) . $function . serialize(request()->input()) . serialize(func_get_args()));
+            $cacheKey = md5(get_class($this) . $function . serialize(request()->input()) . serialize(url()->current()) . serialize(func_get_args()));
 
             if ($this->cache->has($cacheKey)) {
                 return $this->cache->get($cacheKey);

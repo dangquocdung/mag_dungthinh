@@ -46,5 +46,10 @@ Route::group(['namespace' => 'Botble\Gallery\Http\Controllers', 'middleware' => 
             'as' => 'public.galleries',
             'uses' => 'PublicController@getGalleries',
         ]);
+
+        Route::get('/gallery/{slug}', [
+            'as' => 'public.gallery',
+            'uses' => 'PublicController@getGallery',
+        ]);
     });
 });

@@ -6,9 +6,6 @@ use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem as File;
-use League\Flysystem\Adapter\Local as LocalAdapter;
-use League\Flysystem\Filesystem as Flysystem;
-use League\Flysystem\MountManager;
 use Symfony\Component\Console\Input\InputArgument;
 
 class WidgetRemoveCommand extends Command
@@ -19,7 +16,7 @@ class WidgetRemoveCommand extends Command
      *
      * @var string
      */
-    protected $name = 'widget:remove';
+    protected $name = 'cms:widget:remove';
 
     /**
      * The console command description.

@@ -8,8 +8,9 @@ class InvalidConfiguration extends Exception
 {
     /**
      * @return static
-     * @author Freek Van der Herten <freek@spatie.be>
+     * @author Freek Van der Herten
      * @modified Sang Nguyen
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function viewIdNotSpecified()
     {
@@ -17,9 +18,9 @@ class InvalidConfiguration extends Exception
     }
 
     /**
-     * @param $path
      * @return static
      * @author Sang Nguyen
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function credentialsIsNotValid()
     {

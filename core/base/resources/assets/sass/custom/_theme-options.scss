@@ -4,7 +4,7 @@
     background    : #23282d;
     border-bottom : 3px solid #0073aa;
     .display_header {
-        margin     : 0 10px 15px 10px;
+        margin     : 15px;
         text-align : left;
         h2 {
             font-style    : normal;
@@ -82,11 +82,17 @@
     box-shadow         : inset 0 1px 0 #ffffff;
     .tab-content-in-right {
         min-height : 500px;
+        .form-group {
+            .clearfix {
+                height : 10px;
+            }
+        }
     }
 }
 
 .tab-in-left li {
     float : none;
+    width : 100%;
     a {
         display             : block;
         padding             : 10px 4px 10px 14px;

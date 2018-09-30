@@ -2,8 +2,8 @@
 
 namespace Botble\RequestLog;
 
-use Artisan;
 use Botble\Base\Interfaces\PluginInterface;
+use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetInterface;
 use Schema;
 
 class Plugin implements PluginInterface
@@ -13,10 +13,6 @@ class Plugin implements PluginInterface
      */
     public static function activate()
     {
-        Artisan::call('migrate', [
-            '--force' => true,
-            '--path' => 'plugins/request-log/database/migrations',
-        ]);
     }
 
     /**
@@ -32,5 +28,6 @@ class Plugin implements PluginInterface
     public static function remove()
     {
         Schema::dropIfExists('request_logs');
+        app(DashboardWidgetInterface::class)->deleteBy(['name' => 'widget_request_errors']);
     }
 }

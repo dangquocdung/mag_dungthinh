@@ -5,6 +5,7 @@ namespace Botble\Media\Repositories\Eloquent;
 use Auth;
 use Botble\Media\Repositories\Interfaces\MediaFolderInterface;
 use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Class MediaFolderRepository
@@ -89,6 +90,9 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     {
         $count = $this->model->where($key, '=', $value)->where('parent_id', $parent_id)->withTrashed();
 
+        /**
+         * @var Builder $count
+         */
         $count = $count->count();
 
         return $count > 0;
@@ -117,7 +121,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
             [
                 'id' => $folder->id,
                 'name' => $folder->name,
-            ]
+            ],
         ]);
     }
 
@@ -138,9 +142,15 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
             ->orderBy('media_folders.name', 'asc')
             ->onlyTrashed();
 
+        /**
+         * @var Builder $data
+         */
         if ($parent_id == 0) {
             $data->leftJoin('media_folders as mf_parent', 'mf_parent.id', '=', 'media_folders.parent_id')
                 ->where(function ($query) {
+                    /**
+                     * @var Builder $query
+                     */
                     $query
                         ->orWhere('media_folders.parent_id', '=', 0)
                         ->orWhere('mf_parent.deleted_at', '=', null);
@@ -248,8 +258,14 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     {
         $folders = $this->model->onlyTrashed();
 
+        /**
+         * @var Builder $folders
+         */
         $folders = $folders->get();
         foreach ($folders as $folder) {
+            /**
+             * @var \Eloquent $folder
+             */
             $folder->forceDelete();
         }
         return true;

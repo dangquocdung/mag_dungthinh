@@ -2,14 +2,19 @@
 
 namespace Botble\RequestLog\Providers;
 
-use Botble\RequestLog\Events\RequestHandlerEvent;
-use Illuminate\Support\ServiceProvider;
+use Assets;
 use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetInterface;
-use Botble\Dashboard\Repositories\Interfaces\DashboardWidgetSettingInterface;
+use Botble\RequestLog\Events\RequestHandlerEvent;
+use Illuminate\Support\Collection;
+use Illuminate\Support\ServiceProvider;
 use Auth;
 
 class HookServiceProvider extends ServiceProvider
 {
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * Boot the service provider.
@@ -18,7 +23,7 @@ class HookServiceProvider extends ServiceProvider
     public function boot()
     {
         add_action(BASE_ACTION_SITE_ERROR, [$this, 'handleSiteError'], 125, 1);
-        add_filter(DASHBOARD_FILTER_ADMIN_LIST, [$this, 'registerDashboardWidgets'], 125, 1);
+        add_filter(DASHBOARD_FILTER_ADMIN_LIST, [$this, 'registerDashboardWidgets'], 125, 2);
     }
 
     /**
@@ -33,22 +38,40 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $widgets
-     * @return string
+     * @param array $widgets
+     * @param Collection $widget_settings
+     * @return array
+     * @throws \Throwable
      * @author Sang Nguyen
      */
-    public function registerDashboardWidgets($widgets)
+    public function registerDashboardWidgets($widgets, $widget_settings)
     {
-        $widget = app(DashboardWidgetInterface::class)->firstOrCreate(['name' => 'widget_request_errors']);
-        $widget_setting = app(DashboardWidgetSettingInterface::class)->getFirstBy([
-            'widget_id' => $widget->id,
-            'user_id' => Auth::user()->getKey(),
-        ], ['status', 'order']);
+        if (!Auth::user()->hasPermission('request-log.list')) {
+            return $widgets;
+        }
+
+        Assets::addJavascriptDirectly(['vendor/core/plugins/request-log/js/request-log.js']);
+
+        $widget = $widget_settings->where('name', 'widget_request_errors')->first();
+        $widget_setting = $widget ? $widget->settings->first() : null;
+
+        if (!$widget) {
+            $widget = $this->app->make(DashboardWidgetInterface::class)->firstOrCreate(['name' => 'widget_request_errors']);
+        }
+
+        $widget->title = trans('plugins.request-log::request-log.widget_request_errors');
+        $widget->icon = 'fas fa-unlink';
+        $widget->color = '#e7505a';
+
+        $data = [
+            'id' => $widget->id,
+            'view' => view('plugins.request-log::widgets.base', compact('widget', 'widget_setting'))->render(),
+        ];
 
         if (empty($widget_setting) || array_key_exists($widget_setting->order, $widgets)) {
-            $widgets[] = view('plugins.request-log::widgets.base', compact('widget', 'widget_setting'))->render();
+            $widgets[] = $data;
         } else {
-            $widgets[$widget_setting->order] = view('plugins.request-log::widgets.base', compact('widget', 'widget_setting'))->render();
+            $widgets[$widget_setting->order] = $data;
         }
         return $widgets;
     }

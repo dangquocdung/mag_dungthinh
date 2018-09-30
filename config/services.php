@@ -17,12 +17,13 @@ return [
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
-        'region' => 'us-east-1',
+        'region' => env('SES_REGION', 'us-east-1'),
     ],
 
     'sparkpost' => [
@@ -33,27 +34,6 @@ return [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
-    ],
-
-    'facebook' => [
-        'client_id' => env('FACEBOOK_APP_ID'),
-        'client_secret' => env('FACEBOOK_APP_SECRET'),
-        'redirect' => env('FACEBOOK_APP_REDIRECT'),
-    ],
-    'google' => [
-        'client_id' => env('GOOGLE_APP_ID'),
-        'client_secret' => env('GOOGLE_APP_SECRET'),
-        'redirect' => env('GOOGLE_APP_REDIRECT'),
-    ],
-    'github' => [
-        'client_id' => env('GITHUB_APP_ID'),
-        'client_secret' => env('GITHUB_APP_SECRET'),
-        'redirect' => env('GITHUB_APP_REDIRECT'),
-    ],
-
-    'recaptcha' => [
-        'key' => env('NOCAPTCHA_SECRET'),
-        'secret' => env('NOCAPTCHA_SITEKEY'),
     ],
 
 ];

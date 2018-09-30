@@ -1,12 +1,12 @@
 @if ($supported_locales)
     @php
         $language_display = setting('language_display', 'all');
-        $show_related = config('plugins.language.general.show_item_in_default_language_if_current_version_not_existed', true);
+        $show_related = setting('language_show_default_item_if_current_version_not_existed', true);
     @endphp
     @if (setting('language_switcher_display', 'dropdown') == 'dropdown')
         {!! array_get($options, 'before') !!}
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 @if (array_get($options, 'lang_flag', true) && ($language_display == 'all' || $language_display == 'flag'))
                     {!! language_flag(Language::getCurrentLocaleFlag(), Language::getCurrentLocaleName()) !!}
                 @endif

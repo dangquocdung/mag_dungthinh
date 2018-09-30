@@ -9,8 +9,6 @@ use Illuminate\Support\Composer;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class ThemeCreateCommand extends Command
 {
@@ -20,7 +18,10 @@ class ThemeCreateCommand extends Command
      *
      * @var string
      */
-    protected $name = 'theme:create';
+    protected $signature = 'cms:theme:create 
+        {name : The theme that you want to create} 
+        {--path= : Path to theme directory}
+    ';
 
     /**
      * The console command description.
@@ -83,8 +84,9 @@ class ThemeCreateCommand extends Command
         $this->searchAndReplaceInFiles();
         $this->renameFiles($this->getPath(null));
 
-        $this->composer->setWorkingPath($this->getPath(null));
-        $this->composer->dumpAutoloads();
+        $this->composer
+            ->setWorkingPath($this->getPath(null))
+            ->dumpAutoloads();
 
         $this->info('Theme "' . $this->getTheme() . '" has been created.');
         return true;
@@ -94,7 +96,7 @@ class ThemeCreateCommand extends Command
      * Generate the module in Modules directory.
      * @author Sang Nguyen
      */
-    private function publishStubs()
+    protected function publishStubs()
     {
         $from = base_path('core/theme/stubs');
 
@@ -211,7 +213,10 @@ class ThemeCreateCommand extends Command
      */
     protected function getPath($path)
     {
-        $rootPath = $this->option('path');
+        $rootPath = public_path($this->config->get('core.theme.general.themeDir'));
+        if ($this->option('path')) {
+            $rootPath = $this->option('path');
+        }
 
         return $rootPath . '/' . strtolower($this->getTheme()) . '/' . $path;
     }
@@ -240,49 +245,5 @@ class ThemeCreateCommand extends Command
         $path = realpath(__DIR__ . '/../../stubs/' . $template . '.stub');
 
         return $this->files->get($path);
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    protected function getArguments()
-    {
-        return [
-            [
-                'name',
-                InputArgument::REQUIRED,
-                'Name of the theme to generate.',
-            ],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     * @author Teepluss <admin@laravel.in.th>
-     */
-    protected function getOptions()
-    {
-        $path = public_path() . '/' . $this->config->get('core.theme.general.themeDir');
-
-        return [
-            [
-                'path',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Path to theme directory.', $path,
-            ],
-            [
-                'facade',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'Facade name.',
-                null,
-            ],
-        ];
     }
 }

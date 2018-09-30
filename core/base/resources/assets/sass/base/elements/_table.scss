@@ -1,5 +1,5 @@
 $table-min-width : 585px;
-$brand-main-color: $primary-color;
+$brand-main-color : $primary-color;
 
 .dataTables_wrapper {
     .wrapping {
@@ -33,8 +33,11 @@ $brand-main-color: $primary-color;
         overflow     : hidden;
         padding-left : 4px;
         width        : 100% !important;
-        &.tableFloatingHeader .group-checkable {
+        &.tableFloatingHeader .table-check-all {
             left : -15px;
+        }
+        .table-check-all {
+            margin-left : 5px;
         }
         > tr {
             > th {
@@ -66,7 +69,7 @@ $brand-main-color: $primary-color;
             margin    : 0 0 5px;
         }
         .table-actions {
-            min-width  : 150px;
+            min-width  : 155px;
             text-align : center;
         }
     }
@@ -80,16 +83,18 @@ $brand-main-color: $primary-color;
 
 .page-content {
     .dataTables_wrapper {
-        min-height: 120px;
-        position       : relative;
+        position : relative;
+        padding  : 0;
+        margin   : 0;
         .datatables__info_wrap {
-            background-color: #fbfcfd;
+            background-color : #fbfcfd;
+            width            : 100%;
         }
         .dt-buttons {
             float        : right;
             margin-top   : -40px;
             margin-right : 10px;
-            top          : 4px;
+            top          : -4px;
             .btn {
                 padding      : 5px 10px;
                 font-size    : 12px;
@@ -107,9 +112,6 @@ $brand-main-color: $primary-color;
                 &:last-child {
                     margin-right : 0;
                 }
-            }
-            a {
-                color : #ffffff !important;
             }
         }
         .text-left {
@@ -136,7 +138,7 @@ $brand-main-color: $primary-color;
                 display       : inline-block;
                 padding-left  : 0;
                 border-radius : 0 !important;
-                margin        : 5px 10px 0 0;
+                margin        : 8px 10px 0 0;
                 li {
                     a {
                         background-color   : #f1f1f1;
@@ -151,6 +153,7 @@ $brand-main-color: $primary-color;
                         min-width          : 24px;
                         width              : auto;
                         height             : auto;
+                        text-decoration    : none !important;
                         &:hover {
                             background : #e3e3e3;
                         }
@@ -197,7 +200,7 @@ $brand-main-color: $primary-color;
         .dataTables_info {
             margin-left : 10px;
             padding-top : 0;
-            line-height: 32px;
+            line-height : 32px;
             white-space : nowrap;
             display     : inline-block;
             color       : #d9534f;
@@ -254,7 +257,6 @@ $brand-main-color: $primary-color;
 .dataTables_wrapper {
     .dataTables_paginate {
         .paginate_button {
-            font-size : 11px;
             a {
                 width       : 24px;
                 height      : 24px;
@@ -280,8 +282,7 @@ $brand-main-color: $primary-color;
 }
 
 div.dataTables_info {
-    color     : #afafaf;
-    font-size : 11px;
+    color : #afafaf;
 }
 
 .table {
@@ -296,7 +297,7 @@ div.dataTables_info {
         text-transform : uppercase;
         &.no-sort {
             padding-right : 0 !important;
-            &::after {
+            &:before, &:after {
                 display : none !important;
             }
         }
@@ -395,25 +396,25 @@ div.dataTables_info {
         border : 1px solid #f4f4f4;
     }
     .form-control:focus {
-        border-color: #93a1bb;
-        outline: 0;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(147,161,187,.6);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(147,161,187,.6);
+        border-color       : #93a1bb;
+        outline            : 0;
+        -webkit-box-shadow : inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(147, 161, 187, .6);
+        box-shadow         : inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(147, 161, 187, .6);
     }
 
-    select.form-control{
-        padding-right: 1.5em;
-        line-height: 17px;
+    select.form-control {
+        padding-right : 1.5em;
+        line-height   : 17px;
     }
 }
 
 select:not([multiple]) {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-position: right 50%;
-    background-repeat: no-repeat;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
-    padding: .5em;
-    padding-right: 1.5em;
-    border-radius: 0;
+    -webkit-appearance  : none;
+    -moz-appearance     : none;
+    background-position : right 50%;
+    background-repeat   : no-repeat;
+    background-image    : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
+    padding             : .5em;
+    padding-right       : 1.5em;
+    border-radius       : 0;
 }

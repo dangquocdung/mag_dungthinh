@@ -59,6 +59,7 @@ class Breadcrumb
      *
      * @return string
      * @author Sang Nguyen
+     * @throws \Throwable
      */
     public function render()
     {

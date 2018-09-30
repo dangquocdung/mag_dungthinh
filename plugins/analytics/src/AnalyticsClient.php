@@ -58,7 +58,7 @@ class AnalyticsClient
      * @param string $metrics
      * @param array $others
      *
-     * @return array|null
+     * @return \stdClass|null
      */
     public function performQuery(string $viewId, DateTime $startDate, DateTime $endDate, string $metrics, array $others = [])
     {

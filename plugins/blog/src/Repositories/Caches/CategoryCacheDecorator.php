@@ -41,7 +41,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @return mixed
      * @author Sang Nguyen
      */
@@ -61,7 +61,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      */
     public function getCategoryById($id)
@@ -80,7 +80,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return array|null
      */
     public function getAllRelatedChildrenIds($id)

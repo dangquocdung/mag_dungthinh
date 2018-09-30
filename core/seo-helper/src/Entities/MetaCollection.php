@@ -23,7 +23,7 @@ class MetaCollection extends BaseMetaCollection
      * @param  string $content
      *
      * @return \Botble\SeoHelper\Entities\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function add($name, $content)
     {

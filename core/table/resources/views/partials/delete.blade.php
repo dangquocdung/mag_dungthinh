@@ -1,1 +1,1 @@
-{!! Html::link($href, trans('core.table::general.delete'), ['class' => 'delete-many-entry-trigger', 'data-class' => $data_class]) !!}
+{!! Html::link($href, trans('core.table::general.delete'), ['class' => 'delete-many-entry-trigger', 'data-class-item' => $data_class]) !!}

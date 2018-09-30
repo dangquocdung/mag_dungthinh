@@ -5,6 +5,7 @@ namespace Botble\Facebook\Http\Controllers;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Facebook\Http\Requests\UpdateSettingsRequest;
+use Botble\Setting\Supports\SettingStore;
 use Carbon\Carbon;
 use Exception;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -12,15 +13,16 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 class FacebookController extends BaseController
 {
     /**
+     * @param SettingStore $settingStore
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @author Sang Nguyen
      */
-    public function getSettings()
+    public function getSettings(SettingStore $settingStore)
     {
-        page_title()->setTitle(trans('plugins.facebook::facebook.settings.page_title'));
+        page_title()->setTitle(__('Facebook'));
 
         $list_pages = [];
-        $pages = setting('facebook_list_pages', []);
+        $pages = $settingStore->get('facebook_list_pages', []);
         if (!empty($pages)) {
             $pages = json_decode($pages, true);
             foreach ($pages as $page) {
@@ -34,21 +36,27 @@ class FacebookController extends BaseController
     /**
      * @param UpdateSettingsRequest $request
      * @param BaseHttpResponse $response
+     * @param SettingStore $settingStore
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function postSettings(UpdateSettingsRequest $request, BaseHttpResponse $response)
+    public function postSettings(
+        UpdateSettingsRequest $request,
+        BaseHttpResponse $response,
+        SettingStore $settingStore
+    )
     {
         foreach ($request->input('settings', []) as $key => $value) {
-            setting()->set($key, $value);
+            $settingStore->set($key, $value);
         }
 
-        if (setting('facebook_access_token') == null) {
-            setting()->set('facebook_token_expire_date');
-            setting()->set('facebook_list_pages', json_encode([]));
+        if ($settingStore->get('facebook_access_token') == null) {
+            $settingStore
+                ->set('facebook_token_expire_date')
+                ->set('facebook_list_pages', json_encode([]));
         }
 
-        setting()->save();
+        $settingStore->save();
 
         return $response
             ->setNextUrl(route('facebook.settings'))
@@ -62,23 +70,33 @@ class FacebookController extends BaseController
      */
     public function getAccessToken(LaravelFacebookSdk $facebook, BaseHttpResponse $response)
     {
-        return $response->setNextUrl($facebook->getLoginUrl(['email', 'manage_pages', 'publish_pages', 'public_profile'], route('facebook.callback')));
+        return $response->setNextUrl($facebook->getLoginUrl([
+            'email',
+            'manage_pages',
+            'publish_pages',
+            'public_profile',
+        ], route('facebook.callback')));
     }
 
     /**
      * @param LaravelFacebookSdk $facebook
      * @param BaseHttpResponse $response
+     * @param SettingStore $settingStore
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function getHandleCallback(LaravelFacebookSdk $facebook, BaseHttpResponse $response)
+    public function getHandleCallback(
+        LaravelFacebookSdk $facebook,
+        BaseHttpResponse $response,
+        SettingStore $settingStore
+    )
     {
         // Obtain an access token.
         try {
             $token = $facebook->getAccessTokenFromRedirect(route('facebook.callback'));
         } catch (Exception $ex) {
             return $response
-                ->setError(true)
+                ->setError()
                 ->setNextUrl(route('facebook.settings'))
                 ->setMessage($ex->getMessage());
         }
@@ -91,12 +109,12 @@ class FacebookController extends BaseController
 
             if (!$helper->getError()) {
                 return $response
-                    ->setError(true)
+                    ->setError()
                     ->setNextUrl(route('facebook.settings'))
                     ->setMessage(__('Unauthorized action.'));
             }
             return $response
-                ->setError(true)
+                ->setError()
                 ->setNextUrl(route('facebook.settings'))
                 ->setMessage(__('You did not approve Facebook app to get token'));
         }
@@ -110,7 +128,7 @@ class FacebookController extends BaseController
                 $token = $oauth_client->getLongLivedAccessToken($token);
             } catch (Exception $ex) {
                 return $response
-                    ->setError(true)
+                    ->setError()
                     ->setNextUrl(route('facebook.settings'))
                     ->setMessage($ex->getMessage());
             }
@@ -120,26 +138,28 @@ class FacebookController extends BaseController
             $pages = $facebook->get('/me/accounts', $token)->getBody();
         } catch (Exception $ex) {
             return $response
-                ->setError(true)
+                ->setError()
                 ->setNextUrl(route('facebook.settings'))
                 ->setMessage($ex->getMessage());
         }
 
         $facebook->setDefaultAccessToken($token);
 
-        setting()->set('facebook_access_token', $token);
-        setting()->set('facebook_list_pages', null);
+        $settingStore
+            ->set('facebook_access_token', $token)
+            ->set('facebook_list_pages', null);
         if (!empty($pages)) {
             $pages = array_get(json_decode($pages, true), 'data', []);
             if (count($pages) > 0) {
-                setting()->set('facebook_list_pages', json_encode($pages));
-                if (setting('facebook_page_id') == null) {
-                    setting()->set('facebook_page_id', $pages[0]['id']);
+                $settingStore->set('facebook_list_pages', json_encode($pages));
+                if ($settingStore->get('facebook_page_id') == null) {
+                    $settingStore->set('facebook_page_id', $pages[0]['id']);
                 }
             }
         }
-        setting()->set('facebook_token_expire_date', Carbon::now()->addDays(60)->getTimestamp());
-        setting()->save();
+        $settingStore
+            ->set('facebook_token_expire_date', Carbon::now(config('app.timezone'))->addDays(60)->getTimestamp())
+            ->save();
         return $response
             ->setNextUrl(route('facebook.settings'))
             ->setMessage(__('Get Facebook access token successfully!'));
@@ -147,15 +167,16 @@ class FacebookController extends BaseController
 
     /**
      * @param BaseHttpResponse $response
+     * @param SettingStore $settingStore
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function getRemoveAccessToken(BaseHttpResponse $response)
+    public function getRemoveAccessToken(BaseHttpResponse $response, SettingStore $settingStore)
     {
-        setting()->set('facebook_access_token');
-        setting()->set('facebook_token_expire_date');
-        setting()->set('facebook_list_pages', json_encode([]));
-        setting()->save();
+        $settingStore->set('facebook_access_token')
+            ->set('facebook_token_expire_date')
+            ->set('facebook_list_pages', json_encode([]))
+            ->save();
 
         return $response
             ->setNextUrl(route('facebook.settings'))

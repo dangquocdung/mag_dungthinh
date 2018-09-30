@@ -2,16 +2,17 @@
 
 namespace Botble\Theme\Http\Controllers;
 
-use Artisan;
+use App\Console\Kernel;
 use Assets;
 use Botble\Base\Forms\FormBuilder;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\Setting\Supports\SettingStore;
 use Botble\Theme\Forms\CustomCSSForm;
 use Botble\Theme\Http\Requests\CustomCssRequest;
+use Exception;
 use File;
 use Illuminate\Http\Request;
-use Setting;
 use ThemeOption;
 
 class ThemeController extends BaseController
@@ -27,6 +28,8 @@ class ThemeController extends BaseController
         if (File::exists(public_path('themes/.DS_Store'))) {
             File::delete(public_path('themes/.DS_Store'));
         }
+
+        Assets::addAppModule(['theme']);
 
         return view('core.theme::list');
     }
@@ -57,11 +60,12 @@ class ThemeController extends BaseController
     /**
      * @param Request $request
      * @param BaseHttpResponse $response
+     * @param SettingStore $settingStore
      * @return BaseHttpResponse
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @author Sang Nguyen
      */
-    public function postUpdate(Request $request, BaseHttpResponse $response)
+    public function postUpdate(Request $request, BaseHttpResponse $response, SettingStore $settingStore)
     {
         $sections = ThemeOption::constructSections();
         foreach ($sections as $section) {
@@ -70,34 +74,33 @@ class ThemeController extends BaseController
                 ThemeOption::setOption($key, $request->input($key, 0));
             }
         }
-        Setting::save();
+        $settingStore->save();
         return $response->setMessage(trans('core.base::notices.update_success_message'));
     }
 
     /**
-     * @param $theme
+     * @param Request $request
      * @param BaseHttpResponse $response
+     * @param Kernel $kernel
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function getActiveTheme($theme, BaseHttpResponse $response)
+    public function postActivateTheme(Request $request, BaseHttpResponse $response, Kernel $kernel)
     {
-        Setting::set('theme', $theme);
-        Setting::save();
-        Artisan::call('cache:clear');
+        $kernel->call('cms:theme:activate', ['name' => $request->input('theme')]);
+
         return $response
-            ->setNextUrl(route('theme.list'))
             ->setMessage(trans('core.theme::theme.active_success'));
     }
 
     /**
      * @param FormBuilder $formBuilder
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return string
      * @author Sang Nguyen
      */
     public function getCustomCss(FormBuilder $formBuilder)
     {
-        page_title()->setTitle(__('Custom CSS for theme'));
+        page_title()->setTitle(trans('core.theme::theme.custom_css'));
 
         Assets::addAppModule(['custom-css'])
             ->addStylesheetsDirectly([
@@ -113,23 +116,52 @@ class ThemeController extends BaseController
                 'vendor/core/packages/codemirror/addon/hint/css-hint.js',
             ]);
 
-        $form = $formBuilder->create(CustomCSSForm::class);
-
-        return view('core.theme::custom-css', compact('form'));
+        return $formBuilder->create(CustomCSSForm::class)->renderForm();
     }
 
     /**
      * @param CustomCssRequest $request
      * @param BaseHttpResponse $response
+     * @param SettingStore $setting
      * @return BaseHttpResponse
      * @author Sang Nguyen
      */
-    public function postCustomCss(CustomCssRequest $request, BaseHttpResponse $response)
+    public function postCustomCss(CustomCssRequest $request, BaseHttpResponse $response, SettingStore $setting)
     {
-        $file = public_path('themes/' . setting('theme') . '/assets/css/style.integration.css');
+        $file = public_path('themes/' . $setting->get('theme') . '/assets/css/style.integration.css');
         $css = $request->input('custom_css');
         $css = htmlspecialchars(htmlentities(strip_tags($css)));
         save_file_data($file, $css, false);
         return $response->setMessage(__('Update custom CSS successfully!'));
+    }
+
+    /**
+     * Remove plugin
+     *
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @param Kernel $kernel
+     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @author Sang Nguyen
+     */
+    public function postRemoveTheme(Request $request, BaseHttpResponse $response, Kernel $kernel)
+    {
+        $theme = strtolower($request->input('theme'));
+
+        if (in_array($theme, scan_folder(public_path('themes')))) {
+            try {
+                $kernel->call('cms:theme:remove', ['name' => $theme, '--force' => true]);
+                return $response->setMessage(trans('core.theme::theme.remove_theme_success'));
+            } catch (Exception $ex) {
+                info($ex->getMessage());
+                return $response
+                    ->setError()
+                    ->setMessage($ex->getMessage());
+            }
+        }
+        return $response
+            ->setError()
+            ->setMessage(trans('core.theme::theme.theme_is_note_existed'));
     }
 }

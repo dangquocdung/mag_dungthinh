@@ -32,12 +32,12 @@ class SlugService
      * @return int|string
      * @author Sang Nguyen
      */
-    public function create($name, $slug_id = 0)
+    public function create($name, $slug_id = 0, $screen = null)
     {
         $slug = str_slug($name);
         $index = 1;
         $baseSlug = $slug;
-        while ($this->slugRepository->getModel()->where(['key' => $slug])->where('id', '!=', $slug_id)->count() > 0) {
+        while ($this->checkIfExistedSlug($slug, $slug_id, $screen)) {
             $slug = $baseSlug . '-' . $index++;
         }
 
@@ -46,5 +46,30 @@ class SlugService
         }
 
         return $slug;
+    }
+
+    /**
+     * @param $slug
+     * @param $slug_id
+     * @param $screen
+     * @return bool
+     * @author Sang Nguyen
+     */
+    protected function checkIfExistedSlug($slug, $slug_id, $screen)
+    {
+        $prefix = null;
+        if (!empty($screen)) {
+            $prefix = config('core.slug.general.prefixes.' . $screen, '');
+        }
+        $count = $this->slugRepository
+            ->getModel()
+            ->where([
+                'key' => $slug,
+                'prefix' => $prefix,
+            ])
+            ->where('id', '!=', $slug_id)
+            ->count();
+
+        return $count > 0;
     }
 }

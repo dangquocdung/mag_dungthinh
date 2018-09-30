@@ -11,7 +11,7 @@ class PluginListCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugin:list';
+    protected $signature = 'cms:plugin:list';
 
     /**
      * The console command description.
